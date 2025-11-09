@@ -1,4 +1,35 @@
-# 📊 Data Science Portfolio
+# 📊## 🚀 Quick Start
+
+### Option 1: Automated Setup (Recommended)
+```bash
+# Clone the repository
+git clone https://github.com/GodsonKurishinkal/data-science-portfolio.git
+cd data-science-portfolio
+
+# Activate virtual environment (creates .venv if it doesn't exist)
+source activate.sh
+```
+
+### Option 2: Manual Setup
+```bash
+# Clone the repository
+git clone https://github.com/GodsonKurishinkal/data-science-portfolio.git
+cd data-science-portfolio
+
+# Create virtual environment
+python3 -m venv .venv
+
+# Activate it
+source .venv/bin/activate  # Mac/Linux
+# or
+.venv\Scripts\activate     # Windows
+
+# Install dependencies for a specific project
+cd project-001-demand-forecasting-system
+pip install -r requirements.txt
+```
+
+📖 **See [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md) for detailed setup instructions and troubleshooting.**ortfolio
 
 > Showcasing data science projects with machine learning, analytics, and forecasting
 
