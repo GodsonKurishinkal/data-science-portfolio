@@ -19,7 +19,7 @@ source activate.sh
 ```
 
 ### Python Version
-- **Python:** 3.9.6
+- **Python:** 3.11.14
 - **Location:** `.venv/bin/python`
 
 ---

@@ -16,10 +16,16 @@ echo ""
 
 # Check if .venv exists
 if [ ! -d ".venv" ]; then
-    echo -e "${YELLOW}⚠ Virtual environment not found!${NC}"
-    echo "Creating .venv..."
-    python3 -m venv .venv
-    echo -e "${GREEN}✓ Virtual environment created${NC}"
+    echo ""
+    echo "⚠️  Virtual environment not found!"
+    echo "Creating .venv with Python 3.11.14..."
+    python3.11 -m venv .venv
+    if [ $? -eq 0 ]; then
+        echo "✓ Virtual environment created successfully"
+    else
+        echo "✗ Failed to create virtual environment"
+        return 1
+    fi
 fi
 
 # Activate virtual environment
