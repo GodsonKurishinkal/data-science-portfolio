@@ -1,0 +1,140 @@
+# Configuration file for Demand Forecasting System
+
+# Data Configuration
+data:
+  raw_path: "data/raw/"
+  processed_path: "data/processed/"
+  external_path: "data/external/"
+  target_column: "demand"
+  date_column: "date"
+  
+# Feature Engineering Configuration
+features:
+  # Lag features (in days)
+  lags: [1, 7, 14, 30]
+  
+  # Rolling window sizes (in days)
+  rolling_windows: [7, 14, 30]
+  
+  # Time features to create
+  time_features:
+    - year
+    - month
+    - day
+    - dayofweek
+    - quarter
+    - weekofyear
+    - is_weekend
+    - is_month_start
+    - is_month_end
+
+# Model Configuration
+model:
+  # Model type: 'random_forest', 'xgboost', 'lightgbm'
+  type: "random_forest"
+  
+  # Train-test split
+  test_size: 0.2
+  
+  # Random state for reproducibility
+  random_state: 42
+  
+  # Model-specific parameters
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 2
+    min_samples_leaf: 1
+    n_jobs: -1
+  
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+  
+  lightgbm:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    num_leaves: 31
+    subsample: 0.8
+
+# Cross-Validation Configuration
+cross_validation:
+  n_splits: 5
+  method: "time_series"  # time_series or k_fold
+
+# Forecasting Configuration
+forecast:
+  # Forecast horizon (number of periods)
+  horizon: 30
+  
+  # Frequency: 'D' (daily), 'W' (weekly), 'M' (monthly)
+  frequency: "D"
+  
+  # Confidence interval level
+  confidence_level: 0.95
+
+# Evaluation Metrics
+metrics:
+  - mae
+  - rmse
+  - mape
+  - r2
+
+# Paths for saving outputs
+output:
+  models_path: "models/"
+  results_path: "results/"
+  figures_path: "figures/"
+  logs_path: "logs/"
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/demand_forecasting.log"
+
+# Preprocessing Configuration
+preprocessing:
+  # How to handle missing values: 'drop', 'fill_mean', 'fill_median'
+  handle_missing: "fill_mean"
+  
+  # Whether to drop duplicate rows
+  drop_duplicates: true
+  
+  # Whether to remove outliers
+  remove_outliers: false
+  
+  # Outlier detection method: 'iqr', 'zscore'
+  outlier_method: "iqr"
+  
+  # Threshold for outlier detection
+  outlier_threshold: 3
+
+# Feature Selection
+feature_selection:
+  # Whether to perform feature selection
+  enabled: false
+  
+  # Method: 'variance', 'correlation', 'importance'
+  method: "importance"
+  
+  # Number of top features to select
+  n_features: 20
+
+# Hyperparameter Tuning
+hyperparameter_tuning:
+  # Whether to perform hyperparameter tuning
+  enabled: false
+  
+  # Method: 'grid_search', 'random_search', 'bayesian'
+  method: "random_search"
+  
+  # Number of iterations for random/bayesian search
+  n_iterations: 50
+  
+  # Cross-validation folds
+  cv_folds: 3

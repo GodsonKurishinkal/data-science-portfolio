@@ -1,0 +1,101 @@
+# Data files
+data/raw/
+data/processed/
+data/external/
+*.csv
+*.parquet
+*.xlsx
+*.xls
+*.json
+*.xml
+
+# Model files
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.joblib
+*.pt
+*.pth
+*.onnx
+models/*.pkl
+models/*.h5
+
+# Environment files
+.env
+.env.local
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# MLflow
+mlruns/
+
+# Weights & Biases
+wandb/
+
+# DVC
+.dvc/
+*.dvc
+
+# Temporary files
+*.tmp
+*.bak
+*.swp

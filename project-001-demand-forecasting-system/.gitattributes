@@ -1,0 +1,17 @@
+# Jupyter Notebook diffs
+*.ipynb diff=jupyternotebook
+*.ipynb merge=jupyternotebook
+
+# Text files
+*.py text diff=python
+*.md text diff=markdown
+*.txt text
+*.yaml text
+*.yml text
+*.json text
+
+# Binary files
+*.pkl binary
+*.h5 binary
+*.joblib binary
+*.parquet binary
