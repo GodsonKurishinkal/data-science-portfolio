@@ -2,7 +2,23 @@
 
 > Showcasing data science projects with machine learning, analytics, and forecasting
 
-## 👋 About
+## � Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/GodsonKurishinkal/data-science-portfolio.git
+cd data-science-portfolio
+
+# Run automated setup (creates .venv and installs dependencies)
+./setup.sh
+
+# Or manually activate environment
+source .venv/bin/activate
+```
+
+See [SETUP_ENVIRONMENT.md](SETUP_ENVIRONMENT.md) for detailed setup instructions.
+
+## �👋 About
 
 This repository contains a collection of data science projects demonstrating my skills in:
 - Machine Learning & Deep Learning
