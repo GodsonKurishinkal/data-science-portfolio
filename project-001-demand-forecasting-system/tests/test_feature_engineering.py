@@ -149,3 +149,113 @@ class TestCreateAllFeatures:
         
         # Original data should be preserved
         assert 'demand' in df_all.columns
+
+
+# M5-Specific Feature Engineering Tests
+
+@pytest.fixture
+def sample_m5_features_data():
+    """Create sample M5 data for feature engineering tests."""
+    dates = pd.date_range('2021-01-01', periods=50, freq='D')
+    df = pd.DataFrame({
+        'date': dates,
+        'item_id': ['FOODS_1_001'] * 50,
+        'store_id': ['CA_1'] * 50,
+        'cat_id': ['FOODS'] * 50,
+        'sales': np.random.randint(0, 20, 50),
+        'sell_price': np.random.uniform(1.0, 5.0, 50),
+        'event_name_1': [None] * 45 + ['Event1'] * 5,
+        'snap_CA': np.random.choice([0, 1], 50)
+    })
+    return df
+
+
+class TestM5FeatureEngineering:
+    """Test cases for M5-specific feature engineering functions."""
+    
+    def test_create_price_features(self, sample_m5_features_data):
+        """Test price feature creation."""
+        from src.features.build_features import create_price_features
+        
+        df_price = create_price_features(sample_m5_features_data)
+        
+        expected_features = ['price_change', 'price_change_pct', 'price_vs_avg']
+        for feature in expected_features:
+            assert feature in df_price.columns
+    
+    def test_encode_calendar_features(self, sample_m5_features_data):
+        """Test calendar event encoding."""
+        from src.features.build_features import encode_calendar_features
+        
+        df_calendar = encode_calendar_features(sample_m5_features_data)
+        
+        assert 'has_event' in df_calendar.columns
+        assert df_calendar['has_event'].dtype in [np.int64, np.int32]
+        # Check that events are properly encoded
+        assert df_calendar['has_event'].sum() == 5  # 5 event days in fixture
+    
+    def test_create_sales_lag_features(self, sample_m5_features_data):
+        """Test M5 sales lag feature creation."""
+        from src.features.build_features import create_sales_lag_features
+        
+        df_lags = create_sales_lag_features(
+            sample_m5_features_data,
+            target_col='sales',
+            lags=[1, 7]
+        )
+        
+        assert 'sales_lag_1' in df_lags.columns
+        assert 'sales_lag_7' in df_lags.columns
+        # Check lag calculation is grouped by item and store
+        assert df_lags['sales_lag_1'].iloc[1] == df_lags['sales'].iloc[0]
+    
+    def test_create_sales_rolling_features(self, sample_m5_features_data):
+        """Test M5 sales rolling feature creation."""
+        from src.features.build_features import create_sales_rolling_features
+        
+        df_rolling = create_sales_rolling_features(
+            sample_m5_features_data,
+            target_col='sales',
+            windows=[7]
+        )
+        
+        expected_features = [
+            'sales_rolling_mean_7',
+            'sales_rolling_std_7',
+            'sales_rolling_min_7',
+            'sales_rolling_max_7'
+        ]
+        for feature in expected_features:
+            assert feature in df_rolling.columns
+    
+    def test_create_hierarchical_features(self, sample_m5_features_data):
+        """Test hierarchical aggregation features."""
+        from src.features.build_features import create_hierarchical_features
+        
+        df_hier = create_hierarchical_features(sample_m5_features_data, target_col='sales')
+        
+        # Check that hierarchical features are created
+        expected_features = ['store_sales_total', 'cat_sales_total']
+        for feature in expected_features:
+            assert feature in df_hier.columns
+    
+    def test_build_m5_features_integration(self, sample_m5_features_data):
+        """Test complete M5 feature engineering pipeline."""
+        from src.features.build_features import build_m5_features
+        
+        df_features = build_m5_features(
+            sample_m5_features_data,
+            target_col='sales',
+            include_price=True,
+            include_calendar=True,
+            include_lags=True,
+            include_rolling=False,  # Skip rolling for speed
+            include_hierarchical=False,  # Skip hierarchical for simplicity
+            lags=[1, 7],
+            windows=[]
+        )
+        
+        # Check that features were created
+        assert len(df_features.columns) > len(sample_m5_features_data.columns)
+        assert 'sales' in df_features.columns  # Original target preserved
+        assert 'sales_lag_1' in df_features.columns  # Lag features created

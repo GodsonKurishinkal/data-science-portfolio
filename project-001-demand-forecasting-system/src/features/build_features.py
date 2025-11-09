@@ -186,3 +186,326 @@ def create_all_features(
     df_features = create_rolling_features(df_features, target_column, windows=windows)
     
     return df_features
+
+
+# M5-Specific feature engineering functions
+
+def create_price_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Create price-related features for M5 dataset.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        M5 DataFrame with 'sell_price' column.
+        
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with additional price features.
+        
+    Examples
+    --------
+    >>> df = create_price_features(df)
+    """
+    df_price = df.copy()
+    
+    if 'sell_price' not in df_price.columns:
+        return df_price
+    
+    # Group by item and store for item-store specific features
+    group_cols = ['item_id', 'store_id']
+    
+    # Price change features
+    df_price['price_change'] = df_price.groupby(group_cols)['sell_price'].diff()
+    df_price['price_change_pct'] = df_price.groupby(group_cols)['sell_price'].pct_change()
+    
+    # Price momentum (7-day and 28-day)
+    df_price['price_momentum_7'] = df_price.groupby(group_cols)['sell_price'].diff(7)
+    df_price['price_momentum_28'] = df_price.groupby(group_cols)['sell_price'].diff(28)
+    
+    # Rolling price statistics
+    for window in [7, 14, 28]:
+        df_price[f'price_rolling_mean_{window}'] = df_price.groupby(group_cols)['sell_price'].transform(
+            lambda x: x.rolling(window=window, min_periods=1).mean()
+        )
+        df_price[f'price_rolling_std_{window}'] = df_price.groupby(group_cols)['sell_price'].transform(
+            lambda x: x.rolling(window=window, min_periods=1).std()
+        )
+    
+    # Price relative to historical average
+    df_price['price_vs_avg'] = df_price['sell_price'] / df_price.groupby(group_cols)['sell_price'].transform('mean')
+    
+    # Price quantile within item-store history
+    df_price['price_rank'] = df_price.groupby(group_cols)['sell_price'].rank(pct=True)
+    
+    return df_price
+
+
+def encode_calendar_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Encode calendar event and SNAP features for M5 dataset.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        M5 DataFrame with calendar event columns.
+        
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with encoded calendar features.
+        
+    Examples
+    --------
+    >>> df = encode_calendar_features(df)
+    """
+    df_calendar = df.copy()
+    
+    # Event indicators
+    if 'event_name_1' in df_calendar.columns:
+        df_calendar['has_event'] = df_calendar['event_name_1'].notna().astype(int)
+        
+        # Encode event types
+        if 'event_type_1' in df_calendar.columns:
+            event_dummies = pd.get_dummies(df_calendar['event_type_1'], prefix='event_type', dummy_na=False)
+            df_calendar = pd.concat([df_calendar, event_dummies], axis=1)
+    
+    # SNAP indicators by state
+    snap_cols = ['snap_CA', 'snap_TX', 'snap_WI']
+    for col in snap_cols:
+        if col in df_calendar.columns:
+            df_calendar[col] = df_calendar[col].fillna(0).astype(int)
+    
+    # Days since last event
+    if 'has_event' in df_calendar.columns:
+        df_calendar['days_since_event'] = df_calendar.groupby(['store_id', 'item_id'])['has_event'].apply(
+            lambda x: x[::-1].cumsum()[::-1].shift(-1, fill_value=0)
+        ).values
+    
+    return df_calendar
+
+
+def create_sales_lag_features(
+    df: pd.DataFrame,
+    target_col: str = 'sales',
+    lags: List[int] = [1, 7, 14, 21, 28]
+) -> pd.DataFrame:
+    """
+    Create lag features for sales, grouped by product and store.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        M5 DataFrame with sales data.
+    target_col : str, default='sales'
+        Name of the sales column.
+    lags : List[int], default=[1, 7, 14, 21, 28]
+        List of lag periods (in days).
+        
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with sales lag features.
+        
+    Examples
+    --------
+    >>> df = create_sales_lag_features(df, 'sales', lags=[1, 7, 28])
+    """
+    df_lags = df.copy()
+    
+    if target_col not in df_lags.columns:
+        return df_lags
+    
+    # Group by item and store
+    group_cols = ['item_id', 'store_id']
+    
+    for lag in lags:
+        df_lags[f'{target_col}_lag_{lag}'] = df_lags.groupby(group_cols)[target_col].shift(lag)
+    
+    return df_lags
+
+
+def create_sales_rolling_features(
+    df: pd.DataFrame,
+    target_col: str = 'sales',
+    windows: List[int] = [7, 14, 28, 90]
+) -> pd.DataFrame:
+    """
+    Create rolling window statistics for sales, grouped by product and store.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        M5 DataFrame with sales data.
+    target_col : str, default='sales'
+        Name of the sales column.
+    windows : List[int], default=[7, 14, 28, 90]
+        List of window sizes (in days).
+        
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with sales rolling features.
+        
+    Examples
+    --------
+    >>> df = create_sales_rolling_features(df, 'sales', windows=[7, 28])
+    """
+    df_rolling = df.copy()
+    
+    if target_col not in df_rolling.columns:
+        return df_rolling
+    
+    # Group by item and store
+    group_cols = ['item_id', 'store_id']
+    
+    for window in windows:
+        # Rolling mean
+        df_rolling[f'{target_col}_rolling_mean_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
+            lambda x: x.shift(1).rolling(window=window, min_periods=1).mean()
+        )
+        
+        # Rolling standard deviation
+        df_rolling[f'{target_col}_rolling_std_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
+            lambda x: x.shift(1).rolling(window=window, min_periods=1).std()
+        )
+        
+        # Rolling min and max
+        df_rolling[f'{target_col}_rolling_min_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
+            lambda x: x.shift(1).rolling(window=window, min_periods=1).min()
+        )
+        
+        df_rolling[f'{target_col}_rolling_max_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
+            lambda x: x.shift(1).rolling(window=window, min_periods=1).max()
+        )
+    
+    return df_rolling
+
+
+def create_hierarchical_features(df: pd.DataFrame, target_col: str = 'sales') -> pd.DataFrame:
+    """
+    Create hierarchical aggregation features (state, store, category level).
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        M5 DataFrame with hierarchical columns.
+    target_col : str, default='sales'
+        Name of the sales column to aggregate.
+        
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with hierarchical aggregation features.
+        
+    Examples
+    --------
+    >>> df = create_hierarchical_features(df, 'sales')
+    """
+    df_hier = df.copy()
+    
+    if target_col not in df_hier.columns:
+        return df_hier
+    
+    # State-level aggregations
+    if 'state_id' in df_hier.columns and 'date' in df_hier.columns:
+        state_sales = df_hier.groupby(['state_id', 'date'])[target_col].transform('sum')
+        df_hier['state_sales_total'] = state_sales
+    
+    # Store-level aggregations
+    if 'store_id' in df_hier.columns and 'date' in df_hier.columns:
+        store_sales = df_hier.groupby(['store_id', 'date'])[target_col].transform('sum')
+        df_hier['store_sales_total'] = store_sales
+    
+    # Category-level aggregations
+    if 'cat_id' in df_hier.columns and 'date' in df_hier.columns:
+        cat_sales = df_hier.groupby(['cat_id', 'date'])[target_col].transform('sum')
+        df_hier['cat_sales_total'] = cat_sales
+    
+    # Department-level aggregations
+    if 'dept_id' in df_hier.columns and 'date' in df_hier.columns:
+        dept_sales = df_hier.groupby(['dept_id', 'date'])[target_col].transform('sum')
+        df_hier['dept_sales_total'] = dept_sales
+    
+    # Item share of store sales
+    if 'store_sales_total' in df_hier.columns:
+        df_hier['item_store_share'] = df_hier[target_col] / (df_hier['store_sales_total'] + 1e-6)
+    
+    # Item share of category sales
+    if 'cat_sales_total' in df_hier.columns:
+        df_hier['item_cat_share'] = df_hier[target_col] / (df_hier['cat_sales_total'] + 1e-6)
+    
+    return df_hier
+
+
+def build_m5_features(
+    df: pd.DataFrame,
+    target_col: str = 'sales',
+    include_price: bool = True,
+    include_calendar: bool = True,
+    include_lags: bool = True,
+    include_rolling: bool = True,
+    include_hierarchical: bool = True,
+    lags: List[int] = [1, 7, 14, 21, 28],
+    windows: List[int] = [7, 14, 28, 90]
+) -> pd.DataFrame:
+    """
+    Complete M5 feature engineering pipeline.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        M5 DataFrame with merged data.
+    target_col : str, default='sales'
+        Name of the target column.
+    include_price : bool, default=True
+        Whether to create price features.
+    include_calendar : bool, default=True
+        Whether to encode calendar features.
+    include_lags : bool, default=True
+        Whether to create lag features.
+    include_rolling : bool, default=True
+        Whether to create rolling features.
+    include_hierarchical : bool, default=True
+        Whether to create hierarchical features.
+    lags : List[int], default=[1, 7, 14, 21, 28]
+        Lag periods to use.
+    windows : List[int], default=[7, 14, 28, 90]
+        Rolling window sizes to use.
+        
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with all M5 features.
+        
+    Examples
+    --------
+    >>> df_features = build_m5_features(df, target_col='sales')
+    """
+    print("Building M5 features...")
+    df_features = df.copy()
+    
+    if include_price:
+        print("  Creating price features...")
+        df_features = create_price_features(df_features)
+    
+    if include_calendar:
+        print("  Encoding calendar features...")
+        df_features = encode_calendar_features(df_features)
+    
+    if include_lags:
+        print(f"  Creating lag features (lags={lags})...")
+        df_features = create_sales_lag_features(df_features, target_col, lags)
+    
+    if include_rolling:
+        print(f"  Creating rolling features (windows={windows})...")
+        df_features = create_sales_rolling_features(df_features, target_col, windows)
+    
+    if include_hierarchical:
+        print("  Creating hierarchical features...")
+        df_features = create_hierarchical_features(df_features, target_col)
+    
+    print(f"Feature engineering complete! Shape: {df_features.shape}")
+    
+    return df_features
