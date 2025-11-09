@@ -1,0 +1,113 @@
+# Inventory Optimization Engine Configuration
+
+# Data paths
+data:
+  raw_data_path: "../project-001-demand-forecasting-system/data/raw"
+  processed_data_path: "data/processed"
+  external_data_path: "data/external"
+  
+# Model paths
+models:
+  save_path: "models"
+  
+# Inventory parameters
+inventory:
+  # Service level targets (% of demand to meet)
+  service_levels:
+    high_value: 0.99      # A items
+    medium_value: 0.95    # B items
+    low_value: 0.90       # C items
+  
+  # ABC classification thresholds (cumulative revenue %)
+  abc_thresholds:
+    A: 0.80  # Top 80% of revenue
+    B: 0.95  # Next 15% of revenue
+    C: 1.00  # Bottom 5% of revenue
+  
+  # XYZ classification thresholds (coefficient of variation)
+  xyz_thresholds:
+    X: 0.5   # Low variability (CV < 0.5)
+    Y: 1.0   # Medium variability (0.5 <= CV < 1.0)
+    Z: 999   # High variability (CV >= 1.0)
+  
+  # Cost parameters (as % of unit price)
+  costs:
+    holding_cost_rate: 0.25      # 25% annual holding cost
+    ordering_cost: 100           # Fixed cost per order
+    stockout_cost_rate: 2.0      # 200% of unit price as penalty
+  
+  # Lead time (days)
+  lead_time:
+    default: 7
+    by_category: {}
+  
+  # Review period (days)
+  review_period: 7
+  
+  # Safety stock parameters
+  safety_stock:
+    z_scores:
+      service_99: 2.33
+      service_95: 1.65
+      service_90: 1.28
+
+# Optimization parameters
+optimization:
+  # Optimization objective
+  objective: "minimize_cost"  # minimize_cost, maximize_service_level, balanced
+  
+  # Constraints
+  constraints:
+    max_inventory_value: 10000000  # Maximum total inventory value
+    min_service_level: 0.85         # Minimum acceptable service level
+    max_stockout_rate: 0.10         # Maximum acceptable stockout rate
+  
+  # Solver parameters
+  solver:
+    method: "SLSQP"  # Sequential Least Squares Programming
+    max_iterations: 1000
+    tolerance: 1e-6
+
+# Feature engineering
+features:
+  # Demand features
+  demand_aggregation_levels:
+    - "item_id"
+    - "store_id"
+    - "dept_id"
+    - "cat_id"
+  
+  # Time windows for rolling statistics
+  rolling_windows: [7, 14, 28, 56, 84]
+  
+  # Lag features
+  lag_periods: [1, 7, 14, 28]
+
+# Analysis parameters
+analysis:
+  # Time period for analysis
+  train_start_date: "2011-01-29"
+  train_end_date: "2016-03-27"
+  test_start_date: "2016-03-28"
+  test_end_date: "2016-04-24"
+  
+  # Stores to focus on (empty list = all stores)
+  focus_stores: ["CA_1", "TX_1", "WI_1"]
+  
+  # Sample size for quick testing
+  sample_size: null  # null for full dataset
+
+# Visualization
+visualization:
+  output_path: "docs/images"
+  figure_size: [12, 8]
+  style: "seaborn-v0_8-darkgrid"
+  color_palette: "Set2"
+  
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  
+# Random seed for reproducibility
+random_seed: 42

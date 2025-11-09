@@ -1,0 +1,16 @@
+# Handle line endings automatically for files detected as text
+* text=auto
+
+# Force the following filetypes to have unix line endings
+*.py text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# Denote binary files
+*.pkl binary
+*.joblib binary
+*.h5 binary
+*.csv binary
+*.parquet binary
