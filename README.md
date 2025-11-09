@@ -84,9 +84,9 @@ This repository contains a collection of data science projects demonstrating my 
 
 ## 📫 Contact
 
+- **LinkedIn:** [linkedin.com/in/godsonkurishinkal](https://www.linkedin.com/in/godsonkurishinkal)
 - **Email:** godson.kurishinkal+github@gmail.com
-- **LinkedIn:** [Your LinkedIn URL]
-- **Portfolio:** [Your Website]
+- **GitHub:** [github.com/GodsonKurishinkal](https://github.com/GodsonKurishinkal)
 
 ## 📄 License
 

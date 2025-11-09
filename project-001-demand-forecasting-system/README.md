@@ -470,10 +470,9 @@ MIT License - See LICENSE file for details
 
 ## Author
 **Godson Kurishinkal**
+- LinkedIn: [linkedin.com/in/godsonkurishinkal](https://www.linkedin.com/in/godsonkurishinkal)
 - GitHub: [@GodsonKurishinkal](https://github.com/GodsonKurishinkal)
-- LinkedIn: [Your LinkedIn URL]
 - Email: godson.kurishinkal+github@gmail.com
-- Portfolio: [Your Website]
 
 ## Acknowledgments
 - **M5 Competition**: Kaggle and University of Nicosia for the dataset
