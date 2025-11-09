@@ -1,0 +1,50 @@
+# 📊 Data Science Portfolio
+
+> Showcasing data science projects with machine learning, analytics, and forecasting
+
+## 👋 About
+
+This repository contains a collection of data science projects demonstrating my skills in:
+- Machine Learning & Deep Learning
+- Data Analysis & Visualization
+- Statistical Modeling
+- Predictive Analytics
+- Business Intelligence
+
+## 🚀 Projects
+
+### [Project 001: Demand Forecasting System](./project-001-demand-forecasting-system)
+**Description:** Time-series forecasting system for predicting product demand  
+**Tech Stack:** Python, Pandas, Scikit-learn, ARIMA, Prophet  
+**Key Results:** 
+- Improved forecast accuracy by X%
+- Reduced inventory costs by Y%
+
+### [Project 002: Inventory Optimization Engine](./project-002-inventory-optimization-engine)
+**Description:** Optimization engine for inventory management  
+**Tech Stack:** Python, PuLP, OR-Tools, Data Visualization  
+**Key Results:**
+- Optimized stock levels
+- Reduced stockouts by Z%
+
+## 🛠️ Technologies
+
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+
+## 📫 Contact
+
+- **Email:** godson.kurishinkal+github@gmail.com
+- **LinkedIn:** [Your LinkedIn URL]
+- **Portfolio:** [Your Website]
+
+## 📄 License
+
+This repository is for portfolio purposes. Individual projects may have their own licenses.
+
+---
+
+⭐ **If you find these projects interesting, feel free to star this repository!**
