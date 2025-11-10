@@ -1,0 +1,43 @@
+# Real-Time Demand Sensing - Requirements
+
+# Core dependencies
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Dashboard
+streamlit>=1.28.0
+plotly>=5.14.0
+dash>=2.14.0
+
+# Forecasting
+prophet>=1.1.4
+statsmodels>=0.14.0
+pmdarima>=2.0.3
+
+# Machine Learning
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+tensorflow>=2.13.0  # For LSTM autoencoder
+pyod>=1.1.0  # Anomaly detection
+
+# Scheduling
+apscheduler>=3.10.0
+
+# Data processing
+pyyaml>=6.0
+python-dateutil>=2.8.2
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-mock>=3.11.0
+
+# Utilities
+tqdm>=4.65.0
+joblib>=1.3.0
+redis>=4.6.0  # Optional: for production state management
