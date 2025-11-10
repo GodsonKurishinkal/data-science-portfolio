@@ -4,13 +4,13 @@ import sys
 from pathlib import Path
 import pandas as pd
 
-# Add src to path
-sys.path.insert(0, str(Path(__file__).parent / 'src'))
+# Add project root to path for proper imports
+sys.path.insert(0, str(Path(__file__).parent))
 
-from data import DataLoader, DemandCalculator
-from inventory import ABCAnalyzer, SafetyStockCalculator, ReorderPointCalculator, EOQCalculator
-from optimization import InventoryOptimizer, CostCalculator
-from utils import load_config, setup_logging
+from src.data import DataLoader, DemandCalculator
+from src.inventory import ABCAnalyzer, SafetyStockCalculator, ReorderPointCalculator, EOQCalculator
+from src.optimization import InventoryOptimizer, CostCalculator
+from src.utils import load_config, setup_logging
 
 
 def main():
