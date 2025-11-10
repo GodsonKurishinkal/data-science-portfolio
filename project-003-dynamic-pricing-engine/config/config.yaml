@@ -1,0 +1,132 @@
+# Dynamic Pricing Engine Configuration
+
+# Data paths
+data:
+  raw_data_path: '../project-001-demand-forecasting-system/data/raw'
+  processed_data_path: 'data/processed'
+  external_data_path: 'data/external'
+  
+# Elasticity analysis parameters
+elasticity:
+  methods:
+    - 'log-log'
+    - 'arc'
+    - 'point'
+  default_method: 'log-log'
+  min_observations: 30  # Minimum data points for reliable elasticity
+  classification:
+    elastic_threshold: -1.0  # |elasticity| > 1.0
+    inelastic_threshold: -1.0  # |elasticity| < 1.0
+
+# Price optimization parameters
+optimization:
+  objective: 'maximize_revenue'  # or 'maximize_profit'
+  constraints:
+    min_price_factor: 0.70  # Min 30% discount
+    max_price_factor: 1.30  # Max 30% increase
+    min_margin: 0.10  # 10% minimum margin
+  methods:
+    - 'gradient_based'
+    - 'grid_search'
+  default_method: 'gradient_based'
+  grid_search:
+    n_points: 50
+  convergence:
+    tolerance: 1e-6
+    max_iterations: 1000
+
+# Markdown strategy parameters
+markdown:
+  triggers:
+    high_dos_threshold: 90  # Days of supply
+    medium_dos_threshold: 60
+    low_dos_threshold: 45
+  discount_schedule:
+    week_1: 0.15  # 15% off
+    week_2: 0.30  # 30% off
+    week_3: 0.50  # 50% off
+    week_4: 0.70  # 70% off (clearance)
+  costs:
+    holding_cost_per_day: 0.001  # 0.1% of price per day
+    salvage_value_rate: 0.20  # 20% of original price
+  discount_rate: 0.10  # For NPV calculations (10% annual)
+
+# Demand response model parameters
+demand_model:
+  models:
+    - 'linear'
+    - 'random_forest'
+    - 'xgboost'
+    - 'lightgbm'
+  default_model: 'xgboost'
+  features:
+    use_price: true
+    use_promotions: true
+    use_seasonality: true
+    use_lags: true
+    use_rolling_stats: true
+  lags: [1, 7, 14, 28]
+  rolling_windows: [7, 14, 28]
+  train_test_split: 0.20
+  random_state: 42
+  xgboost:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+  random_forest:
+    n_estimators: 100
+    max_depth: 10
+    min_samples_split: 20
+  lightgbm:
+    n_estimators: 100
+    max_depth: 6
+    learning_rate: 0.1
+    num_leaves: 31
+
+# Competitive analysis parameters
+competitive:
+  price_tiers:
+    premium_percentile: 80  # Top 20%
+    value_percentile: 20  # Bottom 20%
+  positioning:
+    premium_factor: 1.15  # 15% above median
+    value_factor: 0.85  # 15% below median
+    middle_range: 0.10  # Within ±10% of median
+  benchmarking:
+    group_by: ['category', 'store_id']
+    metrics:
+      - 'median_price'
+      - 'mean_price'
+      - 'std_price'
+      - 'price_range'
+
+# Model persistence
+models:
+  save_path: 'models'
+  model_prefix: 'demand_model'
+  elasticity_cache: 'data/processed/elasticity_cache.pkl'
+
+# Logging
+logging:
+  level: 'INFO'
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  file: 'logs/pricing_engine.log'
+
+# Visualization
+visualization:
+  save_path: 'docs/images'
+  figure_format: 'png'
+  figure_dpi: 300
+  style: 'seaborn-v0_8-darkgrid'
+  color_palette: 'Set2'
+
+# Demo settings
+demo:
+  sample_size: 1000  # Number of products for quick demo
+  stores: ['CA_1']  # Focus stores for demo
+  categories: ['FOODS']  # Focus categories
+  date_range:
+    start: '2015-01-01'
+    end: '2016-06-19'
