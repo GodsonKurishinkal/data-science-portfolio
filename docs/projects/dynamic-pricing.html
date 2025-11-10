@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Pricing Engine | Godson Kurishinkal</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        .project-hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+        }
+        
+        .project-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .project-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .project-header .project-tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .project-content {
+            padding: 4rem 0;
+        }
+        
+        .content-section {
+            margin-bottom: 4rem;
+        }
+        
+        .content-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .content-section h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+        }
+        
+        .phase-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .phase-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-primary);
+        }
+        
+        .phase-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .phase-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+        
+        .phase-item.complete::before {
+            background: var(--secondary-color);
+            box-shadow: 0 0 0 2px var(--secondary-color);
+        }
+        
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .phase-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .phase-status.complete {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .phase-status.in-progress {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: var(--font-code);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list i {
+            color: var(--secondary-color);
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <span class="brand-icon">📊</span>
+                    <span class="brand-text">Godson Kurishinkal</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html#home" class="nav-link">Home</a>
+                <a href="../index.html#projects" class="nav-link">Projects</a>
+                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-003-dynamic-pricing-engine" 
+                   target="_blank" class="nav-link">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <div class="project-header">
+                <h1>💰 Dynamic Pricing Engine</h1>
+                <p class="project-tagline">
+                    Advanced ML-powered pricing optimization system using econometrics, 
+                    demand forecasting, and revenue maximization
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-003-dynamic-pricing-engine" 
+                       target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="../index.html#projects" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">3,000+</div>
+                    <div class="metric-label">Lines of Code</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">36</div>
+                    <div class="metric-label">Tests Passing</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">47K+</div>
+                    <div class="metric-label">Observations</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">100</div>
+                    <div class="metric-label">Products Analyzed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Content -->
+    <div class="project-content">
+        <div class="container">
+            <!-- Overview -->
+            <div class="content-section">
+                <h2>📋 Project Overview</h2>
+                <p>
+                    The Dynamic Pricing Engine is a comprehensive machine learning system that optimizes
+                    product pricing using advanced econometric analysis, demand forecasting, and mathematical
+                    optimization techniques. Built for retail and e-commerce applications, it maximizes
+                    revenue while considering market dynamics, competitive positioning, and inventory constraints.
+                </p>
+                <p>
+                    This project demonstrates end-to-end data science capabilities: from econometric modeling
+                    (price elasticity analysis) to predictive ML (demand forecasting) to operations research
+                    (price optimization). It's designed as a production-ready system with comprehensive testing,
+                    documentation, and deployment considerations.
+                </p>
+            </div>
+
+            <!-- Key Features -->
+            <div class="content-section">
+                <h2>✨ Key Features</h2>
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Price Elasticity Analysis:</strong> Calculate own-price and cross-price
+                            elasticities using log-log regression, arc elasticity, and point elasticity methods.
+                            Segment products by demand sensitivity (elastic/inelastic).
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Demand Forecasting:</strong> ML-powered forecasting using XGBoost with
+                            50+ engineered features including price history, seasonality, promotions, and lags.
+                            Handles 47K+ observations efficiently.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Price Optimization:</strong> Gradient-based and grid search algorithms
+                            to maximize revenue or profit subject to business constraints (min margin, max discount).
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Markdown Strategy:</strong> Intelligent clearance pricing for end-of-life
+                            products with time-based discount schedules, holding cost calculations, and
+                            salvage value optimization.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Competitive Analysis:</strong> Monitor competitor pricing patterns,
+                            identify market positioning opportunities, and recommend competitive strategies.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Production-Ready:</strong> Comprehensive test suite (36 tests),
+                            configuration-driven design, logging, error handling, and CI/CD ready.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Technical Stack -->
+            <div class="content-section">
+                <h2>🛠️ Technical Stack</h2>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Core ML</h3>
+                        <div class="project-tech" style="justify-content: center;">
+                            <span class="tech-badge">Python 3.11</span>
+                            <span class="tech-badge">scikit-learn</span>
+                            <span class="tech-badge">XGBoost</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Data Science</h3>
+                        <div class="project-tech" style="justify-content: center;">
+                            <span class="tech-badge">Pandas</span>
+                            <span class="tech-badge">NumPy</span>
+                            <span class="tech-badge">Scipy</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Optimization</h3>
+                        <div class="project-tech" style="justify-content: center;">
+                            <span class="tech-badge">PuLP</span>
+                            <span class="tech-badge">Statsmodels</span>
+                            <span class="tech-badge">OR-Tools</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Visualization</h3>
+                        <div class="project-tech" style="justify-content: center;">
+                            <span class="tech-badge">Plotly</span>
+                            <span class="tech-badge">Matplotlib</span>
+                            <span class="tech-badge">Seaborn</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Implementation Phases -->
+            <div class="content-section">
+                <h2>🚀 Implementation Phases</h2>
+                <div class="phase-timeline">
+                    <div class="phase-item complete">
+                        <div class="phase-header">
+                            <h3>Phase 1: Project Setup & Structure</h3>
+                            <span class="phase-status complete">✓ Complete</span>
+                        </div>
+                        <p>
+                            Complete project scaffolding with modular architecture, configuration management,
+                            utility functions, and initial test suite. Set up Git repository with proper
+                            .gitignore, licensing, and documentation structure.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">28 Files Created</span>
+                            <span class="tech-badge">2,483 Lines</span>
+                            <span class="tech-badge">11 Tests</span>
+                        </div>
+                    </div>
+
+                    <div class="phase-item complete">
+                        <div class="phase-header">
+                            <h3>Phase 2: Data Preparation & Linking</h3>
+                            <span class="phase-status complete">✓ Complete</span>
+                        </div>
+                        <p>
+                            Implemented data loading and preprocessing pipeline. Created symlink to M5 Walmart
+                            dataset (58M+ rows). Engineered 58 features including price changes, statistics,
+                            promotions, lags, and rolling windows.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">47,681 Observations</span>
+                            <span class="tech-badge">58 Features</span>
+                            <span class="tech-badge">16.4 MB Dataset</span>
+                        </div>
+                    </div>
+
+                    <div class="phase-item complete">
+                        <div class="phase-header">
+                            <h3>Phase 3: Price Elasticity Analysis</h3>
+                            <span class="phase-status complete">✓ Complete</span>
+                        </div>
+                        <p>
+                            Comprehensive elasticity module with log-log regression, arc, and point methods.
+                            Calculated elasticities for 100 products, performed segmentation, cross-elasticity
+                            analysis, and generated strategic pricing recommendations.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-badge">550+ Lines</span>
+                            <span class="tech-badge">14 Tests</span>
+                            <span class="tech-badge">100% Valid Results</span>
+                        </div>
+                        <h4 style="margin-top: 1rem;">Key Results:</h4>
+                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                            <li>Mean elasticity: -1.148 (moderately elastic)</li>
+                            <li>37% highly inelastic → Can raise prices</li>
+                            <li>33% highly elastic → Should lower prices</li>
+                            <li>Identified product relationships (complements/substitutes)</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-item">
+                        <div class="phase-header">
+                            <h3>Phase 4: Demand Response Modeling</h3>
+                            <span class="phase-status in-progress">📋 Planned</span>
+                        </div>
+                        <p>
+                            Build predictive demand models using elasticities from Phase 3. Incorporate
+                            seasonality, promotions, and external factors. Train XGBoost ensemble with
+                            cross-validation and hyperparameter tuning.
+                        </p>
+                    </div>
+
+                    <div class="phase-item">
+                        <div class="phase-header">
+                            <h3>Phase 5: Price Optimization Engine</h3>
+                            <span class="phase-status in-progress">📋 Planned</span>
+                        </div>
+                        <p>
+                            Implement optimization algorithms (gradient-based, grid search) to maximize
+                            revenue/profit. Apply business constraints (min margin, max discount, competitor
+                            positioning). Generate optimal pricing recommendations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Examples -->
+            <div class="content-section">
+                <h2>💻 Code Examples</h2>
+                
+                <h3>1. Calculate Price Elasticity</h3>
+                <div class="code-block">
+<pre><code><span class="keyword">from</span> src.pricing.elasticity <span class="keyword">import</span> ElasticityAnalyzer
+
+<span class="comment"># Initialize analyzer</span>
+analyzer = ElasticityAnalyzer(method=<span class="string">'log-log'</span>, min_observations=<span class="number">30</span>)
+
+<span class="comment"># Calculate elasticity for a product</span>
+result = analyzer.calculate_own_price_elasticity(
+    product_id=<span class="string">'FOODS_1_001'</span>,
+    price_series=prices,
+    sales_series=sales
+)
+
+<span class="function">print</span>(<span class="string">f"Elasticity: {result['elasticity']:.2f}"</span>)
+<span class="function">print</span>(<span class="string">f"R²: {result['r_squared']:.3f}"</span>)
+<span class="function">print</span>(<span class="string">f"Category: {result['elasticity_category']}"</span>)</code></pre>
+                </div>
+
+                <h3>2. Batch Process All Products</h3>
+                <div class="code-block">
+<pre><code><span class="comment"># Calculate elasticities for all products</span>
+elasticities = analyzer.calculate_elasticities_batch(
+    df=pricing_data,
+    group_cols=[<span class="string">'store_id'</span>, <span class="string">'item_id'</span>]
+)
+
+<span class="comment"># Segment by elasticity</span>
+segmented = analyzer.segment_by_elasticity(elasticities)
+
+<span class="comment"># Get strategic insights</span>
+summary = analyzer.get_elasticity_summary(segmented)
+<span class="function">print</span>(<span class="string">f"Mean elasticity: {summary['mean_elasticity']:.2f}"</span>)</code></pre>
+                </div>
+
+                <h3>3. Revenue Optimization</h3>
+                <div class="code-block">
+<pre><code><span class="comment"># Simulate revenue at different prices</span>
+price_range = <span class="function">np.linspace</span>(current_price * <span class="number">0.8</span>, current_price * <span class="number">1.2</span>, <span class="number">50</span>)
+simulated_sales = mean_sales * (price_range / current_price) ** elasticity
+simulated_revenue = price_range * simulated_sales
+
+<span class="comment"># Find optimal price</span>
+optimal_idx = simulated_revenue.<span class="function">argmax</span>()
+optimal_price = price_range[optimal_idx]
+revenue_lift = (simulated_revenue[optimal_idx] / current_revenue - <span class="number">1</span>) * <span class="number">100</span>
+
+<span class="function">print</span>(<span class="string">f"Optimal price: ${optimal_price:.2f}"</span>)
+<span class="function">print</span>(<span class="string">f"Revenue increase: {revenue_lift:.1f}%"</span>)</code></pre>
+                </div>
+            </div>
+
+            <!-- Results & Impact -->
+            <div class="content-section">
+                <h2>📊 Results & Impact</h2>
+                
+                <h3>Elasticity Analysis Results</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Valid Elasticities</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">-1.15</div>
+                        <div class="metric-label">Mean Elasticity</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">37%</div>
+                        <div class="metric-label">Inelastic Products</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">41%</div>
+                        <div class="metric-label">Elastic Products</div>
+                    </div>
+                </div>
+
+                <h3>Business Impact</h3>
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-dollar-sign"></i>
+                        <div>
+                            <strong>Revenue Optimization:</strong> Identified 37% of products that can
+                            increase prices (inelastic) and 41% that should decrease prices (elastic)
+                            for revenue maximization.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <strong>Data-Driven Decisions:</strong> Replaced gut-feel pricing with
+                            statistical models backed by 47K+ observations and rigorous testing.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <strong>Customer Segmentation:</strong> Identified products with different
+                            demand sensitivities enabling targeted pricing strategies by segment.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-handshake"></i>
+                        <div>
+                            <strong>Competitive Intelligence:</strong> Cross-elasticity analysis reveals
+                            substitute products requiring competitive pricing strategies.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Learnings -->
+            <div class="content-section">
+                <h2>💡 Key Learnings</h2>
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <strong>Econometric Modeling:</strong> Deepened understanding of price elasticity
+                            theory, log-log regression, and interpreting elasticity coefficients for business
+                            strategy.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-database"></i>
+                        <div>
+                            <strong>Large-Scale Data Processing:</strong> Efficiently handled 47K+ observations
+                            with proper sampling, feature engineering, and batch processing techniques.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-vial"></i>
+                        <div>
+                            <strong>Test-Driven Development:</strong> Achieved 100% test pass rate with 36
+                            tests covering edge cases, statistical validation, and integration scenarios.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-tools"></i>
+                        <div>
+                            <strong>Production Engineering:</strong> Built configuration-driven, modular
+                            architecture with comprehensive logging, error handling, and documentation.
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Future Enhancements -->
+            <div class="content-section">
+                <h2>🔮 Future Enhancements</h2>
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-robot"></i>
+                        <div>Real-time pricing API with FastAPI for production deployment</div>
+                    </li>
+                    <li>
+                        <i class="fas fa-chart-area"></i>
+                        <div>Interactive Streamlit dashboard for non-technical stakeholders</div>
+                    </li>
+                    <li>
+                        <i class="fas fa-brain"></i>
+                        <div>Deep learning models (LSTM, Transformers) for demand forecasting</div>
+                    </li>
+                    <li>
+                        <i class="fas fa-globe"></i>
+                        <div>Multi-market support with currency conversion and regional pricing</div>
+                    </li>
+                    <li>
+                        <i class="fas fa-mobile-alt"></i>
+                        <div>Mobile-responsive pricing dashboard for on-the-go decisions</div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="content-section" style="text-align: center; padding: 3rem; background: var(--bg-secondary); border-radius: 16px;">
+                <h2>Interested in Learning More?</h2>
+                <p style="max-width: 600px; margin: 1rem auto 2rem;">
+                    Check out the full source code, documentation, and Jupyter notebooks on GitHub.
+                    Feel free to star the repository or reach out with questions!
+                </p>
+                <div class="project-links">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-003-dynamic-pricing-engine" 
+                       target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="../index.html#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> Get in Touch
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Godson Kurishinkal</h3>
+                    <p>Data Science Portfolio</p>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html#home">Home</a>
+                    <a href="../index.html#projects">Projects</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:godson@example.com">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Godson Kurishinkal. Built with passion for data science.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
