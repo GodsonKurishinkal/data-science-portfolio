@@ -1,0 +1,18 @@
+{
+  "total_products": 100,
+  "valid_results": 100,
+  "valid_percentage": 100.0,
+  "mean_elasticity": -1.1481349454766046,
+  "median_elasticity": 0.0,
+  "std_elasticity": 22.84803589165018,
+  "min_elasticity": -129.8584176533748,
+  "max_elasticity": 65.87612356878566,
+  "mean_r_squared": 0.024149437286683683,
+  "category_distribution": {
+    "Highly Inelastic": 37,
+    "Highly Elastic": 33,
+    "Inelastic": 16,
+    "Elastic": 8,
+    "Unit Elastic": 6
+  }
+}
