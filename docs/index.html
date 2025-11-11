@@ -20,6 +20,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <!-- Prism.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -96,19 +99,19 @@
                             <span class="window-title">supply_chain_optimization.py</span>
                         </div>
                         <div class="window-body">
-                            <pre><code><span class="keyword">import</span> numpy <span class="keyword">as</span> np
-<span class="keyword">import</span> pandas <span class="keyword">as</span> pd
-<span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestRegressor
+                            <pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
 
-<span class="keyword">def</span> <span class="function">optimize_pricing</span>(data):
-    <span class="string">"""Dynamic pricing optimization"""</span>
-    elasticity = <span class="function">calculate_elasticity</span>(data)
-    optimal_price = <span class="function">maximize_revenue</span>(elasticity)
-    <span class="keyword">return</span> optimal_price
+def optimize_pricing(data):
+    """Dynamic pricing optimization"""
+    elasticity = calculate_elasticity(data)
+    optimal_price = maximize_revenue(elasticity)
+    return optimal_price
 
-<span class="comment"># Running optimization...</span>
-result = <span class="function">optimize_pricing</span>(sales_data)
-<span class="function">print</span>(<span class="string">f"Revenue increase: {result['lift']:.1f}%"</span>)</code></pre>
+# Running optimization...
+result = optimize_pricing(sales_data)
+print(f"Revenue increase: {result['lift']:.1f}%")</code></pre>
                         </div>
                     </div>
                 </div>
@@ -573,6 +576,10 @@ result = <span class="function">optimize_pricing</span>(sales_data)
     <button class="back-to-top" id="backToTop" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Prism.js for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
 
     <!-- Custom JavaScript -->
     <script src="js/main.js"></script>
