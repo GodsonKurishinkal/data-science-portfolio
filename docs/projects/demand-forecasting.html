@@ -516,6 +516,50 @@
         </div>
     </section>
 
+    <!-- Visual Results -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Visual Results</h2>
+            <p style="font-size: 1.05rem; color: #4a5568; margin-bottom: 2rem;">
+                Comprehensive visualizations demonstrating model performance, feature importance, and prediction quality across the M5 dataset.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-chart-bar"></i> Model Comparison</h3>
+                    <img src="../images/projects/model_comparison.png" alt="Model Performance Comparison" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                        LightGBM outperforms all baseline and ML models with lowest RMSE and highest R² score, making it the optimal choice for production deployment.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-star"></i> Feature Importance</h3>
+                    <img src="../images/projects/feature_importance.png" alt="Feature Importance Analysis" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                        Lag features (especially 28-day and 7-day) dominate importance, confirming strong temporal patterns in retail demand.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-chart-line"></i> Prediction Quality</h3>
+                    <img src="../images/projects/predictions_analysis.png" alt="Predictions vs Actuals" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                        Strong correlation between predictions and actuals with residuals centered near zero, indicating unbiased, high-quality forecasts.
+                    </p>
+                </div>
+
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-tachometer-alt"></i> Metrics Summary</h3>
+                    <img src="../images/projects/metrics_summary.png" alt="Performance Metrics Dashboard" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                        Comprehensive metrics dashboard showing MAE, RMSE, MAPE, and R² scores across training and validation sets.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Model Performance -->
     <section class="content-section">
         <div class="container">
