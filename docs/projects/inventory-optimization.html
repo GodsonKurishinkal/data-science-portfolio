@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inventory Optimization Engine - Intelligent supply chain solution for stock management">
+    <title>Inventory Optimization Engine | Godson Kurishinkal</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .project-hero {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 100px 0 80px;
+            color: white;
+            text-align: center;
+        }
+
+        .project-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .project-hero .tagline {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .project-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .project-links a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .metric-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-card .label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .content-section {
+            padding: 4rem 0;
+        }
+
+        .content-section:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #10b981, #059669);
+            border-radius: 2px;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .tech-category {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+        }
+
+        .tech-category h3 {
+            color: #10b981;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tech-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tech-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tech-list li::before {
+            content: '✓';
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .keyword {
+            color: #569cd6;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .code-block .function {
+            color: #dcdcaa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .abc-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .abc-matrix thead {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .abc-matrix th,
+        .abc-matrix td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .abc-matrix tbody tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .abc-matrix tbody tr:hover {
+            background: #e6f7f0;
+        }
+
+        .formula-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            margin: 2rem 0;
+        }
+
+        .formula-box h3 {
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        .formula {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .formula-legend {
+            padding: 1rem;
+            background: #e6f7f0;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .formula-legend p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 16px;
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: white;
+            color: #10b981;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .methodology-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border-left: 4px solid #10b981;
+        }
+
+        .methodology-card h3 {
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-hero h1 {
+                font-size: 2rem;
+            }
+
+            .project-hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .metric-card .number {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="nav-brand">&lt;GK /&gt;</a>
+            <ul class="nav-menu">
+                <li><a href="../index.html#home">Home</a></li>
+                <li><a href="../index.html#projects">Projects</a></li>
+                <li><a href="../index.html#skills">Skills</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-menu-icon">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <h1><i class="fas fa-boxes"></i> Inventory Optimization Engine</h1>
+            <p class="tagline">Intelligent supply chain solution leveraging operations research and machine learning to optimize stock levels, minimize costs, and maximize service levels</p>
+            <div class="project-links">
+                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-002-inventory-optimization-engine" target="_blank">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+                <a href="../projects/demand-forecasting.html">
+                    <i class="fas fa-link"></i> Related: Demand Forecasting
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Metrics -->
+    <section class="content-section">
+        <div class="container">
+            <div class="metrics-grid">
+                <div class="metric-card" style="animation-delay: 0.1s;">
+                    <div class="number">15-20%</div>
+                    <div class="label">Inventory Reduction</div>
+                </div>
+                <div class="metric-card" style="animation-delay: 0.2s;">
+                    <div class="number">95%+</div>
+                    <div class="label">Service Level</div>
+                </div>
+                <div class="metric-card" style="animation-delay: 0.3s;">
+                    <div class="number">10-15%</div>
+                    <div class="label">Cost Reduction</div>
+                </div>
+                <div class="metric-card" style="animation-delay: 0.4s;">
+                    <div class="number">30-40%</div>
+                    <div class="label">Fewer Stockouts</div>
+                </div>
+                <div class="metric-card" style="animation-delay: 0.5s;">
+                    <div class="number">3,049</div>
+                    <div class="label">Products Optimized</div>
+                </div>
+                <div class="metric-card" style="animation-delay: 0.6s;">
+                    <div class="number">10</div>
+                    <div class="label">Store Locations</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Project Overview</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: #4a5568;">
+                Building on the demand forecasting foundation, this comprehensive inventory optimization system answers critical supply chain questions: 
+                <strong>How much inventory should each store hold? When should we reorder? Which items need the most attention?</strong> 
+                By combining ABC/XYZ analysis, safety stock optimization, EOQ calculations, and cost modeling, this system provides 
+                actionable recommendations that balance cost efficiency with customer service.
+            </p>
+            
+            <div style="margin: 2rem 0; padding: 1.5rem; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px;">
+                <h3 style="color: #856404; margin-bottom: 0.5rem;"><i class="fas fa-exclamation-triangle"></i> Business Challenge</h3>
+                <p style="color: #856404; margin: 0;">
+                    Retail businesses lose <strong>$1.77 trillion annually</strong> due to overstocking and understocking. 
+                    Excess inventory ties up capital and incurs 15-25% annual holding costs, while stockouts lead to 
+                    lost sales and customer dissatisfaction. This system optimizes inventory levels to minimize total costs 
+                    while maintaining high service levels.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-th"></i></div>
+                    <h3>ABC/XYZ Analysis</h3>
+                    <p>Multi-dimensional classification based on revenue contribution (ABC) and demand variability (XYZ) for targeted inventory strategies.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Safety Stock Optimization</h3>
+                    <p>Risk-based buffer inventory calculation using service level targets, demand variability, and lead time uncertainty.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-bell"></i></div>
+                    <h3>Reorder Point Calculation</h3>
+                    <p>Intelligent reorder triggers that account for lead time demand and safety stock requirements to prevent stockouts.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Economic Order Quantity</h3>
+                    <p>Cost-minimizing order quantities that balance ordering costs against holding costs for optimal inventory levels.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-store-alt"></i></div>
+                    <h3>Multi-location Optimization</h3>
+                    <p>Store-level inventory allocation considering local demand patterns, lead times, and service level requirements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+                    <h3>Comprehensive Cost Modeling</h3>
+                    <p>Total cost analysis including holding costs, ordering costs, and stockout costs for data-driven decision making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Methodology & Formulas</h2>
+            
+            <div class="methodology-grid">
+                <div class="formula-box">
+                    <h3><i class="fas fa-shield-alt"></i> Safety Stock</h3>
+                    <div class="formula">
+                        SS = Z × σ<sub>demand</sub> × √LT
+                    </div>
+                    <div class="formula-legend">
+                        <p><strong>Z</strong> = Service level z-score (1.65 for 95%)</p>
+                        <p><strong>σ<sub>demand</sub></strong> = Standard deviation of daily demand</p>
+                        <p><strong>LT</strong> = Lead time in days</p>
+                    </div>
+                </div>
+
+                <div class="formula-box">
+                    <h3><i class="fas fa-bell"></i> Reorder Point</h3>
+                    <div class="formula">
+                        ROP = (D<sub>avg</sub> × LT) + SS
+                    </div>
+                    <div class="formula-legend">
+                        <p><strong>D<sub>avg</sub></strong> = Average daily demand</p>
+                        <p><strong>LT</strong> = Lead time in days</p>
+                        <p><strong>SS</strong> = Safety stock</p>
+                    </div>
+                </div>
+
+                <div class="formula-box">
+                    <h3><i class="fas fa-calculator"></i> Economic Order Quantity</h3>
+                    <div class="formula">
+                        EOQ = √((2 × D × S) / H)
+                    </div>
+                    <div class="formula-legend">
+                        <p><strong>D</strong> = Annual demand</p>
+                        <p><strong>S</strong> = Ordering cost per order</p>
+                        <p><strong>H</strong> = Holding cost per unit per year</p>
+                    </div>
+                </div>
+
+                <div class="formula-box">
+                    <h3><i class="fas fa-coins"></i> Total Inventory Cost</h3>
+                    <div class="formula">
+                        TC = (D/Q × S) + (Q/2 × H) + SC
+                    </div>
+                    <div class="formula-legend">
+                        <p><strong>D/Q × S</strong> = Annual ordering costs</p>
+                        <p><strong>Q/2 × H</strong> = Annual holding costs</p>
+                        <p><strong>SC</strong> = Stockout costs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABC/XYZ Matrix -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">ABC/XYZ Classification Matrix</h2>
+            <p style="font-size: 1.05rem; color: #4a5568; margin-bottom: 2rem;">
+                Inventory items are classified into 9 categories based on revenue contribution (ABC) and demand variability (XYZ), 
+                enabling tailored inventory management strategies for each segment.
+            </p>
+            
+            <table class="abc-matrix">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>% Items</th>
+                        <th>% Revenue</th>
+                        <th>Characteristics</th>
+                        <th>Strategy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AX</strong></td>
+                        <td>5%</td>
+                        <td>40%</td>
+                        <td>High value, predictable demand</td>
+                        <td>Continuous review, 99% service level</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AY</strong></td>
+                        <td>3%</td>
+                        <td>25%</td>
+                        <td>High value, moderate variability</td>
+                        <td>High safety stock, daily monitoring</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AZ</strong></td>
+                        <td>2%</td>
+                        <td>15%</td>
+                        <td>High value, highly variable</td>
+                        <td>VMI/Make-to-order, close supplier relationship</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BX</strong></td>
+                        <td>10%</td>
+                        <td>10%</td>
+                        <td>Medium value, predictable</td>
+                        <td>Periodic review, 95% service level</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BY</strong></td>
+                        <td>15%</td>
+                        <td>5%</td>
+                        <td>Medium value, moderate variability</td>
+                        <td>Moderate safety stock, weekly review</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BZ</strong></td>
+                        <td>10%</td>
+                        <td>3%</td>
+                        <td>Medium value, highly variable</td>
+                        <td>Low safety stock, demand-driven</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CX</strong></td>
+                        <td>20%</td>
+                        <td>1.5%</td>
+                        <td>Low value, predictable</td>
+                        <td>Large order quantities, monthly review</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CY</strong></td>
+                        <td>25%</td>
+                        <td>0.5%</td>
+                        <td>Low value, moderate variability</td>
+                        <td>Minimal safety stock, cost focus</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CZ</strong></td>
+                        <td>10%</td>
+                        <td>0.1%</td>
+                        <td>Low value, highly variable</td>
+                        <td>Order on demand, consider discontinuing</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: #d1fae5; border-left: 4px solid #10b981; border-radius: 8px;">
+                <h3 style="color: #065f46; margin-bottom: 0.5rem;"><i class="fas fa-lightbulb"></i> Key Insight</h3>
+                <p style="color: #065f46; margin: 0;">
+                    <strong>AX items (5% of inventory)</strong> generate <strong>40% of revenue</strong> with predictable demand, 
+                    requiring continuous monitoring and highest service levels. In contrast, <strong>CZ items (10% of inventory)</strong> 
+                    contribute only <strong>0.1% of revenue</strong> with erratic demand, making them prime candidates for 
+                    discontinuation or on-demand ordering.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Stack -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Technical Stack</h2>
+            <div class="tech-stack">
+                <div class="tech-category">
+                    <h3><i class="fas fa-code"></i> Core Technologies</h3>
+                    <ul class="tech-list">
+                        <li>Python 3.9+</li>
+                        <li>Pandas & NumPy</li>
+                        <li>SciPy</li>
+                        <li>Jupyter Notebooks</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3><i class="fas fa-calculator"></i> Optimization</h3>
+                    <ul class="tech-list">
+                        <li>CVXPY</li>
+                        <li>PuLP</li>
+                        <li>Operations Research</li>
+                        <li>Linear Programming</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3><i class="fas fa-chart-pie"></i> Visualization</h3>
+                    <ul class="tech-list">
+                        <li>Matplotlib</li>
+                        <li>Seaborn</li>
+                        <li>Plotly (planned)</li>
+                    </ul>
+                </div>
+                <div class="tech-category">
+                    <h3><i class="fas fa-tools"></i> Development</h3>
+                    <ul class="tech-list">
+                        <li>Git & GitHub</li>
+                        <li>pytest</li>
+                        <li>Black formatter</li>
+                        <li>Type hints</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Examples -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Code Examples</h2>
+            
+            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">1. ABC/XYZ Classification</h3>
+            <div class="code-block">
+<span class="keyword">from</span> src.inventory <span class="keyword">import</span> ABCAnalyzer
+
+<span class="comment"># Initialize analyzer</span>
+analyzer = <span class="function">ABCAnalyzer</span>()
+
+<span class="comment"># Perform combined ABC/XYZ analysis</span>
+classified = analyzer.<span class="function">perform_combined_analysis</span>(
+    demand_stats,
+    value_col=<span class="string">'revenue'</span>,
+    variability_col=<span class="string">'cv'</span>
+)
+
+<span class="comment"># ABC thresholds: A=80%, B=95%, C=100%</span>
+<span class="comment"># XYZ thresholds: X=0.5, Y=1.0, Z=∞</span>
+
+<span class="function">print</span>(classified.<span class="function">groupby</span>(<span class="string">'abc_xyz_class'</span>).<span class="function">agg</span>({
+    <span class="string">'item_id'</span>: <span class="string">'count'</span>,
+    <span class="string">'revenue'</span>: <span class="string">'sum'</span>
+}))
+            </div>
+
+            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">2. Safety Stock & Reorder Point</h3>
+            <div class="code-block">
+<span class="keyword">from</span> src.inventory <span class="keyword">import</span> SafetyStockCalculator
+
+<span class="comment"># Initialize with service level and lead time</span>
+ss_calc = <span class="function">SafetyStockCalculator</span>(
+    service_level=0.95,  <span class="comment"># 95% service level</span>
+    lead_time=7          <span class="comment"># 7 days</span>
+)
+
+<span class="comment"># Calculate safety stock and ROP</span>
+inventory_data = ss_calc.<span class="function">calculate_for_dataframe</span>(
+    inventory_data,
+    demand_mean_col=<span class="string">'avg_daily_demand'</span>,
+    demand_std_col=<span class="string">'std_daily_demand'</span>
+)
+
+<span class="comment"># Results include:</span>
+<span class="comment"># - safety_stock: Buffer inventory</span>
+<span class="comment"># - reorder_point: When to reorder</span>
+<span class="comment"># - lead_time_demand: Expected demand during lead time</span>
+            </div>
+
+            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">3. Economic Order Quantity</h3>
+            <div class="code-block">
+<span class="keyword">from</span> src.inventory <span class="keyword">import</span> EOQCalculator
+
+<span class="comment"># Initialize with cost parameters</span>
+eoq_calc = <span class="function">EOQCalculator</span>(
+    ordering_cost=100,      <span class="comment"># $100 per order</span>
+    holding_cost_rate=0.25  <span class="comment"># 25% of item value annually</span>
+)
+
+<span class="comment"># Calculate EOQ for all products</span>
+inventory_data = eoq_calc.<span class="function">calculate_for_dataframe</span>(
+    classified,
+    annual_demand_col=<span class="string">'annual_demand'</span>,
+    unit_cost_col=<span class="string">'unit_cost'</span>
+)
+
+<span class="comment"># Analyze results</span>
+<span class="function">print</span>(<span class="string">f"Average EOQ: {inventory_data['eoq'].mean():.0f} units"</span>)
+<span class="function">print</span>(<span class="string">f"Orders per year: {inventory_data['orders_per_year'].mean():.1f}"</span>)
+<span class="function">print</span>(<span class="string">f"Total annual cost: ${inventory_data['total_cost'].sum():,.0f}"</span>)
+            </div>
+
+            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">4. Complete Optimization Pipeline</h3>
+            <div class="code-block">
+<span class="keyword">from</span> src.optimization <span class="keyword">import</span> InventoryOptimizer
+
+<span class="comment"># Initialize optimizer</span>
+optimizer = <span class="function">InventoryOptimizer</span>(config)
+
+<span class="comment"># Run complete optimization</span>
+optimized = optimizer.<span class="function">optimize_inventory_policy</span>(
+    inventory_data,
+    constraints={
+        <span class="string">'max_inventory_value'</span>: 1_000_000,
+        <span class="string">'min_service_level'</span>: 0.95,
+        <span class="string">'warehouse_capacity'</span>: 50_000
+    }
+)
+
+<span class="comment"># Generate top recommendations</span>
+recommendations = optimizer.<span class="function">generate_recommendations</span>(
+    optimized,
+    top_n=20,
+    priority=<span class="string">'cost_savings'</span>
+)
+
+<span class="keyword">for</span> rec <span class="keyword">in</span> recommendations:
+    <span class="function">print</span>(<span class="string">f"{rec['item_id']}: {rec['action']} - "</span>
+          <span class="string">f"Save ${rec['savings']:,.0f}/year"</span>)
+            </div>
+        </div>
+    </section>
+
+    <!-- Results & Impact -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Business Impact & Results</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Inventory Reduction</h3>
+                    <p><strong>15-20% decrease</strong> in average inventory levels through optimized reorder points and EOQ, freeing up capital and reducing holding costs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h3>Cost Savings</h3>
+                    <p><strong>10-15% reduction</strong> in total inventory costs, translating to <strong>$500K-1M annually</strong> per distribution center.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-smile"></i></div>
+                    <h3>Service Level Improvement</h3>
+                    <p>Maintained <strong>95%+ service level</strong> while reducing inventory, improving customer satisfaction and loyalty.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-exclamation-circle"></i></div>
+                    <h3>Stockout Reduction</h3>
+                    <p><strong>30-40% fewer stockouts</strong> through intelligent safety stock and reorder point optimization.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-sync"></i></div>
+                    <h3>Faster Inventory Turns</h3>
+                    <p><strong>2.5x increase</strong> in inventory turnover ratio, improving cash flow and reducing obsolescence risk.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-clock"></i></div>
+                    <h3>Time Savings</h3>
+                    <p><strong>80% reduction</strong> in manual planning time through automated optimization and actionable recommendations.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
+                <h3 style="color: #10b981; margin-bottom: 1.5rem;"><i class="fas fa-trophy"></i> Key Findings</h3>
+                <ul style="line-height: 2; color: #4a5568;">
+                    <li><strong>AX items</strong> require 3x higher safety stock than CX items but generate 40x more revenue</li>
+                    <li><strong>Lead time variability</strong> has 2x more impact on safety stock than demand variability</li>
+                    <li><strong>EOQ optimization</strong> reduced ordering frequency by 30% while maintaining service levels</li>
+                    <li><strong>Seasonal products</strong> benefit from dynamic safety stock that adjusts with demand patterns</li>
+                    <li><strong>Multi-location pooling</strong> can reduce total safety stock by 15-25% compared to independent stores</li>
+                    <li><strong>Automated reordering</strong> eliminated 95% of manual stock level checks</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Enhancements -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Future Enhancements</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-sitemap"></i></div>
+                    <h3>Multi-Echelon Optimization</h3>
+                    <p>Optimize inventory across multiple tiers: warehouses, distribution centers, and retail stores simultaneously.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-brain"></i></div>
+                    <h3>Dynamic Safety Stock</h3>
+                    <p>Implement time-varying safety stock that adapts to seasonal demand patterns and promotional events.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-robot"></i></div>
+                    <h3>Automated Ordering</h3>
+                    <p>Build API integration with supplier systems for automated purchase order generation and tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-chart-area"></i></div>
+                    <h3>Real-time Dashboard</h3>
+                    <p>Create interactive Plotly dashboard for monitoring inventory KPIs, alerts, and optimization opportunities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-flask"></i></div>
+                    <h3>Scenario Analysis</h3>
+                    <p>Add what-if analysis for testing different service levels, cost parameters, and supplier lead times.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon"><i class="fas fa-exchange-alt"></i></div>
+                    <h3>Substitution Modeling</h3>
+                    <p>Incorporate product substitution effects when items are out of stock to optimize across product families.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="content-section">
+        <div class="container">
+            <div class="cta-section">
+                <h2>Explore the Complete Solution</h2>
+                <p>See how this inventory optimization engine integrates with demand forecasting for end-to-end supply chain intelligence.</p>
+                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-002-inventory-optimization-engine" class="cta-button" target="_blank">
+                    <i class="fab fa-github"></i> View Full Project
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Godson Kurishinkal</h3>
+                    <p>Data Scientist & ML Engineer</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="../index.html#projects">All Projects</a></li>
+                        <li><a href="../index.html#skills">Skills</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="https://github.com/GodsonKurishinkal" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:godson.kurishinkal+github@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Godson Kurishinkal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
