@@ -111,43 +111,67 @@
 }
 
 .code-block pre {
-    background: #1e293b;
+    background: #1e293b !important;
     border-radius: 8px;
     padding: 1.5rem;
     overflow-x: auto;
     margin: 0;
     -webkit-overflow-scrolling: touch;
+    border: none;
 }
 
 .code-block pre code {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'JetBrains Mono', monospace !important;
     font-size: 0.9rem;
     line-height: 1.6;
     color: #e2e8f0;
     display: block;
+    background: transparent !important;
+    text-shadow: none;
 }
 
-/* Syntax highlighting for code */
-.code-block .keyword {
-    color: #c084fc;
+/* Prism.js override for Python syntax highlighting */
+.token.keyword {
+    color: #c084fc !important;
     font-weight: 500;
 }
 
-.code-block .function {
-    color: #60a5fa;
+.token.function {
+    color: #60a5fa !important;
 }
 
-.code-block .string {
-    color: #34d399;
+.token.string {
+    color: #34d399 !important;
 }
 
-.code-block .number {
-    color: #f472b6;
+.token.number {
+    color: #f472b6 !important;
 }
 
-.code-block .comment {
-    color: #64748b;
+.token.comment {
+    color: #64748b !important;
     font-style: italic;
+}
+
+.token.operator,
+.token.punctuation {
+    color: #94a3b8 !important;
+}
+
+.token.builtin,
+.token.class-name {
+    color: #fbbf24 !important;
+}
+
+pre[class*="language-"] {
+    background: #1e293b !important;
+    border: none;
+}
+
+code[class*="language-"] {
+    color: #e2e8f0;
+    background: transparent;
+    text-shadow: none;
 }
 
 pre {
