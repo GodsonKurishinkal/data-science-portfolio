@@ -1,0 +1,594 @@
+/* ===================================
+   PROJECT PAGES RESPONSIVE STYLES
+   =================================== */
+
+/* Base Project Page Styles */
+.project-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 100px 0 80px;
+    color: white;
+    text-align: center;
+}
+
+.project-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: fadeInUp 0.8s ease;
+}
+
+.project-hero .tagline {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.project-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.project-links a:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.metric-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    animation: fadeInUp 0.8s ease;
+}
+
+.metric-card .number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.metric-card .label {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.content-section {
+    padding: 4rem 0;
+}
+
+.content-section:nth-child(even) {
+    background: #f8f9fa;
+}
+
+.section-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #2d3748;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+}
+
+/* Code blocks */
+pre {
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+pre code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+}
+
+/* Images and visualizations */
+.visualization-image,
+.project-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+    display: block;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.image-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Feature lists */
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 0.75rem 0 0.75rem 2rem;
+    position: relative;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.feature-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* Tech stack badges */
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+.tech-badge {
+    padding: 0.5rem 1rem;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+/* ===================================
+   TABLET RESPONSIVE (max-width: 1024px)
+   =================================== */
+
+@media (max-width: 1024px) {
+    .project-hero {
+        padding: 80px 20px 60px;
+    }
+    
+    .project-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .project-hero .tagline {
+        font-size: 1.15rem;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .metric-card {
+        padding: 1.5rem;
+    }
+    
+    .metric-card .number {
+        font-size: 2rem;
+    }
+    
+    .content-section {
+        padding: 3rem 0;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .image-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+
+/* ===================================
+   MOBILE RESPONSIVE (max-width: 768px)
+   =================================== */
+
+@media (max-width: 768px) {
+    .project-hero {
+        padding: 70px 15px 50px;
+    }
+    
+    .project-hero h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 0.75rem;
+    }
+    
+    .project-hero .tagline {
+        font-size: 1rem;
+        line-height: 1.5;
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    .project-links {
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0 20px;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .project-links a {
+        width: 100%;
+        justify-content: center;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.95rem;
+    }
+    
+    /* Metrics Grid - Single Column on Mobile */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+    
+    .metric-card {
+        padding: 1.25rem;
+    }
+    
+    .metric-card .number {
+        font-size: 1.75rem;
+    }
+    
+    .metric-card .label {
+        font-size: 0.875rem;
+    }
+    
+    /* Content Sections */
+    .content-section {
+        padding: 2.5rem 0;
+    }
+    
+    .container {
+        padding: 0 20px;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.75rem;
+    }
+    
+    .section-title::after {
+        width: 50px;
+        height: 3px;
+    }
+    
+    /* Code Blocks - Better Mobile Scrolling */
+    pre {
+        padding: 1rem;
+        margin: 1rem -5px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+    }
+    
+    pre code {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+    
+    /* Horizontal scroll hint for code blocks */
+    pre::after {
+        content: '← Scroll →';
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.4);
+        pointer-events: none;
+    }
+    
+    /* Images - Full Width on Mobile */
+    .visualization-image,
+    .project-image {
+        margin: 1.5rem -5px;
+        border-radius: 8px;
+        width: calc(100% + 10px);
+        max-width: none;
+    }
+    
+    .image-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin: 1.5rem 0;
+    }
+    
+    .image-grid img {
+        border-radius: 6px;
+    }
+    
+    /* Feature Lists */
+    .feature-list li {
+        padding: 0.6rem 0 0.6rem 1.75rem;
+        font-size: 0.95rem;
+    }
+    
+    .feature-list li::before {
+        font-size: 1rem;
+    }
+    
+    /* Tech Stack */
+    .tech-stack {
+        gap: 0.5rem;
+        margin: 1.25rem 0;
+    }
+    
+    .tech-badge {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    
+    /* Tables - Make Scrollable */
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Better touch targets */
+    a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+/* ===================================
+   SMALL MOBILE (max-width: 480px)
+   =================================== */
+
+@media (max-width: 480px) {
+    .project-hero {
+        padding: 60px 10px 40px;
+    }
+    
+    .project-hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .project-hero .tagline {
+        font-size: 0.95rem;
+    }
+    
+    .project-links {
+        padding: 0 10px;
+    }
+    
+    .project-links a {
+        padding: 0.65rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .metric-card {
+        padding: 1rem;
+    }
+    
+    .metric-card .number {
+        font-size: 1.5rem;
+    }
+    
+    .metric-card .label {
+        font-size: 0.8rem;
+    }
+    
+    .content-section {
+        padding: 2rem 0;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .section-title {
+        font-size: 1.35rem;
+    }
+    
+    pre {
+        padding: 0.75rem;
+        margin: 1rem -10px;
+    }
+    
+    pre code {
+        font-size: 0.75rem;
+    }
+    
+    .visualization-image,
+    .project-image {
+        margin: 1rem -10px;
+        width: calc(100% + 20px);
+        border-radius: 6px;
+    }
+}
+
+/* ===================================
+   EXTRA SMALL MOBILE (max-width: 360px)
+   =================================== */
+
+@media (max-width: 360px) {
+    .project-hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .project-hero .tagline {
+        font-size: 0.9rem;
+    }
+    
+    .section-title {
+        font-size: 1.25rem;
+    }
+    
+    .metric-card .number {
+        font-size: 1.35rem;
+    }
+    
+    pre code {
+        font-size: 0.7rem;
+    }
+}
+
+/* ===================================
+   LANDSCAPE ORIENTATION
+   =================================== */
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .project-hero {
+        padding: 50px 20px 30px;
+    }
+    
+    .project-hero h1 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .project-hero .tagline {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+    }
+    
+    .metrics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+    }
+    
+    .metric-card {
+        padding: 0.75rem;
+    }
+    
+    .content-section {
+        padding: 2rem 0;
+    }
+}
+
+/* ===================================
+   TOUCH DEVICE OPTIMIZATIONS
+   =================================== */
+
+@media (hover: none) and (pointer: coarse) {
+    /* Larger touch targets */
+    .project-links a {
+        min-height: 48px;
+        padding: 1rem 1.5rem;
+    }
+    
+    /* Remove hover effects */
+    .project-links a:hover {
+        transform: none;
+    }
+    
+    /* Tap highlight color */
+    * {
+        -webkit-tap-highlight-color: rgba(102, 126, 234, 0.1);
+    }
+    
+    /* Prevent text selection on double tap */
+    .metric-card,
+    .tech-badge,
+    .project-links a {
+        -webkit-user-select: none;
+        user-select: none;
+    }
+}
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+
+@media print {
+    .project-hero {
+        background: #667eea;
+        page-break-after: avoid;
+    }
+    
+    .project-links {
+        display: none;
+    }
+    
+    .visualization-image,
+    .project-image {
+        page-break-inside: avoid;
+    }
+    
+    pre {
+        page-break-inside: avoid;
+        border: 1px solid #e5e7eb;
+    }
+}
+
+/* ===================================
+   ANIMATIONS
+   =================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

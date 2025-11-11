@@ -8,17 +8,53 @@ const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
 // Navbar scroll effect
+let lastScrollTop = 0;
+const navbarHeight = navbar.offsetHeight;
+
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > 50) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
+    
+    // Auto-hide navbar on scroll down (mobile only)
+    if (window.innerWidth <= 768) {
+        if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+            navbar.style.transform = 'translateY(-100%)';
+        } else {
+            navbar.style.transform = 'translateY(0)';
+        }
+    }
+    
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+}, { passive: true });
+
+// Mobile menu toggle with animation
+navToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navMenu.classList.toggle('active');
+    navToggle.classList.toggle('active');
+    
+    // Prevent body scroll when menu is open
+    if (navMenu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
 });
 
-// Mobile menu toggle
-navToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (navMenu.classList.contains('active') && 
+        !navMenu.contains(e.target) && 
+        !navToggle.contains(e.target)) {
+        navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 });
 
 // Active nav link on scroll
@@ -41,12 +77,14 @@ window.addEventListener('scroll', () => {
             });
         }
     });
-});
+}, { passive: true });
 
 // Close mobile menu on link click
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
+        navToggle.classList.remove('active');
+        document.body.style.overflow = '';
     });
 });
 
@@ -210,14 +248,27 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // PARALLAX EFFECT
 // ===================================
 
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const heroBackground = document.querySelector('.hero-background');
+// Disable parallax on mobile for performance
+if (window.innerWidth > 768) {
+    let ticking = false;
     
-    if (heroBackground) {
-        heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrolled = window.pageYOffset;
+                const heroBackground = document.querySelector('.hero-background');
+                
+                if (heroBackground) {
+                    heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+                }
+                
+                ticking = false;
+            });
+            
+            ticking = true;
+        }
+    }, { passive: true });
+}
 
 // ===================================
 // LOADING ANIMATION
@@ -289,15 +340,82 @@ if (savedTheme === 'dark') {
 
 const projectCards = document.querySelectorAll('.project-card');
 
+// Add touch and mouse interactions
 projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
-    });
+    // Desktop hover effect
+    if (window.innerWidth > 768) {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    }
     
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
+    // Mobile tap effect
+    let tapTimeout;
+    card.addEventListener('touchstart', function(e) {
+        if (window.innerWidth <= 768) {
+            clearTimeout(tapTimeout);
+            this.style.transform = 'scale(0.98)';
+        }
+    }, { passive: true });
+    
+    card.addEventListener('touchend', function(e) {
+        if (window.innerWidth <= 768) {
+            this.style.transform = 'scale(1)';
+            tapTimeout = setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+        }
+    }, { passive: true });
 });
+
+// Swipe gesture for project cards (mobile)
+if (window.innerWidth <= 768) {
+    const projectsGrid = document.querySelector('.projects-grid');
+    if (projectsGrid) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let currentCard = 0;
+        const cards = Array.from(projectCards);
+        
+        projectsGrid.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        projectsGrid.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentCard < cards.length - 1) {
+                    // Swipe left - next card
+                    currentCard++;
+                    scrollToCard(currentCard);
+                } else if (diff < 0 && currentCard > 0) {
+                    // Swipe right - previous card
+                    currentCard--;
+                    scrollToCard(currentCard);
+                }
+            }
+        }
+        
+        function scrollToCard(index) {
+            cards[index].scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest',
+                inline: 'center'
+            });
+        }
+    }
+}
 
 // ===================================
 // SKILL ITEMS STAGGER ANIMATION
@@ -408,4 +526,86 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         document.body.classList.add('loaded');
     }, 100);
+    
+    // Set proper viewport height for mobile browsers
+    setViewportHeight();
 });
+
+// ===================================
+// MOBILE OPTIMIZATIONS
+// ===================================
+
+// Handle viewport height for mobile browsers (fixes 100vh issue)
+function setViewportHeight() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', () => {
+    setViewportHeight();
+    
+    // Re-enable hover effects on desktop
+    if (window.innerWidth > 768) {
+        document.body.classList.remove('touch-device');
+    }
+});
+
+// Detect orientation change
+window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+        setViewportHeight();
+        
+        // Close mobile menu on orientation change
+        if (navMenu && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }, 200);
+});
+
+// Detect touch device
+function isTouchDevice() {
+    return (('ontouchstart' in window) ||
+            (navigator.maxTouchPoints > 0) ||
+            (navigator.msMaxTouchPoints > 0));
+}
+
+if (isTouchDevice()) {
+    document.body.classList.add('touch-device');
+}
+
+// Prevent zoom on double tap (iOS)
+let lastTouchEnd = 0;
+document.addEventListener('touchend', (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, { passive: false });
+
+// Improve scroll performance on mobile
+let isScrolling;
+window.addEventListener('scroll', () => {
+    window.clearTimeout(isScrolling);
+    document.body.classList.add('is-scrolling');
+    
+    isScrolling = setTimeout(() => {
+        document.body.classList.remove('is-scrolling');
+    }, 150);
+}, { passive: true });
+
+// ===================================
+// NETWORK OPTIMIZATION
+// ===================================
+
+// Save data mode detection
+if ('connection' in navigator) {
+    const connection = navigator.connection;
+    
+    if (connection.saveData || connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+        document.body.classList.add('save-data-mode');
+        console.log('Save data mode enabled - reducing animations');
+    }
+}
