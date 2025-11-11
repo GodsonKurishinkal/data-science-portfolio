@@ -1661,6 +1661,99 @@ button {
     }
 }
 
+/* ===================================
+   PRISM.JS SYNTAX HIGHLIGHTING OVERRIDES
+   =================================== */
+
+/* Base code styling */
+.window-body pre[class*="language-"],
+.window-body code[class*="language-"] {
+    color: #e2e8f0 !important;
+    background: #1e293b !important;
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    text-shadow: none !important;
+}
+
+.window-body pre[class*="language-"] {
+    padding: 1.5rem !important;
+    margin: 0 !important;
+    overflow: auto !important;
+    border-radius: 0 !important;
+}
+
+/* Token colors - VS Code inspired */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #64748b !important;
+    font-style: italic !important;
+}
+
+.token.punctuation {
+    color: #94a3b8 !important;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #f472b6 !important;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #34d399 !important;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #94a3b8 !important;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #c084fc !important;
+    font-weight: 500 !important;
+}
+
+.token.function,
+.token.class-name {
+    color: #60a5fa !important;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #fbbf24 !important;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold !important;
+}
+
+.token.italic {
+    font-style: italic !important;
+}
+
+.token.entity {
+    cursor: help !important;
+}
+
 /* Print Styles */
 @media print {
     .navbar,
