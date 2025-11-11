@@ -106,6 +106,50 @@
 }
 
 /* Code blocks */
+.code-block {
+    margin: 1.5rem 0;
+}
+
+.code-block pre {
+    background: #1e293b;
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.code-block pre code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #e2e8f0;
+    display: block;
+}
+
+/* Syntax highlighting for code */
+.code-block .keyword {
+    color: #c084fc;
+    font-weight: 500;
+}
+
+.code-block .function {
+    color: #60a5fa;
+}
+
+.code-block .string {
+    color: #34d399;
+}
+
+.code-block .number {
+    color: #f472b6;
+}
+
+.code-block .comment {
+    color: #64748b;
+    font-style: italic;
+}
+
 pre {
     background: #1e293b;
     border-radius: 8px;
