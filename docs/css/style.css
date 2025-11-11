@@ -402,13 +402,13 @@ button {
     font-family: var(--font-code);
     font-size: 0.875rem;
     line-height: 1.8;
-    color: #e2e8f0;
+    /* Color handled by Prism.js tokens */
 }
 
-.keyword { color: #c084fc; }
-.function { color: #60a5fa; }
-.string { color: #34d399; }
-.comment { color: #64748b; }
+.window-body code {
+    font-family: var(--font-code);
+    color: #e2e8f0;
+}
 
 /* Scroll Indicator */
 .scroll-indicator {
@@ -1669,7 +1669,7 @@ button {
 .window-body pre[class*="language-"],
 .window-body code[class*="language-"] {
     color: #e2e8f0 !important;
-    background: #1e293b !important;
+    background: transparent !important;
     font-family: 'JetBrains Mono', 'Courier New', monospace !important;
     font-size: 14px !important;
     line-height: 1.6 !important;
@@ -1677,81 +1677,76 @@ button {
 }
 
 .window-body pre[class*="language-"] {
-    padding: 1.5rem !important;
+    padding: 0 !important;
     margin: 0 !important;
-    overflow: auto !important;
+    overflow: visible !important;
     border-radius: 0 !important;
+    background: transparent !important;
 }
 
-/* Token colors - VS Code inspired */
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
+/* Token colors - VS Code inspired - Higher specificity */
+.window-body code[class*="language-"] .token.comment,
+.window-body code[class*="language-"] .token.prolog,
+.window-body code[class*="language-"] .token.doctype,
+.window-body code[class*="language-"] .token.cdata {
     color: #64748b !important;
     font-style: italic !important;
 }
 
-.token.punctuation {
+.window-body code[class*="language-"] .token.punctuation {
     color: #94a3b8 !important;
 }
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
+.window-body code[class*="language-"] .token.property,
+.window-body code[class*="language-"] .token.tag,
+.window-body code[class*="language-"] .token.boolean,
+.window-body code[class*="language-"] .token.number,
+.window-body code[class*="language-"] .token.constant,
+.window-body code[class*="language-"] .token.symbol,
+.window-body code[class*="language-"] .token.deleted {
     color: #f472b6 !important;
 }
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
+.window-body code[class*="language-"] .token.selector,
+.window-body code[class*="language-"] .token.attr-name,
+.window-body code[class*="language-"] .token.string,
+.window-body code[class*="language-"] .token.char,
+.window-body code[class*="language-"] .token.builtin,
+.window-body code[class*="language-"] .token.inserted {
     color: #34d399 !important;
 }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
+.window-body code[class*="language-"] .token.operator,
+.window-body code[class*="language-"] .token.entity,
+.window-body code[class*="language-"] .token.url {
     color: #94a3b8 !important;
 }
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
+.window-body code[class*="language-"] .token.atrule,
+.window-body code[class*="language-"] .token.attr-value,
+.window-body code[class*="language-"] .token.keyword {
     color: #c084fc !important;
     font-weight: 500 !important;
 }
 
-.token.function,
-.token.class-name {
+.window-body code[class*="language-"] .token.function,
+.window-body code[class*="language-"] .token.class-name {
     color: #60a5fa !important;
 }
 
-.token.regex,
-.token.important,
-.token.variable {
+.window-body code[class*="language-"] .token.regex,
+.window-body code[class*="language-"] .token.important,
+.window-body code[class*="language-"] .token.variable {
     color: #fbbf24 !important;
 }
 
-.token.important,
-.token.bold {
+.window-body code[class*="language-"] .token.important,
+.window-body code[class*="language-"] .token.bold {
     font-weight: bold !important;
 }
 
-.token.italic {
+.window-body code[class*="language-"] .token.italic {
     font-style: italic !important;
-}
-
-.token.entity {
-    cursor: help !important;
 }
 
 /* Print Styles */
