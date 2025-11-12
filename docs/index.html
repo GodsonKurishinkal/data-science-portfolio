@@ -90,104 +90,43 @@
                         </div>
                     </div>
                 </div>
-                <!-- Interactive 5-Project Data Science Mindmap -->
-<div class="hero-visual">
-    <div class="mindmap-container">
-        <svg class="mindmap-svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
-            <defs>
-                <!-- Arrow markers for directional flow -->
-                <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L0,6 L9,3 z" fill="#4facfe" />
-                </marker>
-                <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L0,6 L9,3 z" fill="#764ba2" />
-                </marker>
-                <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L0,6 L9,3 z" fill="#fa709a" />
-                </marker>
-                <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L0,6 L9,3 z" fill="#43e97b" />
-                </marker>
-                <marker id="arrowPink" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L0,6 L9,3 z" fill="#f093fb" />
-                </marker>
-                
-                <!-- Subtle glow filter -->
-                <filter id="glow">
-                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                    <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
-            </defs>
-            
-            <!-- Connection Lines with Arrows and Labels -->
-            
-            <!-- 001 (Demand Forecast) → 002 (Inventory) -->
-            <path class="flow-line" d="M 320 200 Q 350 280 320 360" stroke="#4facfe" stroke-width="2.5" fill="none" marker-end="url(#arrowBlue)"/>
-            
-            <!-- 001 (Demand Forecast) → 003 (Dynamic Pricing) -->
-            <path class="flow-line" d="M 360 180 Q 450 150 540 180" stroke="#4facfe" stroke-width="2.5" fill="none" marker-end="url(#arrowBlue)"/>
-            
-            <!-- 001 (Demand Forecast) ← 005 (Realtime Sensing) -->
-            <path class="flow-line" d="M 360 220 Q 450 250 540 220" stroke="#f093fb" stroke-width="2.5" fill="none" marker-end="url(#arrowPink)"/>
-            
-            <!-- 002 (Inventory) → 004 (Supply Chain) -->
-            <path class="flow-line" d="M 360 400 Q 450 430 540 400" stroke="#fa709a" stroke-width="2.5" fill="none" marker-end="url(#arrowOrange)"/>
-            
-            <!-- 003 (Dynamic Pricing) ← 004 (Supply Chain) -->
-            <path class="flow-line" d="M 580 220 Q 650 280 620 360" stroke="#43e97b" stroke-width="2.5" fill="none" marker-end="url(#arrowGreen)"/>
-            
-            <!-- 002 (Inventory) → 003 (Dynamic Pricing) via center -->
-            <path class="flow-line" d="M 350 380 Q 450 320 550 250" stroke="#fa709a" stroke-width="2" fill="none" marker-end="url(#arrowOrange)" stroke-dasharray="4,4"/>
-            
-            <!-- 004 (Supply Chain) → 005 (Realtime) -->
-            <path class="flow-line" d="M 620 380 Q 650 320 620 260" stroke="#43e97b" stroke-width="2" fill="none" marker-end="url(#arrowGreen)" stroke-dasharray="4,4"/>
-            
-        </svg>
-        
-        <!-- Central Hub: ML Data Pipeline -->
-        <div class="mindmap-center">
-            <div class="center-hub">
-                <i class="fas fa-database"></i>
-            </div>
-            <div class="center-label">ML Pipeline</div>
-        </div>
-        
-        <!-- Project Boxes -->
-        
-        <!-- Project 001: Demand Forecasting - Top Left -->
-        <div class="project-box box-001" data-project="001">
-            <div class="project-number">001</div>
-            <div class="project-title">Demand Forecasting</div>
-            <div class="project-desc">Time series predictions for 30K+ SKUs using ML</div>
-            <div class="project-status status-complete">
-                <i class="fas fa-check-circle"></i> Complete
-            </div>
-        </div>
-        
-        <!-- Project 002: Inventory Optimization - Bottom Left -->
-        <div class="project-box box-002" data-project="002">
-            <div class="project-number">002</div>
-            <div class="project-title">Inventory Optimization</div>
-            <div class="project-desc">Stock level optimization & reorder point calculation</div>
-            <div class="project-status status-progress">
-                <i class="fas fa-spinner"></i> In Progress
-            </div>
-        </div>
-        
-        <!-- Project 003: Dynamic Pricing - Top Right -->
-        <div class="project-box box-003" data-project="003" onclick="window.location.href='projects/dynamic-pricing.html'">
-            <div class="project-number">003</div>
-            <div class="project-title">Dynamic Pricing Engine</div>
-            <div class="project-desc">Real-time price optimization with elasticity analysis</div>
-            <div class="project-status status-live">
-                <i class="fas fa-fire"></i> Live • $10.8M Impact
-            </div>
-        </div>
-        
-        <!-- Project 004: Supply Chain - Bottom Right -->
+                <div class="hero-visual">
+                    <div class="code-window">
+                        <div class="window-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                            <span class="window-title">dynamic_pricing_engine.py</span>
+                        </div>
+                        <div class="window-body">
+                            <pre><code class="language-python">import numpy as np
+import pandas as pd
+from sklearn.ensemble import RandomForestRegressor
+
+def optimize_pricing(demand_data, elasticity):
+    """
+    Dynamic pricing optimization with ML
+    Analyzes 30K+ SKUs for revenue maximization
+    """
+    model = RandomForestRegressor(n_estimators=100)
+    predictions = model.predict(demand_data)
+    
+    optimal_prices = calculate_price_points(
+        predictions, elasticity
+    )
+    
+    return {
+        'prices': optimal_prices,
+        'revenue_lift': '+12.3%',
+        'impact': '$10.8M annually'
+    }
+
+# Live optimization running...
+result = optimize_pricing(sales_data, price_elasticity)
+print(f"✓ Revenue increase: {result['revenue_lift']}")</code></pre>
+                        </div>
+                    </div>
+                </div>
         <div class="project-box box-004" data-project="004">
             <div class="project-number">004</div>
             <div class="project-title">Supply Chain Network</div>
