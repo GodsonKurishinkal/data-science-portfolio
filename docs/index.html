@@ -91,28 +91,156 @@
                     </div>
                 </div>
                 <div class="hero-visual">
-                    <div class="code-window">
-                        <div class="window-header">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                            <span class="window-title">supply_chain_optimization.py</span>
+                    <div class="project-map">
+                        <svg class="map-connections" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet">
+                            <!-- Central Hub connections -->
+                            <path class="connection-line line-active" d="M 300 300 L 150 150" stroke-dasharray="5,5">
+                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
+                            </path>
+                            <path class="connection-line line-active" d="M 300 300 L 450 150" stroke-dasharray="5,5">
+                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
+                            </path>
+                            <path class="connection-line line-future" d="M 300 300 L 150 450" stroke-dasharray="5,5">
+                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
+                            </path>
+                            <path class="connection-line line-future" d="M 300 300 L 450 450" stroke-dasharray="5,5">
+                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Project interconnections -->
+                            <path class="connection-line line-data-flow" d="M 150 150 Q 200 250 150 450" stroke-dasharray="3,3">
+                                <animate attributeName="stroke-dashoffset" from="6" to="0" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            <path class="connection-line line-data-flow" d="M 450 150 Q 400 250 450 450" stroke-dasharray="3,3">
+                                <animate attributeName="stroke-dashoffset" from="6" to="0" dur="2s" repeatCount="indefinite"/>
+                            </path>
+                            
+                            <!-- Glow effects -->
+                            <defs>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
+                                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        
+                        <div class="map-nodes">
+                            <!-- Central Hub: Data Science Platform -->
+                            <div class="map-node map-node-center node-pulse" style="top: 50%; left: 50%;" data-delay="0">
+                                <div class="node-icon node-icon-center">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <div class="node-label">ML Platform</div>
+                                <div class="node-detail">Core Analytics Engine</div>
+                            </div>
+                            
+                            <!-- Top Left: Demand Forecasting -->
+                            <div class="map-node map-node-project node-pulse" style="top: 25%; left: 25%;" data-delay="0.2" onclick="window.location.href='#projects'">
+                                <div class="node-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-chart-area"></i>
+                                </div>
+                                <div class="node-label">Demand Forecasting</div>
+                                <div class="node-detail">30K SKUs • Time Series</div>
+                                <div class="node-badge">
+                                    <i class="fas fa-check-circle"></i> Complete
+                                </div>
+                                <div class="connection-arrow arrow-to-pricing">→ Dynamic Pricing</div>
+                            </div>
+                            
+                            <!-- Top Right: Dynamic Pricing -->
+                            <div class="map-node map-node-project node-pulse" style="top: 25%; left: 75%;" data-delay="0.4" onclick="window.location.href='projects/dynamic-pricing.html'">
+                                <div class="node-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <div class="node-label">Dynamic Pricing</div>
+                                <div class="node-detail">5 Phases • $10.8M Impact</div>
+                                <div class="node-badge">
+                                    <i class="fas fa-fire"></i> Live
+                                </div>
+                                <div class="connection-arrow arrow-to-inventory">→ Inventory Opt.</div>
+                            </div>
+                            
+                            <!-- Bottom Left: Inventory Optimization -->
+                            <div class="map-node map-node-future node-pulse" style="top: 75%; left: 25%;" data-delay="0.6">
+                                <div class="node-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-boxes"></i>
+                                </div>
+                                <div class="node-label">Inventory Optimization</div>
+                                <div class="node-detail">Stock Levels • Reorder</div>
+                                <div class="node-badge node-badge-future">
+                                    <i class="fas fa-clock"></i> Coming Soon
+                                </div>
+                                <div class="connection-arrow arrow-to-supply">→ Supply Chain</div>
+                            </div>
+                            
+                            <!-- Bottom Right: Supply Chain Optimization -->
+                            <div class="map-node map-node-future node-pulse" style="top: 75%; left: 75%;" data-delay="0.8">
+                                <div class="node-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                                <div class="node-label">Supply Chain</div>
+                                <div class="node-detail">Logistics • Distribution</div>
+                                <div class="node-badge node-badge-future">
+                                    <i class="fas fa-lightbulb"></i> Planned
+                                </div>
+                            </div>
+                            
+                            <!-- Top: Data Input -->
+                            <div class="map-node map-node-small node-pulse" style="top: 5%; left: 50%;" data-delay="0.3">
+                                <div class="node-icon-small">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="node-label-small">M5 Dataset</div>
+                            </div>
+                            
+                            <!-- Right: ML Models -->
+                            <div class="map-node map-node-small node-pulse" style="top: 50%; left: 92%;" data-delay="0.5">
+                                <div class="node-icon-small">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="node-label-small">ML Models</div>
+                            </div>
+                            
+                            <!-- Bottom: Business Value -->
+                            <div class="map-node map-node-small node-pulse" style="top: 95%; left: 50%;" data-delay="0.7">
+                                <div class="node-icon-small" style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="node-label-small">Business Impact</div>
+                            </div>
+                            
+                            <!-- Left: Analytics -->
+                            <div class="map-node map-node-small node-pulse" style="top: 50%; left: 8%;" data-delay="0.9">
+                                <div class="node-icon-small">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="node-label-small">Analytics</div>
+                            </div>
                         </div>
-                        <div class="window-body">
-                            <pre><code class="language-python">import numpy as np
-import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
-
-def optimize_pricing(data):
-    """Dynamic pricing optimization"""
-    elasticity = calculate_elasticity(data)
-    optimal_price = maximize_revenue(elasticity)
-    return optimal_price
-
-# Running optimization...
-result = optimize_pricing(sales_data)
-print(f"Revenue increase: {result['lift']:.1f}%")</code></pre>
+                        
+                        <!-- Data flow indicators -->
+                        <div class="data-flow-label" style="top: 15%; left: 50%;">
+                            <i class="fas fa-arrow-down"></i> Data Input
                         </div>
+                        <div class="data-flow-label" style="top: 35%; left: 50%;">
+                            <i class="fas fa-exchange-alt"></i> Data Flow
+                        </div>
+                        <div class="data-flow-label" style="top: 85%; left: 50%;">
+                            <i class="fas fa-arrow-up"></i> Business Value
+                        </div>
+                        
+                        <!-- Floating particles -->
+                        <div class="particle particle-1"></div>
+                        <div class="particle particle-2"></div>
+                        <div class="particle particle-3"></div>
+                        <div class="particle particle-4"></div>
                     </div>
                 </div>
             </div>
