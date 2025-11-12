@@ -90,54 +90,156 @@
                         </div>
                     </div>
                 </div>
-                <!-- Radial Mind Map for Hero Section -->
+                <!-- Interactive 5-Project Data Science Mindmap -->
 <div class="hero-visual">
     <div class="mindmap-container">
-        <svg class="mindmap-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+        <svg class="mindmap-svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet">
             <defs>
-                <!-- Gradient definitions for organic branches -->
-                <linearGradient id="branch-purple" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#764ba2;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.3" />
-                </linearGradient>
-                <linearGradient id="branch-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#4facfe;stop-opacity:0.3" />
-                </linearGradient>
-                <linearGradient id="branch-orange" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#fa709a;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#fa709a;stop-opacity:0.3" />
-                </linearGradient>
-                <linearGradient id="branch-green" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#00f2fe;stop-opacity:1" />
-                    <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:0.3" />
-                </linearGradient>
+                <!-- Arrow markers for directional flow -->
+                <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#4facfe" />
+                </marker>
+                <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#764ba2" />
+                </marker>
+                <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#fa709a" />
+                </marker>
+                <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#43e97b" />
+                </marker>
+                <marker id="arrowPink" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#f093fb" />
+                </marker>
+                
+                <!-- Subtle glow filter -->
+                <filter id="glow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
             </defs>
             
-            <!-- Top Branch: Dynamic Pricing (Purple) -->
-            <path class="mind-branch" d="M 400 300 Q 400 250, 400 180" stroke="url(#branch-purple)" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 400 180 Q 380 160, 340 140" stroke="url(#branch-purple)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 400 180 Q 400 160, 400 120" stroke="url(#branch-purple)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 400 180 Q 420 160, 460 140" stroke="url(#branch-purple)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Connection Lines with Arrows and Labels -->
             
-            <!-- Right Branch: Demand Forecasting (Blue) -->
-            <path class="mind-branch" d="M 400 300 Q 480 300, 580 300" stroke="url(#branch-blue)" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 580 300 Q 620 280, 650 250" stroke="url(#branch-blue)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 580 300 Q 630 300, 680 300" stroke="url(#branch-blue)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 580 300 Q 620 320, 650 350" stroke="url(#branch-blue)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- 001 (Demand Forecast) → 002 (Inventory) -->
+            <path class="flow-line" d="M 320 200 Q 350 280 320 360" stroke="#4facfe" stroke-width="2.5" fill="none" marker-end="url(#arrowBlue)"/>
             
-            <!-- Bottom Branch: Inventory Optimization (Orange) -->
-            <path class="mind-branch" d="M 400 300 Q 400 360, 400 440" stroke="url(#branch-orange)" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 400 440 Q 380 470, 340 500" stroke="url(#branch-orange)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 400 440 Q 400 470, 400 510" stroke="url(#branch-orange)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 400 440 Q 420 470, 460 500" stroke="url(#branch-orange)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- 001 (Demand Forecast) → 003 (Dynamic Pricing) -->
+            <path class="flow-line" d="M 360 180 Q 450 150 540 180" stroke="#4facfe" stroke-width="2.5" fill="none" marker-end="url(#arrowBlue)"/>
             
-            <!-- Left Branch: Supply Chain (Green) -->
-            <path class="mind-branch" d="M 400 300 Q 320 300, 220 300" stroke="url(#branch-green)" stroke-width="5" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 220 300 Q 180 280, 150 250" stroke="url(#branch-green)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 220 300 Q 170 300, 120 300" stroke="url(#branch-green)" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <path class="mind-branch-sub" d="M 220 300 Q 180 320, 150 350" stroke="url(#branch-green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- 001 (Demand Forecast) ← 005 (Realtime Sensing) -->
+            <path class="flow-line" d="M 360 220 Q 450 250 540 220" stroke="#f093fb" stroke-width="2.5" fill="none" marker-end="url(#arrowPink)"/>
+            
+            <!-- 002 (Inventory) → 004 (Supply Chain) -->
+            <path class="flow-line" d="M 360 400 Q 450 430 540 400" stroke="#fa709a" stroke-width="2.5" fill="none" marker-end="url(#arrowOrange)"/>
+            
+            <!-- 003 (Dynamic Pricing) ← 004 (Supply Chain) -->
+            <path class="flow-line" d="M 580 220 Q 650 280 620 360" stroke="#43e97b" stroke-width="2.5" fill="none" marker-end="url(#arrowGreen)"/>
+            
+            <!-- 002 (Inventory) → 003 (Dynamic Pricing) via center -->
+            <path class="flow-line" d="M 350 380 Q 450 320 550 250" stroke="#fa709a" stroke-width="2" fill="none" marker-end="url(#arrowOrange)" stroke-dasharray="4,4"/>
+            
+            <!-- 004 (Supply Chain) → 005 (Realtime) -->
+            <path class="flow-line" d="M 620 380 Q 650 320 620 260" stroke="#43e97b" stroke-width="2" fill="none" marker-end="url(#arrowGreen)" stroke-dasharray="4,4"/>
+            
         </svg>
+        
+        <!-- Central Hub: ML Data Pipeline -->
+        <div class="mindmap-center">
+            <div class="center-hub">
+                <i class="fas fa-database"></i>
+            </div>
+            <div class="center-label">ML Pipeline</div>
+        </div>
+        
+        <!-- Project Boxes -->
+        
+        <!-- Project 001: Demand Forecasting - Top Left -->
+        <div class="project-box box-001" data-project="001">
+            <div class="project-number">001</div>
+            <div class="project-title">Demand Forecasting</div>
+            <div class="project-desc">Time series predictions for 30K+ SKUs using ML</div>
+            <div class="project-status status-complete">
+                <i class="fas fa-check-circle"></i> Complete
+            </div>
+        </div>
+        
+        <!-- Project 002: Inventory Optimization - Bottom Left -->
+        <div class="project-box box-002" data-project="002">
+            <div class="project-number">002</div>
+            <div class="project-title">Inventory Optimization</div>
+            <div class="project-desc">Stock level optimization & reorder point calculation</div>
+            <div class="project-status status-progress">
+                <i class="fas fa-spinner"></i> In Progress
+            </div>
+        </div>
+        
+        <!-- Project 003: Dynamic Pricing - Top Right -->
+        <div class="project-box box-003" data-project="003" onclick="window.location.href='projects/dynamic-pricing.html'">
+            <div class="project-number">003</div>
+            <div class="project-title">Dynamic Pricing Engine</div>
+            <div class="project-desc">Real-time price optimization with elasticity analysis</div>
+            <div class="project-status status-live">
+                <i class="fas fa-fire"></i> Live • $10.8M Impact
+            </div>
+        </div>
+        
+        <!-- Project 004: Supply Chain - Bottom Right -->
+        <div class="project-box box-004" data-project="004">
+            <div class="project-number">004</div>
+            <div class="project-title">Supply Chain Network</div>
+            <div class="project-desc">Route optimization & logistics cost minimization</div>
+            <div class="project-status status-planned">
+                <i class="fas fa-calendar-alt"></i> Planned Q1 2026
+            </div>
+        </div>
+        
+        <!-- Project 005: Realtime Demand Sensing - Far Right -->
+        <div class="project-box box-005" data-project="005">
+            <div class="project-number">005</div>
+            <div class="project-title">Realtime Demand Sensing</div>
+            <div class="project-desc">Live market signals & trend detection system</div>
+            <div class="project-status status-planned">
+                <i class="fas fa-lightbulb"></i> Planned Q2 2026
+            </div>
+        </div>
+        
+        <!-- Flow Labels -->
+        <div class="flow-label flow-label-1">
+            <div class="flow-text">Demand Forecasts</div>
+            <div class="flow-arrow">↓</div>
+        </div>
+        
+        <div class="flow-label flow-label-2">
+            <div class="flow-text">Demand Predictions</div>
+            <div class="flow-arrow">→</div>
+        </div>
+        
+        <div class="flow-label flow-label-3">
+            <div class="flow-text">Real-time Signals</div>
+            <div class="flow-arrow">←</div>
+        </div>
+        
+        <div class="flow-label flow-label-4">
+            <div class="flow-text">Stock Levels & Reorder Points</div>
+            <div class="flow-arrow">→</div>
+        </div>
+        
+        <div class="flow-label flow-label-5">
+            <div class="flow-text">Logistics Costs</div>
+            <div class="flow-arrow">↑</div>
+        </div>
+        
+        <div class="flow-label flow-label-6">
+            <div class="flow-text">Inventory Data</div>
+            <div class="flow-arrow">↗</div>
+        </div>
+        
+    </div>
+</div>
         
         <!-- Central Node -->
         <div class="mind-center">

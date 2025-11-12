@@ -2195,17 +2195,19 @@ button {
     }
 }
 /* =====================================
-   RADIAL MIND MAP STYLES
+
+/* =====================================
+   5-PROJECT INTERACTIVE MINDMAP STYLES
    ===================================== */
 
 .mindmap-container {
     position: relative;
     width: 100%;
-    height: 600px;
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    height: 650px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    overflow: visible;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mindmap-svg {
@@ -2215,267 +2217,421 @@ button {
     width: 100%;
     height: 100%;
     z-index: 1;
+    pointer-events: none;
 }
 
-/* Organic branch animations */
-.mind-branch {
-    stroke-dasharray: 400;
-    stroke-dashoffset: 400;
-    animation: drawBranch 2s ease-out forwards;
+/* Flow lines with animation */
+.flow-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawFlow 3s ease-out forwards;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
 }
 
-.mind-branch-sub {
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
-    animation: drawBranch 1.5s ease-out 0.5s forwards;
+.flow-line:hover {
+    opacity: 1;
 }
 
-@keyframes drawBranch {
+@keyframes drawFlow {
     to {
         stroke-dashoffset: 0;
     }
 }
 
-/* Central Node */
-.mind-center {
+/* Central Hub */
+.mindmap-center {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 10;
+    z-index: 5;
     text-align: center;
 }
 
-.center-circle {
-    width: 120px;
-    height: 120px;
+.center-hub {
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1rem;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
-    animation: pulse 3s ease-in-out infinite;
+    margin: 0 auto 0.5rem;
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+    animation: hubPulse 3s ease-in-out infinite;
 }
 
-.center-circle i {
-    font-size: 3rem;
+.center-hub i {
+    font-size: 2rem;
     color: white;
 }
 
-.center-text {
-    background: rgba(30, 41, 59, 0.95);
-    padding: 0.75rem 1.5rem;
-    border-radius: 12px;
-    border: 2px solid rgba(102, 126, 234, 0.3);
-}
-
-.center-title {
-    font-size: 1.5rem;
-    font-weight: 700;
+.center-label {
+    font-size: 0.9rem;
+    font-weight: 600;
     color: #f1f5f9;
-    margin-bottom: 0.25rem;
+    background: rgba(30, 41, 59, 0.9);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.center-subtitle {
-    font-size: 1rem;
-    color: #94a3b8;
-    font-weight: 500;
-}
-
-@keyframes pulse {
+@keyframes hubPulse {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
     }
     50% {
         transform: scale(1.05);
-        box-shadow: 0 15px 50px rgba(102, 126, 234, 0.6);
+        box-shadow: 0 12px 40px rgba(102, 126, 234, 0.6);
     }
 }
 
-/* Branch Nodes */
-.mind-node {
+/* Project Boxes */
+.project-box {
     position: absolute;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    text-align: center;
-    cursor: pointer;
-    animation: fadeIn 1s ease-out forwards;
-    opacity: 0;
-}
-
-.node-top { top: 18%; left: 50%; animation-delay: 0.5s; }
-.node-right { top: 50%; left: 72%; animation-delay: 0.7s; }
-.node-bottom { top: 82%; left: 50%; animation-delay: 0.9s; }
-.node-left { top: 50%; left: 28%; animation-delay: 1.1s; }
-
-.node-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 0.75rem;
-    font-size: 1.75rem;
-    color: white;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-.node-purple { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-.node-blue { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-.node-orange { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-.node-green { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-
-.mind-node:hover .node-icon {
-    transform: scale(1.15) rotate(5deg);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
-}
-
-.node-label {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #f1f5f9;
+    width: 240px;
+    padding: 1.25rem;
     background: rgba(30, 41, 59, 0.95);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    white-space: nowrap;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.node-tag {
-    margin-top: 0.5rem;
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    background: rgba(245, 158, 11, 0.2);
-    border: 1px solid rgba(245, 158, 11, 0.5);
-    border-radius: 12px;
-    font-size: 0.75rem;
-    color: #f59e0b;
-    font-weight: 600;
-}
-
-/* Leaf Nodes (Sub-branches) */
-.mind-leaf {
-    position: absolute;
-    z-index: 4;
-    padding: 0.4rem 0.8rem;
-    background: rgba(30, 41, 59, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    font-size: 0.85rem;
-    color: #cbd5e1;
-    white-space: nowrap;
-    animation: fadeIn 1s ease-out forwards;
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 2px solid;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    transition: all 0.3s ease;
+    cursor: default;
+    animation: boxFadeIn 0.8s ease-out forwards;
     opacity: 0;
 }
 
-/* Top leaves */
-.leaf-top-left { top: 10%; left: 42.5%; animation-delay: 1s; }
-.leaf-top-center { top: 5%; left: 50%; transform: translateX(-50%); animation-delay: 1.1s; }
-.leaf-top-right { top: 10%; left: 57.5%; animation-delay: 1.2s; }
+.project-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
 
-/* Right leaves */
-.leaf-right-top { top: 37%; left: 81%; animation-delay: 1.3s; }
-.leaf-right-center { top: 50%; left: 85%; transform: translateY(-50%); animation-delay: 1.4s; }
-.leaf-right-bottom { top: 63%; left: 81%; animation-delay: 1.5s; }
-
-/* Bottom leaves */
-.leaf-bottom-left { top: 90%; left: 42.5%; animation-delay: 1.6s; }
-.leaf-bottom-center { top: 95%; left: 50%; transform: translateX(-50%); animation-delay: 1.7s; }
-.leaf-bottom-right { top: 90%; left: 57.5%; animation-delay: 1.8s; }
-
-/* Left leaves */
-.leaf-left-top { top: 37%; left: 19%; animation-delay: 1.9s; }
-.leaf-left-center { top: 50%; left: 15%; transform: translateY(-50%); animation-delay: 2s; }
-.leaf-left-bottom { top: 63%; left: 19%; animation-delay: 2.1s; }
-
-@keyframes fadeIn {
+@keyframes boxFadeIn {
     from {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
+        transform: scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
     }
 }
 
-/* Responsive */
+/* Project positioning */
+.box-001 {
+    top: 12%;
+    left: 12%;
+    border-color: #4facfe;
+    animation-delay: 0.2s;
+}
+
+.box-002 {
+    top: 58%;
+    left: 12%;
+    border-color: #fa709a;
+    animation-delay: 0.4s;
+}
+
+.box-003 {
+    top: 12%;
+    right: 12%;
+    border-color: #764ba2;
+    animation-delay: 0.6s;
+    cursor: pointer;
+}
+
+.box-004 {
+    top: 58%;
+    right: 12%;
+    border-color: #43e97b;
+    animation-delay: 0.8s;
+}
+
+.box-005 {
+    top: 35%;
+    right: 2%;
+    border-color: #f093fb;
+    animation-delay: 1s;
+    width: 220px;
+}
+
+/* Project number badge */
+.project-number {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    font-family: var(--font-code);
+    margin-bottom: 0.75rem;
+}
+
+/* Project title */
+.project-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+/* Project description */
+.project-desc {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+/* Status badges */
+.project-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-complete {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #10b981;
+}
+
+.status-live {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    animation: livePulse 2s ease-in-out infinite;
+}
+
+.status-progress {
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: #3b82f6;
+}
+
+.status-planned {
+    background: rgba(245, 158, 11, 0.15);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    color: #f59e0b;
+}
+
+@keyframes livePulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.status-live i,
+.status-progress i {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Flow Labels */
+.flow-label {
+    position: absolute;
+    z-index: 8;
+    animation: labelFadeIn 1s ease-out forwards;
+    opacity: 0;
+}
+
+.flow-text {
+    background: rgba(30, 41, 59, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    white-space: nowrap;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.flow-arrow {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #60a5fa;
+    font-weight: bold;
+}
+
+@keyframes labelFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Flow label positioning */
+.flow-label-1 {
+    top: 35%;
+    left: 18%;
+    animation-delay: 1.5s;
+}
+
+.flow-label-2 {
+    top: 8%;
+    left: 48%;
+    animation-delay: 1.7s;
+}
+
+.flow-label-3 {
+    top: 28%;
+    right: 32%;
+    animation-delay: 1.9s;
+}
+
+.flow-label-4 {
+    top: 65%;
+    left: 48%;
+    animation-delay: 2.1s;
+}
+
+.flow-label-5 {
+    top: 46%;
+    right: 21%;
+    animation-delay: 2.3s;
+}
+
+.flow-label-6 {
+    top: 43%;
+    left: 38%;
+    animation-delay: 2.5s;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .mindmap-container {
+        height: 600px;
+    }
+    
+    .project-box {
+        width: 200px;
+        padding: 1rem;
+    }
+    
+    .box-005 {
+        width: 180px;
+    }
+    
+    .project-title {
+        font-size: 1rem;
+    }
+    
+    .project-desc {
+        font-size: 0.8rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .mindmap-container {
-        height: 500px;
+        height: 700px;
     }
     
-    .center-circle {
-        width: 100px;
-        height: 100px;
+    /* Rearrange for tablet - stack vertically */
+    .box-001 {
+        top: 8%;
+        left: 50%;
+        transform: translateX(-50%);
     }
     
-    .center-circle i {
-        font-size: 2.5rem;
+    .box-002 {
+        top: 28%;
+        left: 10%;
     }
     
-    .node-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5rem;
+    .box-003 {
+        top: 28%;
+        right: 10%;
+        left: auto;
     }
     
-    .node-label {
-        font-size: 0.9rem;
+    .box-004 {
+        top: 52%;
+        left: 10%;
     }
     
-    .mind-leaf {
-        font-size: 0.75rem;
-        padding: 0.3rem 0.6rem;
+    .box-005 {
+        top: 52%;
+        right: 10%;
+        left: auto;
+    }
+    
+    .flow-label {
+        display: none; /* Hide labels on tablet for clarity */
     }
 }
 
 @media (max-width: 768px) {
     .mindmap-container {
-        height: 450px;
+        height: auto;
+        min-height: 900px;
+        padding: 1rem;
     }
     
-    .center-circle {
-        width: 80px;
-        height: 80px;
+    .mindmap-svg {
+        display: none; /* Hide connection lines on mobile */
     }
     
-    .center-circle i {
-        font-size: 2rem;
+    .mindmap-center {
+        top: 5%;
     }
     
-    .center-title {
-        font-size: 1.2rem;
+    .center-hub {
+        width: 60px;
+        height: 60px;
     }
     
-    .center-subtitle {
-        font-size: 0.9rem;
+    .center-hub i {
+        font-size: 1.5rem;
     }
     
-    .node-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.25rem;
+    .project-box {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 350px;
+        margin: 1rem auto;
+        left: 0 !important;
+        right: 0 !important;
+        top: auto !important;
+        transform: none !important;
     }
     
-    .node-label {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.8rem;
+    .box-001 { margin-top: 5rem; }
+    
+    .project-title {
+        font-size: 0.95rem;
     }
     
-    .mind-leaf {
-        font-size: 0.7rem;
-        padding: 0.25rem 0.5rem;
+    .project-desc {
+        font-size: 0.75rem;
     }
     
-    /* Adjust positions for mobile */
-    .node-top { top: 15%; }
-    .node-bottom { top: 85%; }
-    .node-left { left: 25%; }
-    .node-right { left: 75%; }
+    .flow-label {
+        display: none;
+    }
 }
