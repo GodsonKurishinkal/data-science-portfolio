@@ -590,15 +590,24 @@ print(f"✓ Revenue increase: {result['revenue_lift']}")</code></pre>
     </button>
 
     <!-- Prism.js for syntax highlighting -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js?v=2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js?v=2"></script>
     
     <!-- Initialize Prism -->
     <script>
-        // Ensure Prism highlights the code
-        if (typeof Prism !== 'undefined') {
-            Prism.highlightAll();
-        }
+        // Ensure Prism highlights the code and make tokens invisible
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAll();
+                
+                // Hide token class text that might be showing
+                const tokens = document.querySelectorAll('.token');
+                tokens.forEach(token => {
+                    // Ensure token content is only the code, not the class name
+                    token.style.display = 'inline';
+                });
+            }
+        });
     </script>
 
     <!-- Custom JavaScript -->
