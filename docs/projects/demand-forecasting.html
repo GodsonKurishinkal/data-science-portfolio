@@ -5,18 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="M5 Walmart Demand Forecasting System - Production-ready ML pipeline for retail demand prediction">
     <title>Demand Forecasting System | Godson Kurishinkal</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/project-pages.css">
+    <link rel="stylesheet" href="../css/unified.css">
+    <link rel="stylesheet" href="../css/projects.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* Navigation */
+        nav {
+            background: white;
+            border-bottom: 1px solid #E5E7EB;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        [data-theme="dark"] nav {
+            background: #111827;
+            border-bottom-color: #374151;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #4F46E5;
+        }
+
         .project-hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 100px 0 80px;
             color: white;
             text-align: center;
+            margin-top: 60px;
         }
 
         .project-hero h1 {
