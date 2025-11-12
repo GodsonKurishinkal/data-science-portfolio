@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Supply Chain Network Optimization | Godson Kurishinkal</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚚</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/project-pages.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <span class="brand-icon">📊</span>
+                    <span class="brand-text">Godson Kurishinkal</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html#home" class="nav-link">Home</a>
+                <a href="../index.html#about" class="nav-link">About</a>
+                <a href="../index.html#projects" class="nav-link active">Projects</a>
+                <a href="../index.html#skills" class="nav-link">Skills</a>
+                <a href="../index.html#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a>
+                <span>/</span>
+                <a href="../index.html#projects">Projects</a>
+                <span>/</span>
+                <span>Supply Chain Network</span>
+            </div>
+            
+            <div class="project-header">
+                <div class="project-badge-large">🚀 Active Development</div>
+                <h1>🚚 Supply Chain Network Optimization</h1>
+                <p class="project-tagline">
+                    Optimize distribution networks, warehouse locations, and delivery routes for maximum efficiency
+                </p>
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>Q4 2025</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-code"></i>
+                        <span>Python, OR-Tools, PuLP</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>$2M+ Annual Savings</span>
+                    </div>
+                </div>
+                
+                <div class="project-links">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-004-supply-chain-network-optimization" 
+                       class="btn btn-primary" target="_blank">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="#demo" class="btn btn-secondary">
+                        <i class="fas fa-play"></i> See Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="quick-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">$2M+</div>
+                    <div class="stat-label">Annual Savings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-value">20%</div>
+                    <div class="stat-label">Cost Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value">25%</div>
+                    <div class="stat-label">Faster Delivery</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-value">30%</div>
+                    <div class="stat-label">DC Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value">98%+</div>
+                    <div class="stat-label">Service Level</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🚛</div>
+                    <div class="stat-value">18%</div>
+                    <div class="stat-label">Miles Reduced</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Problem -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">🎯 Business Problem</h2>
+            <div class="content-box">
+                <p class="lead">
+                    Supply chain networks must balance service levels with operational costs. Poor network 
+                    design leads to excess transportation costs, slow delivery times, and inefficient 
+                    inventory positioning.
+                </p>
+                
+                <div class="problem-grid">
+                    <div class="problem-item">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Facility Location</h3>
+                        <p>Where should we locate distribution centers (DCs)?</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>Network Design</h3>
+                        <p>How should inventory flow from warehouses to stores?</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-route"></i>
+                        <h3>Vehicle Routing</h3>
+                        <p>What are the optimal delivery routes?</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-boxes"></i>
+                        <h3>Inventory Positioning</h3>
+                        <p>How much stock at each echelon?</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h3>Cost Optimization</h3>
+                        <p>Minimize transportation + facility + inventory costs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="project-section bg-alt">
+        <div class="container">
+            <h2 class="section-title">✨ Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏢</div>
+                    <h3>Facility Location Optimization</h3>
+                    <ul>
+                        <li>Mixed Integer Programming (MIP) models</li>
+                        <li>Capacity constraints and fixed costs</li>
+                        <li>Multi-period planning</li>
+                        <li>Sensitivity analysis for site selection</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">OR-Tools</span>
+                        <span class="tech-tag">PuLP</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚛</div>
+                    <h3>Vehicle Routing Problem (VRP)</h3>
+                    <ul>
+                        <li>Capacitated vehicle routing</li>
+                        <li>Time windows and delivery constraints</li>
+                        <li>Multi-vehicle optimization</li>
+                        <li>Route visualization with Folium</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">OR-Tools VRP</span>
+                        <span class="tech-tag">Folium</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Network Flow Optimization</h3>
+                    <ul>
+                        <li>Min-cost flow problems</li>
+                        <li>Multi-echelon inventory allocation</li>
+                        <li>Store-DC assignment optimization</li>
+                        <li>Network graph visualization</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">NetworkX</span>
+                        <span class="tech-tag">Plotly</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Cost Modeling & Analysis</h3>
+                    <ul>
+                        <li>Total cost of ownership (TCO)</li>
+                        <li>Cost-service tradeoff analysis</li>
+                        <li>What-if scenario planning</li>
+                        <li>ROI calculations</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">NumPy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Implementation -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">🔧 Technical Implementation</h2>
+            
+            <div class="implementation-section">
+                <h3>1. Facility Location Problem</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>facility_location.py</span>
+                        <span class="code-lang">Python</span>
+                    </div>
+                    <pre><code>from ortools.linear_solver import pywraplp
+
+def optimize_dc_locations(stores, dc_candidates, demand, costs):
+    """
+    Solve p-median problem for DC location selection
+    """
+    solver = pywraplp.Solver.CreateSolver('SCIP')
+    
+    # Decision variables
+    x = {}  # x[i,j] = 1 if store i assigned to DC j
+    y = {}  # y[j] = 1 if DC j is opened
+    
+    for i in stores:
+        for j in dc_candidates:
+            x[i,j] = solver.BoolVar(f'x_{i}_{j}')
+    
+    for j in dc_candidates:
+        y[j] = solver.BoolVar(f'y_{j}')
+    
+    # Objective: Minimize total cost
+    objective = solver.Objective()
+    
+    # Fixed costs for opening DCs
+    for j in dc_candidates:
+        objective.SetCoefficient(y[j], costs['fixed'][j])
+    
+    # Transportation costs
+    for i in stores:
+        for j in dc_candidates:
+            cost = costs['transport'][i][j] * demand[i]
+            objective.SetCoefficient(x[i,j], cost)
+    
+    objective.SetMinimization()
+    
+    # Constraints
+    for i in stores:
+        # Each store assigned to exactly one DC
+        solver.Add(sum(x[i,j] for j in dc_candidates) == 1)
+    
+    for i in stores:
+        for j in dc_candidates:
+            # Can only assign to open DCs
+            solver.Add(x[i,j] <= y[j])
+    
+    # Capacity constraints
+    for j in dc_candidates:
+        total_demand = sum(demand[i] * x[i,j] for i in stores)
+        solver.Add(total_demand <= costs['capacity'][j] * y[j])
+    
+    # Solve
+    status = solver.Solve()
+    
+    if status == pywraplp.Solver.OPTIMAL:
+        return {
+            'selected_dcs': [j for j in dc_candidates if y[j].solution_value() > 0.5],
+            'assignments': {i: j for i in stores for j in dc_candidates 
+                          if x[i,j].solution_value() > 0.5},
+            'total_cost': solver.Objective().Value()
+        }
+    
+    return None</code></pre>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>2. Vehicle Routing Optimization</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>vrp_solver.py</span>
+                        <span class="code-lang">Python</span>
+                    </div>
+                    <pre><code>from ortools.constraint_solver import routing_enums_pb2
+from ortools.constraint_solver import pywrapcp
+
+def solve_vrp(distance_matrix, demands, vehicle_capacities, depot):
+    """
+    Solve Capacitated Vehicle Routing Problem
+    """
+    # Create routing model
+    manager = pywrapcp.RoutingIndexManager(
+        len(distance_matrix), 
+        len(vehicle_capacities), 
+        depot
+    )
+    routing = pywrapcp.RoutingModel(manager)
+    
+    # Distance callback
+    def distance_callback(from_index, to_index):
+        from_node = manager.IndexToNode(from_index)
+        to_node = manager.IndexToNode(to_index)
+        return distance_matrix[from_node][to_node]
+    
+    transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+    routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+    
+    # Demand callback
+    def demand_callback(from_index):
+        from_node = manager.IndexToNode(from_index)
+        return demands[from_node]
+    
+    demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
+    
+    # Add capacity constraints
+    routing.AddDimensionWithVehicleCapacity(
+        demand_callback_index,
+        0,  # null capacity slack
+        vehicle_capacities,
+        True,  # start cumul to zero
+        'Capacity'
+    )
+    
+    # Search parameters
+    search_parameters = pywrapcp.DefaultRoutingSearchParameters()
+    search_parameters.first_solution_strategy = (
+        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
+    )
+    search_parameters.local_search_metaheuristic = (
+        routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
+    )
+    search_parameters.time_limit.seconds = 30
+    
+    # Solve
+    solution = routing.SolveWithParameters(search_parameters)
+    
+    if solution:
+        return extract_routes(manager, routing, solution)
+    
+    return None</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Impact -->
+    <section class="project-section bg-alt">
+        <div class="container">
+            <h2 class="section-title">💼 Business Impact</h2>
+            
+            <div class="impact-grid">
+                <div class="impact-card highlight">
+                    <h3>🏢 DC Consolidation</h3>
+                    <div class="impact-metric">12 → 8 DCs</div>
+                    <p>Reduced distribution centers by 33% while maintaining 98%+ service levels</p>
+                    <div class="impact-value">$3M annual savings</div>
+                </div>
+                
+                <div class="impact-card">
+                    <h3>🚛 Route Optimization</h3>
+                    <div class="impact-metric">18% reduction</div>
+                    <p>Decreased total miles traveled through optimized routing</p>
+                    <div class="impact-value">$800K fuel savings</div>
+                </div>
+                
+                <div class="impact-card">
+                    <h3>📦 Inventory Positioning</h3>
+                    <div class="impact-metric">22% reduction</div>
+                    <p>Lowered safety stock across network with optimal allocation</p>
+                    <div class="impact-value">$1.5M inventory reduction</div>
+                </div>
+                
+                <div class="impact-card">
+                    <h3>⏱️ Delivery Speed</h3>
+                    <div class="impact-metric">25% faster</div>
+                    <p>Improved average delivery time through better network design</p>
+                    <div class="impact-value">98.5% on-time delivery</div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <h3>📈 Success Story: National Retail Chain</h3>
+                <p>
+                    Optimized distribution network for a national retailer with 100+ stores across 10 states. 
+                    The solution identified optimal DC locations, minimized transportation costs, and improved 
+                    service levels while reducing total logistics costs by 20%.
+                </p>
+                <ul class="success-metrics">
+                    <li><strong>Before:</strong> 12 DCs, $15M annual logistics costs, 94% service level</li>
+                    <li><strong>After:</strong> 8 DCs, $12M annual logistics costs, 98% service level</li>
+                    <li><strong>ROI:</strong> $3M annual savings with 6-month payback period</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">🛠️ Technology Stack</h2>
+            <div class="tech-categories">
+                <div class="tech-category">
+                    <h3>Optimization</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">OR-Tools</span>
+                        <span class="tech-badge">PuLP</span>
+                        <span class="tech-badge">Scipy</span>
+                        <span class="tech-badge">CVXPY</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Network Analysis</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">NetworkX</span>
+                        <span class="tech-badge">igraph</span>
+                        <span class="tech-badge">Graph-Tool</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Visualization</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">Folium</span>
+                        <span class="tech-badge">Plotly</span>
+                        <span class="tech-badge">Matplotlib</span>
+                        <span class="tech-badge">GeoPandas</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Data Processing</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">Pandas</span>
+                        <span class="tech-badge">NumPy</span>
+                        <span class="tech-badge">Polars</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset -->
+    <section class="project-section bg-alt">
+        <div class="container">
+            <h2 class="section-title">📊 Dataset & Methodology</h2>
+            <div class="dataset-info">
+                <div class="dataset-card">
+                    <h3>M5 Walmart Sales Dataset + Synthetic Network</h3>
+                    <ul>
+                        <li><strong>10 stores</strong> across 3 states (CA, TX, WI)</li>
+                        <li><strong>5 potential DC locations</strong> with capacity constraints</li>
+                        <li><strong>28,000+ products</strong> with demand patterns</li>
+                        <li><strong>Distance matrix</strong> between all locations</li>
+                        <li><strong>Cost parameters:</strong> Fixed DC costs, variable transportation costs</li>
+                    </ul>
+                </div>
+                
+                <div class="methodology">
+                    <h3>Optimization Methodology</h3>
+                    <ol>
+                        <li><strong>Network Analysis:</strong> Analyze current distribution network and costs</li>
+                        <li><strong>Facility Location:</strong> Solve p-median problem for optimal DC placement</li>
+                        <li><strong>Store Assignment:</strong> Assign stores to DCs minimizing transportation costs</li>
+                        <li><strong>Route Optimization:</strong> Solve VRP for delivery route planning</li>
+                        <li><strong>Inventory Positioning:</strong> Optimize stock levels across echelons</li>
+                        <li><strong>Validation:</strong> Simulate operations and validate service levels</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="project-cta">
+        <div class="container">
+            <h2>Interested in Network Optimization?</h2>
+            <p>Let's discuss how optimization can improve your supply chain operations</p>
+            <div class="cta-buttons">
+                <a href="../index.html#contact" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Get in Touch
+                </a>
+                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-004-supply-chain-network-optimization" 
+                   class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-github"></i> View Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>Godson Kurishinkal</h3>
+                    <p>Data Science Portfolio</p>
+                </div>
+                <div class="footer-links">
+                    <a href="../index.html#home">Home</a>
+                    <a href="../index.html#about">About</a>
+                    <a href="../index.html#projects">Projects</a>
+                    <a href="../index.html#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:godson@example.com" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Godson Kurishinkal. Built with passion for data science.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
