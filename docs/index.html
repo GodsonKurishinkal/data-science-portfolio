@@ -90,159 +90,115 @@
                         </div>
                     </div>
                 </div>
-                <div class="hero-visual">
-                    <div class="project-map">
-                        <svg class="map-connections" viewBox="0 0 600 600" preserveAspectRatio="xMidYMid meet">
-                            <!-- Central Hub connections -->
-                            <path class="connection-line line-active" d="M 300 300 L 150 150" stroke-dasharray="5,5">
-                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
-                            </path>
-                            <path class="connection-line line-active" d="M 300 300 L 450 150" stroke-dasharray="5,5">
-                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
-                            </path>
-                            <path class="connection-line line-future" d="M 300 300 L 150 450" stroke-dasharray="5,5">
-                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
-                            </path>
-                            <path class="connection-line line-future" d="M 300 300 L 450 450" stroke-dasharray="5,5">
-                                <animate attributeName="stroke-dashoffset" from="10" to="0" dur="1.5s" repeatCount="indefinite"/>
-                            </path>
-                            
-                            <!-- Project interconnections -->
-                            <path class="connection-line line-data-flow" d="M 150 150 Q 200 250 150 450" stroke-dasharray="3,3">
-                                <animate attributeName="stroke-dashoffset" from="6" to="0" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            <path class="connection-line line-data-flow" d="M 450 150 Q 400 250 450 450" stroke-dasharray="3,3">
-                                <animate attributeName="stroke-dashoffset" from="6" to="0" dur="2s" repeatCount="indefinite"/>
-                            </path>
-                            
-                            <!-- Glow effects -->
-                            <defs>
-                                <filter id="glow">
-                                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                                    <feMerge>
-                                        <feMergeNode in="coloredBlur"/>
-                                        <feMergeNode in="SourceGraphic"/>
-                                    </feMerge>
-                                </filter>
-                                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        
-                        <div class="map-nodes">
-                            <!-- Central Hub: Data Science Platform -->
-                            <div class="map-node map-node-center node-pulse" style="top: 50%; left: 50%;" data-delay="0">
-                                <div class="node-icon node-icon-center">
-                                    <i class="fas fa-brain"></i>
-                                </div>
-                                <div class="node-label">ML Platform</div>
-                                <div class="node-detail">Core Analytics Engine</div>
-                            </div>
-                            
-                            <!-- Top Left: Demand Forecasting -->
-                            <div class="map-node map-node-project node-pulse" style="top: 25%; left: 25%;" data-delay="0.2" onclick="window.location.href='#projects'">
-                                <div class="node-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                                    <i class="fas fa-chart-area"></i>
-                                </div>
-                                <div class="node-label">Demand Forecasting</div>
-                                <div class="node-detail">30K SKUs • Time Series</div>
-                                <div class="node-badge">
-                                    <i class="fas fa-check-circle"></i> Complete
-                                </div>
-                                <div class="connection-arrow arrow-to-pricing">→ Dynamic Pricing</div>
-                            </div>
-                            
-                            <!-- Top Right: Dynamic Pricing -->
-                            <div class="map-node map-node-project node-pulse" style="top: 25%; left: 75%;" data-delay="0.4" onclick="window.location.href='projects/dynamic-pricing.html'">
-                                <div class="node-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                    <i class="fas fa-dollar-sign"></i>
-                                </div>
-                                <div class="node-label">Dynamic Pricing</div>
-                                <div class="node-detail">5 Phases • $10.8M Impact</div>
-                                <div class="node-badge">
-                                    <i class="fas fa-fire"></i> Live
-                                </div>
-                                <div class="connection-arrow arrow-to-inventory">→ Inventory Opt.</div>
-                            </div>
-                            
-                            <!-- Bottom Left: Inventory Optimization -->
-                            <div class="map-node map-node-future node-pulse" style="top: 75%; left: 25%;" data-delay="0.6">
-                                <div class="node-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                                    <i class="fas fa-boxes"></i>
-                                </div>
-                                <div class="node-label">Inventory Optimization</div>
-                                <div class="node-detail">Stock Levels • Reorder</div>
-                                <div class="node-badge node-badge-future">
-                                    <i class="fas fa-clock"></i> Coming Soon
-                                </div>
-                                <div class="connection-arrow arrow-to-supply">→ Supply Chain</div>
-                            </div>
-                            
-                            <!-- Bottom Right: Supply Chain Optimization -->
-                            <div class="map-node map-node-future node-pulse" style="top: 75%; left: 75%;" data-delay="0.8">
-                                <div class="node-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                                    <i class="fas fa-truck"></i>
-                                </div>
-                                <div class="node-label">Supply Chain</div>
-                                <div class="node-detail">Logistics • Distribution</div>
-                                <div class="node-badge node-badge-future">
-                                    <i class="fas fa-lightbulb"></i> Planned
-                                </div>
-                            </div>
-                            
-                            <!-- Top: Data Input -->
-                            <div class="map-node map-node-small node-pulse" style="top: 5%; left: 50%;" data-delay="0.3">
-                                <div class="node-icon-small">
-                                    <i class="fas fa-database"></i>
-                                </div>
-                                <div class="node-label-small">M5 Dataset</div>
-                            </div>
-                            
-                            <!-- Right: ML Models -->
-                            <div class="map-node map-node-small node-pulse" style="top: 50%; left: 92%;" data-delay="0.5">
-                                <div class="node-icon-small">
-                                    <i class="fas fa-robot"></i>
-                                </div>
-                                <div class="node-label-small">ML Models</div>
-                            </div>
-                            
-                            <!-- Bottom: Business Value -->
-                            <div class="map-node map-node-small node-pulse" style="top: 95%; left: 50%;" data-delay="0.7">
-                                <div class="node-icon-small" style="background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%);">
-                                    <i class="fas fa-trophy"></i>
-                                </div>
-                                <div class="node-label-small">Business Impact</div>
-                            </div>
-                            
-                            <!-- Left: Analytics -->
-                            <div class="map-node map-node-small node-pulse" style="top: 50%; left: 8%;" data-delay="0.9">
-                                <div class="node-icon-small">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                                <div class="node-label-small">Analytics</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Data flow indicators -->
-                        <div class="data-flow-label" style="top: 15%; left: 50%;">
-                            <i class="fas fa-arrow-down"></i> Data Input
-                        </div>
-                        <div class="data-flow-label" style="top: 35%; left: 50%;">
-                            <i class="fas fa-exchange-alt"></i> Data Flow
-                        </div>
-                        <div class="data-flow-label" style="top: 85%; left: 50%;">
-                            <i class="fas fa-arrow-up"></i> Business Value
-                        </div>
-                        
-                        <!-- Floating particles -->
-                        <div class="particle particle-1"></div>
-                        <div class="particle particle-2"></div>
-                        <div class="particle particle-3"></div>
-                        <div class="particle particle-4"></div>
-                    </div>
-                </div>
+                <!-- Radial Mind Map for Hero Section -->
+<div class="hero-visual">
+    <div class="mindmap-container">
+        <svg class="mindmap-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <!-- Gradient definitions for organic branches -->
+                <linearGradient id="branch-purple" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#764ba2;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.3" />
+                </linearGradient>
+                <linearGradient id="branch-blue" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#4facfe;stop-opacity:0.3" />
+                </linearGradient>
+                <linearGradient id="branch-orange" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#fa709a;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#fa709a;stop-opacity:0.3" />
+                </linearGradient>
+                <linearGradient id="branch-green" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#00f2fe;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#00f2fe;stop-opacity:0.3" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Top Branch: Dynamic Pricing (Purple) -->
+            <path class="mind-branch" d="M 400 300 Q 400 250, 400 180" stroke="url(#branch-purple)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 400 180 Q 380 160, 340 140" stroke="url(#branch-purple)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 400 180 Q 400 160, 400 120" stroke="url(#branch-purple)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 400 180 Q 420 160, 460 140" stroke="url(#branch-purple)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            
+            <!-- Right Branch: Demand Forecasting (Blue) -->
+            <path class="mind-branch" d="M 400 300 Q 480 300, 580 300" stroke="url(#branch-blue)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 580 300 Q 620 280, 650 250" stroke="url(#branch-blue)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 580 300 Q 630 300, 680 300" stroke="url(#branch-blue)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 580 300 Q 620 320, 650 350" stroke="url(#branch-blue)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            
+            <!-- Bottom Branch: Inventory Optimization (Orange) -->
+            <path class="mind-branch" d="M 400 300 Q 400 360, 400 440" stroke="url(#branch-orange)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 400 440 Q 380 470, 340 500" stroke="url(#branch-orange)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 400 440 Q 400 470, 400 510" stroke="url(#branch-orange)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 400 440 Q 420 470, 460 500" stroke="url(#branch-orange)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            
+            <!-- Left Branch: Supply Chain (Green) -->
+            <path class="mind-branch" d="M 400 300 Q 320 300, 220 300" stroke="url(#branch-green)" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 220 300 Q 180 280, 150 250" stroke="url(#branch-green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 220 300 Q 170 300, 120 300" stroke="url(#branch-green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path class="mind-branch-sub" d="M 220 300 Q 180 320, 150 350" stroke="url(#branch-green)" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+        
+        <!-- Central Node -->
+        <div class="mind-center">
+            <div class="center-circle">
+                <i class="fas fa-project-diagram"></i>
+            </div>
+            <div class="center-text">
+                <div class="center-title">Data Science</div>
+                <div class="center-subtitle">Portfolio</div>
+            </div>
+        </div>
+        
+        <!-- Branch Nodes -->
+        <!-- Top: Dynamic Pricing -->
+        <div class="mind-node node-top" onclick="window.location.href='projects/dynamic-pricing.html'">
+            <div class="node-icon node-purple">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="node-label">Dynamic Pricing</div>
+        </div>
+        <div class="mind-leaf leaf-top-left">Price Elasticity</div>
+        <div class="mind-leaf leaf-top-center">$10.8M Impact</div>
+        <div class="mind-leaf leaf-top-right">5 Phases</div>
+        
+        <!-- Right: Demand Forecasting -->
+        <div class="mind-node node-right">
+            <div class="node-icon node-blue">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="node-label">Demand Forecasting</div>
+        </div>
+        <div class="mind-leaf leaf-right-top">Time Series</div>
+        <div class="mind-leaf leaf-right-center">30K SKUs</div>
+        <div class="mind-leaf leaf-right-bottom">M5 Dataset</div>
+        
+        <!-- Bottom: Inventory -->
+        <div class="mind-node node-bottom">
+            <div class="node-icon node-orange">
+                <i class="fas fa-boxes"></i>
+            </div>
+            <div class="node-label">Inventory Optimization</div>
+            <div class="node-tag">Coming Soon</div>
+        </div>
+        <div class="mind-leaf leaf-bottom-left">Stock Levels</div>
+        <div class="mind-leaf leaf-bottom-center">Reorder Points</div>
+        <div class="mind-leaf leaf-bottom-right">Warehouse</div>
+        
+        <!-- Left: Supply Chain -->
+        <div class="mind-node node-left">
+            <div class="node-icon node-green">
+                <i class="fas fa-truck"></i>
+            </div>
+            <div class="node-label">Supply Chain</div>
+            <div class="node-tag">Planned</div>
+        </div>
+        <div class="mind-leaf leaf-left-top">Logistics</div>
+        <div class="mind-leaf leaf-left-center">Distribution</div>
+        <div class="mind-leaf leaf-left-bottom">Optimization</div>
+    </div>
+</div>
+
             </div>
         </div>
         <div class="scroll-indicator">
