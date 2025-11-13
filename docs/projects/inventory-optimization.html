@@ -5,414 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="description" content="Inventory Optimization Engine - Intelligent supply chain solution for stock management">
     <title>Inventory Optimization Engine | Godson Kurishinkal</title>
-    <link rel="stylesheet" href="../css/unified.css">
-    <link rel="stylesheet" href="../css/projects.css">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* Navigation */
-        nav {
-            background: white;
-            border-bottom: 1px solid #E5E7EB;
-            padding: 1rem 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-
-        [data-theme="dark"] nav {
-            background: #111827;
-            border-bottom-color: #374151;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: #4B5563;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: #4F46E5;
-        }
-
-        .project-hero {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            padding: 100px 0 80px;
-            color: white;
-            text-align: center;
-            margin-top: 60px;
-        }
-
-        .project-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .project-hero .tagline {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            animation: fadeInUp 0.8s ease 0.4s both;
-        }
-
-        .project-links a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.8rem 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .project-links a:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .metric-card {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            color: white;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .metric-card .number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-card .label {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        .content-section {
-            padding: 4rem 0;
-        }
-
-        .content-section:nth-child(even) {
-            background: #f8f9fa;
-        }
-
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: #2d3748;
-            position: relative;
-            padding-bottom: 1rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(90deg, #10b981, #059669);
-            border-radius: 2px;
-        }
-
-        .tech-stack {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .tech-category {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-        }
-
-        .tech-category h3 {
-            color: #10b981;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tech-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .tech-list li {
-            padding: 0.5rem 0;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .tech-list li::before {
-            content: '✓';
-            color: #10b981;
-            font-weight: bold;
-        }
-
-        .code-block {
-            background: #1e1e1e;
-            color: #d4d4d4;
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 1rem 0;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .code-block .comment {
-            color: #6a9955;
-        }
-
-        .code-block .keyword {
-            color: #569cd6;
-        }
-
-        .code-block .string {
-            color: #ce9178;
-        }
-
-        .code-block .function {
-            color: #dcdcaa;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-card .icon {
-            font-size: 2.5rem;
-            color: #10b981;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-        }
-
-        .abc-matrix {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 2rem 0;
-            background: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .abc-matrix thead {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-        }
-
-        .abc-matrix th,
-        .abc-matrix td {
-            padding: 1rem;
-            text-align: left;
-        }
-
-        .abc-matrix tbody tr:nth-child(even) {
-            background: #f8f9fa;
-        }
-
-        .abc-matrix tbody tr:hover {
-            background: #e6f7f0;
-        }
-
-        .formula-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            margin: 2rem 0;
-        }
-
-        .formula-box h3 {
-            color: #10b981;
-            margin-bottom: 1rem;
-        }
-
-        .formula {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 8px;
-            font-family: 'JetBrains Mono', monospace;
-            text-align: center;
-            font-size: 1.2rem;
-            margin: 1rem 0;
-        }
-
-        .formula-legend {
-            padding: 1rem;
-            background: #e6f7f0;
-            border-radius: 8px;
-            margin-top: 1rem;
-        }
-
-        .formula-legend p {
-            margin: 0.5rem 0;
-            font-size: 0.95rem;
-        }
-
-        .cta-section {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-            border-radius: 16px;
-            margin: 3rem 0;
-        }
-
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .cta-section p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            background: white;
-            color: #10b981;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .methodology-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .methodology-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            border-left: 4px solid #10b981;
-        }
-
-        .methodology-card h3 {
-            color: #10b981;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .project-hero h1 {
-                font-size: 2rem;
-            }
-
-            .project-hero .tagline {
-                font-size: 1.1rem;
-            }
-
-            .metrics-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-
-            .metric-card .number {
-                font-size: 2rem;
-            }
-
-            .section-title {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    
+    <link rel="stylesheet" href="../css/minimal.css">
+    <link rel="stylesheet" href="../css/minimal-project.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../index.html" class="nav-brand">&lt;GK /&gt;</a>
+        <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container container">
+            <a href="../index.html" class="nav-brand">Godson Kurishinkal</a>
             <ul class="nav-menu">
-                <li><a href="../index.html#home">Home</a></li>
-                <li><a href="../index.html#projects">Projects</a></li>
-                <li><a href="../index.html#skills">Skills</a></li>
-                <li><a href="../index.html#contact">Contact</a></li>
+                <li><a href="../index.html#home" class="nav-link">Home</a></li>
+                <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
             </ul>
-            <div class="mobile-menu-icon">
-                <i class="fas fa-bars"></i>
-            </div>
         </div>
     </nav>
 
@@ -996,37 +608,83 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
         </div>
     </section>
 
-    <!-- Footer -->
+        <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Godson Kurishinkal</h3>
-                    <p>Data Scientist & ML Engineer</p>
+                <p class="footer-text">© 2024 Godson Kurishinkal. All rights reserved.</p>
+                <ul class="footer-links">
+                    <li><a href="../index.html#home" class="footer-link">Home</a></li>
+                    <li><a href="../index.html#projects" class="footer-link">Projects</a></li>
+                    <li><a href="../index.html#contact" class="footer-link">Contact</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:godson.kurishinkal+github@gmail.com" class="social-link" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
                 </div>
-                <div class="footer-section">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="../index.html#projects">All Projects</a></li>
-                        <li><a href="../index.html#skills">Skills</a></li>
-                        <li><a href="../index.html#contact">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Connect</h4>
-                    <div class="social-links">
-                        <a href="https://github.com/GodsonKurishinkal" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank"><i class="fab fa-linkedin"></i></a>
-                        <a href="mailto:godson.kurishinkal+github@gmail.com"><i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Godson Kurishinkal. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="../js/main.js"></script>
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('.nav').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Nav scroll effect
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.feature-card, .tech-item, .metric-card, .timeline-item');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight * 0.85) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Initialize elements
+        revealElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        revealOnScroll();
+    </script>
 </body>
 </html>

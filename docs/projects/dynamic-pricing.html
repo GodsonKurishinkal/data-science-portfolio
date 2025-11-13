@@ -13,290 +13,89 @@
     <!-- Prism.js for syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     
-    <link rel="stylesheet" href="../css/unified.css">
-    <link rel="stylesheet" href="../css/projects.css">
-    
-    <style>
-        /* Navigation */
-        nav {
-            background: white;
-            border-bottom: 1px solid #E5E7EB;
-            padding: 1rem 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-
-        [data-theme="dark"] nav {
-            background: #111827;
-            border-bottom-color: #374151;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            color: #4B5563;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover {
-            color: #4F46E5;
-        }
-
-        .project-hero {
-            padding: 120px 0 80px;
-            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-            margin-top: 60px;
-        }
-        
-        .project-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .project-header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .project-header .project-tagline {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-        }
-        
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .project-content {
-            padding: 4rem 0;
-        }
-        
-        .content-section {
-            margin-bottom: 4rem;
-        }
-        
-        .content-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-        
-        .content-section h3 {
-            font-size: 1.5rem;
-            margin: 2rem 0 1rem;
-            color: var(--primary-color);
-        }
-        
-        .phase-timeline {
-            position: relative;
-            padding-left: 3rem;
-        }
-        
-        .phase-timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--gradient-primary);
-        }
-        
-        .phase-item {
-            position: relative;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .phase-item::before {
-            content: '';
-            position: absolute;
-            left: -3rem;
-            top: 2rem;
-            width: 20px;
-            height: 20px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 0 0 2px var(--primary-color);
-        }
-        
-        .phase-item.complete::before {
-            background: var(--secondary-color);
-            box-shadow: 0 0 0 2px var(--secondary-color);
-        }
-        
-        .phase-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .phase-status {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-        
-        .phase-status.complete {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        
-        .phase-status.in-progress {
-            background: #dbeafe;
-            color: #1e40af;
-        }
-        
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .metric-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-            text-align: center;
-        }
-        
-        .metric-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .metric-label {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-        }
-        
-        .code-block {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            font-family: var(--font-code);
-            font-size: 0.875rem;
-            line-height: 1.6;
-            margin: 1.5rem 0;
-        }
-        
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .feature-list li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: start;
-            gap: 1rem;
-        }
-        
-        .feature-list li:last-child {
-            border-bottom: none;
-        }
-        
-        .feature-list i {
-            color: var(--secondary-color);
-            margin-top: 0.25rem;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/minimal.css">
+    <link rel="stylesheet" href="../css/minimal-project.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="nav-brand">
-                <a href="../index.html">
-                    <span class="brand-icon">📊</span>
-                    <span class="brand-text">Godson Kurishinkal</span>
-                </a>
-            </div>
-            <div class="nav-menu">
-                <a href="../index.html#home" class="nav-link">Home</a>
-                <a href="../index.html#projects" class="nav-link">Projects</a>
-                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-003-dynamic-pricing-engine" 
-                   target="_blank" class="nav-link">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-            </div>
+    <nav class="nav">
+        <div class="nav-container container">
+            <a href="../index.html" class="nav-brand">Godson Kurishinkal</a>
+            <ul class="nav-menu">
+                <li><a href="../index.html#home" class="nav-link">Home</a></li>
+                <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
     <!-- Project Hero -->
     <section class="project-hero">
         <div class="container">
-            <div class="project-header">
-                <h1>💰 Dynamic Pricing Engine</h1>
-                <p class="project-tagline">
-                    Advanced ML-powered pricing optimization system using econometrics, 
-                    demand forecasting, and revenue maximization
+            <a href="../index.html#projects" class="back-nav">
+                <i class="fas fa-arrow-left"></i>
+                Back to Projects
+            </a>
+            
+            <div class="project-hero-content">
+                <span class="project-label">
+                    <i class="fas fa-chart-line"></i>
+                    Machine Learning • Pricing Optimization
+                </span>
+                
+                <h1 class="project-title">Dynamic Pricing Engine</h1>
+                
+                <p class="project-subtitle">
+                    Advanced ML-powered pricing optimization system using econometric analysis, 
+                    demand forecasting, and revenue maximization algorithms for retail and e-commerce applications.
                 </p>
-                <div class="project-links">
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Status</span>
+                        <span class="meta-value">✅ Completed</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Duration</span>
+                        <span class="meta-value">3 Months</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Complexity</span>
+                        <span class="meta-value">Advanced</span>
+                    </div>
+                </div>
+                
+                <div class="project-actions">
                     <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-003-dynamic-pricing-engine" 
                        target="_blank" class="btn btn-primary">
                         <i class="fab fa-github"></i> View on GitHub
                     </a>
-                    <a href="../index.html#projects" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to Projects
+                    <a href="#overview" class="btn btn-secondary">
+                        <i class="fas fa-book"></i> Read Documentation
                     </a>
                 </div>
-            </div>
-
-            <!-- Key Metrics -->
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-value">7,500+</div>
-                    <div class="metric-label">Lines of Code</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">127</div>
-                    <div class="metric-label">Tests Passing</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">47K+</div>
-                    <div class="metric-label">Observations</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value">100</div>
-                    <div class="metric-label">Products Analyzed</div>
+                
+                <!-- Key Stats -->
+                <div class="project-stats">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">7.5K+</div>
+                            <div class="stat-label">Lines of Code</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">127</div>
+                            <div class="stat-label">Tests Passing</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">47K+</div>
+                            <div class="stat-label">Observations</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">100</div>
+                            <div class="stat-label">Products Analyzed</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -306,15 +105,15 @@
     <div class="project-content">
         <div class="container">
             <!-- Overview -->
-            <div class="content-section">
-                <h2>📋 Project Overview</h2>
-                <p>
+            <div class="content-section" id="overview">
+                <h2 class="section-heading">Project Overview</h2>
+                <p class="section-intro">
                     The Dynamic Pricing Engine is a comprehensive machine learning system that optimizes
                     product pricing using advanced econometric analysis, demand forecasting, and mathematical
                     optimization techniques. Built for retail and e-commerce applications, it maximizes
                     revenue while considering market dynamics, competitive positioning, and inventory constraints.
                 </p>
-                <p>
+                <p class="section-intro">
                     This project demonstrates end-to-end data science capabilities: from econometric modeling
                     (price elasticity analysis) to predictive ML (demand forecasting) to operations research
                     (price optimization). It's designed as a production-ready system with comprehensive testing,
@@ -324,91 +123,126 @@
 
             <!-- Key Features -->
             <div class="content-section">
-                <h2>✨ Key Features</h2>
-                <ul class="feature-list">
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>Price Elasticity Analysis:</strong> Calculate own-price and cross-price
-                            elasticities using log-log regression, arc elasticity, and point elasticity methods.
-                            Segment products by demand sensitivity (elastic/inelastic).
+                <h2 class="section-heading">Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
                         </div>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>Demand Forecasting:</strong> ML-powered forecasting using XGBoost with
-                            50+ engineered features including price history, seasonality, promotions, and lags.
-                            Handles 47K+ observations efficiently.
+                        <h3 class="feature-title">Price Elasticity Analysis</h3>
+                        <p class="feature-description">
+                            Calculate own-price and cross-price elasticities using log-log regression, 
+                            arc elasticity, and point elasticity methods. Segment products by demand 
+                            sensitivity (elastic/inelastic).
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
                         </div>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>Price Optimization:</strong> Gradient-based and grid search algorithms
-                            to maximize revenue or profit subject to business constraints (min margin, max discount).
+                        <h3 class="feature-title">Demand Forecasting</h3>
+                        <p class="feature-description">
+                            ML-powered forecasting using XGBoost with 50+ engineered features including 
+                            price history, seasonality, promotions, and lags. Handles 47K+ observations 
+                            efficiently.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
                         </div>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>Markdown Strategy:</strong> Intelligent clearance pricing for end-of-life
-                            products with time-based discount schedules, holding cost calculations, and
-                            salvage value optimization.
+                        <h3 class="feature-title">Price Optimization</h3>
+                        <p class="feature-description">
+                            Gradient-based and grid search algorithms to maximize revenue or profit 
+                            subject to business constraints (min margin, max discount).
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-percentage"></i>
                         </div>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>Competitive Analysis:</strong> Monitor competitor pricing patterns,
-                            identify market positioning opportunities, and recommend competitive strategies.
+                        <h3 class="feature-title">Markdown Strategy</h3>
+                        <p class="feature-description">
+                            Intelligent clearance pricing for end-of-life products with time-based 
+                            discount schedules, holding cost calculations, and salvage value optimization.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
                         </div>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>Production-Ready:</strong> Comprehensive test suite (94 tests),
-                            configuration-driven design, logging, error handling, and CI/CD ready.
+                        <h3 class="feature-title">Competitive Analysis</h3>
+                        <p class="feature-description">
+                            Monitor competitor pricing patterns, identify market positioning opportunities, 
+                            and recommend competitive strategies.
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-check-circle"></i>
                         </div>
-                    </li>
-                </ul>
+                        <h3 class="feature-title">Production-Ready</h3>
+                        <p class="feature-description">
+                            Comprehensive test suite (127 tests), configuration-driven design, logging, 
+                            error handling, and CI/CD ready.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <!-- Technical Stack -->
             <div class="content-section">
-                <h2>🛠️ Technical Stack</h2>
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Core ML</h3>
-                        <div class="project-tech" style="justify-content: center;">
-                            <span class="tech-badge">Python 3.11</span>
-                            <span class="tech-badge">scikit-learn</span>
-                            <span class="tech-badge">XGBoost</span>
-                        </div>
+                <h2 class="section-heading">Technical Stack</h2>
+                <div class="tech-stack-grid">
+                    <div class="tech-item">
+                        <div class="tech-icon">🐍</div>
+                        <div class="tech-name">Python 3.11</div>
+                        <div class="tech-category">Core Language</div>
                     </div>
-                    <div class="metric-card">
-                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Data Science</h3>
-                        <div class="project-tech" style="justify-content: center;">
-                            <span class="tech-badge">Pandas</span>
-                            <span class="tech-badge">NumPy</span>
-                            <span class="tech-badge">Scipy</span>
-                        </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🧠</div>
+                        <div class="tech-name">scikit-learn</div>
+                        <div class="tech-category">ML Framework</div>
                     </div>
-                    <div class="metric-card">
-                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Optimization</h3>
-                        <div class="project-tech" style="justify-content: center;">
-                            <span class="tech-badge">PuLP</span>
-                            <span class="tech-badge">Statsmodels</span>
-                            <span class="tech-badge">OR-Tools</span>
-                        </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">⚡</div>
+                        <div class="tech-name">XGBoost</div>
+                        <div class="tech-category">Gradient Boosting</div>
                     </div>
-                    <div class="metric-card">
-                        <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Visualization</h3>
-                        <div class="project-tech" style="justify-content: center;">
-                            <span class="tech-badge">Plotly</span>
-                            <span class="tech-badge">Matplotlib</span>
-                            <span class="tech-badge">Seaborn</span>
-                        </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📊</div>
+                        <div class="tech-name">Pandas</div>
+                        <div class="tech-category">Data Analysis</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🔢</div>
+                        <div class="tech-name">NumPy</div>
+                        <div class="tech-category">Numerical Computing</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📈</div>
+                        <div class="tech-name">Scipy</div>
+                        <div class="tech-category">Scientific Computing</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">🎯</div>
+                        <div class="tech-name">PuLP</div>
+                        <div class="tech-category">Optimization</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📉</div>
+                        <div class="tech-name">Statsmodels</div>
+                        <div class="tech-category">Statistical Models</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-icon">📊</div>
+                        <div class="tech-name">Plotly</div>
+                        <div class="tech-category">Visualization</div>
                     </div>
                 </div>
             </div>
@@ -875,41 +709,83 @@ print(f"Maximum profit: ${optimal_profit:,.2f}")</code></pre>
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-brand">
-                    <h3>Godson Kurishinkal</h3>
-                    <p>Data Science Portfolio</p>
-                </div>
-                <div class="footer-links">
-                    <a href="../index.html#home">Home</a>
-                    <a href="../index.html#projects">Projects</a>
-                    <a href="../index.html#contact">Contact</a>
-                </div>
-                <div class="footer-social">
-                    <a href="https://github.com/GodsonKurishinkal" target="_blank">
+                <p class="footer-text">© 2024 Godson Kurishinkal. All rights reserved.</p>
+                <ul class="footer-links">
+                    <li><a href="../index.html#home" class="footer-link">Home</a></li>
+                    <li><a href="../index.html#projects" class="footer-link">Projects</a></li>
+                    <li><a href="../index.html#contact" class="footer-link">Contact</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link" aria-label="GitHub">
                         <i class="fab fa-github"></i>
                     </a>
-                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank">
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link" aria-label="LinkedIn">
                         <i class="fab fa-linkedin"></i>
                     </a>
-                    <a href="mailto:godson@example.com">
+                    <a href="mailto:godson@example.com" class="social-link" aria-label="Email">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Godson Kurishinkal. Built with passion for data science.</p>
-            </div>
         </div>
     </footer>
-
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
 
     <!-- Prism.js for syntax highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     
-    <script src="../js/main.js"></script>
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('.nav').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Nav scroll effect
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.feature-card, .tech-item, .metric-card, .timeline-item');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight * 0.85) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Initialize elements
+        revealElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        revealOnScroll();
+    </script>
 </body>
 </html>
