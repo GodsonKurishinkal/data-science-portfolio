@@ -16,13 +16,16 @@
     <link rel="stylesheet" href="css/minimal.css">
 </head>
 <body>
+    <!-- Skip to content for accessibility -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    
     <!-- Navigation -->
-    <nav class="nav" id="nav">
+    <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-container">
-            <a href="#" class="nav-brand">Godson Kurishinkal</a>
+            <a href="#" class="nav-brand" aria-label="Godson Kurishinkal - Home">Godson Kurishinkal</a>
             
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link active">Home</a></li>
+            <ul class="nav-menu" role="list">
+                <li><a href="#home" class="nav-link active" aria-current="page">Home</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#skills" class="nav-link">Skills</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
@@ -31,11 +34,11 @@
     </nav>
 
     <!-- Hero -->
-    <section class="hero" id="home">
-        <div class="container">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+        <div class="container" id="main-content">
             <div class="hero-content">
-                <p class="hero-label">Data Scientist & ML Engineer</p>
-                <h1 class="hero-title">Building intelligent systems that drive business impact</h1>
+                <p class="hero-label" aria-label="Professional title">Data Scientist & ML Engineer</p>
+                <h1 class="hero-title" id="hero-title">Building intelligent systems that drive business impact</h1>
                 <p class="hero-description">
                     I specialize in machine learning, supply chain optimization, and turning complex data 
                     into actionable insights. Currently focused on building end-to-end ML systems for 
@@ -75,22 +78,22 @@
     </section>
 
     <!-- Projects -->
-    <section class="section" id="projects">
+    <section class="section section-alt" id="projects" aria-labelledby="projects-title">
         <div class="container">
             <div class="section-header">
                 <p class="section-label">Portfolio</p>
-                <h2 class="section-title">Featured Projects</h2>
+                <h2 class="section-title" id="projects-title">Featured Projects</h2>
                 <p class="section-description">
                     End-to-end machine learning solutions for supply chain optimization
                 </p>
             </div>
             
-            <div class="projects-grid">
+            <div class="projects-grid" role="list">
                 <!-- Project 1: Dynamic Pricing -->
-                <article class="project-card">
+                <article class="project-card" role="listitem">
                     <div class="project-meta">
-                        <span class="project-icon">💰</span>
-                        <span class="project-status">Complete</span>
+                        <span class="project-icon" aria-label="Dynamic Pricing icon">💰</span>
+                        <span class="project-status" aria-label="Project status">Complete</span>
                     </div>
                     
                     <h3 class="project-title">Dynamic Pricing Engine</h3>
