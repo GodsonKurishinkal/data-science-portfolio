@@ -39,7 +39,7 @@
                 </a>
                 <a href="../projects/demand-forecasting.html">
                     <i class="fas fa-link"></i> Related: Demand Forecasting
-                </a></code></pre>
+                </a>
             </div>
         </div>
     </section>
@@ -71,7 +71,7 @@
                 <div class="metric-card">
                     <div class="number">10</div>
                     <div class="label">Store Locations</div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -94,7 +94,7 @@
                     Excess inventory ties up capital and incurs 15-25% annual holding costs, while stockouts lead to 
                     lost sales and customer dissatisfaction. This system optimizes inventory levels to minimize total costs 
                     while maintaining high service levels.
-                </p></code></pre>
+                </p>
             </div>
         </div>
     </section>
@@ -133,7 +133,7 @@
                     <div class="icon"><i class="fas fa-dollar-sign"></i></div>
                     <h3>Comprehensive Cost Modeling</h3>
                     <p>Total cost analysis including holding costs, ordering costs, and stockout costs for data-driven decision making.</p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -190,7 +190,7 @@
                         <p><strong>Q/2 × H</strong> = Annual holding costs</p>
                         <p><strong>SC</strong> = Stockout costs</p>
                     </div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -298,7 +298,7 @@
                     <p class="visual-caption">
                         Visual representation of the 9-segment ABC/XYZ matrix showing distribution of products by value and variability
                     </p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -350,7 +350,7 @@
                     <p class="visual-caption">
                         Detailed analysis of top 20 revenue-generating items showing EOQ, reorder points, safety stock levels, and optimization opportunities.
                     </p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -394,7 +394,7 @@
                         <li>Black formatter</li>
                         <li>Type hints</li>
                     </ul>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -406,7 +406,7 @@
             
             <h3 class="code-section-title">1. ABC/XYZ Classification</h3>
             <div class="code-block">
-                <pre><code><span class="keyword">from</span> src.inventory <span class="keyword">import</span> ABCAnalyzer
+<span class="keyword">from</span> src.inventory <span class="keyword">import</span> ABCAnalyzer
 
 <span class="comment"># Initialize analyzer</span>
 analyzer = <span class="function">ABCAnalyzer</span>()
@@ -429,7 +429,7 @@ classified = analyzer.<span class="function">perform_combined_analysis</span>(
 
             <h3 class="code-section-title">2. Safety Stock & Reorder Point</h3>
             <div class="code-block">
-                <pre><code><span class="keyword">from</span> src.inventory <span class="keyword">import</span> SafetyStockCalculator
+<span class="keyword">from</span> src.inventory <span class="keyword">import</span> SafetyStockCalculator
 
 <span class="comment"># Initialize with service level and lead time</span>
 ss_calc = <span class="function">SafetyStockCalculator</span>(
@@ -452,7 +452,7 @@ inventory_data = ss_calc.<span class="function">calculate_for_dataframe</span>(
 
             <h3 class="code-section-title">3. Economic Order Quantity</h3>
             <div class="code-block">
-                <pre><code><span class="keyword">from</span> src.inventory <span class="keyword">import</span> EOQCalculator
+<span class="keyword">from</span> src.inventory <span class="keyword">import</span> EOQCalculator
 
 <span class="comment"># Initialize with cost parameters</span>
 eoq_calc = <span class="function">EOQCalculator</span>(
@@ -475,7 +475,7 @@ inventory_data = eoq_calc.<span class="function">calculate_for_dataframe</span>(
 
             <h3 class="code-section-title">4. Complete Optimization Pipeline</h3>
             <div class="code-block">
-                <pre><code><span class="keyword">from</span> src.optimization <span class="keyword">import</span> InventoryOptimizer
+<span class="keyword">from</span> src.optimization <span class="keyword">import</span> InventoryOptimizer
 
 <span class="comment"># Initialize optimizer</span>
 optimizer = <span class="function">InventoryOptimizer</span>(config)
@@ -499,7 +499,7 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
 
 <span class="keyword">for</span> rec <span class="keyword">in</span> recommendations:
     <span class="function">print</span>(<span class="string">f"{rec['item_id']}: {rec['action']} - "</span>
-          <span class="string">f"Save ${rec['savings']:,.0f}/year"</span>)</code></pre>
+          <span class="string">f"Save ${rec['savings']:,.0f}/year"</span>)
             </div>
         </div>
     </section>
@@ -551,7 +551,7 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
                     <li><strong>Seasonal products</strong> benefit from dynamic safety stock that adjusts with demand patterns</li>
                     <li><strong>Multi-location pooling</strong> can reduce total safety stock by 15-25% compared to independent stores</li>
                     <li><strong>Automated reordering</strong> eliminated 95% of manual stock level checks</li>
-                </ul></code></pre>
+                </ul>
             </div>
         </div>
     </section>
@@ -590,7 +590,7 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
                     <div class="icon"><i class="fas fa-exchange-alt"></i></div>
                     <h3>Substitution Modeling</h3>
                     <p>Incorporate product substitution effects when items are out of stock to optimize across product families.</p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -603,7 +603,7 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
                 <p>See how this inventory optimization engine integrates with demand forecasting for end-to-end supply chain intelligence.</p>
                 <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-002-inventory-optimization-engine" class="cta-button" target="_blank">
                     <i class="fab fa-github"></i> View Full Project
-                </a></code></pre>
+                </a>
             </div>
         </div>
     </section>

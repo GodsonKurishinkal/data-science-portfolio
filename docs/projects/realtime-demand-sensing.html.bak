@@ -68,7 +68,7 @@
                     <a href="#dashboard" class="btn btn-secondary">
                         <i class="fas fa-tachometer-alt"></i> Dashboard Demo
                     </a>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -106,7 +106,7 @@
                     <div class="stat-icon">💵</div>
                     <div class="stat-value">$1.2M</div>
                     <div class="stat-label">Cost Savings</div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -148,7 +148,7 @@
                         <h3>Interactive Monitoring</h3>
                         <p>Dashboard for real-time visibility and control</p>
                     </div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -216,7 +216,7 @@
                         <span class="tech-tag">Streamlit</span>
                         <span class="tech-tag">Plotly</span>
                     </div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -229,7 +229,7 @@
             <div class="implementation-section">
                 <h3>1. Real-Time Demand Sensing</h3>
                 <div class="code-block">
-                <pre><code>                    <div class="code-header">
+                    <div class="code-header">
                         <span>demand_sensor.py</span>
                         <span class="code-lang">Python</span>
                     </div>
@@ -338,7 +338,7 @@ class DemandSensor:
             <div class="implementation-section">
                 <h3>2. Automated Replenishment Engine</h3>
                 <div class="code-block">
-                <pre><code>                    <div class="code-header">
+                    <div class="code-header">
                         <span>trigger_engine.py</span>
                         <span class="code-lang">Python</span>
                     </div>
@@ -448,7 +448,7 @@ class DemandSensor:
         """
         from scipy import stats
         return stats.norm.ppf(service_level)</code></pre>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -483,7 +483,7 @@ class DemandSensor:
                 </div>
                 
                 <div class="code-block">
-                <pre><code>                    <div class="code-header">
+                    <div class="code-header">
                         <span>app.py - Streamlit Dashboard</span>
                         <span class="code-lang">Python</span>
                     </div>
@@ -608,7 +608,7 @@ with tab4:
     st.write(f"- Expected Stockouts: {scenario_results['expected_stockouts']}")
     st.write(f"- Total Cost: ${scenario_results['total_cost']:,.0f}")
 </code></pre>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -660,7 +660,7 @@ with tab4:
                     <li><strong>Response Action:</strong> Automatic expedited order for 5,000 units</li>
                     <li><strong>Outcome:</strong> 98% in-stock during surge, $200K additional revenue captured</li>
                     <li><strong>ROI:</strong> System paid for itself in the first major event</li>
-                </ul></code></pre>
+                </ul>
             </div>
         </div>
     </section>
@@ -702,7 +702,7 @@ with tab4:
                         <span class="tech-badge">NumPy</span>
                         <span class="tech-badge">Polars</span>
                     </div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -719,7 +719,7 @@ with tab4:
                 <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-005-realtime-demand-sensing" 
                    class="btn btn-secondary" target="_blank">
                     <i class="fab fa-github"></i> View Code
-                </a></code></pre>
+                </a>
             </div>
         </div>
     </section>

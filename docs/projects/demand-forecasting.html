@@ -369,7 +369,7 @@
             
             <h3 class="code-section-title">1. Quick Start Demo</h3>
             <div class="code-block">
-<span class="comment"># Run the complete ML pipeline in under 3 minutes</span>
+                <pre><code><span class="comment"># Run the complete ML pipeline in under 3 minutes</span>
 <span class="keyword">import</span> sys
 sys.path.append(<span class="string">'.'</span>)
 
@@ -392,12 +392,12 @@ model, metrics, importance = <span class="function">train_m5_model</span>(
 
 <span class="comment"># Display results</span>
 <span class="function">print</span>(<span class="string">f"RMSE: {metrics['rmse']:.4f}"</span>)
-<span class="function">print</span>(<span class="string">f"R²: {metrics['r2']:.4f}"</span>)
+<span class="function">print</span>(<span class="string">f"R²: {metrics['r2']:.4f}"</span>)</code></pre>
             </div>
 
             <h3 class="code-section-title">2. Feature Engineering Pipeline</h3>
             <div class="code-block">
-<span class="keyword">def</span> <span class="function">build_m5_features</span>(df, target_col=<span class="string">'sales'</span>):
+                <pre><code><span class="keyword">def</span> <span class="function">build_m5_features</span>(df, target_col=<span class="string">'sales'</span>):
     <span class="string">"""Build comprehensive feature set for M5 forecasting."""</span>
     
     <span class="comment"># Time-based features</span>
@@ -428,12 +428,12 @@ model, metrics, importance = <span class="function">train_m5_model</span>(
         .<span class="function">transform</span>(<span class="keyword">lambda</span> x: x.<span class="function">rolling</span>(7).<span class="function">mean</span>() - x)
     )
     
-    <span class="keyword">return</span> df
+    <span class="keyword">return</span> df</code></pre>
             </div>
 
             <h3 class="code-section-title">3. Model Training & Evaluation</h3>
             <div class="code-block">
-<span class="keyword">from</span> lightgbm <span class="keyword">import</span> LGBMRegressor
+                <pre><code><span class="keyword">from</span> lightgbm <span class="keyword">import</span> LGBMRegressor
 <span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_absolute_error, r2_score
 
 <span class="comment"># Initialize LightGBM with optimized hyperparameters</span>
@@ -469,7 +469,7 @@ r2 = <span class="function">r2_score</span>(y_test, y_pred)
 importance_df = pd.<span class="function">DataFrame</span>({
     <span class="string">'feature'</span>: X_train.columns,
     <span class="string">'importance'</span>: model.feature_importances_
-}).<span class="function">sort_values</span>(<span class="string">'importance'</span>, ascending=<span class="keyword">False</span>)
+}).<span class="function">sort_values</span>(<span class="string">'importance'</span>, ascending=<span class="keyword">False</span>)</code></pre>
             </div>
         </div>
     </section>
