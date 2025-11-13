@@ -1,0 +1,87 @@
+# Real-Time Demand Sensing Configuration
+
+# Sensing Parameters
+sensing:
+  update_frequency_minutes: 60
+  lookback_hours: 24
+  smoothing_alpha: 0.3
+  drift_threshold: 0.15
+
+# Anomaly Detection
+anomaly_detection:
+  methods: ['zscore', 'isolation_forest', 'lstm']
+  ensemble_weights: [0.3, 0.4, 0.3]
+  sensitivity: 'medium'  # low, medium, high
+  baseline_window_days: 28
+  z_score_threshold: 3.0
+  isolation_forest:
+    contamination: 0.05
+    n_estimators: 100
+  lstm:
+    sequence_length: 24
+    epochs: 50
+
+# Alert Thresholds
+alerts:
+  critical:
+    days_of_stock: 1
+    demand_spike_pct: 100
+  warning:
+    days_of_stock: 3
+    demand_spike_pct: 50
+  info:
+    days_of_stock: 5
+    demand_spike_pct: 25
+
+# Forecasting
+forecasting:
+  horizon_days: 7
+  models: ['prophet', 'sarimax', 'xgboost']
+  ensemble_method: 'weighted_average'
+  weights: [0.4, 0.3, 0.3]
+  prophet:
+    seasonality_mode: 'multiplicative'
+    changepoint_prior_scale: 0.05
+  sarimax:
+    order: [1, 1, 1]
+    seasonal_order: [1, 1, 1, 7]
+
+# Replenishment Rules
+replenishment:
+  reorder_point_method: 'dynamic'  # fixed, dynamic
+  safety_stock_factor: 1.65  # For 95% service level
+  lead_time_days: 3
+  min_order_quantity: 10
+  max_order_quantity: 1000
+  economic_order_quantity: true
+  automation_rules:
+    auto_approve_threshold: 1000  # USD value
+    review_required_threshold: 5000
+
+# Data Streaming (Simulation)
+streaming:
+  batch_size: 100
+  update_interval_seconds: 60
+  buffer_size: 10000
+
+# Cache Settings
+cache:
+  type: 'memory'  # memory, redis
+  ttl_seconds: 3600
+  redis:
+    host: 'localhost'
+    port: 6379
+    db: 0
+
+# Dashboard
+dashboard:
+  refresh_interval_seconds: 60
+  max_products_display: 50
+  chart_history_days: 30
+
+# Paths
+paths:
+  data: 'data/'
+  models: 'models/'
+  logs: 'logs/'
+  cache: 'cache/'
