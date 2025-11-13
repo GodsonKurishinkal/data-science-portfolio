@@ -104,27 +104,27 @@
     <section class="content-section">
         <div class="container">
             <div class="metrics-grid">
-                <div class="metric-card" style="animation-delay: 0.1s;">
+                <div class="metric-card">
                     <div class="number">30,490</div>
                     <div class="label">Time Series</div>
                 </div>
-                <div class="metric-card" style="animation-delay: 0.2s;">
+                <div class="metric-card">
                     <div class="number">92.4%</div>
                     <div class="label">R² Score (LightGBM)</div>
                 </div>
-                <div class="metric-card" style="animation-delay: 0.3s;">
+                <div class="metric-card">
                     <div class="number">50+</div>
                     <div class="label">Engineered Features</div>
                 </div>
-                <div class="metric-card" style="animation-delay: 0.4s;">
+                <div class="metric-card">
                     <div class="number">12.3%</div>
                     <div class="label">MAPE (Best Model)</div>
                 </div>
-                <div class="metric-card" style="animation-delay: 0.5s;">
+                <div class="metric-card">
                     <div class="number">58M</div>
                     <div class="label">Data Points Processed</div>
                 </div>
-                <div class="metric-card" style="animation-delay: 0.6s;">
+                <div class="metric-card">
                     <div class="number">2.5min</div>
                     <div class="label">Training Time</div>
                 </div>
@@ -136,15 +136,15 @@
     <section class="content-section">
         <div class="container">
             <h2 class="section-title">Project Overview</h2>
-            <p style="font-size: 1.1rem; line-height: 1.8; color: #4a5568;">
+            <p class="overview-text">
                 A comprehensive machine learning system designed to forecast retail product demand using the prestigious M5 Competition dataset from Walmart. 
                 This production-ready solution handles <strong>30,490 time series</strong> across <strong>10 stores</strong>, <strong>3 states</strong>, and 
                 <strong>3,049 products</strong>, processing approximately <strong>5 years of historical sales data</strong>.
             </p>
             
-            <div style="margin: 2rem 0; padding: 1.5rem; background: #fff3cd; border-left: 4px solid #ffc107; border-radius: 8px;">
-                <h3 style="color: #856404; margin-bottom: 0.5rem;"><i class="fas fa-lightbulb"></i> Business Problem</h3>
-                <p style="color: #856404; margin: 0;">
+            <div class="business-problem">
+                <h3><i class="fas fa-lightbulb"></i> Business Problem</h3>
+                <p>
                     Retail businesses lose billions annually due to poor demand forecasting. Overstocking leads to increased holding costs 
                     and waste (15-25% of inventory value), while understocking results in lost sales and customer dissatisfaction. 
                     This system provides accurate demand forecasts to optimize inventory levels, reduce costs by 10-15%, and improve customer service.
@@ -240,39 +240,39 @@
     <section class="content-section">
         <div class="container">
             <h2 class="section-title">Visual Results</h2>
-            <p style="font-size: 1.05rem; color: #4a5568; margin-bottom: 2rem;">
+            <p class="intro-text">
                 Comprehensive visualizations demonstrating model performance, feature importance, and prediction quality across the M5 dataset.
             </p>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-chart-bar"></i> Model Comparison</h3>
-                    <img src="../images/projects/model_comparison.png" alt="Model Performance Comparison" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+            <div class="visual-grid">
+                <div class="visual-card">
+                    <h3><i class="fas fa-chart-bar"></i> Model Comparison</h3>
+                    <img src="../images/projects/model_comparison.png" alt="Model Performance Comparison">
+                    <p class="visual-caption">
                         LightGBM outperforms all baseline and ML models with lowest RMSE and highest R² score, making it the optimal choice for production deployment.
                     </p>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-star"></i> Feature Importance</h3>
-                    <img src="../images/projects/feature_importance.png" alt="Feature Importance Analysis" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                <div class="visual-card">
+                    <h3><i class="fas fa-star"></i> Feature Importance</h3>
+                    <img src="../images/projects/feature_importance.png" alt="Feature Importance Analysis">
+                    <p class="visual-caption">
                         Lag features (especially 28-day and 7-day) dominate importance, confirming strong temporal patterns in retail demand.
                     </p>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-chart-line"></i> Prediction Quality</h3>
-                    <img src="../images/projects/predictions_analysis.png" alt="Predictions vs Actuals" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                <div class="visual-card">
+                    <h3><i class="fas fa-chart-line"></i> Prediction Quality</h3>
+                    <img src="../images/projects/predictions_analysis.png" alt="Predictions vs Actuals">
+                    <p class="visual-caption">
                         Strong correlation between predictions and actuals with residuals centered near zero, indicating unbiased, high-quality forecasts.
                     </p>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #667eea; margin-bottom: 1rem;"><i class="fas fa-tachometer-alt"></i> Metrics Summary</h3>
-                    <img src="../images/projects/metrics_summary.png" alt="Performance Metrics Dashboard" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                <div class="visual-card">
+                    <h3><i class="fas fa-tachometer-alt"></i> Metrics Summary</h3>
+                    <img src="../images/projects/metrics_summary.png" alt="Performance Metrics Dashboard">
+                    <p class="visual-caption">
                         Comprehensive metrics dashboard showing MAE, RMSE, MAPE, and R² scores across training and validation sets.
                     </p>
                 </div>
@@ -284,7 +284,7 @@
     <section class="content-section">
         <div class="container">
             <h2 class="section-title">Model Performance Comparison</h2>
-            <p style="font-size: 1.05rem; color: #4a5568; margin-bottom: 2rem;">
+            <p class="intro-text">
                 Comprehensive evaluation of baseline and machine learning models. LightGBM achieves the best accuracy with fastest training time.
             </p>
             
@@ -351,9 +351,9 @@
                 </tbody>
             </table>
 
-            <div style="margin-top: 2rem; padding: 1.5rem; background: #d1fae5; border-left: 4px solid #10b981; border-radius: 8px;">
-                <h3 style="color: #065f46; margin-bottom: 0.5rem;"><i class="fas fa-trophy"></i> Winner: LightGBM</h3>
-                <p style="color: #065f46; margin: 0;">
+            <div class="winner-badge">
+                <h3><i class="fas fa-trophy"></i> Winner: LightGBM</h3>
+                <p>
                     LightGBM outperforms all models with <strong>92.4% R² score</strong> and <strong>12.3% MAPE</strong>, 
                     while maintaining the fastest training time among ML models at just 2.5 minutes. This makes it ideal for 
                     production deployment with regular retraining.
@@ -367,7 +367,7 @@
         <div class="container">
             <h2 class="section-title">Code Examples</h2>
             
-            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">1. Quick Start Demo</h3>
+            <h3 class="code-section-title">1. Quick Start Demo</h3>
             <div class="code-block">
 <span class="comment"># Run the complete ML pipeline in under 3 minutes</span>
 <span class="keyword">import</span> sys
@@ -395,7 +395,7 @@ model, metrics, importance = <span class="function">train_m5_model</span>(
 <span class="function">print</span>(<span class="string">f"R²: {metrics['r2']:.4f}"</span>)
             </div>
 
-            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">2. Feature Engineering Pipeline</h3>
+            <h3 class="code-section-title">2. Feature Engineering Pipeline</h3>
             <div class="code-block">
 <span class="keyword">def</span> <span class="function">build_m5_features</span>(df, target_col=<span class="string">'sales'</span>):
     <span class="string">"""Build comprehensive feature set for M5 forecasting."""</span>
@@ -431,7 +431,7 @@ model, metrics, importance = <span class="function">train_m5_model</span>(
     <span class="keyword">return</span> df
             </div>
 
-            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">3. Model Training & Evaluation</h3>
+            <h3 class="code-section-title">3. Model Training & Evaluation</h3>
             <div class="code-block">
 <span class="keyword">from</span> lightgbm <span class="keyword">import</span> LGBMRegressor
 <span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_absolute_error, r2_score
@@ -512,9 +512,9 @@ importance_df = pd.<span class="function">DataFrame</span>({
                 </div>
             </div>
 
-            <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                <h3 style="color: #667eea; margin-bottom: 1.5rem;"><i class="fas fa-trophy"></i> Top 10 Most Important Features</h3>
-                <ol style="line-height: 2; color: #4a5568;">
+            <div class="insight-box">
+                <h3><i class="fas fa-trophy"></i> Top 10 Most Important Features</h3>
+                <ol>
                     <li><strong>sales_lag_28</strong> - 28-day sales lag (monthly pattern) - 15.6%</li>
                     <li><strong>sales_lag_7</strong> - 7-day sales lag (weekly pattern) - 14.2%</li>
                     <li><strong>sales_rolling_mean_28</strong> - 28-day rolling average - 12.8%</li>
