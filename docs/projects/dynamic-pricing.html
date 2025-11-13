@@ -300,8 +300,8 @@
                             <span class="tech-badge">14 Tests</span>
                             <span class="tech-badge">100% Valid Results</span>
                         </div>
-                        <h4 style="margin-top: 1rem;">Key Results:</h4>
-                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <h4 class="phase-results-title">Key Results:</h4>
+                        <ul class="phase-results-list">
                             <li>Mean elasticity: -1.148 (moderately elastic)</li>
                             <li>37% highly inelastic → Can raise prices</li>
                             <li>33% highly elastic → Should lower prices</li>
@@ -324,8 +324,8 @@
                             <span class="tech-badge">18 Tests</span>
                             <span class="tech-badge">Demo Script</span>
                         </div>
-                        <h4 style="margin-top: 1rem;">Key Features:</h4>
-                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <h4 class="phase-results-title">Key Features:</h4>
+                        <ul class="phase-results-list">
                             <li><strong>Demand Prediction:</strong> Q_new = Q_base × (P_new/P_base)^elasticity × seasonality × promotion</li>
                             <li><strong>Demand Curves:</strong> Generate 30 price points, identify optimal revenue-maximizing price</li>
                             <li><strong>Seasonality:</strong> Day-of-week, monthly, and weekend demand patterns</li>
@@ -334,8 +334,8 @@
                             <li><strong>Confidence Intervals:</strong> 95% prediction intervals using z-score</li>
                             <li><strong>Scenario Analysis:</strong> Compare 9+ pricing strategies side-by-side</li>
                         </ul>
-                        <h4 style="margin-top: 1rem;">Demo Results:</h4>
-                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <h4 class="phase-results-title">Demo Results:</h4>
+                        <ul class="phase-results-list">
                             <li>Optimal price identified: +30% from baseline → +$330 additional revenue</li>
                             <li>Best scenario: +20% price increase → +20% revenue (inelastic products)</li>
                             <li>Seasonality: Weekend demand 1.1% lower than weekdays on average</li>
@@ -360,14 +360,14 @@
                             <span class="tech-badge">73 Tests</span>
                             <span class="tech-badge">3 Algorithms</span>
                         </div>
-                        <h4 style="margin-top: 1rem;">Optimization Methods:</h4>
-                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <h4 class="phase-results-title">Optimization Methods:</h4>
+                        <ul class="phase-results-list">
                             <li><strong>Scipy Bounded Minimization:</strong> Fast, precise optimization with constraints</li>
                             <li><strong>Grid Search:</strong> Exhaustive search across 100 price points</li>
                             <li><strong>Custom Gradient Descent:</strong> Numerical gradient with convergence tolerance</li>
                         </ul>
-                        <h4 style="margin-top: 1rem;">Key Features:</h4>
-                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <h4 class="phase-results-title">Key Features:</h4>
+                        <ul class="phase-results-list">
                             <li><strong>Dual Objectives:</strong> Revenue maximization or profit maximization</li>
                             <li><strong>Business Constraints:</strong> Min/max price, minimum margin %, max discount %</li>
                             <li><strong>Portfolio Optimization:</strong> Batch processing for multiple products</li>
@@ -376,16 +376,16 @@
                             <li><strong>Elasticity Segmentation:</strong> Product categorization with strategic recommendations</li>
                             <li><strong>Optimization History:</strong> Track and aggregate results across multiple runs</li>
                         </ul>
-                        <h4 style="margin-top: 1rem;">Demo Results:</h4>
-                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <h4 class="phase-results-title">Demo Results:</h4>
+                        <ul class="phase-results-list">
                             <li><strong>Single Product (Elastic):</strong> -25% price → +26% revenue (+$155K monthly)</li>
                             <li><strong>Single Product (Profit):</strong> +25% price → +12% profit (+$26K monthly)</li>
                             <li><strong>6-Product Portfolio:</strong> +40% total profit (+$901K monthly = $10.8M annually)</li>
                             <li><strong>Sensitivity Analysis:</strong> Identified +30% price opportunity → +29% profit improvement</li>
                             <li><strong>Average Impact (5 products):</strong> +42% profit improvement, $876K annual gain</li>
                         </ul>
-                        <h4 style="margin-top: 1rem;">Business Value:</h4>
-                        <ul style="margin-left: 1.5rem; color: var(--text-secondary);">
+                        <h4 class="phase-results-title">Business Value:</h4>
+                        <ul class="phase-results-list">
                             <li>Automated data-driven pricing decisions with quantified ROI</li>
                             <li>Multi-million dollar profit improvement potential demonstrated</li>
                             <li>Constraint-aware recommendations maintain business rules</li>
@@ -686,9 +686,9 @@ print(f"Maximum profit: ${optimal_profit:,.2f}")</code></pre>
             </div>
 
             <!-- Call to Action -->
-            <div class="content-section" style="text-align: center; padding: 3rem; background: var(--bg-secondary); border-radius: 16px;">
+            <div class="content-section cta-section">
                 <h2>Interested in Learning More?</h2>
-                <p style="max-width: 600px; margin: 1rem auto 2rem;">
+                <p>
                     Check out the full source code, documentation, and Jupyter notebooks on GitHub.
                     Feel free to star the repository or reach out with questions!
                 </p>

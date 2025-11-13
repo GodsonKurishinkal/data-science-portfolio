@@ -727,6 +727,53 @@ code {
     color: #10b981;
 }
 
+.phase-results h4 {
+    margin-top: var(--space-4);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.phase-results ul {
+    margin-left: var(--space-6);
+    color: var(--color-text-light);
+    line-height: 1.8;
+}
+
+.phase-results ul li {
+    margin-bottom: var(--space-2);
+}
+
+.phase-results-title {
+    margin-top: var(--space-4);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.phase-results-list {
+    margin-left: var(--space-6);
+    color: var(--color-text-light);
+    line-height: 1.8;
+}
+
+.phase-results-list li {
+    margin-bottom: var(--space-2);
+}
+
+.cta-section {
+    text-align: center;
+    padding: var(--space-12);
+    background: var(--color-bg-subtle);
+    border-radius: var(--border-radius-xl);
+}
+
+.cta-section p {
+    max-width: 600px;
+    margin: var(--space-4) auto var(--space-8);
+    line-height: 1.8;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .project-title {
