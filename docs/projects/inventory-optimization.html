@@ -199,7 +199,7 @@
     <section class="content-section">
         <div class="container">
             <h2 class="section-title">ABC/XYZ Classification Matrix</h2>
-            <p style="font-size: 1.05rem; color: #4a5568; margin-bottom: 2rem;">
+            <p class="intro-text">
                 Inventory items are classified into 9 categories based on revenue contribution (ABC) and demand variability (XYZ), 
                 enabling tailored inventory management strategies for each segment.
             </p>
@@ -311,43 +311,43 @@
                 Data-driven insights from inventory optimization analysis showing cost reductions, service level tradeoffs, and revenue distribution.
             </p>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem; margin: 2rem 0;">
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-dollar-sign"></i> Cost Analysis</h3>
-                    <img src="../images/projects/cost_analysis.png" alt="Inventory Cost Breakdown" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+            <div class="visual-grid">
+                <div class="visual-card inventory">
+                    <h3><i class="fas fa-dollar-sign"></i> Cost Analysis</h3>
+                    <img src="../images/projects/cost_analysis.png" alt="Inventory Cost Breakdown">
+                    <p class="visual-caption">
                         Comprehensive breakdown of holding costs, ordering costs, and total inventory costs showing 10-15% reduction potential through optimization.
                     </p>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-balance-scale"></i> Service Level Tradeoff</h3>
-                    <img src="../images/projects/service_level_tradeoff.png" alt="Service Level vs Cost Tradeoff" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                <div class="visual-card inventory">
+                    <h3><i class="fas fa-balance-scale"></i> Service Level Tradeoff</h3>
+                    <img src="../images/projects/service_level_tradeoff.png" alt="Service Level vs Cost Tradeoff">
+                    <p class="visual-caption">
                         Optimal balance between service level and inventory costs, showing diminishing returns beyond 95% service level target.
                     </p>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-chart-pie"></i> Revenue Distribution</h3>
-                    <img src="../images/projects/revenue_distribution.png" alt="Revenue by ABC Classification" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                <div class="visual-card inventory">
+                    <h3><i class="fas fa-chart-pie"></i> Revenue Distribution</h3>
+                    <img src="../images/projects/revenue_distribution.png" alt="Revenue by ABC Classification">
+                    <p class="visual-caption">
                         Pareto analysis confirming 80/20 rule: top 20% of products (A items) generate 80% of revenue, requiring focused attention.
                     </p>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-tachometer-alt"></i> Inventory Metrics Dashboard</h3>
-                    <img src="../images/projects/inventory_metrics.png" alt="Key Inventory Performance Indicators" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                <div class="visual-card inventory">
+                    <h3><i class="fas fa-tachometer-alt"></i> Inventory Metrics Dashboard</h3>
+                    <img src="../images/projects/inventory_metrics.png" alt="Key Inventory Performance Indicators">
+                    <p class="visual-caption">
                         Comprehensive KPI dashboard tracking inventory turnover, days of supply, fill rate, and stockout frequency across all locations.
                     </p>
                 </div>
 
-                <div style="background: white; padding: 1.5rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                    <h3 style="color: #10b981; margin-bottom: 1rem;"><i class="fas fa-crown"></i> Top Items Dashboard</h3>
-                    <img src="../images/projects/top_items_dashboard.png" alt="Top 20 Items Analysis" style="width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                <div class="visual-card inventory">
+                    <h3><i class="fas fa-crown"></i> Top Items Dashboard</h3>
+                    <img src="../images/projects/top_items_dashboard.png" alt="Top 20 Items Analysis">
+                    <p class="visual-caption">
                         Detailed analysis of top 20 revenue-generating items showing EOQ, reorder points, safety stock levels, and optimization opportunities.
                     </p>
                 </div>
@@ -404,7 +404,7 @@
         <div class="container">
             <h2 class="section-title">Code Examples</h2>
             
-            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">1. ABC/XYZ Classification</h3>
+            <h3 class="code-section-title">1. ABC/XYZ Classification</h3>
             <div class="code-block">
 <span class="keyword">from</span> src.inventory <span class="keyword">import</span> ABCAnalyzer
 
@@ -427,7 +427,7 @@ classified = analyzer.<span class="function">perform_combined_analysis</span>(
 }))
             </div>
 
-            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">2. Safety Stock & Reorder Point</h3>
+            <h3 class="code-section-title">2. Safety Stock & Reorder Point</h3>
             <div class="code-block">
 <span class="keyword">from</span> src.inventory <span class="keyword">import</span> SafetyStockCalculator
 
@@ -450,7 +450,7 @@ inventory_data = ss_calc.<span class="function">calculate_for_dataframe</span>(
 <span class="comment"># - lead_time_demand: Expected demand during lead time</span>
             </div>
 
-            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">3. Economic Order Quantity</h3>
+            <h3 class="code-section-title">3. Economic Order Quantity</h3>
             <div class="code-block">
 <span class="keyword">from</span> src.inventory <span class="keyword">import</span> EOQCalculator
 
@@ -473,7 +473,7 @@ inventory_data = eoq_calc.<span class="function">calculate_for_dataframe</span>(
 <span class="function">print</span>(<span class="string">f"Total annual cost: ${inventory_data['total_cost'].sum():,.0f}"</span>)
             </div>
 
-            <h3 style="color: #2d3748; margin: 2rem 0 1rem;">4. Complete Optimization Pipeline</h3>
+            <h3 class="code-section-title">4. Complete Optimization Pipeline</h3>
             <div class="code-block">
 <span class="keyword">from</span> src.optimization <span class="keyword">import</span> InventoryOptimizer
 
@@ -542,9 +542,9 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
                 </div>
             </div>
 
-            <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
-                <h3 style="color: #10b981; margin-bottom: 1.5rem;"><i class="fas fa-trophy"></i> Key Findings</h3>
-                <ul style="line-height: 2; color: #4a5568;">
+            <div class="insight-box inventory">
+                <h3><i class="fas fa-trophy"></i> Key Findings</h3>
+                <ul>
                     <li><strong>AX items</strong> require 3x higher safety stock than CX items but generate 40x more revenue</li>
                     <li><strong>Lead time variability</strong> has 2x more impact on safety stock than demand variability</li>
                     <li><strong>EOQ optimization</strong> reduced ordering frequency by 30% while maintaining service levels</li>

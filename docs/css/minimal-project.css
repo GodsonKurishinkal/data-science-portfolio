@@ -678,6 +678,19 @@ code {
     margin-bottom: var(--space-3);
 }
 
+.insight-box ul {
+    line-height: 1.9;
+    color: var(--color-text);
+}
+
+.insight-box ul li {
+    margin-bottom: var(--space-3);
+}
+
+.insight-box.inventory h3 {
+    color: #10b981;
+}
+
 .key-insight {
     margin-top: var(--space-8);
     padding: var(--space-6);
@@ -708,6 +721,10 @@ code {
     margin-bottom: var(--space-6);
     font-size: var(--text-2xl);
     font-weight: 700;
+}
+
+.visual-card.inventory h3 {
+    color: #10b981;
 }
 
 /* Responsive */
