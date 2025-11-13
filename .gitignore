@@ -45,3 +45,7 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Claude AI context files
+**/CLAUDE*.md
+CLAUDE*.md
