@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Godson Kurishinkal - Data Scientist & ML Engineer specializing in supply chain optimization and machine learning.">
-    <title>Godson Kurishinkal | Data Scientist</title>
+    <meta name="description" content="Godson Kurishinkal - Data Scientist & ML Engineer specializing in supply chain optimization, machine learning, and end-to-end ML systems. Portfolio featuring demand forecasting, inventory optimization, and dynamic pricing projects.">
+    <meta name="keywords" content="Data Science, Machine Learning, Supply Chain, ML Engineer, Python, Demand Forecasting, Inventory Optimization, Dynamic Pricing">
+    <meta name="author" content="Godson Kurishinkal">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Godson Kurishinkal | Data Scientist & ML Engineer">
+    <meta property="og:description" content="Portfolio showcasing expertise in supply chain analytics, machine learning, and end-to-end ML systems.">
+    <meta property="og:url" content="https://godsonkurishinkal.github.io/data-science-portfolio/">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Godson Kurishinkal | Data Scientist Portfolio">
+    <meta name="twitter:description" content="Supply chain analytics and ML engineering portfolio">
+    
+    <title>Godson Kurishinkal | Data Scientist & ML Engineer</title>
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
@@ -372,7 +386,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p class="footer-text">&copy; 2024 Godson Kurishinkal. All rights reserved.</p>
+                <p class="footer-text">&copy; 2025 Godson Kurishinkal. All rights reserved.</p>
                 
                 <div class="social-links">
                     <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link" aria-label="GitHub">
@@ -388,6 +402,11 @@
             </div>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <!-- Simple JS for navigation -->
     <script>
@@ -465,6 +484,24 @@
 
         // Trigger initial reveal
         revealOnScroll();
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     </script>
 </body>
 </html>
