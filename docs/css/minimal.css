@@ -91,6 +91,7 @@ html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -108,6 +109,29 @@ body {
     from {
         opacity: 0;
         transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Progressive content loading */
+.hero-content > * {
+    opacity: 0;
+    animation: slideInUp 0.8s ease-out forwards;
+}
+
+.hero-label { animation-delay: 0.1s; }
+.hero-title { animation-delay: 0.2s; }
+.hero-description { animation-delay: 0.3s; }
+.hero-buttons { animation-delay: 0.4s; }
+.hero-stats { animation-delay: 0.5s; }
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -267,6 +291,7 @@ img {
     font-weight: 600;
     padding: var(--space-2) 0;
     position: relative;
+    transition: color var(--transition), transform var(--transition-fast);
 }
 
 .nav-link::after {
@@ -284,6 +309,7 @@ img {
 
 .nav-link:hover {
     color: var(--color-accent);
+    transform: translateY(-1px);
 }
 
 .nav-link.active {
@@ -441,6 +467,12 @@ img {
     margin-top: var(--space-2);
     margin-bottom: var(--space-2);
     letter-spacing: -0.02em;
+    transition: color var(--transition), transform var(--transition-fast);
+}
+
+.stat:hover .stat-number {
+    color: var(--color-accent);
+    transform: scale(1.05);
 }
 
 .stat-label {
@@ -513,12 +545,17 @@ img {
 }
 
 .btn-primary:active {
-    transform: translateY(0);
+    transform: translateY(1px) scale(0.98);
 }
 
 .btn-primary i {
     position: relative;
     z-index: 1;
+    transition: transform var(--transition-fast);
+}
+
+.btn-primary:hover i {
+    transform: translateX(2px);
 }
 
 .btn-secondary {
@@ -532,6 +569,10 @@ img {
     color: var(--color-accent);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+}
+
+.btn-secondary:active {
+    transform: translateY(0) scale(0.98);
 }
 
 .btn-secondary:active {
@@ -619,10 +660,11 @@ img {
     border: 2px solid var(--color-border);
     border-radius: var(--border-radius-lg);
     padding: var(--space-8);
-    transition: all var(--transition);
+    transition: all var(--transition), transform var(--transition-fast);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    will-change: transform;
 }
 
 .project-card::before {
@@ -652,8 +694,8 @@ img {
 
 .project-card:hover {
     border-color: var(--color-accent);
-    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
-    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15), 0 4px 8px rgba(59, 130, 246, 0.1);
+    transform: translateY(-8px) scale(1.01);
 }
 
 .project-card:hover::before {
@@ -962,8 +1004,8 @@ img {
 
 .contact-item:hover {
     border-color: var(--color-accent);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15), 0 4px 8px rgba(59, 130, 246, 0.08);
 }
 
 .contact-item:hover::before {

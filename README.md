@@ -301,9 +301,9 @@ I'm a data science professional passionate about solving complex supply chain pr
 ## 📫 Connect With Me
 
 - **LinkedIn**: [linkedin.com/in/godsonkurishinkal](https://www.linkedin.com/in/godsonkurishinkal)
-- **Email**: godson.kurishinkal+github@gmail.com
+- **Email**: [godson.kurishinkal@gmail.com](mailto:godson.kurishinkal@gmail.com)
 - **GitHub**: [github.com/GodsonKurishinkal](https://github.com/GodsonKurishinkal)
-- **Portfolio**: This repository!
+- **Portfolio**: [godsonkurishinkal.github.io/data-science-portfolio](https://godsonkurishinkal.github.io/data-science-portfolio/)
 
 ---
 
