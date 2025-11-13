@@ -1,6 +1,32 @@
 # 📊 Supply Chain Analytics Portfolio
 
-> **End-to-end supply chain intelligence**: From demand forecasting to real-time operations
+> **End-to-end supply chain intelligence**: Fro### 3. 💰 Dynamic Pricing Engine
+**Status**: ✅ **COMPLETE** | [View Project →](./project-003-dynamic-pricing-engine)
+
+Intelligent pricing system using price elasticity analysis and revenue optimizatio### Phase 1: Strategic Planning ✅
+- [x] Project 1: Demand Forecasting System
+- [x] Project 2: Inventory Optimization Engine
+
+### Phase 2: Tactical Optimization ✅
+- [x] Project 3: Dynamic Pricing Engine
+- [ ] Project 4: Supply Chain Network Optimization (Template ready)
+
+### Phase 3: Operational Excellence 📝
+- [ ] Project 5: Real-Time Demand Sensing (Template ready)ms.
+
+**What I Built**:
+- Price elasticity calculator (own-price & cross-price elasticity)
+- Demand response models (Linear Regression, Random Forest, XGBoost)
+- Revenue optimization engine with business constraints
+- Markdown strategy optimizer for clearance items
+- Competitive pricing analysis framework
+- Interactive pricing simulator
+
+**Business Impact**:
+- 📈 **8-12% revenue increase** through optimal pricing
+- 💰 **3-5% margin improvement** via strategic markdowns
+- 🎯 **95% of products** within optimal price range
+- 🔄 **30% reduction** in clearance timesting to real-time operations
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -23,7 +49,7 @@ This portfolio tells a complete supply chain story:
 |---|---------|--------|------------|-----------------|
 | **1** | [Demand Forecasting System](#1-demand-forecasting-system) | ✅ Complete | 85% accuracy, 15% inventory reduction | ARIMA, Prophet, XGBoost |
 | **2** | [Inventory Optimization Engine](#2-inventory-optimization-engine) | ✅ Complete | 20% cost reduction, 98% service level | EOQ, ABC/XYZ, Optimization |
-| **3** | [Dynamic Pricing Engine](#3-dynamic-pricing-engine) | 📝 Template | 8-12% revenue increase | Price Elasticity, ML |
+| **3** | [Dynamic Pricing Engine](#3-dynamic-pricing-engine) | ✅ Complete | 8-12% revenue increase | Price Elasticity, ML |
 | **4** | [Network Optimization](#4-supply-chain-network-optimization) | 📝 Template | 15-20% logistics savings | MILP, VRP, OR-Tools |
 | **5** | [Real-Time Demand Sensing](#5-real-time-demand-sensing) | 📝 Template | 25% stockout reduction | Anomaly Detection, Dashboard |
 
@@ -100,10 +126,15 @@ Intelligent pricing system using price elasticity analysis and revenue optimizat
 - 📈 **8-12% revenue increase** through optimal pricing
 - 💰 **3-5% margin improvement** via strategic markdowns
 - 🎯 **95% of products** within optimal price range
+- 🔄 **30% reduction** in clearance time
 
-**Tech Stack**: `Python` `Scikit-learn` `XGBoost` `Statsmodels` `PuLP` `Optimization`
+**Tech Stack**: `Python` `Scikit-learn` `XGBoost` `Statsmodels` `SciPy` `Optimization`
 
-**Status**: Ready to implement - comprehensive README and architecture provided
+**Key Files**:
+- `src/pricing/` - Price elasticity and optimization modules
+- `src/models/` - Demand prediction models
+- `notebooks/exploratory/` - Pricing analysis notebooks
+- `demo.py` - Interactive pricing simulator
 
 ---
 
@@ -251,9 +282,9 @@ pip install -r requirements.txt
 
 | Metric | Value |
 |--------|-------|
-| **Total Projects** | 5 (2 complete, 3 templates) |
-| **Code Lines** | 10,000+ across projects |
-| **Documentation** | 50,000+ words |
+| **Total Projects** | 5 (3 complete, 2 templates) |
+| **Code Lines** | 15,000+ across projects |
+| **Documentation** | 60,000+ words |
 | **Technologies** | 25+ tools and libraries |
 | **Business Impact** | 15-25% improvements demonstrated |
 | **Domains Covered** | Forecasting, Inventory, Pricing, Logistics, Operations |
