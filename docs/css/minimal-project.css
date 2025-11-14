@@ -811,6 +811,23 @@
     line-height: 1.8;
 }
 
+/* Smooth Transitions */
+.stat-card,
+.visual-card,
+.metric-card,
+.insight-box,
+.challenge-item,
+.solution-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover,
+.visual-card:hover,
+.metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .project-title {
