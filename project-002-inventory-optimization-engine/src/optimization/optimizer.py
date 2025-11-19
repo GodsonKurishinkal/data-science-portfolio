@@ -140,30 +140,29 @@ class InventoryOptimizer:
         Returns:
             DataFrame with recommendations
         """
-        recommendations = []
-        
         # High-priority items (AX, AY, AZ)
         high_priority = optimized_data[
             optimized_data['abc_class'] == 'A'
         ].nlargest(top_n, 'revenue_sum')
         
-        for _, item in high_priority.iterrows():
-            policy = self.abc_analyzer.recommend_inventory_policy(
-                item['abc_xyz_class']
-            )
-            
-            recommendations.append({
-                'item_id': item['item_id'],
-                'store_id': item['store_id'],
-                'abc_xyz_class': item['abc_xyz_class'],
-                'priority_score': item['priority_score'],
-                'recommended_policy': policy['policy'],
-                'target_service_level': f"{item['target_service_level']*100:.0f}%",
-                'eoq': int(item['eoq']),
-                'reorder_point': int(item['reorder_point']),
-                'safety_stock': int(item['safety_stock']),
-                'review_frequency': policy['review_frequency'],
-                'annual_cost': item['total_annual_cost']
-            })
+        # Vectorized approach: Get all policy recommendations at once
+        policy_map = {}
+        for abc_xyz_class in high_priority['abc_xyz_class'].unique():
+            policy_map[abc_xyz_class] = self.abc_analyzer.recommend_inventory_policy(abc_xyz_class)
         
-        return pd.DataFrame(recommendations)
+        # Build recommendations using vectorized operations
+        recommendations_df = pd.DataFrame({
+            'item_id': high_priority['item_id'],
+            'store_id': high_priority['store_id'],
+            'abc_xyz_class': high_priority['abc_xyz_class'],
+            'priority_score': high_priority['priority_score'],
+            'recommended_policy': high_priority['abc_xyz_class'].map(lambda x: policy_map[x]['policy']),
+            'target_service_level': (high_priority['target_service_level'] * 100).astype(int).astype(str) + '%',
+            'eoq': high_priority['eoq'].astype(int),
+            'reorder_point': high_priority['reorder_point'].astype(int),
+            'safety_stock': high_priority['safety_stock'].astype(int),
+            'review_frequency': high_priority['abc_xyz_class'].map(lambda x: policy_map[x]['review_frequency']),
+            'annual_cost': high_priority['total_annual_cost']
+        })
+        
+        return recommendations_df.reset_index(drop=True)
