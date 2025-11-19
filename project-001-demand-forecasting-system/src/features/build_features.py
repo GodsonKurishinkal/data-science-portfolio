@@ -58,7 +58,8 @@ def create_time_features(df: pd.DataFrame, date_column: Optional[str] = None) ->
 def create_lag_features(
     df: pd.DataFrame,
     target_column: str,
-    lags: List[int] = [1, 7, 14, 30]
+    lags: List[int] = [1, 7, 14, 30],
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Create lag features for time series forecasting.
@@ -71,11 +72,13 @@ def create_lag_features(
         Name of the target column to create lags from.
     lags : List[int], default=[1, 7, 14, 30]
         List of lag periods to create.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with additional lag features.
+        DataFrame with additional lag features (or None if inplace=True).
         
     Examples
     --------
@@ -83,21 +86,24 @@ def create_lag_features(
     >>> print(df_with_lags.columns)
     Index(['demand', 'demand_lag_1', 'demand_lag_7', 'demand_lag_30'])
     """
-    df_lags = df.copy()
+    df_lags = df if inplace else df.copy()
     
     if target_column not in df_lags.columns:
         raise ValueError(f"Target column '{target_column}' not found in DataFrame")
     
+    # Cache the target column to avoid repeated lookups
+    target_series = df_lags[target_column]
     for lag in lags:
-        df_lags[f'{target_column}_lag_{lag}'] = df_lags[target_column].shift(lag)
+        df_lags[f'{target_column}_lag_{lag}'] = target_series.shift(lag)
     
-    return df_lags
+    return None if inplace else df_lags
 
 
 def create_rolling_features(
     df: pd.DataFrame,
     target_column: str,
-    windows: List[int] = [7, 14, 30]
+    windows: List[int] = [7, 14, 30],
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Create rolling window statistics features.
@@ -110,36 +116,35 @@ def create_rolling_features(
         Name of the target column to calculate rolling statistics.
     windows : List[int], default=[7, 14, 30]
         List of window sizes for rolling calculations.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with additional rolling features.
+        DataFrame with additional rolling features (or None if inplace=True).
         
     Examples
     --------
     >>> df_with_rolling = create_rolling_features(df, 'demand', windows=[7, 30])
     """
-    df_rolling = df.copy()
+    df_rolling = df if inplace else df.copy()
     
     if target_column not in df_rolling.columns:
         raise ValueError(f"Target column '{target_column}' not found in DataFrame")
     
-    for window in windows:
-        df_rolling[f'{target_column}_rolling_mean_{window}'] = (
-            df_rolling[target_column].rolling(window=window).mean()
-        )
-        df_rolling[f'{target_column}_rolling_std_{window}'] = (
-            df_rolling[target_column].rolling(window=window).std()
-        )
-        df_rolling[f'{target_column}_rolling_min_{window}'] = (
-            df_rolling[target_column].rolling(window=window).min()
-        )
-        df_rolling[f'{target_column}_rolling_max_{window}'] = (
-            df_rolling[target_column].rolling(window=window).max()
-        )
+    # Cache target series to avoid repeated lookups
+    target_series = df_rolling[target_column]
     
-    return df_rolling
+    for window in windows:
+        # Create rolling object once per window
+        rolling = target_series.rolling(window=window)
+        df_rolling[f'{target_column}_rolling_mean_{window}'] = rolling.mean()
+        df_rolling[f'{target_column}_rolling_std_{window}'] = rolling.std()
+        df_rolling[f'{target_column}_rolling_min_{window}'] = rolling.min()
+        df_rolling[f'{target_column}_rolling_max_{window}'] = rolling.max()
+    
+    return None if inplace else df_rolling
 
 
 def create_all_features(
