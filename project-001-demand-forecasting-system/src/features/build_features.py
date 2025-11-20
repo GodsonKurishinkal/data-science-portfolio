@@ -58,7 +58,8 @@ def create_time_features(df: pd.DataFrame, date_column: Optional[str] = None) ->
 def create_lag_features(
     df: pd.DataFrame,
     target_column: str,
-    lags: List[int] = [1, 7, 14, 30]
+    lags: List[int] = [1, 7, 14, 30],
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Create lag features for time series forecasting.
@@ -71,11 +72,13 @@ def create_lag_features(
         Name of the target column to create lags from.
     lags : List[int], default=[1, 7, 14, 30]
         List of lag periods to create.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with additional lag features.
+        DataFrame with additional lag features (or None if inplace=True).
         
     Examples
     --------
@@ -83,21 +86,24 @@ def create_lag_features(
     >>> print(df_with_lags.columns)
     Index(['demand', 'demand_lag_1', 'demand_lag_7', 'demand_lag_30'])
     """
-    df_lags = df.copy()
+    df_lags = df if inplace else df.copy()
     
     if target_column not in df_lags.columns:
         raise ValueError(f"Target column '{target_column}' not found in DataFrame")
     
+    # Cache the target column to avoid repeated lookups
+    target_series = df_lags[target_column]
     for lag in lags:
-        df_lags[f'{target_column}_lag_{lag}'] = df_lags[target_column].shift(lag)
+        df_lags[f'{target_column}_lag_{lag}'] = target_series.shift(lag)
     
-    return df_lags
+    return None if inplace else df_lags
 
 
 def create_rolling_features(
     df: pd.DataFrame,
     target_column: str,
-    windows: List[int] = [7, 14, 30]
+    windows: List[int] = [7, 14, 30],
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Create rolling window statistics features.
@@ -110,36 +116,35 @@ def create_rolling_features(
         Name of the target column to calculate rolling statistics.
     windows : List[int], default=[7, 14, 30]
         List of window sizes for rolling calculations.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with additional rolling features.
+        DataFrame with additional rolling features (or None if inplace=True).
         
     Examples
     --------
     >>> df_with_rolling = create_rolling_features(df, 'demand', windows=[7, 30])
     """
-    df_rolling = df.copy()
+    df_rolling = df if inplace else df.copy()
     
     if target_column not in df_rolling.columns:
         raise ValueError(f"Target column '{target_column}' not found in DataFrame")
     
-    for window in windows:
-        df_rolling[f'{target_column}_rolling_mean_{window}'] = (
-            df_rolling[target_column].rolling(window=window).mean()
-        )
-        df_rolling[f'{target_column}_rolling_std_{window}'] = (
-            df_rolling[target_column].rolling(window=window).std()
-        )
-        df_rolling[f'{target_column}_rolling_min_{window}'] = (
-            df_rolling[target_column].rolling(window=window).min()
-        )
-        df_rolling[f'{target_column}_rolling_max_{window}'] = (
-            df_rolling[target_column].rolling(window=window).max()
-        )
+    # Cache target series to avoid repeated lookups
+    target_series = df_rolling[target_column]
     
-    return df_rolling
+    for window in windows:
+        # Create rolling object once per window
+        rolling = target_series.rolling(window=window)
+        df_rolling[f'{target_column}_rolling_mean_{window}'] = rolling.mean()
+        df_rolling[f'{target_column}_rolling_std_{window}'] = rolling.std()
+        df_rolling[f'{target_column}_rolling_min_{window}'] = rolling.min()
+        df_rolling[f'{target_column}_rolling_max_{window}'] = rolling.max()
+    
+    return None if inplace else df_rolling
 
 
 def create_all_features(
@@ -190,7 +195,7 @@ def create_all_features(
 
 # M5-Specific feature engineering functions
 
-def create_price_features(df: pd.DataFrame) -> pd.DataFrame:
+def create_price_features(df: pd.DataFrame, inplace: bool = False) -> pd.DataFrame:
     """
     Create price-related features for M5 dataset.
     
@@ -198,20 +203,22 @@ def create_price_features(df: pd.DataFrame) -> pd.DataFrame:
     ----------
     df : pd.DataFrame
         M5 DataFrame with 'sell_price' column.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with additional price features.
+        DataFrame with additional price features (or None if inplace=True).
         
     Examples
     --------
     >>> df = create_price_features(df)
     """
-    df_price = df.copy()
+    df_price = df if inplace else df.copy()
     
     if 'sell_price' not in df_price.columns:
-        return df_price
+        return None if inplace else df_price
     
     # Group by item and store for item-store specific features
     group_cols = ['item_id', 'store_id']
@@ -239,10 +246,10 @@ def create_price_features(df: pd.DataFrame) -> pd.DataFrame:
     # Price quantile within item-store history
     df_price['price_rank'] = df_price.groupby(group_cols)['sell_price'].rank(pct=True)
     
-    return df_price
+    return None if inplace else df_price
 
 
-def encode_calendar_features(df: pd.DataFrame) -> pd.DataFrame:
+def encode_calendar_features(df: pd.DataFrame, inplace: bool = False) -> pd.DataFrame:
     """
     Encode calendar event and SNAP features for M5 dataset.
     
@@ -250,17 +257,19 @@ def encode_calendar_features(df: pd.DataFrame) -> pd.DataFrame:
     ----------
     df : pd.DataFrame
         M5 DataFrame with calendar event columns.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with encoded calendar features.
+        DataFrame with encoded calendar features (or None if inplace=True).
         
     Examples
     --------
     >>> df = encode_calendar_features(df)
     """
-    df_calendar = df.copy()
+    df_calendar = df if inplace else df.copy()
     
     # Event indicators
     if 'event_name_1' in df_calendar.columns:
@@ -277,19 +286,23 @@ def encode_calendar_features(df: pd.DataFrame) -> pd.DataFrame:
         if col in df_calendar.columns:
             df_calendar[col] = df_calendar[col].fillna(0).astype(int)
     
-    # Days since last event
+    # Days since last event - optimized vectorized approach
     if 'has_event' in df_calendar.columns:
-        df_calendar['days_since_event'] = df_calendar.groupby(['store_id', 'item_id'])['has_event'].apply(
-            lambda x: x[::-1].cumsum()[::-1].shift(-1, fill_value=0)
-        ).values
+        # Sort by store_id, item_id, and date (assuming date is in index or needs to be sorted)
+        # Calculate cumulative sum in reverse order more efficiently
+        df_calendar['days_since_event'] = (
+            df_calendar.groupby(['store_id', 'item_id'])['has_event']
+            .transform(lambda x: x[::-1].cumsum()[::-1].shift(-1, fill_value=0))
+        )
     
-    return df_calendar
+    return None if inplace else df_calendar
 
 
 def create_sales_lag_features(
     df: pd.DataFrame,
     target_col: str = 'sales',
-    lags: List[int] = [1, 7, 14, 21, 28]
+    lags: List[int] = [1, 7, 14, 21, 28],
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Create lag features for sales, grouped by product and store.
@@ -302,20 +315,22 @@ def create_sales_lag_features(
         Name of the sales column.
     lags : List[int], default=[1, 7, 14, 21, 28]
         List of lag periods (in days).
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with sales lag features.
+        DataFrame with sales lag features (or None if inplace=True).
         
     Examples
     --------
     >>> df = create_sales_lag_features(df, 'sales', lags=[1, 7, 28])
     """
-    df_lags = df.copy()
+    df_lags = df if inplace else df.copy()
     
     if target_col not in df_lags.columns:
-        return df_lags
+        return None if inplace else df_lags
     
     # Group by item and store
     group_cols = ['item_id', 'store_id']
@@ -323,13 +338,14 @@ def create_sales_lag_features(
     for lag in lags:
         df_lags[f'{target_col}_lag_{lag}'] = df_lags.groupby(group_cols)[target_col].shift(lag)
     
-    return df_lags
+    return None if inplace else df_lags
 
 
 def create_sales_rolling_features(
     df: pd.DataFrame,
     target_col: str = 'sales',
-    windows: List[int] = [7, 14, 28, 90]
+    windows: List[int] = [7, 14, 28, 90],
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Create rolling window statistics for sales, grouped by product and store.
@@ -342,20 +358,22 @@ def create_sales_rolling_features(
         Name of the sales column.
     windows : List[int], default=[7, 14, 28, 90]
         List of window sizes (in days).
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with sales rolling features.
+        DataFrame with sales rolling features (or None if inplace=True).
         
     Examples
     --------
     >>> df = create_sales_rolling_features(df, 'sales', windows=[7, 28])
     """
-    df_rolling = df.copy()
+    df_rolling = df if inplace else df.copy()
     
     if target_col not in df_rolling.columns:
-        return df_rolling
+        return None if inplace else df_rolling
     
     # Group by item and store
     group_cols = ['item_id', 'store_id']
@@ -380,10 +398,10 @@ def create_sales_rolling_features(
             lambda x: x.shift(1).rolling(window=window, min_periods=1).max()
         )
     
-    return df_rolling
+    return None if inplace else df_rolling
 
 
-def create_hierarchical_features(df: pd.DataFrame, target_col: str = 'sales') -> pd.DataFrame:
+def create_hierarchical_features(df: pd.DataFrame, target_col: str = 'sales', inplace: bool = False) -> pd.DataFrame:
     """
     Create hierarchical aggregation features (state, store, category level).
     
@@ -393,17 +411,19 @@ def create_hierarchical_features(df: pd.DataFrame, target_col: str = 'sales') ->
         M5 DataFrame with hierarchical columns.
     target_col : str, default='sales'
         Name of the sales column to aggregate.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with hierarchical aggregation features.
+        DataFrame with hierarchical aggregation features (or None if inplace=True).
         
     Examples
     --------
     >>> df = create_hierarchical_features(df, 'sales')
     """
-    df_hier = df.copy()
+    df_hier = df if inplace else df.copy()
     
     if target_col not in df_hier.columns:
         return df_hier
@@ -436,7 +456,7 @@ def create_hierarchical_features(df: pd.DataFrame, target_col: str = 'sales') ->
     if 'cat_sales_total' in df_hier.columns:
         df_hier['item_cat_share'] = df_hier[target_col] / (df_hier['cat_sales_total'] + 1e-6)
     
-    return df_hier
+    return None if inplace else df_hier
 
 
 def build_m5_features(
@@ -448,7 +468,8 @@ def build_m5_features(
     include_rolling: bool = True,
     include_hierarchical: bool = True,
     lags: List[int] = [1, 7, 14, 21, 28],
-    windows: List[int] = [7, 14, 28, 90]
+    windows: List[int] = [7, 14, 28, 90],
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Complete M5 feature engineering pipeline.
@@ -473,39 +494,45 @@ def build_m5_features(
         Lag periods to use.
     windows : List[int], default=[7, 14, 28, 90]
         Rolling window sizes to use.
+    inplace : bool, default=False
+        If True, modify DataFrame in place for better performance.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with all M5 features.
+        DataFrame with all M5 features (or None if inplace=True).
         
     Examples
     --------
     >>> df_features = build_m5_features(df, target_col='sales')
     """
     print("Building M5 features...")
-    df_features = df.copy()
+    
+    # Make a single copy at the beginning if not inplace
+    df_features = df if inplace else df.copy()
     
     if include_price:
         print("  Creating price features...")
-        df_features = create_price_features(df_features)
+        create_price_features(df_features, inplace=True)
     
     if include_calendar:
         print("  Encoding calendar features...")
-        df_features = encode_calendar_features(df_features)
+        encode_calendar_features(df_features, inplace=True)
     
     if include_lags:
         print(f"  Creating lag features (lags={lags})...")
-        df_features = create_sales_lag_features(df_features, target_col, lags)
+        create_sales_lag_features(df_features, target_col, lags, inplace=True)
     
     if include_rolling:
         print(f"  Creating rolling features (windows={windows})...")
-        df_features = create_sales_rolling_features(df_features, target_col, windows)
+        create_sales_rolling_features(df_features, target_col, windows, inplace=True)
     
     if include_hierarchical:
         print("  Creating hierarchical features...")
-        df_features = create_hierarchical_features(df_features, target_col)
+        create_hierarchical_features(df_features, target_col, inplace=True)
     
     print(f"Feature engineering complete! Shape: {df_features.shape}")
+    
+    return None if inplace else df_features
     
     return df_features

@@ -55,7 +55,8 @@ def load_data(file_path: str) -> pd.DataFrame:
 def clean_data(
     df: pd.DataFrame,
     drop_duplicates: bool = True,
-    handle_missing: str = 'drop'
+    handle_missing: str = 'drop',
+    inplace: bool = False
 ) -> pd.DataFrame:
     """
     Clean the input DataFrame by handling duplicates and missing values.
@@ -68,33 +69,45 @@ def clean_data(
         Whether to drop duplicate rows.
     handle_missing : str, default='drop'
         Strategy for handling missing values. Options: 'drop', 'fill_mean', 'fill_median'.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        Cleaned DataFrame.
+        Cleaned DataFrame (or None if inplace=True).
         
     Examples
     --------
     >>> df_clean = clean_data(df, drop_duplicates=True, handle_missing='fill_mean')
     """
-    df_clean = df.copy()
+    df_clean = df if inplace else df.copy()
     
-    # Handle duplicates
+    # Handle duplicates - drop_duplicates always returns a new DataFrame
     if drop_duplicates:
-        df_clean = df_clean.drop_duplicates()
+        if inplace:
+            # For inplace, we need to update the original DataFrame
+            df.drop_duplicates(inplace=True)
+            df_clean = df
+        else:
+            df_clean = df_clean.drop_duplicates()
     
     # Handle missing values
     if handle_missing == 'drop':
-        df_clean = df_clean.dropna()
+        if inplace:
+            df_clean.dropna(inplace=True)
+        else:
+            df_clean = df_clean.dropna()
     elif handle_missing == 'fill_mean':
         numeric_cols = df_clean.select_dtypes(include=[np.number]).columns
-        df_clean[numeric_cols] = df_clean[numeric_cols].fillna(df_clean[numeric_cols].mean())
+        means = df_clean[numeric_cols].mean()
+        df_clean[numeric_cols] = df_clean[numeric_cols].fillna(means)
     elif handle_missing == 'fill_median':
         numeric_cols = df_clean.select_dtypes(include=[np.number]).columns
-        df_clean[numeric_cols] = df_clean[numeric_cols].fillna(df_clean[numeric_cols].median())
+        medians = df_clean[numeric_cols].median()
+        df_clean[numeric_cols] = df_clean[numeric_cols].fillna(medians)
     
-    return df_clean
+    return None if inplace else df_clean
 
 
 def preprocess_data(
@@ -294,7 +307,7 @@ def merge_m5_data(
     return df
 
 
-def create_datetime_features(df: pd.DataFrame, date_col: str = 'date') -> pd.DataFrame:
+def create_datetime_features(df: pd.DataFrame, date_col: str = 'date', inplace: bool = False) -> pd.DataFrame:
     """
     Create datetime-based features from a date column.
     
@@ -304,40 +317,44 @@ def create_datetime_features(df: pd.DataFrame, date_col: str = 'date') -> pd.Dat
         Input DataFrame with a date column.
     date_col : str, default='date'
         Name of the date column.
+    inplace : bool, default=False
+        If True, modify DataFrame in place and return None.
         
     Returns
     -------
     pd.DataFrame
-        DataFrame with additional datetime features.
+        DataFrame with additional datetime features (or None if inplace=True).
         
     Examples
     --------
     >>> df = create_datetime_features(df, date_col='date')
     """
-    df = df.copy()
+    df_result = df if inplace else df.copy()
     
-    if date_col not in df.columns:
+    if date_col not in df_result.columns:
         raise ValueError(f"Date column '{date_col}' not found in DataFrame")
     
     # Ensure datetime type
-    df[date_col] = pd.to_datetime(df[date_col])
+    df_result[date_col] = pd.to_datetime(df_result[date_col])
     
-    # Extract datetime components
-    df['year'] = df[date_col].dt.year
-    df['month'] = df[date_col].dt.month
-    df['day'] = df[date_col].dt.day
-    df['dayofweek'] = df[date_col].dt.dayofweek
-    df['dayofyear'] = df[date_col].dt.dayofyear
-    df['week'] = df[date_col].dt.isocalendar().week
-    df['quarter'] = df[date_col].dt.quarter
+    # Extract datetime components - optimize by storing dt accessor
+    dt = df_result[date_col].dt
+    df_result['year'] = dt.year
+    df_result['month'] = dt.month
+    df_result['day'] = dt.day
+    df_result['dayofweek'] = dt.dayofweek
+    df_result['dayofyear'] = dt.dayofyear
+    df_result['week'] = dt.isocalendar().week
+    df_result['quarter'] = dt.quarter
     
     # Boolean features
-    df['is_weekend'] = df['dayofweek'].isin([5, 6]).astype(int)
-    df['is_month_start'] = df[date_col].dt.is_month_start.astype(int)
-    df['is_month_end'] = df[date_col].dt.is_month_end.astype(int)
-    df['is_quarter_start'] = df[date_col].dt.is_quarter_start.astype(int)
-    df['is_quarter_end'] = df[date_col].dt.is_quarter_end.astype(int)
+    df_result['is_weekend'] = df_result['dayofweek'].isin([5, 6]).astype(int)
+    df_result['is_month_start'] = dt.is_month_start.astype(int)
+    df_result['is_month_end'] = dt.is_month_end.astype(int)
+    df_result['is_quarter_start'] = dt.is_quarter_start.astype(int)
+    df_result['is_quarter_end'] = dt.is_quarter_end.astype(int)
     
+    return None if inplace else df_result
     return df
 
 

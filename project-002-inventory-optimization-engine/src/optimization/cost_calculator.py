@@ -249,36 +249,30 @@ class CostCalculator:
         
         from scipy import stats
         
-        results = []
+        # Vectorized computation
+        service_levels_array = np.array(service_levels)
+        z_scores = stats.norm.ppf(service_levels_array)
+        safety_stocks = z_scores * demand_std
+        expected_stockouts = demand_std * stats.norm.pdf(z_scores) * (1 - service_levels_array)
         
-        for sl in service_levels:
-            # Z-score for service level
-            z = stats.norm.ppf(sl)
-            
-            # Safety stock required
-            safety_stock = z * demand_std
-            
-            # Expected stockouts (simplified)
-            expected_stockout = demand_std * stats.norm.pdf(z) * (1 - sl)
-            
-            # Costs
-            holding_cost = self.calculate_holding_cost(safety_stock, unit_cost)
-            stockout_cost = self.calculate_stockout_cost(expected_stockout, unit_cost)
-            
-            total_cost = holding_cost + stockout_cost
-            
-            results.append({
-                'service_level': sl,
-                'service_level_pct': sl * 100,
-                'z_score': z,
-                'safety_stock': safety_stock,
-                'expected_stockout': expected_stockout,
-                'holding_cost': holding_cost,
-                'stockout_cost': stockout_cost,
-                'total_cost': total_cost
-            })
+        # Calculate costs in vectorized manner
+        holding_costs = safety_stocks * unit_cost * self.holding_cost_rate
+        stockout_costs = expected_stockouts * unit_cost * self.stockout_cost_rate
+        total_costs = holding_costs + stockout_costs
         
-        return pd.DataFrame(results)
+        # Build results DataFrame efficiently
+        results_df = pd.DataFrame({
+            'service_level': service_levels_array,
+            'service_level_pct': service_levels_array * 100,
+            'z_score': z_scores,
+            'safety_stock': safety_stocks,
+            'expected_stockout': expected_stockouts,
+            'holding_cost': holding_costs,
+            'stockout_cost': stockout_costs,
+            'total_cost': total_costs
+        })
+        
+        return results_df
     
     def calculate_abc_class_costs(
         self,
@@ -305,39 +299,32 @@ class CostCalculator:
         """
         logger.info(f"Calculating costs by {group_col}...")
         
-        results = []
+        # Vectorized groupby aggregation
+        grouped = data.groupby(group_col)
         
-        for group_value in data[group_col].unique():
-            group_data = data[data[group_col] == group_value]
-            
-            total_inventory = group_data[inventory_col].sum()
-            total_sales = group_data[sales_col].sum()
-            avg_price = group_data[price_col].mean()
-            total_orders = group_data[orders_col].sum()
-            
-            # Calculate costs
-            holding = self.calculate_holding_cost(total_inventory, avg_price)
-            ordering = self.calculate_ordering_cost(total_orders)
-            
-            # Turnover metrics
-            turnover_metrics = self.calculate_inventory_turnover_cost(
-                total_sales, total_inventory, avg_price
-            )
-            
-            results.append({
-                group_col: group_value,
-                'num_items': len(group_data),
-                'total_inventory': total_inventory,
-                'total_sales': total_sales,
-                'inventory_value': total_inventory * avg_price,
-                'holding_cost': holding,
-                'ordering_cost': ordering,
-                'total_operational_cost': holding + ordering,
-                'turnover_ratio': turnover_metrics['turnover_ratio'],
-                'days_of_supply': turnover_metrics['days_of_supply']
-            })
+        # Aggregate statistics
+        agg_dict = {
+            inventory_col: 'sum',
+            sales_col: 'sum',
+            price_col: 'mean',
+            orders_col: 'sum'
+        }
         
-        result_df = pd.DataFrame(results)
+        result_df = grouped.agg(agg_dict).reset_index()
+        result_df.columns = [group_col, 'total_inventory', 'total_sales', 'avg_price', 'total_orders']
+        
+        # Add item count
+        result_df['num_items'] = grouped.size().values
+        
+        # Calculate costs vectorized
+        result_df['inventory_value'] = result_df['total_inventory'] * result_df['avg_price']
+        result_df['holding_cost'] = result_df['total_inventory'] * result_df['avg_price'] * self.holding_cost_rate
+        result_df['ordering_cost'] = result_df['total_orders'] * self.ordering_cost
+        result_df['total_operational_cost'] = result_df['holding_cost'] + result_df['ordering_cost']
+        
+        # Calculate turnover metrics vectorized
+        result_df['turnover_ratio'] = result_df['total_sales'] / (result_df['total_inventory'] + 1e-6)
+        result_df['days_of_supply'] = 365 / (result_df['turnover_ratio'] + 1e-6)
         
         # Calculate percentages
         result_df['cost_pct'] = (

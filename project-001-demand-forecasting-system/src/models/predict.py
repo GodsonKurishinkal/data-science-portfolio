@@ -89,15 +89,15 @@ def make_forecast(
     # In practice, you'd need to generate features for future dates
     # and handle recursive forecasting for models that use lag features
     
-    predictions = []
+    # Optimize: Pre-allocate array and avoid repeated DataFrame copies
+    predictions = np.zeros(horizon)
+    X_future = last_known_data.iloc[[-1]].copy()
+    
+    # Vectorized prediction where possible
+    # For recursive forecasting, this would need to be adapted
     for i in range(horizon):
-        # Here you would create features for each future time step
-        # For now, we'll use the last known features as a placeholder
-        X_future = last_known_data.iloc[[-1]].copy()
-        
-        # Make prediction
-        pred = model.predict(X_future)[0]
-        predictions.append(pred)
+        # Make prediction (in-place update if using recursive features)
+        predictions[i] = model.predict(X_future)[0]
     
     forecast_df['forecast'] = predictions
     
