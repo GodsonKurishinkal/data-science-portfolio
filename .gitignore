@@ -49,3 +49,4 @@ logs/
 # Claude AI context files
 **/CLAUDE*.md
 CLAUDE*.md
+.github/copilot-instructions.md
