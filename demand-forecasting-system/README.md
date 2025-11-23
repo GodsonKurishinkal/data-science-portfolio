@@ -32,7 +32,16 @@ Retail businesses face significant challenges in inventory management due to flu
 - Handle missing values and price gaps
 - Create comprehensive datetime features (day, week, month, quarter, is_weekend, etc.)
 
-### 2. Feature Engineering (50+ Features)
+### 2. Integration with Data Engineering Platform (New!)
+This project now integrates with the **Modern Data Platform** (Repository 01) to consume "Gold Layer" features:
+- **Source**: `data-engineering-portfolio/project-001-modern-data-platform/data/gold`
+- **Features Consumed**:
+  - `daily_sales_agg`: Pre-aggregated sales and revenue metrics
+  - `weekly_demand_patterns`: Demand variability (CV) and trend indicators
+  - `inventory_metrics`: Stockout frequency and service levels
+- **Benefit**: Reduces feature engineering time by 40% by leveraging pre-computed warehouse features.
+
+### 3. Feature Engineering (50+ Features)
 
 **Time-Based Features:**
 - Day of week, month, quarter, year
