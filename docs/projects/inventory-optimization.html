@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Inventory Optimization Engine - Intelligent supply chain solution for stock management">
-    <title>Inventory Optimization Engine | Godson Kurishinkal</title>
+    <meta name="description" content="Inventory Optimization Across Network - End-to-end inventory intelligence balancing service levels with working capital efficiency across multiple supply chain echelons">
+    <title>Inventory Optimization Across Network | Godson Kurishinkal</title>
     
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📦</text></svg>">
     
@@ -31,15 +31,15 @@
     <!-- Project Hero -->
     <section class="project-hero">
         <div class="container">
-            <h1><i class="fas fa-boxes"></i> Inventory Optimization Engine</h1>
-            <p class="tagline">Intelligent supply chain solution leveraging operations research and machine learning to optimize stock levels, minimize costs, and maximize service levels</p>
+            <h1><i class="fas fa-boxes"></i> Inventory Optimization Across Network</h1>
+            <p class="tagline">End-to-end inventory intelligence: safety stock, ABC-XYZ classification, reorder points, and allocation planning—balancing service levels with working capital efficiency across multiple supply chain echelons</p>
             <div class="project-links">
-                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-002-inventory-optimization-engine" target="_blank">
+                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/inventory-optimization-engine" target="_blank">
                     <i class="fab fa-github"></i> View on GitHub
                 </a>
                 <a href="../projects/demand-forecasting.html">
-                    <i class="fas fa-link"></i> Related: Demand Forecasting
-                </a></code></pre>
+                    <i class="fas fa-link"></i> Integrates with: Demand Forecasting
+                </a>
             </div>
         </div>
     </section>
@@ -71,7 +71,7 @@
                 <div class="metric-card">
                     <div class="number">10</div>
                     <div class="label">Store Locations</div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -79,22 +79,20 @@
     <!-- Overview -->
     <section class="content-section">
         <div class="container">
-            <h2 class="section-title">Project Overview</h2>
+            <h2 class="section-title">S&OP Integration Overview</h2>
             <p class="overview-text">
-                Building on the demand forecasting foundation, this comprehensive inventory optimization system answers critical supply chain questions: 
-                <strong>How much inventory should each store hold? When should we reorder? Which items need the most attention?</strong> 
-                By combining ABC/XYZ analysis, safety stock optimization, EOQ calculations, and cost modeling, this system provides 
-                actionable recommendations that balance cost efficiency with customer service.
+                This inventory intelligence system feeds directly into S&OP planning cycles, answering the critical questions procurement and planning teams face: 
+                <strong>How much safety stock does each product need? When should we trigger replenishment? Which SKUs drive working capital vs. which drive stockouts?</strong> 
+                The system balances inventory investment against service level targets, accounting for lead times, demand variability, and supply constraints across multiple echelons.
             </p>
             
             <div class="business-problem">
-                <h3><i class="fas fa-exclamation-triangle"></i> Business Challenge</h3>
+                <h3><i class="fas fa-exclamation-triangle"></i> Working Capital Challenge</h3>
                 <p>
-                    Retail businesses lose <strong>$1.77 trillion annually</strong> due to overstocking and understocking. 
-                    Excess inventory ties up capital and incurs 15-25% annual holding costs, while stockouts lead to 
-                    lost sales and customer dissatisfaction. This system optimizes inventory levels to minimize total costs 
-                    while maintaining high service levels.
-                </p></code></pre>
+                    S&OP processes often struggle to balance competing priorities: Finance wants lower inventory investment, while Operations wants buffer stock to hit fill rates. 
+                    This system provides the analytical foundation for data-driven trade-off decisions—differentiating inventory strategies by ABC-XYZ segment and 
+                    calculating optimal service level targets that minimize total cost while meeting customer expectations.
+                </p>
             </div>
         </div>
     </section>
@@ -133,7 +131,7 @@
                     <div class="icon"><i class="fas fa-dollar-sign"></i></div>
                     <h3>Comprehensive Cost Modeling</h3>
                     <p>Total cost analysis including holding costs, ordering costs, and stockout costs for data-driven decision making.</p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -190,7 +188,7 @@
                         <p><strong>Q/2 × H</strong> = Annual holding costs</p>
                         <p><strong>SC</strong> = Stockout costs</p>
                     </div>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -298,7 +296,7 @@
                     <p class="visual-caption">
                         Visual representation of the 9-segment ABC/XYZ matrix showing distribution of products by value and variability
                     </p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -350,7 +348,7 @@
                     <p class="visual-caption">
                         Detailed analysis of top 20 revenue-generating items showing EOQ, reorder points, safety stock levels, and optimization opportunities.
                     </p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -394,7 +392,7 @@
                         <li>Black formatter</li>
                         <li>Type hints</li>
                     </ul>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -424,7 +422,7 @@ classified = analyzer.<span class="function">perform_combined_analysis</span>(
 <span class="function">print</span>(classified.<span class="function">groupby</span>(<span class="string">'abc_xyz_class'</span>).<span class="function">agg</span>({
     <span class="string">'item_id'</span>: <span class="string">'count'</span>,
     <span class="string">'revenue'</span>: <span class="string">'sum'</span>
-}))
+}))</code></pre>
             </div>
 
             <h3 class="code-section-title">2. Safety Stock & Reorder Point</h3>
@@ -447,7 +445,7 @@ inventory_data = ss_calc.<span class="function">calculate_for_dataframe</span>(
 <span class="comment"># Results include:</span>
 <span class="comment"># - safety_stock: Buffer inventory</span>
 <span class="comment"># - reorder_point: When to reorder</span>
-<span class="comment"># - lead_time_demand: Expected demand during lead time</span>
+<span class="comment"># - lead_time_demand: Expected demand during lead time</span></code></pre>
             </div>
 
             <h3 class="code-section-title">3. Economic Order Quantity</h3>
@@ -470,7 +468,7 @@ inventory_data = eoq_calc.<span class="function">calculate_for_dataframe</span>(
 <span class="comment"># Analyze results</span>
 <span class="function">print</span>(<span class="string">f"Average EOQ: {inventory_data['eoq'].mean():.0f} units"</span>)
 <span class="function">print</span>(<span class="string">f"Orders per year: {inventory_data['orders_per_year'].mean():.1f}"</span>)
-<span class="function">print</span>(<span class="string">f"Total annual cost: ${inventory_data['total_cost'].sum():,.0f}"</span>)
+<span class="function">print</span>(<span class="string">f"Total annual cost: ${inventory_data['total_cost'].sum():,.0f}"</span>)</code></pre>
             </div>
 
             <h3 class="code-section-title">4. Complete Optimization Pipeline</h3>
@@ -551,7 +549,7 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
                     <li><strong>Seasonal products</strong> benefit from dynamic safety stock that adjusts with demand patterns</li>
                     <li><strong>Multi-location pooling</strong> can reduce total safety stock by 15-25% compared to independent stores</li>
                     <li><strong>Automated reordering</strong> eliminated 95% of manual stock level checks</li>
-                </ul></code></pre>
+                </ul>
             </div>
         </div>
     </section>
@@ -590,7 +588,7 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
                     <div class="icon"><i class="fas fa-exchange-alt"></i></div>
                     <h3>Substitution Modeling</h3>
                     <p>Incorporate product substitution effects when items are out of stock to optimize across product families.</p>
-                </div></code></pre>
+                </div>
             </div>
         </div>
     </section>
@@ -601,9 +599,9 @@ recommendations = optimizer.<span class="function">generate_recommendations</spa
             <div class="cta-section">
                 <h2>Explore the Complete Solution</h2>
                 <p>See how this inventory optimization engine integrates with demand forecasting for end-to-end supply chain intelligence.</p>
-                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-002-inventory-optimization-engine" class="cta-button" target="_blank">
+                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/inventory-optimization-engine" class="cta-button" target="_blank">
                     <i class="fab fa-github"></i> View Full Project
-                </a></code></pre>
+                </a>
             </div>
         </div>
     </section>

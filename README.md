@@ -1,13 +1,13 @@
-# 📊 Supply Chain Analytics Portfolio
+# 📊 Supply Chain Data Science Portfolio
 
-> **End-to-end supply chain intelligence**: From forecasting to real-time operations
+> **Building ML systems that optimize retail supply chains**—from demand planning to fulfillment
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Portfolio](https://img.shields.io/badge/Status-Active-success.svg)]()
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Portfolio-Visit-blue)](https://godsonkurishinkal.github.io/data-science-portfolio/)
 
-A comprehensive portfolio demonstrating expertise in **supply chain analytics**, **operations research**, and **machine learning** through 5 interconnected projects that showcase strategic planning, tactical optimization, and operational excellence.
+I build production ML systems that integrate **demand forecasting**, **inventory planning**, and **warehouse operations** into cohesive decision-support platforms. This portfolio demonstrates end-to-end expertise across 5 interconnected projects covering **S&OP processes**, **procurement decisions**, and **inventory allocation strategies**.
 
 ---
 
@@ -33,10 +33,10 @@ This portfolio tells a complete supply chain story:
 
 ## 🚀 Projects
 
-### 1. 📈 Demand Forecasting System
-**Status**: ✅ **COMPLETE** | [View Project →](./project-001-demand-forecasting-system)
+### 1. 📈 Demand Forecasting & Planning System
+**Status**: ✅ **COMPLETE** | [View Project →](./demand-forecasting-system)
 
-Advanced time-series forecasting system using M5 Walmart dataset (28,000+ products, 5 years of data).
+Ensemble ML models combining 15+ algorithms to predict demand across product hierarchies, powering S&OP processes, procurement decisions, and inventory allocation. Uses M5 Walmart dataset (30,490 time series, 5 years of data).
 
 **What I Built**:
 - Comprehensive EDA with 15+ visualizations
@@ -58,10 +58,10 @@ Advanced time-series forecasting system using M5 Walmart dataset (28,000+ produc
 
 ---
 
-### 2. 📦 Inventory Optimization Engine
-**Status**: ✅ **COMPLETE** | [View Project →](./project-002-inventory-optimization-engine)
+### 2. 📦 Inventory Optimization Across Network
+**Status**: ✅ **COMPLETE** | [View Project →](./inventory-optimization-engine)
 
-Multi-method inventory optimization with ABC/XYZ classification, EOQ, safety stock, and reorder point calculations.
+End-to-end inventory intelligence covering safety stock calculations, ABC-XYZ classification, reorder point optimization, and allocation planning. Balances service levels with working capital efficiency across multiple supply chain echelons.
 
 **What I Built**:
 - ABC/XYZ classification engine (value + variability segmentation)
@@ -309,13 +309,22 @@ pip install -r requirements.txt
 
 ## 🎓 About Me
 
-I'm a data science professional passionate about solving complex supply chain problems through analytics and optimization. This portfolio demonstrates my ability to:
+**Godson Kurishinkal** | Supply Chain Data Scientist | Dubai, UAE
 
-✅ Build end-to-end ML pipelines  
-✅ Optimize operations with mathematical programming  
-✅ Create business value through data-driven insights  
-✅ Communicate technical concepts to stakeholders  
-✅ Write clean, maintainable, production-quality code  
+As **Assistant Manager – DC (MIS & Analytics) at Landmark Group**, I combine 6+ years of supply chain experience with advanced data science to solve complex planning and optimization problems across the retail value chain. I don't just analyze data—I build production systems that integrate forecasting, inventory planning, and warehouse operations into cohesive decision-support platforms.
+
+### What I Build
+- **Demand Forecasting Systems**: Ensemble ML models (15+ algorithms) powering S&OP processes
+- **Inventory Optimization**: Safety stock, ABC-XYZ classification, reorder point automation
+- **Warehouse Analytics**: Replenishment planning, space utilization, operational intelligence
+- **Performance Monitoring**: KPI frameworks tracking MAPE, fill rates, inventory turns
+
+### How I Work
+I operate across the full data stack—from **SQL pipelines** extracting data from ERP and WMS systems, to **Python-based ML models**, to **Power BI dashboards** for planning teams and executives. My approach is practical: solutions that work within existing enterprise systems, integrate with S&OP workflows, and deliver metrics that matter.
+
+### Education
+- **BS in Data Science & Applications** — IIT Madras (Demand Planning & S&OP specialization)
+- **MicroMasters in Supply Chain Management** — MITx  
 
 ---
 
@@ -348,6 +357,6 @@ If you find these projects helpful or interesting:
 
 **Built with** ❤️ **and lots of** ☕
 
-*Last Updated: November 2025*
+*Last Updated: December 2025*
 
 </div>
