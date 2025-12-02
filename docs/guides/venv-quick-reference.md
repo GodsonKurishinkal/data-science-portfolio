@@ -15,7 +15,7 @@ source activate.sh  # One command to activate!
 
 ### Navigate to Project
 ```bash
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 python demo.py
 ```
 
@@ -35,7 +35,7 @@ source .venv/bin/activate
 
 ### Install Project 001 Dependencies
 ```bash
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pip install -r requirements.txt
 ```
 
@@ -91,12 +91,12 @@ data-science-portfolio/
 ├── activate.sh         ← Quick activation script
 ├── ENVIRONMENT_SETUP.md  ← Full documentation
 │
-├── project-001-demand-forecasting-system/
+├── demand-forecasting-system/
 │   ├── requirements.txt  ← Project dependencies
 │   ├── demo.py
 │   └── ...
 │
-└── project-002-inventory-optimization-engine/
+└── inventory-optimization-engine/
     └── ...
 ```
 

@@ -203,7 +203,7 @@ This document outlines your complete supply chain analytics portfolio featuring 
 
 ### Project 3: Dynamic Pricing
 ```
-project-003-dynamic-pricing-engine/
+dynamic-pricing-engine/
 ├── src/
 │   ├── pricing/          # Elasticity, optimizer, markdown
 │   ├── models/           # Demand response models
@@ -216,7 +216,7 @@ project-003-dynamic-pricing-engine/
 
 ### Project 4: Network Optimization
 ```
-project-004-supply-chain-network-optimization/
+supply-chain-network-optimization/
 ├── src/
 │   ├── network/          # Facility location
 │   ├── routing/          # VRP solver
@@ -229,7 +229,7 @@ project-004-supply-chain-network-optimization/
 
 ### Project 5: Real-Time Sensing
 ```
-project-005-realtime-demand-sensing/
+realtime-demand-sensing/
 ├── src/
 │   ├── sensing/          # Demand sensors
 │   ├── detection/        # Anomaly detection
@@ -306,7 +306,7 @@ project-005-realtime-demand-sensing/
 
 ### To Begin Project 3 (Dynamic Pricing):
 ```bash
-cd project-003-dynamic-pricing-engine
+cd dynamic-pricing-engine
 # Review README.md for details
 # Install dependencies from requirements.txt
 # Start building!
@@ -314,13 +314,13 @@ cd project-003-dynamic-pricing-engine
 
 ### To Begin Project 4 (Network Optimization):
 ```bash
-cd project-004-supply-chain-network-optimization
+cd supply-chain-network-optimization
 # Review README.md for details
 ```
 
 ### To Begin Project 5 (Real-Time Sensing):
 ```bash
-cd project-005-realtime-demand-sensing
+cd realtime-demand-sensing
 # Review README.md for details
 ```
 

@@ -47,7 +47,7 @@
 #### Tasks:
 1. **Directory Structure**
    ```bash
-   mkdir -p project-003-dynamic-pricing-engine/{src/{pricing,models,competitive,utils},notebooks,tests,data/{processed,external},models,config,docs/{images}}
+   mkdir -p dynamic-pricing-engine/{src/{pricing,models,competitive,utils},notebooks,tests,data/{processed,external},models,config,docs/{images}}
    ```
 
 2. **Configuration Files**
@@ -75,7 +75,7 @@
 - ✅ Configuration files
 - ✅ Empty module files with __init__.py
 
-**Validation**: `tree -L 3 project-003-dynamic-pricing-engine/`
+**Validation**: `tree -L 3 dynamic-pricing-engine/`
 
 ---
 
@@ -88,7 +88,7 @@
 1. **Create Data Symlinks** (Reuse M5 data from project-001)
    ```bash
    cd data
-   ln -s ../../project-001-demand-forecasting-system/data/raw raw
+   ln -s ../../demand-forecasting-system/data/raw raw
    ```
 
 2. **Data Loading Module** (`src/data/loader.py`)
@@ -827,7 +827,7 @@ print(f"Dataset shape: {df.shape}")  # Should be ~60M rows
 
 ```bash
 # Navigate to project
-cd project-003-dynamic-pricing-engine
+cd dynamic-pricing-engine
 
 # Activate virtual environment
 source ../venv/bin/activate  # or .venv on portfolio level
@@ -838,7 +838,7 @@ pip install -e .
 
 # Create data symlinks
 cd data
-ln -s ../../project-001-demand-forecasting-system/data/raw raw
+ln -s ../../demand-forecasting-system/data/raw raw
 cd ..
 
 # Run demo
@@ -909,8 +909,8 @@ python scripts/generate_visualizations.py
 ## 🔗 Related Resources
 
 ### Internal Links
-- [Project 1: Demand Forecasting](../project-001-demand-forecasting-system/README.md)
-- [Project 2: Inventory Optimization](../project-002-inventory-optimization-engine/README.md)
+- [Project 1: Demand Forecasting](../demand-forecasting-system/README.md)
+- [Project 2: Inventory Optimization](../inventory-optimization-engine/README.md)
 - [Portfolio Roadmap](../PROJECT_ROADMAP.md)
 - [Getting Started Guide](../GETTING_STARTED.md)
 

@@ -48,7 +48,7 @@ Retailers face the challenge of setting prices that maximize revenue while remai
 ```bash
 # Clone repository
 git clone https://github.com/YourUsername/data-science-portfolio.git
-cd data-science-portfolio/project-003-dynamic-pricing-engine
+cd data-science-portfolio/dynamic-pricing-engine
 
 # Set up environment
 python -m venv venv
@@ -64,7 +64,7 @@ python demo.py
 ## 🏗️ Project Architecture
 
 ```
-project-003-dynamic-pricing-engine/
+dynamic-pricing-engine/
 ├── src/
 │   ├── pricing/
 │   │   ├── elasticity.py          # Price elasticity calculation
@@ -264,8 +264,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🔗 Related Projects
 
-1. [Demand Forecasting System](../project-001-demand-forecasting-system) - Predicts future demand
-2. [Inventory Optimization Engine](../project-002-inventory-optimization-engine) - Optimizes stock levels
+1. [Demand Forecasting System](../demand-forecasting-system) - Predicts future demand
+2. [Inventory Optimization Engine](../inventory-optimization-engine) - Optimizes stock levels
 3. **Dynamic Pricing Engine** (This Project) - Optimizes pricing strategies
 
 ---

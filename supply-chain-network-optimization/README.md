@@ -46,7 +46,7 @@ Supply chain networks must balance service levels with operational costs. Poor n
 ```bash
 # Clone repository
 git clone https://github.com/YourUsername/data-science-portfolio.git
-cd data-science-portfolio/project-004-supply-chain-network-optimization
+cd data-science-portfolio/supply-chain-network-optimization
 
 # Set up environment
 python -m venv venv
@@ -62,7 +62,7 @@ python demo.py
 ## 🏗️ Project Architecture
 
 ```
-project-004-supply-chain-network-optimization/
+supply-chain-network-optimization/
 ├── src/
 │   ├── network/
 │   │   ├── facility_location.py   # DC location optimization
@@ -282,9 +282,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🔗 Related Projects
 
-1. [Demand Forecasting System](../project-001-demand-forecasting-system) - Predicts future demand
-2. [Inventory Optimization Engine](../project-002-inventory-optimization-engine) - Optimizes stock levels
-3. [Dynamic Pricing Engine](../project-003-dynamic-pricing-engine) - Optimizes pricing
+1. [Demand Forecasting System](../demand-forecasting-system) - Predicts future demand
+2. [Inventory Optimization Engine](../inventory-optimization-engine) - Optimizes stock levels
+3. [Dynamic Pricing Engine](../dynamic-pricing-engine) - Optimizes pricing
 4. **Supply Chain Network Optimization** (This Project) - Optimizes logistics network
 
 ---

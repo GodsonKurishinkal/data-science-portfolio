@@ -181,7 +181,7 @@ The model shows excellent prediction quality with residuals close to zero and st
 1. Clone the repository:
 ```bash
 git clone https://github.com/GodsonKurishinkal/data-science-portfolio.git
-cd data-science-portfolio/project-001-demand-forecasting-system
+cd data-science-portfolio/demand-forecasting-system
 ```
 
 2. Create a virtual environment:
@@ -350,7 +350,7 @@ jupyter notebook
 
 ## Project Structure
 ```
-project-001-demand-forecasting-system/
+demand-forecasting-system/
 ├── data/
 │   ├── raw/                    # Original M5 dataset files
 │   │   ├── calendar.csv
@@ -505,7 +505,7 @@ If you use this project in your research or work, please cite:
   title = {M5 Walmart Demand Forecasting System},
   year = {2025},
   publisher = {GitHub},
-  url = {https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/project-001-demand-forecasting-system}
+  url = {https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/demand-forecasting-system}
 }
 ```
 

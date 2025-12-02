@@ -149,19 +149,19 @@ Every project README includes:
 
 #### **Option A: Quick Win** (Recommended)
 ```bash
-cd project-003-dynamic-pricing-engine
+cd dynamic-pricing-engine
 # Start here - uses same M5 data, quickest to build
 ```
 
 #### **Option B: Most Impressive**
 ```bash
-cd project-005-realtime-demand-sensing
+cd realtime-demand-sensing
 # Build interactive dashboard first - most visually impressive
 ```
 
 #### **Option C: Most Complex**
 ```bash
-cd project-004-supply-chain-network-optimization
+cd supply-chain-network-optimization
 # Tackle the hardest challenge - shows deep OR skills
 ```
 
@@ -285,13 +285,13 @@ Everything is set up and ready to go. Just:
 ```
 data-science-portfolio/
 ├── PROJECT_ROADMAP.md                        ← Master guide
-├── project-003-dynamic-pricing-engine/
+├── dynamic-pricing-engine/
 │   ├── README.md                             ← Start here for P3
 │   └── requirements.txt
-├── project-004-supply-chain-network-optimization/
+├── supply-chain-network-optimization/
 │   ├── README.md                             ← Start here for P4
 │   └── requirements.txt
-└── project-005-realtime-demand-sensing/
+└── realtime-demand-sensing/
     ├── README.md                             ← Start here for P5
     └── requirements.txt
 ```

@@ -296,7 +296,7 @@ If you use this model or methodology, please cite:
 **LinkedIn:** [Your LinkedIn]  
 
 **Repository:** https://github.com/GodsonKurishinkal/data-science-portfolio  
-**Project Path:** `project-001-demand-forecasting-system/`
+**Project Path:** `demand-forecasting-system/`
 
 ---
 

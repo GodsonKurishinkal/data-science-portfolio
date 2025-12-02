@@ -293,7 +293,7 @@ $$\epsilon = \frac{\% \Delta Q}{\% \Delta P}$$
 
 ### Run Elasticity Analysis
 ```bash
-cd project-003-dynamic-pricing-engine
+cd dynamic-pricing-engine
 python3 scripts/analyze_elasticity.py
 ```
 

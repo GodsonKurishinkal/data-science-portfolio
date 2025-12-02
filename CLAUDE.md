@@ -46,7 +46,7 @@ Each project has its own `requirements.txt`. Install dependencies after activati
 
 ```bash
 # For a specific project
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pip install -r requirements.txt
 
 # Install in development mode (allows editing source code)
@@ -62,14 +62,14 @@ The root also has `requirements-full.txt` with all installed packages from a com
 #### Quick Demo
 Each complete project has a `demo.py` for quick demonstrations:
 ```bash
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 python demo.py  # Runs complete pipeline in <3 minutes
 ```
 
 #### Jupyter Notebooks
 ```bash
 # Start Jupyter from project directory
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 jupyter notebook
 
 # Notebooks are organized in:
@@ -82,7 +82,7 @@ jupyter notebook
 Projects use **pytest** with coverage reporting:
 
 ```bash
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 
 # Run all tests
 pytest tests/
@@ -117,7 +117,7 @@ The M5 Walmart dataset is used across multiple projects:
 
 ```bash
 # Download M5 data (requires Kaggle API setup)
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 python scripts/download_m5_data.py
 ```
 
@@ -206,7 +206,7 @@ from models.predict import make_prediction
 
 2. **Navigate to project:**
    ```bash
-   cd project-001-demand-forecasting-system
+   cd demand-forecasting-system
    ```
 
 3. **Install dependencies (first time):**

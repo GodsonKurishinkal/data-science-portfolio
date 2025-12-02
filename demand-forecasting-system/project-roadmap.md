@@ -376,7 +376,7 @@ Recommended timeline: **1-2 weeks** working 4-6 hours per day
 **Command to continue:**
 ```bash
 # Ensure you're in the project directory
-cd /Users/godsonkurishinkal/Projects/data-science-portfolio/project-001-demand-forecasting-system
+cd /Users/godsonkurishinkal/Projects/data-science-portfolio/demand-forecasting-system
 
 # Download M5 data
 python scripts/download_m5_data.py

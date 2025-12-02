@@ -26,7 +26,7 @@ This project builds on demand forecasting to create a complete **end-to-end supp
 ## 📁 Project Structure
 
 ```
-project-002-inventory-optimization-engine/
+inventory-optimization-engine/
 ├── config/
 │   └── config.yaml              # Configuration parameters
 ├── data/
@@ -69,7 +69,7 @@ project-002-inventory-optimization-engine/
 
 1. **Clone the repository**
    ```bash
-   cd project-002-inventory-optimization-engine
+   cd inventory-optimization-engine
    ```
 
 2. **Create and activate virtual environment**
@@ -81,7 +81,7 @@ project-002-inventory-optimization-engine/
 
 3. **Install dependencies**
    ```bash
-   cd project-002-inventory-optimization-engine
+   cd inventory-optimization-engine
    pip install -r requirements.txt
    pip install -e .
    ```
@@ -243,9 +243,9 @@ pytest tests/ -v --cov=src
 
 This project is part of a **Data Science Portfolio** series:
 
-- **Project 001**: [Demand Forecasting System](../project-001-demand-forecasting-system/) - Predict future demand
+- **Project 001**: [Demand Forecasting System](../demand-forecasting-system/) - Predict future demand
 - **Project 002**: Inventory Optimization Engine (This project) - Optimize inventory levels
-- **Project 003**: [Inventory Optimization Engine](../project-003-supply-chain-analytics/) *(Planned)* - End-to-end supply chain analytics
+- **Project 003**: [Inventory Optimization Engine](../dynamic-pricing-engine/) *(Planned)* - End-to-end supply chain analytics
 
 ## 📄 License
 

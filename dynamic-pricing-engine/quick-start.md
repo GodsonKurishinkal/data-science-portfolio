@@ -10,7 +10,7 @@
 
 ### 1. Navigate to Project
 ```bash
-cd project-003-dynamic-pricing-engine
+cd dynamic-pricing-engine
 ```
 
 ### 2. Activate Virtual Environment
@@ -19,7 +19,7 @@ cd project-003-dynamic-pricing-engine
 cd ..
 source .venv/bin/activate  # macOS/Linux
 # or .venv\Scripts\activate on Windows
-cd project-003-dynamic-pricing-engine
+cd dynamic-pricing-engine
 ```
 
 ### 3. Install Dependencies
@@ -42,7 +42,7 @@ You should see:
 ## Project Structure
 
 ```
-project-003-dynamic-pricing-engine/
+dynamic-pricing-engine/
 ├── src/
 │   ├── pricing/          # Elasticity, optimization, markdown
 │   ├── models/           # Demand response models
@@ -64,7 +64,7 @@ project-003-dynamic-pricing-engine/
 Create symlink to M5 data:
 ```bash
 cd data
-ln -s ../../project-001-demand-forecasting-system/data/raw raw
+ln -s ../../demand-forecasting-system/data/raw raw
 cd ..
 ```
 
@@ -109,7 +109,7 @@ pip install -e .
 ### Configuration Not Found
 Make sure you're in the project directory:
 ```bash
-cd project-003-dynamic-pricing-engine
+cd dynamic-pricing-engine
 python demo.py
 ```
 
@@ -117,7 +117,7 @@ python demo.py
 Link M5 data from project-001:
 ```bash
 cd data
-ln -s ../../project-001-demand-forecasting-system/data/raw raw
+ln -s ../../demand-forecasting-system/data/raw raw
 ```
 
 ## Getting Help

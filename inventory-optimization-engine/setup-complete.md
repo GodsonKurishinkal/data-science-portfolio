@@ -7,7 +7,7 @@ Congratulations! Your **Inventory Optimization Engine** project is fully set up 
 ## 📦 Project Structure
 
 ```
-project-002-inventory-optimization-engine/
+inventory-optimization-engine/
 ├── 📋 Configuration & Setup
 │   ├── config/config.yaml          ✅ Complete optimization parameters
 │   ├── requirements.txt            ✅ All dependencies listed
@@ -59,7 +59,7 @@ project-002-inventory-optimization-engine/
 
 ```bash
 # Navigate to project
-cd project-002-inventory-optimization-engine
+cd inventory-optimization-engine
 
 # Activate virtual environment
 source ../venv/bin/activate

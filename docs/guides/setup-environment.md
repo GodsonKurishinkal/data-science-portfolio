@@ -36,14 +36,14 @@ Once activated, install project dependencies:
 
 ### For Project 001 (Demand Forecasting):
 ```bash
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pip install -r requirements.txt
 ```
 
 ### For All Projects (when available):
 ```bash
 # Install from root
-pip install -e project-001-demand-forecasting-system/
+pip install -e demand-forecasting-system/
 ```
 
 ---
@@ -67,7 +67,7 @@ cd ~/Projects/data-science-portfolio
 source .venv/bin/activate
 
 # 3. Install dependencies (first time only)
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pip install -r requirements.txt
 
 # 4. Run demo or work on project
@@ -109,7 +109,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # Install dependencies
-pip install -r project-001-demand-forecasting-system/requirements.txt
+pip install -r demand-forecasting-system/requirements.txt
 ```
 
 ---

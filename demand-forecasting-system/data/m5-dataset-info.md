@@ -34,7 +34,7 @@ pip install kaggle
 # Set permissions: chmod 600 ~/.kaggle/kaggle.json
 
 # Navigate to project directory
-cd /Users/godsonkurishinkal/Projects/data-science-portfolio/project-001-demand-forecasting-system
+cd /Users/godsonkurishinkal/Projects/data-science-portfolio/demand-forecasting-system
 
 # Download M5 dataset
 kaggle competitions download -c m5-forecasting-accuracy -p data/raw/

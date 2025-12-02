@@ -12,7 +12,7 @@ data/
 
 This project uses the **M5 Walmart dataset** from the sibling project:
 ```
-../project-001-demand-forecasting-system/data/raw/
+../demand-forecasting-system/data/raw/
 ```
 
 The raw data includes:
@@ -36,7 +36,7 @@ To process the raw data:
 ```python
 from src.data import DataLoader, DemandCalculator
 
-loader = DataLoader('../project-001-demand-forecasting-system/data/raw')
+loader = DataLoader('../demand-forecasting-system/data/raw')
 data = loader.process_data()
 
 calc = DemandCalculator()

@@ -104,7 +104,7 @@ source activate.sh
 ### Run Tests
 ```bash
 source activate.sh
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pytest tests/
 ```
 
@@ -117,7 +117,7 @@ pytest tests/
 ### Run the Interactive Demo
 ```bash
 source activate.sh
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 python demo.py
 ```
 
@@ -141,7 +141,7 @@ data-science-portfolio/
 ├── VENV_QUICK_REFERENCE.md ✅ Quick reference
 ├── README.md               ✅ Portfolio overview
 │
-├── project-001-demand-forecasting-system/
+├── demand-forecasting-system/
 │   ├── data/               ✅ M5 dataset
 │   ├── src/                ✅ Source code
 │   ├── notebooks/          ✅ Jupyter notebooks
@@ -151,7 +151,7 @@ data-science-portfolio/
 │   ├── demo.py             ✅ Interactive demo
 │   └── requirements.txt    ✅ Dependencies
 │
-└── project-002-inventory-optimization-engine/
+└── inventory-optimization-engine/
     └── (ready for development)
 ```
 
@@ -202,7 +202,7 @@ data-science-portfolio/
 - **GitHub Repository:** https://github.com/GodsonKurishinkal/data-science-portfolio
 - **Full Setup Guide:** [ENVIRONMENT_SETUP.md](ENVIRONMENT_SETUP.md)
 - **Quick Reference:** [VENV_QUICK_REFERENCE.md](VENV_QUICK_REFERENCE.md)
-- **Project 001 README:** [project-001-demand-forecasting-system/README.md](project-001-demand-forecasting-system/README.md)
+- **Project 001 README:** [demand-forecasting-system/README.md](demand-forecasting-system/README.md)
 
 ---
 

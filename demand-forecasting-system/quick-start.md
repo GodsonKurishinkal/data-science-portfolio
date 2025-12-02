@@ -9,7 +9,7 @@
 
 ```bash
 # Navigate to project directory
-cd /Users/godsonkurishinkal/Projects/data-science-portfolio/project-001-demand-forecasting-system
+cd /Users/godsonkurishinkal/Projects/data-science-portfolio/demand-forecasting-system
 
 # Create virtual environment
 python3 -m venv venv
@@ -97,7 +97,7 @@ pytest tests/test_data_processing.py -v
 ## Project Structure Quick Reference
 
 ```
-project-001-demand-forecasting-system/
+demand-forecasting-system/
 ├── data/
 │   ├── raw/               # Download M5 data here
 │   └── processed/         # Processed data goes here

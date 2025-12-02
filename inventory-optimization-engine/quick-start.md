@@ -8,7 +8,7 @@ Get up and running with the Inventory Optimization Engine in 5 minutes!
 
 ```bash
 # Navigate to project directory
-cd project-002-inventory-optimization-engine
+cd inventory-optimization-engine
 
 # Activate portfolio virtual environment
 source ../venv/bin/activate  # macOS/Linux
@@ -20,11 +20,11 @@ pip install -e .
 
 ### Step 2: Verify Data Access
 
-The project uses data from `project-001-demand-forecasting-system`:
+The project uses data from `demand-forecasting-system`:
 
 ```bash
 # Check data availability
-ls ../project-001-demand-forecasting-system/data/raw/
+ls ../demand-forecasting-system/data/raw/
 ```
 
 You should see:
@@ -259,7 +259,7 @@ pip install -e .
 ```bash
 # Check data path in config.yaml
 # Verify project-001 data exists
-ls ../project-001-demand-forecasting-system/data/raw/
+ls ../demand-forecasting-system/data/raw/
 ```
 
 ### Issue: Memory errors with large datasets

@@ -25,7 +25,7 @@ which python  # Should show: .../data-science-portfolio/.venv/bin/python
 
 **For Project 001 (Demand Forecasting):**
 ```bash
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pip install -r requirements.txt
 ```
 
@@ -66,10 +66,10 @@ deactivate
 4. **Install project dependencies**:
    ```bash
    # Project 001
-   pip install -r project-001-demand-forecasting-system/requirements.txt
+   pip install -r demand-forecasting-system/requirements.txt
    
    # Add more projects as you create them
-   # pip install -r project-002-inventory-optimization-engine/requirements.txt
+   # pip install -r inventory-optimization-engine/requirements.txt
    ```
 
 5. **Verify installation**:
@@ -91,7 +91,7 @@ cd /Users/godsonkurishinkal/Projects/data-science-portfolio
 source .venv/bin/activate
 
 # 3. Navigate to specific project
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 
 # 4. Start working!
 python demo.py
@@ -143,7 +143,7 @@ source .venv/bin/activate
 pip install package-name
 
 # Update requirements.txt (for specific project)
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pip freeze > requirements.txt
 ```
 
@@ -235,12 +235,12 @@ data-science-portfolio/
 ├── ENVIRONMENT_SETUP.md            # This file
 ├── README.md                       # Portfolio documentation
 │
-├── project-001-demand-forecasting-system/
+├── demand-forecasting-system/
 │   ├── requirements.txt            # Project 001 dependencies
 │   ├── src/                        # Source code
 │   └── ...
 │
-├── project-002-inventory-optimization-engine/
+├── inventory-optimization-engine/
 │   ├── requirements.txt            # Project 002 dependencies
 │   ├── src/                        # Source code
 │   └── ...
