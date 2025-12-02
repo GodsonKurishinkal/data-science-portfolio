@@ -284,7 +284,7 @@ class HolidayAdjuster:
             Multiplier factor (1.0 if no holiday effect)
         """
         # Check each holiday
-        for holiday_name, config in self.holidays.items():
+        for _holiday_name, config in self.holidays.items():
             holiday_date = self._get_holiday_date(date.year, config)
 
             if holiday_date is None:

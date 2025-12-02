@@ -28,7 +28,7 @@ def ensure_columns(
 
     for col in required_columns:
         if col not in result.columns:
-            logger.warning(f"Adding missing column '{col}' with default value")
+            logger.warning("Adding missing column '%s' with default value", col)
             result[col] = fill_value
 
     return result

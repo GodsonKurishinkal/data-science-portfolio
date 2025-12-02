@@ -6,7 +6,7 @@ Preprocesses pricing data and engineers features for pricing analysis.
 
 import pandas as pd
 import numpy as np
-from typing import List
+from typing import List, Optional
 import logging
 
 logger = logging.getLogger(__name__)
@@ -30,7 +30,7 @@ class PricingDataPreprocessor:
     def extract_price_history(
         self,
         df: pd.DataFrame,
-        group_cols: List[str] = ['store_id', 'item_id']
+        group_cols: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
         Extract price change history over time.
@@ -42,6 +42,8 @@ class PricingDataPreprocessor:
         Returns:
             DataFrame with price change indicators
         """
+        if group_cols is None:
+            group_cols = ['store_id', 'item_id']
         logger.info("Extracting price change history")
 
         df = df.copy()
@@ -57,7 +59,7 @@ class PricingDataPreprocessor:
 
         # Days since last price change
         df['days_since_price_change'] = 0
-        for name, group in df.groupby(group_cols):
+        for _name, group in df.groupby(group_cols):
             change_dates = group[group['price_changed']].index
             for idx in group.index:
                 prior_changes = change_dates[change_dates < idx]
@@ -67,14 +69,14 @@ class PricingDataPreprocessor:
                 else:
                     df.loc[idx, 'days_since_price_change'] = 999  # No prior change
 
-        logger.info(f"Price changes identified: {df['price_changed'].sum()}")
+        logger.info("Price changes identified: %d", df['price_changed'].sum())
 
         return df
 
     def calculate_price_statistics(
         self,
         df: pd.DataFrame,
-        group_cols: List[str] = ['store_id', 'item_id']
+        group_cols: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
         Calculate price statistics by product.
@@ -86,6 +88,8 @@ class PricingDataPreprocessor:
         Returns:
             DataFrame with price statistics merged
         """
+        if group_cols is None:
+            group_cols = ['store_id', 'item_id']
         logger.info("Calculating price statistics")
 
         # Calculate statistics
@@ -128,7 +132,7 @@ class PricingDataPreprocessor:
         Returns:
             DataFrame with promotion indicators
         """
-        logger.info(f"Identifying promotions (threshold: {promotion_threshold})")
+        logger.info("Identifying promotions (threshold: %s)", promotion_threshold)
 
         df = df.copy()
 
@@ -146,7 +150,7 @@ class PricingDataPreprocessor:
         n_promotions = df['is_promotion'].sum()
         pct_promotions = (n_promotions / len(df)) * 100
 
-        logger.info(f"Promotions identified: {n_promotions} ({pct_promotions:.2f}% of data)")
+        logger.info("Promotions identified: %d (%.2f%% of data)", n_promotions, pct_promotions)
 
         return df
 
@@ -184,11 +188,12 @@ class PricingDataPreprocessor:
         if include_rolling:
             logger.info("Creating rolling features")
             for window in [7, 14, 28]:
+                w = window  # Capture loop variable
                 df[f'price_rolling_mean_{window}'] = df.groupby(['store_id', 'item_id'])['sell_price'].transform(
-                    lambda x: x.rolling(window, min_periods=1).mean()
+                    lambda x, w=w: x.rolling(w, min_periods=1).mean()
                 )
                 df[f'price_rolling_std_{window}'] = df.groupby(['store_id', 'item_id'])['sell_price'].transform(
-                    lambda x: x.rolling(window, min_periods=1).std()
+                    lambda x, w=w: x.rolling(w, min_periods=1).std()
                 )
 
         # Price trend indicators
@@ -203,7 +208,7 @@ class PricingDataPreprocessor:
 
         df['price_vs_store_cat_avg'] = (df['sell_price'] - df['store_cat_avg_price']) / df['store_cat_avg_price']
 
-        logger.info(f"Feature engineering complete. Final shape: {df.shape}")
+        logger.info("Feature engineering complete. Final shape: %s", df.shape)
 
         return df
 
@@ -237,14 +242,14 @@ class PricingDataPreprocessor:
         if include_all_features:
             df = self.engineer_pricing_features(df)
 
-        logger.info(f"Pricing dataset created with {len(df.columns)} columns")
+        logger.info("Pricing dataset created with %d columns", len(df.columns))
 
         return df
 
     def get_product_price_summary(
         self,
         df: pd.DataFrame,
-        group_cols: List[str] = ['store_id', 'item_id']
+        group_cols: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
         Get summary statistics for each product.
@@ -256,6 +261,8 @@ class PricingDataPreprocessor:
         Returns:
             Summary statistics DataFrame
         """
+        if group_cols is None:
+            group_cols = ['store_id', 'item_id']
         logger.info("Creating product price summary")
 
         summary = df.groupby(group_cols).agg({
@@ -273,6 +280,6 @@ class PricingDataPreprocessor:
         summary['total_sales'] = summary['sales_sum']
         summary['avg_daily_sales'] = summary['sales_mean']
 
-        logger.info(f"Summary created for {len(summary)} products")
+        logger.info("Summary created for %d products", len(summary))
 
         return summary

@@ -90,7 +90,7 @@ def make_forecast(
     # and handle recursive forecasting for models that use lag features
 
     predictions = []
-    for i in range(horizon):
+    for _i in range(horizon):
         # Here you would create features for each future time step
         # For now, we'll use the last known features as a placeholder
         X_future = last_known_data.iloc[[-1]].copy()
@@ -107,7 +107,7 @@ def make_forecast(
 def predict_with_confidence_interval(
     model: Any,
     X: pd.DataFrame,
-    confidence_level: float = 0.95
+    _confidence_level: float = 0.95
 ) -> pd.DataFrame:
     """
     Make predictions with confidence intervals (for ensemble models).
@@ -444,7 +444,7 @@ def plot_predictions(
     """
     import matplotlib.pyplot as plt
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
+    _fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(15, 10))
 
     # Time series plot
     x = dates if dates is not None else np.arange(len(y_true))
@@ -499,7 +499,7 @@ def plot_residuals(
 
     residuals = y_true - y_pred
 
-    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+    _fig, axes = plt.subplots(2, 2, figsize=(15, 10))
 
     # Residuals over time
     x = dates if dates is not None else np.arange(len(residuals))

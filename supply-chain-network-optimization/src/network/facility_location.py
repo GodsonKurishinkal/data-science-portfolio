@@ -2,7 +2,9 @@
 
 import pandas as pd
 import numpy as np
-from pulp import *  # noqa: F403, F405
+from pulp import (
+    LpProblem, LpMinimize, LpVariable, lpSum, LpStatus, value, PULP_CBC_CMD
+)
 from typing import Dict, List, Optional
 import logging
 
@@ -154,12 +156,12 @@ class FacilityLocationOptimizer:
 
         # Extract solution
         status = LpStatus[self.model.status]
-        logger.info(f"Optimization status: {status}")
+        logger.info("Optimization status: %s", status)
 
         if status == 'Optimal' or status == 'Feasible':
             self.solution = self._extract_solution(y, x, facilities, store_ids, demand)
-            logger.info(f"Solution found: {len(self.solution['open_facilities'])} facilities open")
-            logger.info(f"Total cost: ${self.solution['total_cost']:,.2f}")
+            logger.info("Solution found: %d facilities open", len(self.solution['open_facilities']))
+            logger.info("Total cost: $%.2f", self.solution['total_cost'])
             return self.solution
         else:
             logger.error("No solution found!")
@@ -232,7 +234,7 @@ class FacilityLocationOptimizer:
         results = []
 
         for num_fac in facility_range:
-            logger.info(f"\nTesting with max {num_fac} facilities...")
+            logger.info("\nTesting with max %d facilities...", num_fac)
             solution = self.optimize(
                 stores=stores,
                 demand=demand,
@@ -286,7 +288,7 @@ class FacilityLocationOptimizer:
             raise ValueError("No solution available. Run optimize() first.")
 
         import json
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             # Convert numpy types to native Python types
             solution_copy = {
                 k: (v.tolist() if isinstance(v, np.ndarray) else v)
@@ -294,4 +296,4 @@ class FacilityLocationOptimizer:
             }
             json.dump(solution_copy, f, indent=2)
 
-        logger.info(f"Solution exported to {filepath}")
+        logger.info("Solution exported to %s", filepath)

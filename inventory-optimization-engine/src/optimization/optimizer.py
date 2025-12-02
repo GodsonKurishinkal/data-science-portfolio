@@ -60,7 +60,7 @@ class InventoryOptimizer:
         Returns:
             DataFrame with optimized inventory parameters
         """
-        logger.info(f"Optimizing inventory policy with objective: {objective}")
+        logger.info("Optimizing inventory policy with objective: %s", objective)
 
         # Step 1: ABC-XYZ Classification
         classified_data = self.abc_analyzer.perform_combined_analysis(

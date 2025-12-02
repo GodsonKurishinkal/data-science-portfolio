@@ -226,7 +226,7 @@ class CostCalculator:
 
     def calculate_service_level_cost_tradeoff(
         self,
-        demand_mean: float,
+        _demand_mean: float,
         demand_std: float,
         unit_cost: float,
         service_levels: List[float] = None
@@ -302,7 +302,7 @@ class CostCalculator:
         Returns:
             DataFrame with cost breakdown by class
         """
-        logger.info(f"Calculating costs by {group_col}...")
+        logger.info("Calculating costs by %s...", group_col)
 
         results = []
 
@@ -344,7 +344,7 @@ class CostCalculator:
             result_df['total_operational_cost'].sum() * 100
         ).round(2)
 
-        logger.info(f"\nCost Summary by {group_col}:")
-        logger.info(result_df.to_string())
+        logger.info("\nCost Summary by %s:", group_col)
+        logger.info("%s", result_df.to_string())
 
         return result_df

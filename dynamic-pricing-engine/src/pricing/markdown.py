@@ -82,9 +82,11 @@ class MarkdownOptimizer:
         self.clearance_history = []
 
         logger.info(
-            f"Initialized MarkdownOptimizer: "
-            f"holding_cost={holding_cost_per_day:.4f}, "
-            f"salvage_value={salvage_value_pct:.2%}"
+            "Initialized MarkdownOptimizer: "
+            "holding_cost=%.4f, "
+            "salvage_value=%.2f%%",
+            holding_cost_per_day,
+            salvage_value_pct * 100
         )
 
     def calculate_optimal_markdown(
@@ -201,10 +203,14 @@ class MarkdownOptimizer:
         self.clearance_history.append(result)
 
         logger.info(
-            f"Calculated markdown for {product_id}: "
-            f"strategy={strategy}, "
-            f"clearance={clearance_rate:.1%}, "
-            f"revenue=${total_revenue:,.2f}"
+            "Calculated markdown for %s: "
+            "strategy=%s, "
+            "clearance=%.1f%%, "
+            "revenue=$%.2f",
+            product_id,
+            strategy,
+            clearance_rate * 100,
+            total_revenue
         )
 
         return result
@@ -253,7 +259,7 @@ class MarkdownOptimizer:
             daily_demand = baseline_demand * demand_multiplier
 
             # Simulate each day in this stage
-            for day in range(stage_duration):
+            for _day in range(stage_duration):
                 if inventory <= 0:
                     break
 
@@ -380,7 +386,7 @@ class MarkdownOptimizer:
 
         comparison_df = pd.DataFrame(results)
 
-        logger.info(f"Compared {len(strategies)} strategies for {product_id}")
+        logger.info("Compared %d strategies for %s", len(strategies), product_id)
 
         return comparison_df
 
@@ -388,7 +394,7 @@ class MarkdownOptimizer:
         self,
         days_remaining: int,
         current_price: float,
-        stages: int = 3
+        _stages: int = 3
     ) -> List[Dict]:
         """
         Generate standard progressive markdown schedule.
@@ -426,7 +432,7 @@ class MarkdownOptimizer:
         self,
         days_remaining: int,
         base_price: float,
-        elasticity: float
+        _elasticity: float
     ) -> List[Dict]:
         """Create conservative markdown schedule (10% → 20% → 35%)."""
         stage_duration = max(1, days_remaining // 3)
@@ -462,7 +468,7 @@ class MarkdownOptimizer:
         self,
         days_remaining: int,
         base_price: float,
-        elasticity: float
+        _elasticity: float
     ) -> List[Dict]:
         """Create standard progressive markdown schedule (15% → 30% → 50%)."""
         stage_duration = max(1, days_remaining // 3)
@@ -498,7 +504,7 @@ class MarkdownOptimizer:
         self,
         days_remaining: int,
         base_price: float,
-        elasticity: float
+        _elasticity: float
     ) -> List[Dict]:
         """Create aggressive markdown schedule (25% → 40% → 60%)."""
         stage_duration = max(1, days_remaining // 3)

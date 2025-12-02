@@ -68,7 +68,7 @@ class DemandResponseModel:
         # Promotional lift factors
         self.promotion_lifts = {}
 
-        logger.info(f"Initialized DemandResponseModel with {confidence_level*100}% confidence intervals")
+        logger.info("Initialized DemandResponseModel with %s%% confidence intervals", confidence_level*100)
 
     def predict_demand_at_price(
         self,
@@ -102,7 +102,7 @@ class DemandResponseModel:
             if product_id in self.elasticity_cache:
                 elasticity = self.elasticity_cache[product_id]['elasticity']
             else:
-                logger.warning(f"No elasticity estimate for {product_id}, using default -1.0")
+                logger.warning("No elasticity estimate for %s, using default -1.0", product_id)
                 elasticity = -1.0
 
         # Validate inputs
@@ -259,7 +259,7 @@ class DemandResponseModel:
         """
         results = []
 
-        for idx, row in predictions_df.iterrows():
+        for _idx, row in predictions_df.iterrows():
             try:
                 elasticity = row[elasticity_col] if elasticity_col and elasticity_col in row else None
 
@@ -272,8 +272,8 @@ class DemandResponseModel:
                 )
                 results.append(prediction)
 
-            except Exception as e:
-                logger.error(f"Error predicting for {row[product_id_col]}: {str(e)}")
+            except (ValueError, KeyError, TypeError) as e:
+                logger.error("Error predicting for %s: %s", row[product_id_col], str(e))
                 continue
 
         return pd.DataFrame(results)
@@ -297,7 +297,7 @@ class DemandResponseModel:
             'metadata': metadata or {},
             'cached_at': datetime.now()
         }
-        logger.debug(f"Cached elasticity {elasticity:.3f} for {product_id}")
+        logger.debug("Cached elasticity %.3f for %s", elasticity, product_id)
 
     def load_elasticity_from_analyzer(
         self,
@@ -322,7 +322,7 @@ class DemandResponseModel:
 
         # Calculate elasticity for each product
         products = data[product_id_col].unique()
-        logger.info(f"Calculating elasticity for {len(products)} products")
+        logger.info("Calculating elasticity for %d products", len(products))
 
         for product_id in products:
             product_data = data[data[product_id_col] == product_id]
@@ -344,7 +344,7 @@ class DemandResponseModel:
                     }
                 )
 
-        logger.info(f"Cached elasticity for {len(self.elasticity_cache)} products")
+        logger.info("Cached elasticity for %d products", len(self.elasticity_cache))
 
     def learn_seasonality(
         self,
@@ -394,7 +394,7 @@ class DemandResponseModel:
                 'overall_mean': overall_mean
             }
 
-        logger.info(f"Learned seasonality for {len(self.seasonality_patterns)} products")
+        logger.info("Learned seasonality for %d products", len(self.seasonality_patterns))
 
     def set_promotion_lift(
         self,
@@ -414,7 +414,7 @@ class DemandResponseModel:
             self.promotion_lifts[product_id] = {}
 
         self.promotion_lifts[product_id][promotion_type] = lift_factor
-        logger.debug(f"Set {promotion_type} lift to {lift_factor:.2f}x for {product_id}")
+        logger.debug("Set %s lift to %.2fx for %s", promotion_type, lift_factor, product_id)
 
     def _get_seasonality_factor(self, product_id: str, date: datetime) -> float:
         """Get seasonality adjustment factor for a given date."""

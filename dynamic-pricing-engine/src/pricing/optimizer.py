@@ -84,7 +84,7 @@ class PriceOptimizer:
         self.demand_model = demand_model
         self.optimization_history = []
 
-        logger.info(f"Initialized PriceOptimizer with objective='{objective}', method='{method}'")
+        logger.info("Initialized PriceOptimizer with objective='%s', method='%s'", objective, method)
 
     def optimize_single_product(
         self,
@@ -183,7 +183,7 @@ class PriceOptimizer:
 
         # Ensure min_price <= max_price
         if min_price > max_price:
-            logger.warning(f"Constraints conflict: min_price ({min_price:.2f}) > max_price ({max_price:.2f}). Using current_price.")
+            logger.warning("Constraints conflict: min_price (%.2f) > max_price (%.2f). Using current_price.", min_price, max_price)
             return self._create_no_change_result(
                 product_id, current_price, baseline_demand, elasticity,
                 seasonality_factor, promotion_lift, cost_per_unit
@@ -226,6 +226,9 @@ class PriceOptimizer:
                 max_iterations=1000,
                 tolerance=1e-6
             )
+        else:
+            # Default to current price if method is unknown
+            optimal_price = current_price
 
         # Calculate results
         optimal_price = np.clip(optimal_price, min_price, max_price)
@@ -287,9 +290,9 @@ class PriceOptimizer:
         # Store in history
         self.optimization_history.append(result)
 
-        logger.info(f"Optimized {product_id}: ${current_price:.2f} -> ${optimal_price:.2f} "
-                   f"({price_change_pct:+.1f}%), Revenue: ${current_revenue:.2f} -> ${optimal_revenue:.2f} "
-                   f"({revenue_change_pct:+.1f}%)")
+        logger.info("Optimized %s: $%.2f -> $%.2f (%+.1f%%), Revenue: $%.2f -> $%.2f (%+.1f%%)",
+                   product_id, current_price, optimal_price, price_change_pct,
+                   current_revenue, optimal_revenue, revenue_change_pct)
 
         return result
 
@@ -324,7 +327,7 @@ class PriceOptimizer:
             ... })
             >>> results = optimizer.optimize_portfolio(products)
         """
-        logger.info(f"Starting portfolio optimization for {len(products_df)} products")
+        logger.info("Starting portfolio optimization for %d products", len(products_df))
 
         results = []
         for _, row in products_df.iterrows():
@@ -340,8 +343,8 @@ class PriceOptimizer:
                     promotion_lift=row.get('promotion_lift', 1.0)
                 )
                 results.append(result)
-            except Exception as e:
-                logger.error(f"Failed to optimize {row['product_id']}: {str(e)}")
+            except (ValueError, KeyError, TypeError) as e:
+                logger.error("Failed to optimize %s: %s", row['product_id'], str(e))
                 continue
 
         results_df = pd.DataFrame(results)
@@ -352,9 +355,9 @@ class PriceOptimizer:
             total_optimal_revenue = results_df['optimal_revenue'].sum()
             portfolio_revenue_change = ((total_optimal_revenue - total_current_revenue) / total_current_revenue) * 100
 
-            logger.info(f"Portfolio optimization complete: {len(results_df)} products optimized")
-            logger.info(f"Total revenue: ${total_current_revenue:,.2f} -> ${total_optimal_revenue:,.2f} "
-                       f"({portfolio_revenue_change:+.1f}%)")
+            logger.info("Portfolio optimization complete: %d products optimized", len(results_df))
+            logger.info("Total revenue: $%.2f -> $%.2f (%+.1f%%)",
+                       total_current_revenue, total_optimal_revenue, portfolio_revenue_change)
 
         return results_df
 
@@ -422,7 +425,7 @@ class PriceOptimizer:
             results.append(result)
 
         results_df = pd.DataFrame(results)
-        logger.info(f"Simulated {len(scenarios)} scenarios for {product_id}")
+        logger.info("Simulated %d scenarios for %s", len(scenarios), product_id)
 
         return results_df
 
@@ -506,12 +509,12 @@ class PriceOptimizer:
         max_revenue_idx = results_df['revenue'].idxmax()
         optimal_revenue_price = results_df.loc[max_revenue_idx, 'price']
 
-        logger.info(f"Sensitivity analysis for {product_id}: Optimal revenue at ${optimal_revenue_price:.2f}")
+        logger.info("Sensitivity analysis for %s: Optimal revenue at $%.2f", product_id, optimal_revenue_price)
 
         if cost_per_unit is not None:
             max_profit_idx = results_df['profit'].idxmax()
             optimal_profit_price = results_df.loc[max_profit_idx, 'price']
-            logger.info(f"  Optimal profit at ${optimal_profit_price:.2f}")
+            logger.info("  Optimal profit at $%.2f", optimal_profit_price)
 
         return results_df
 
@@ -577,7 +580,7 @@ class PriceOptimizer:
             'Highly Inelastic': 'Strong pricing power. Consider premium pricing strategies to maximize margins.'
         }
 
-        logger.info(f"Segmented {len(products_df)} products into {len(summary)} elasticity segments")
+        logger.info("Segmented %d products into %d elasticity segments", len(products_df), len(summary))
 
         return {
             'segments': products_df,
@@ -660,7 +663,7 @@ class PriceOptimizer:
 
             # Check convergence
             if abs(new_price - price) < tolerance:
-                logger.debug(f"Gradient descent converged in {iteration + 1} iterations")
+                logger.debug("Gradient descent converged in %d iterations", iteration + 1)
                 break
 
             price = new_price

@@ -3,6 +3,7 @@ Feature engineering module for time series forecasting.
 
 This module contains functions for creating time-based and lag features.
 """
+# pyright: reportArgumentType=false
 
 import pandas as pd
 from typing import List, Optional
@@ -57,7 +58,7 @@ def create_time_features(df: pd.DataFrame, date_column: Optional[str] = None) ->
 def create_lag_features(
     df: pd.DataFrame,
     target_column: str,
-    lags: List[int] = [1, 7, 14, 30]
+    lags: Optional[List[int]] = None
 ) -> pd.DataFrame:
     """
     Create lag features for time series forecasting.
@@ -82,6 +83,8 @@ def create_lag_features(
     >>> print(df_with_lags.columns)
     Index(['demand', 'demand_lag_1', 'demand_lag_7', 'demand_lag_30'])
     """
+    if lags is None:
+        lags = [1, 7, 14, 30]
     df_lags = df.copy()
 
     if target_column not in df_lags.columns:
@@ -96,7 +99,7 @@ def create_lag_features(
 def create_rolling_features(
     df: pd.DataFrame,
     target_column: str,
-    windows: List[int] = [7, 14, 30]
+    windows: Optional[List[int]] = None
 ) -> pd.DataFrame:
     """
     Create rolling window statistics features.
@@ -119,6 +122,8 @@ def create_rolling_features(
     --------
     >>> df_with_rolling = create_rolling_features(df, 'demand', windows=[7, 30])
     """
+    if windows is None:
+        windows = [7, 14, 30]
     df_rolling = df.copy()
 
     if target_column not in df_rolling.columns:
@@ -145,8 +150,8 @@ def create_all_features(
     df: pd.DataFrame,
     target_column: str,
     date_column: Optional[str] = None,
-    lags: List[int] = [1, 7, 14, 30],
-    windows: List[int] = [7, 14, 30]
+    lags: Optional[List[int]] = None,
+    windows: Optional[List[int]] = None
 ) -> pd.DataFrame:
     """
     Create all time series features (time, lag, and rolling features).
@@ -173,6 +178,10 @@ def create_all_features(
     --------
     >>> df_final = create_all_features(df, 'demand')
     """
+    if lags is None:
+        lags = [1, 7, 14, 30]
+    if windows is None:
+        windows = [7, 14, 30]
     df_features = df.copy()
 
     # Create time features
@@ -225,11 +234,12 @@ def create_price_features(df: pd.DataFrame) -> pd.DataFrame:
 
     # Rolling price statistics
     for window in [7, 14, 28]:
+        w = window  # Capture loop variable
         df_price[f'price_rolling_mean_{window}'] = df_price.groupby(group_cols)['sell_price'].transform(
-            lambda x: x.rolling(window=window, min_periods=1).mean()
+            lambda x, w=w: x.rolling(window=w, min_periods=1).mean()
         )
         df_price[f'price_rolling_std_{window}'] = df_price.groupby(group_cols)['sell_price'].transform(
-            lambda x: x.rolling(window=window, min_periods=1).std()
+            lambda x, w=w: x.rolling(window=w, min_periods=1).std()
         )
 
     # Price relative to historical average
@@ -288,7 +298,7 @@ def encode_calendar_features(df: pd.DataFrame) -> pd.DataFrame:
 def create_sales_lag_features(
     df: pd.DataFrame,
     target_col: str = 'sales',
-    lags: List[int] = [1, 7, 14, 21, 28]
+    lags: Optional[List[int]] = None
 ) -> pd.DataFrame:
     """
     Create lag features for sales, grouped by product and store.
@@ -311,6 +321,8 @@ def create_sales_lag_features(
     --------
     >>> df = create_sales_lag_features(df, 'sales', lags=[1, 7, 28])
     """
+    if lags is None:
+        lags = [1, 7, 14, 21, 28]
     df_lags = df.copy()
 
     if target_col not in df_lags.columns:
@@ -328,7 +340,7 @@ def create_sales_lag_features(
 def create_sales_rolling_features(
     df: pd.DataFrame,
     target_col: str = 'sales',
-    windows: List[int] = [7, 14, 28, 90]
+    windows: Optional[List[int]] = None
 ) -> pd.DataFrame:
     """
     Create rolling window statistics for sales, grouped by product and store.
@@ -351,6 +363,8 @@ def create_sales_rolling_features(
     --------
     >>> df = create_sales_rolling_features(df, 'sales', windows=[7, 28])
     """
+    if windows is None:
+        windows = [7, 14, 28, 90]
     df_rolling = df.copy()
 
     if target_col not in df_rolling.columns:
@@ -360,23 +374,24 @@ def create_sales_rolling_features(
     group_cols = ['item_id', 'store_id']
 
     for window in windows:
+        w = window  # Capture loop variable
         # Rolling mean
         df_rolling[f'{target_col}_rolling_mean_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
-            lambda x: x.shift(1).rolling(window=window, min_periods=1).mean()
+            lambda x, w=w: x.shift(1).rolling(window=w, min_periods=1).mean()
         )
 
         # Rolling standard deviation
         df_rolling[f'{target_col}_rolling_std_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
-            lambda x: x.shift(1).rolling(window=window, min_periods=1).std()
+            lambda x, w=w: x.shift(1).rolling(window=w, min_periods=1).std()
         )
 
         # Rolling min and max
         df_rolling[f'{target_col}_rolling_min_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
-            lambda x: x.shift(1).rolling(window=window, min_periods=1).min()
+            lambda x, w=w: x.shift(1).rolling(window=w, min_periods=1).min()
         )
 
         df_rolling[f'{target_col}_rolling_max_{window}'] = df_rolling.groupby(group_cols)[target_col].transform(
-            lambda x: x.shift(1).rolling(window=window, min_periods=1).max()
+            lambda x, w=w: x.shift(1).rolling(window=w, min_periods=1).max()
         )
 
     return df_rolling
@@ -446,8 +461,8 @@ def build_m5_features(
     include_lags: bool = True,
     include_rolling: bool = True,
     include_hierarchical: bool = True,
-    lags: List[int] = [1, 7, 14, 21, 28],
-    windows: List[int] = [7, 14, 28, 90]
+    lags: Optional[List[int]] = None,
+    windows: Optional[List[int]] = None
 ) -> pd.DataFrame:
     """
     Complete M5 feature engineering pipeline.
@@ -468,10 +483,10 @@ def build_m5_features(
         Whether to create rolling features.
     include_hierarchical : bool, default=True
         Whether to create hierarchical features.
-    lags : List[int], default=[1, 7, 14, 21, 28]
-        Lag periods to use.
-    windows : List[int], default=[7, 14, 28, 90]
-        Rolling window sizes to use.
+    lags : List[int], optional
+        Lag periods to use. Default: [1, 7, 14, 21, 28]
+    windows : List[int], optional
+        Rolling window sizes to use. Default: [7, 14, 28, 90]
 
     Returns
     -------
@@ -482,6 +497,10 @@ def build_m5_features(
     --------
     >>> df_features = build_m5_features(df, target_col='sales')
     """
+    if lags is None:
+        lags = [1, 7, 14, 21, 28]
+    if windows is None:
+        windows = [7, 14, 28, 90]
     print("Building M5 features...")
     df_features = df.copy()
 

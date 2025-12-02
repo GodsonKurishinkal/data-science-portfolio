@@ -234,8 +234,8 @@ class PlanningWorkflow:
                 step.result = result
                 step.status = WorkflowStatus.COMPLETED
                 step_results[step_name] = result
-                
-            except Exception as e:
+
+            except (ValueError, RuntimeError, KeyError, TypeError) as e:
                 error_msg = f"Step {step_name} failed: {str(e)}"
                 logger.error(error_msg)
                 step.status = WorkflowStatus.FAILED

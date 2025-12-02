@@ -15,7 +15,6 @@ from typing import Any, Dict, List, Optional
 
 import pandas as pd
 
-from ..interfaces.base import IAlertGenerator
 from .types import Alert, AlertSeverity, AlertType
 
 logger = logging.getLogger(__name__)
@@ -47,9 +46,11 @@ class AlertThresholds:
     coverage_warning: float = 0.90
 
 
-class AlertGenerator(IAlertGenerator):
+class AlertGenerator:
     """Generate replenishment alerts based on inventory conditions.
 
+    This is a concrete class (not abstract) that generates alerts.
+    
     Features:
     - Multi-level severity classification
     - Configurable thresholds

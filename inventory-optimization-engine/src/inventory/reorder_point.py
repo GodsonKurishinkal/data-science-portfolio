@@ -49,7 +49,7 @@ class ReorderPointCalculator:
     def calculate_dynamic_reorder_point(
         self,
         demand_forecast: float,
-        demand_std: float,
+        _demand_std: float,
         safety_stock: float,
         lead_time: int = None
     ) -> float:
@@ -114,8 +114,8 @@ class ReorderPointCalculator:
         # Round to whole units
         result['reorder_point'] = result['reorder_point'].round(0).astype(int)
 
-        logger.info(f"Average reorder point: {result['reorder_point'].mean():.2f}")
-        logger.info(f"Total reorder point: {result['reorder_point'].sum():,.0f}")
+        logger.info("Average reorder point: %.2f", result['reorder_point'].mean())
+        logger.info("Total reorder point: %.0f", result['reorder_point'].sum())
 
         return result
 
@@ -276,9 +276,9 @@ class ReorderPointCalculator:
         # Calculate metrics
         results['service_level'] = ((results['demand'] - results['stockouts']) / results['demand']).fillna(1)
 
-        logger.info(f"Simulation complete: {len(results)} periods")
-        logger.info(f"Average inventory: {results['inventory'].mean():.2f}")
-        logger.info(f"Stockout rate: {(results['stockouts'] > 0).sum() / len(results) * 100:.2f}%")
-        logger.info(f"Service level: {results['service_level'].mean() * 100:.2f}%")
+        logger.info("Simulation complete: %d periods", len(results))
+        logger.info("Average inventory: %.2f", results['inventory'].mean())
+        logger.info("Stockout rate: %.2f%%", (results['stockouts'] > 0).sum() / len(results) * 100)
+        logger.info("Service level: %.2f%%", results['service_level'].mean() * 100)
 
         return results

@@ -109,7 +109,7 @@ class TrendDetector:
         if np.std(y) == 0:
             return result  # No variation, stable
 
-        slope, intercept, r_value, p_value, std_err = stats.linregress(x, y)
+        slope, intercept, r_value, p_value, _std_err = stats.linregress(x, y)
 
         # Calculate percent change
         start_value = intercept

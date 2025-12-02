@@ -524,7 +524,6 @@ def train_m5_model(
             model.fit(
                 X_tr, y_tr,
                 eval_set=[(X_val, y_val)],
-                early_stopping_rounds=10,
                 verbose=False
             )
         else:
@@ -625,7 +624,7 @@ def compare_models(
         print(f"{'='*60}")
 
         try:
-            model, metrics, _ = train_m5_model(
+            _model, metrics, _ = train_m5_model(
                 df,
                 target_col=target_col,
                 model_type=model_type,
@@ -639,7 +638,7 @@ def compare_models(
                 'mape': metrics['mape'],
                 'r2': metrics['r2']
             })
-        except Exception as e:
+        except (ValueError, RuntimeError, ImportError) as e:
             print(f"Error training {model_type}: {e}")
 
     comparison_df = pd.DataFrame(results).sort_values('rmse')

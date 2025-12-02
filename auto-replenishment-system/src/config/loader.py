@@ -45,7 +45,7 @@ class ConfigLoader:
         with open(path, "r", encoding="utf-8") as f:
             config = yaml.safe_load(f)
 
-        logger.info(f"Loaded configuration from {config_path}")
+        logger.info("Loaded configuration from %s", config_path)
         return config
 
     @staticmethod

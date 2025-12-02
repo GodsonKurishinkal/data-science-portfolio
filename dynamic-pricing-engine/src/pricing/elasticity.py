@@ -39,7 +39,7 @@ class ElasticityAnalyzer:
         """
         self.method = method
         self.min_observations = min_observations
-        logger.info(f"Initialized ElasticityAnalyzer with method: {method}")
+        logger.info("Initialized ElasticityAnalyzer with method: %s", method)
 
     def calculate_own_price_elasticity(
         self,
@@ -68,7 +68,7 @@ class ElasticityAnalyzer:
         sales = sales_series[mask]
 
         if len(prices) < self.min_observations:
-            logger.warning(f"Product {product_id}: Insufficient data ({len(prices)} < {self.min_observations})")
+            logger.warning("Product %s: Insufficient data (%d < %d)", product_id, len(prices), self.min_observations)
             return {
                 'product_id': product_id,
                 'elasticity': np.nan,
@@ -308,7 +308,7 @@ class ElasticityAnalyzer:
     def calculate_elasticities_batch(
         self,
         df: pd.DataFrame,
-        group_cols: List[str] = ['store_id', 'item_id']
+        group_cols: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
         Calculate elasticities for multiple products in batch.
@@ -320,7 +320,9 @@ class ElasticityAnalyzer:
         Returns:
             DataFrame with elasticity results for each product
         """
-        logger.info(f"Calculating elasticities for {df.groupby(group_cols).ngroups} products")
+        if group_cols is None:
+            group_cols = ['store_id', 'item_id']
+        logger.info("Calculating elasticities for %d products", df.groupby(group_cols).ngroups)
 
         results = []
 
@@ -343,7 +345,7 @@ class ElasticityAnalyzer:
             results.append(result)
 
         results_df = pd.DataFrame(results)
-        logger.info(f"Calculated {len(results_df)} elasticities, {results_df['valid'].sum()} valid")
+        logger.info("Calculated %d elasticities, %d valid", len(results_df), results_df['valid'].sum())
 
         return results_df
 
@@ -367,7 +369,7 @@ class ElasticityAnalyzer:
         Returns:
             Dictionary with cross-elasticity and interpretation
         """
-        logger.info(f"Calculating cross-elasticity: {product_a_id} vs {product_b_id}")
+        logger.info("Calculating cross-elasticity: %s vs %s", product_a_id, product_b_id)
 
         # Get data for both products
         mask_a = data['item_id'] == product_a_id
@@ -439,7 +441,7 @@ class ElasticityAnalyzer:
     def segment_by_elasticity(
         self,
         elasticities: pd.DataFrame,
-        elastic_threshold: float = -1.0
+        _elastic_threshold: float = -1.0
     ) -> pd.DataFrame:
         """
         Classify products by elasticity category.
@@ -503,7 +505,7 @@ class ElasticityAnalyzer:
 
         # Distribution summary
         category_counts = df['elasticity_category'].value_counts()
-        logger.info(f"Elasticity distribution:\n{category_counts}")
+        logger.info("Elasticity distribution:\n%s", category_counts)
 
         return df
 

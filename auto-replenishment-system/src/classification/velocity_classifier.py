@@ -208,7 +208,7 @@ class VelocityClassifier(IClassifier):
     def _calculate_stats(
         self,
         item_metrics: pd.DataFrame,
-        metric_column: str,
+        _metric_column: str,
     ) -> Dict[str, Any]:
         """Calculate classification statistics."""
         stats = {

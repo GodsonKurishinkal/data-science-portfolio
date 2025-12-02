@@ -36,17 +36,17 @@ class DataLoader:
         # Load calendar
         calendar_path = self.data_path / "calendar.csv"
         self.calendar = pd.read_csv(calendar_path)
-        logger.info(f"Loaded calendar: {self.calendar.shape}")
+        logger.info("Loaded calendar: %s", self.calendar.shape)
 
         # Load sales training data
         sales_path = self.data_path / "sales_train_evaluation.csv"
         self.sales_train = pd.read_csv(sales_path)
-        logger.info(f"Loaded sales data: {self.sales_train.shape}")
+        logger.info("Loaded sales data: %s", self.sales_train.shape)
 
         # Load sell prices
         prices_path = self.data_path / "sell_prices.csv"
         self.sell_prices = pd.read_csv(prices_path)
-        logger.info(f"Loaded price data: {self.sell_prices.shape}")
+        logger.info("Loaded price data: %s", self.sell_prices.shape)
 
         return self.calendar, self.sales_train, self.sell_prices
 
@@ -69,7 +69,7 @@ class DataLoader:
             value_name='sales'
         )
 
-        logger.info(f"Melted sales shape: {sales_melted.shape}")
+        logger.info("Melted sales shape: %s", sales_melted.shape)
         return sales_melted
 
     def merge_data(self, sales_melted: pd.DataFrame) -> pd.DataFrame:
@@ -104,8 +104,8 @@ class DataLoader:
         # Calculate revenue
         data['revenue'] = data['sales'] * data['sell_price']
 
-        logger.info(f"Merged data shape: {data.shape}")
-        logger.info(f"Date range: {data['date'].min()} to {data['date'].max()}")
+        logger.info("Merged data shape: %s", data.shape)
+        logger.info("Date range: %s to %s", data['date'].min(), data['date'].max())
 
         return data
 
@@ -149,11 +149,12 @@ class DataLoader:
         }
 
         logger.info(
-            f"Hierarchy: {len(hierarchy['states'])} states, "
-            f"{len(hierarchy['stores'])} stores, "
-            f"{len(hierarchy['categories'])} categories, "
-            f"{len(hierarchy['departments'])} departments, "
-            f"{len(hierarchy['items'])} items"
+            "Hierarchy: %d states, %d stores, %d categories, %d departments, %d items",
+            len(hierarchy['states']),
+            len(hierarchy['stores']),
+            len(hierarchy['categories']),
+            len(hierarchy['departments']),
+            len(hierarchy['items'])
         )
 
         return hierarchy
@@ -183,21 +184,21 @@ class DataLoader:
 
         if stores:
             filtered = filtered[filtered['store_id'].isin(stores)]
-            logger.info(f"Filtered to stores: {stores}")
+            logger.info("Filtered to stores: %s", stores)
 
         if categories:
             filtered = filtered[filtered['cat_id'].isin(categories)]
-            logger.info(f"Filtered to categories: {categories}")
+            logger.info("Filtered to categories: %s", categories)
 
         if start_date:
             filtered = filtered[filtered['date'] >= start_date]
-            logger.info(f"Filtered to start_date >= {start_date}")
+            logger.info("Filtered to start_date >= %s", start_date)
 
         if end_date:
             filtered = filtered[filtered['date'] <= end_date]
-            logger.info(f"Filtered to end_date <= {end_date}")
+            logger.info("Filtered to end_date <= %s", end_date)
 
-        logger.info(f"Filtered data shape: {filtered.shape}")
+        logger.info("Filtered data shape: %s", filtered.shape)
         return filtered
 
 
@@ -207,7 +208,7 @@ class DemandCalculator:
     @staticmethod
     def calculate_demand_statistics(
         data: pd.DataFrame,
-        group_cols: List[str] = ['store_id', 'item_id']
+        group_cols: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
         Calculate demand statistics by group.
@@ -219,7 +220,9 @@ class DemandCalculator:
         Returns:
             DataFrame with demand statistics
         """
-        logger.info(f"Calculating demand statistics grouped by: {group_cols}")
+        if group_cols is None:
+            group_cols = ['store_id', 'item_id']
+        logger.info("Calculating demand statistics grouped by: %s", group_cols)
 
         stats = data.groupby(group_cols).agg({
             'sales': [
@@ -249,15 +252,15 @@ class DemandCalculator:
 
         stats = stats.merge(fill_rate, on=group_cols, how='left')
 
-        logger.info(f"Calculated statistics for {len(stats)} groups")
+        logger.info("Calculated statistics for %d groups", len(stats))
 
         return stats
 
     @staticmethod
     def calculate_rolling_statistics(
         data: pd.DataFrame,
-        windows: List[int] = [7, 14, 28],
-        group_cols: List[str] = ['store_id', 'item_id']
+        windows: Optional[List[int]] = None,
+        group_cols: Optional[List[str]] = None
     ) -> pd.DataFrame:
         """
         Calculate rolling demand statistics.
@@ -270,18 +273,23 @@ class DemandCalculator:
         Returns:
             DataFrame with rolling statistics
         """
-        logger.info(f"Calculating rolling statistics for windows: {windows}")
+        if windows is None:
+            windows = [7, 14, 28]
+        if group_cols is None:
+            group_cols = ['store_id', 'item_id']
+        logger.info("Calculating rolling statistics for windows: %s", windows)
 
         # Sort by group and date
         data_sorted = data.sort_values(group_cols + ['date'])
 
         # Calculate rolling stats for each window
         for window in windows:
+            w = window  # Capture loop variable
             data_sorted[f'rolling_mean_{window}d'] = data_sorted.groupby(group_cols)['sales'].transform(
-                lambda x: x.rolling(window=window, min_periods=1).mean()
+                lambda x, w=w: x.rolling(window=w, min_periods=1).mean()
             )
             data_sorted[f'rolling_std_{window}d'] = data_sorted.groupby(group_cols)['sales'].transform(
-                lambda x: x.rolling(window=window, min_periods=1).std()
+                lambda x, w=w: x.rolling(window=w, min_periods=1).std()
             )
 
         return data_sorted

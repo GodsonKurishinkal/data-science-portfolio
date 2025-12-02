@@ -272,8 +272,8 @@ class PlanningScheduler:
                 'job_id': job_id,
                 'workflow_result': result
             }
-            
-        except Exception as e:
+
+        except (ValueError, RuntimeError, KeyError, TypeError) as e:
             logger.error("Job %s failed: %s", job_id, str(e))
             return {
                 'status': 'error',

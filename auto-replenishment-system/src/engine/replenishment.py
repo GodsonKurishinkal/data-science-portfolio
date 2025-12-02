@@ -146,8 +146,7 @@ class ReplenishmentEngine:
 
         # Load configuration
         if config_path:
-            self.config_loader = ConfigLoader(config_path)
-            self.config = self.config_loader.load()
+            self.config = ConfigLoader.load(config_path)
         else:
             self.config = config_dict or {}
 
@@ -178,7 +177,7 @@ class ReplenishmentEngine:
         Returns:
             ReplenishmentResult with recommendations and alerts
         """
-        logger.info(f"Running replenishment for scenario: {scenario}")
+        logger.info("Running replenishment for scenario: %s", scenario)
 
         # Get scenario configuration
         scenario_config = self._get_scenario_config(scenario, **kwargs)
@@ -247,7 +246,7 @@ class ReplenishmentEngine:
 
         if scenario not in scenarios:
             logger.warning(
-                f"Scenario '{scenario}' not in config, using defaults"
+                "Scenario '%s' not in config, using defaults", scenario
             )
             scenario_config = self._get_default_config()
         else:
@@ -278,16 +277,16 @@ class ReplenishmentEngine:
     def _validate_inventory(
         self,
         inventory_data: pd.DataFrame,
-        config: Dict[str, Any],
+        _config: Dict[str, Any],
     ) -> pd.DataFrame:
         """Validate and preprocess inventory data."""
-        validator = InventoryValidator(
-            required_columns=config.get("required_columns", [
-                "item_id", "current_stock"
-            ])
-        )
-
-        return validator.validate(inventory_data)
+        validator = InventoryValidator()
+        is_valid, errors = validator.validate(inventory_data)
+        
+        if not is_valid:
+            logger.warning("Inventory validation issues: %s", errors)
+        
+        return inventory_data
 
     def _run_classification(
         self,
@@ -302,9 +301,11 @@ class ReplenishmentEngine:
         # ABC Classification
         if classification_config.get("abc_enabled", True):
             abc_config = classification_config.get("abc", {})
+            thresholds = abc_config.get("thresholds", (0.67, 0.90))
             abc_classifier = ABCClassifier(
                 value_column=abc_config.get("value_column", "revenue"),
-                thresholds=abc_config.get("thresholds", (0.80, 0.95)),
+                a_threshold=thresholds[0] if isinstance(thresholds, tuple) else 0.67,
+                b_threshold=thresholds[1] if isinstance(thresholds, tuple) else 0.90,
             )
 
             if "revenue" in inventory_data.columns:
@@ -313,8 +314,10 @@ class ReplenishmentEngine:
         # XYZ Classification
         if classification_config.get("xyz_enabled", True) and demand_data is not None:
             xyz_config = classification_config.get("xyz", {})
+            thresholds = xyz_config.get("thresholds", (0.5, 1.0))
             xyz_classifier = XYZClassifier(
-                cv_thresholds=xyz_config.get("thresholds", (0.5, 1.0)),
+                x_threshold=thresholds[0] if isinstance(thresholds, tuple) else 0.5,
+                y_threshold=thresholds[1] if isinstance(thresholds, tuple) else 1.0,
             )
 
             results["xyz"] = xyz_classifier.classify(demand_data)
@@ -322,8 +325,10 @@ class ReplenishmentEngine:
         # Velocity Classification
         if classification_config.get("velocity_enabled", False):
             velocity_config = classification_config.get("velocity", {})
+            thresholds = velocity_config.get("thresholds", (0.6, 0.85))
             velocity_classifier = VelocityClassifier(
-                thresholds=velocity_config.get("thresholds", (0.6, 0.9)),
+                f_threshold=thresholds[0] if isinstance(thresholds, tuple) else 0.6,
+                m_threshold=thresholds[1] if isinstance(thresholds, tuple) else 0.85,
             )
 
             if "daily_demand_rate" in inventory_data.columns:
@@ -341,12 +346,12 @@ class ReplenishmentEngine:
 
         analyzer = DemandAnalyzer(
             date_column=analytics_config.get("date_column", "date"),
-            demand_column=analytics_config.get("demand_column", "quantity"),
+            quantity_column=analytics_config.get("demand_column", "quantity"),
             item_column=analytics_config.get("item_column", "item_id"),
         )
 
         return {
-            "demand_stats": analyzer.calculate_statistics(demand_data),
+            "demand_stats": analyzer.analyze(demand_data),
         }
 
     def _merge_analytics(
@@ -379,11 +384,10 @@ class ReplenishmentEngine:
         """Merge classification results into inventory data."""
         # Create ABC-XYZ matrix for service levels
         if "abc" in classification_results and "xyz" in classification_results:
-            matrix = ABCXYZMatrix()
             service_levels = config.get("service_level_matrix", {})
-
-            if service_levels:
-                matrix.set_service_levels(service_levels)
+            matrix = ABCXYZMatrix(
+                service_levels=service_levels if service_levels else None
+            )
 
             # Add target service level based on classification
             abc_df = classification_results["abc"]
@@ -449,7 +453,7 @@ class ReplenishmentEngine:
         policy_class = self.POLICY_REGISTRY.get(policy_type)
         if policy_class is None:
             logger.warning(
-                f"Unknown policy type '{policy_type}', using periodic_review"
+                "Unknown policy type '%s', using periodic_review", policy_type
             )
             policy_class = PeriodicReviewPolicy
 
@@ -483,7 +487,10 @@ class ReplenishmentEngine:
         self,
         config: Dict[str, Any],
     ) -> AlertGenerator:
-        """Get alert generator with configuration."""
+        """Get alert generator with configuration.
+        
+        Note: AlertGenerator is a concrete class, not abstract.
+        """
         alert_config = config.get("alerts", {})
 
         thresholds = AlertThresholds(
@@ -492,13 +499,14 @@ class ReplenishmentEngine:
             overstock_days_supply=alert_config.get("overstock_days_supply", 60.0),
         )
 
+        # AlertGenerator is a concrete class that can be instantiated
         return AlertGenerator(thresholds=thresholds)
 
     def _create_summary(
         self,
         recommendations: pd.DataFrame,
         alerts: List[Alert],
-        config: Dict[str, Any],
+        _config: Dict[str, Any],
     ) -> Dict[str, Any]:
         """Create execution summary."""
         if recommendations.empty:

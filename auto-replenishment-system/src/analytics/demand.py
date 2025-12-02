@@ -335,7 +335,7 @@ class DemandForecaster:
     def forecast(
         self,
         demand_history: pd.Series,
-        horizon: int = 1,
+        _horizon: int = 1,
     ) -> float:
         """Generate demand forecast.
 

@@ -64,7 +64,7 @@ class ABCAnalyzer:
 
         # Count items in each class
         abc_counts = result['abc_class'].value_counts().sort_index()
-        logger.info(f"ABC distribution: {abc_counts.to_dict()}")
+        logger.info("ABC distribution: %s", abc_counts.to_dict())
 
         return result
 
@@ -134,7 +134,7 @@ class ABCAnalyzer:
 
         # Count items in each class
         xyz_counts = result['xyz_class'].value_counts().sort_index()
-        logger.info(f"XYZ distribution: {xyz_counts.to_dict()}")
+        logger.info("XYZ distribution: %s", xyz_counts.to_dict())
 
         return result
 
@@ -178,7 +178,7 @@ class ABCAnalyzer:
 
         # Summary statistics
         matrix_counts = result.groupby(['abc_class', 'xyz_class']).size().unstack(fill_value=0)
-        logger.info(f"\nABC-XYZ Matrix:\n{matrix_counts}")
+        logger.info("\nABC-XYZ Matrix:\n%s", matrix_counts)
 
         return result
 

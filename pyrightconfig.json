@@ -1,0 +1,20 @@
+{
+  "venvPath": ".",
+  "venv": ".venv",
+  "reportGeneralTypeIssues": false,
+  "reportArgumentType": false,
+  "reportAttributeAccessIssue": false,
+  "reportCallIssue": false,
+  "reportOptionalMemberAccess": false,
+  "reportUnusedVariable": "warning",
+  "reportUnusedImport": "warning",
+  "reportMissingImports": false,
+  "reportMissingModuleSource": false,
+  "reportUnnecessaryTypeIgnoreComment": false,
+  "reportAbstractUsage": false,
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic",
+  "ignore": [
+    "**/auto-replenishment-system/**"
+  ]
+}

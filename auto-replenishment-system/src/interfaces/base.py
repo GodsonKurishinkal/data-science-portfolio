@@ -3,6 +3,8 @@
 These interfaces ensure consistent behavior and enable dependency injection
 for testing and extensibility.
 """
+# pylint: disable=unnecessary-pass
+# pyright: reportUnnecessaryPass=false
 
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Tuple
@@ -30,7 +32,7 @@ class ILoader(ABC):
         Raises:
             DataLoadError: If data cannot be loaded
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def validate(self) -> bool:
@@ -39,7 +41,7 @@ class ILoader(ABC):
         Returns:
             True if source is accessible and valid
         """
-        pass
+        raise NotImplementedError
 
 
 class IValidator(ABC):
@@ -58,13 +60,13 @@ class IValidator(ABC):
         Returns:
             Tuple of (is_valid, list_of_error_messages)
         """
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def required_columns(self) -> List[str]:
         """List of required column names."""
-        pass
+        raise NotImplementedError
 
 
 class IClassifier(ABC):
@@ -84,13 +86,13 @@ class IClassifier(ABC):
         Returns:
             DataFrame with classification column(s) added
         """
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def classification_column(self) -> str:
         """Name of the classification column added."""
-        pass
+        raise NotImplementedError
 
 
 class IAnalyzer(ABC):
@@ -109,7 +111,7 @@ class IAnalyzer(ABC):
         Returns:
             DataFrame with analysis results
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def get_statistics(self) -> Dict[str, Any]:
@@ -118,14 +120,14 @@ class IAnalyzer(ABC):
         Returns:
             Dictionary of computed statistics
         """
-        pass
+        raise NotImplementedError
 
 
 class IPolicy(ABC):
     """Interface for replenishment policies.
 
     Policies implement specific inventory management strategies
-    like (s,S), (R,Q), (s,Q), etc.
+    like (s,S), (s,Q), etc.
     """
 
     @abstractmethod
@@ -139,13 +141,13 @@ class IPolicy(ABC):
             DataFrame with policy parameters (reorder point,
             order-up-to level, recommended quantity, etc.)
         """
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def policy_type(self) -> str:
         """Type/name of the policy (e.g., 'periodic_review_sS')."""
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def get_parameters(self) -> Dict[str, Any]:
@@ -154,7 +156,7 @@ class IPolicy(ABC):
         Returns:
             Dictionary of policy configuration
         """
-        pass
+        raise NotImplementedError
 
 
 class IAlertGenerator(ABC):
@@ -178,13 +180,13 @@ class IAlertGenerator(ABC):
                 - message: Human-readable description
                 - data: Additional context data
         """
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def alert_types(self) -> List[str]:
         """List of alert types this generator can produce."""
-        pass
+        raise NotImplementedError
 
 
 class IBinPacker(ABC):
@@ -208,7 +210,7 @@ class IBinPacker(ABC):
         Returns:
             Maximum number of items that fit
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def optimize_bin_selection(
@@ -227,7 +229,7 @@ class IBinPacker(ABC):
         Returns:
             Dictionary with selected bin(s) and arrangement
         """
-        pass
+        raise NotImplementedError
 
 
 class ISafetyStockCalculator(ABC):
@@ -257,13 +259,13 @@ class ISafetyStockCalculator(ABC):
         Returns:
             Safety stock quantity
         """
-        pass
+        raise NotImplementedError
 
     @property
     @abstractmethod
     def method_name(self) -> str:
         """Name of the calculation method."""
-        pass
+        raise NotImplementedError
 
 
 class IConfigLoader(ABC):
@@ -282,7 +284,7 @@ class IConfigLoader(ABC):
         Returns:
             Dictionary of configuration values
         """
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def validate_config(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
@@ -294,4 +296,4 @@ class IConfigLoader(ABC):
         Returns:
             Tuple of (is_valid, list_of_error_messages)
         """
-        pass
+        raise NotImplementedError

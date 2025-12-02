@@ -261,7 +261,7 @@ class RouteVisualizer:
 
     def __init__(self):
         """Initialize route visualizer."""
-        pass
+        self._initialized = True  # Placeholder for future configuration
 
     def plot_routes_on_map(self, depot: Tuple[float, float],
                           routes: List[List[Dict]],

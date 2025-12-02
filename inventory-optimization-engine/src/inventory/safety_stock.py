@@ -130,7 +130,7 @@ class SafetyStockCalculator:
         self,
         data: pd.DataFrame,
         method: str = 'basic',
-        demand_mean_col: str = 'sales_mean',
+        _demand_mean_col: str = 'sales_mean',
         demand_std_col: str = 'sales_std',
         lead_time_col: str = None,
         review_period: int = 7
@@ -149,7 +149,7 @@ class SafetyStockCalculator:
         Returns:
             DataFrame with safety stock column added
         """
-        logger.info(f"Calculating safety stock using method: {method}")
+        logger.info("Calculating safety stock using method: %s", method)
 
         result = data.copy()
 
@@ -164,7 +164,7 @@ class SafetyStockCalculator:
                 )
             else:
                 result['safety_stock'] = result[demand_std_col].apply(
-                    lambda std: self.calculate_basic_safety_stock(std)
+                    self.calculate_basic_safety_stock
                 )
 
         elif method == 'periodic':
@@ -195,8 +195,8 @@ class SafetyStockCalculator:
         # Round to whole units
         result['safety_stock'] = result['safety_stock'].round(0).astype(int)
 
-        logger.info(f"Average safety stock: {result['safety_stock'].mean():.2f}")
-        logger.info(f"Total safety stock: {result['safety_stock'].sum():,.0f}")
+        logger.info("Average safety stock: %.2f", result['safety_stock'].mean())
+        logger.info("Total safety stock: %.0f", result['safety_stock'].sum())
 
         return result
 
@@ -278,7 +278,7 @@ class SafetyStockCalculator:
         unit_cost: float,
         holding_cost_rate: float,
         stockout_cost: float,
-        demand_std: float,
+        _demand_std: float,
         lead_time: int = None
     ) -> float:
         """

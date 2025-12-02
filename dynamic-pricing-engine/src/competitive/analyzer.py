@@ -22,7 +22,6 @@ class CompetitiveAnalyzer:
 
     def __init__(self):
         """Initialize competitive analyzer."""
-        pass
 
     def calculate_price_indices(self, df: pd.DataFrame) -> pd.DataFrame:
         """
