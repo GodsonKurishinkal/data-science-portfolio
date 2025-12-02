@@ -105,7 +105,7 @@ class PlanningConfig:
             logger.warning("Config file %s not found, using defaults", config_path)
             return cls()
         
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             data = yaml.safe_load(f) or {}
         
         return cls._from_dict(data)
@@ -169,7 +169,7 @@ class PlanningConfig:
         path = Path(config_path)
         path.parent.mkdir(parents=True, exist_ok=True)
         
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             yaml.dump(self.to_dict(), f, default_flow_style=False)
         
         logger.info("Configuration saved to %s", config_path)

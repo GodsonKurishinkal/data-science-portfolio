@@ -5,7 +5,7 @@ Pytest configuration and shared fixtures for Supply Chain Planning System.
 import pytest
 import pandas as pd
 import numpy as np
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
 
 # Add src to path
@@ -173,8 +173,7 @@ def temp_config_file(tmp_path, sample_config):
     """Create a temporary config file."""
     import yaml
     
+    config_data = sample_config  # Use local variable to avoid shadowing warning
     config_file = tmp_path / "config.yaml"
-    with open(config_file, 'w') as f:
-        yaml.dump(sample_config, f)
-    
-    return config_file
+    with open(config_file, 'w', encoding='utf-8') as f:
+        yaml.dump(config_data, f)

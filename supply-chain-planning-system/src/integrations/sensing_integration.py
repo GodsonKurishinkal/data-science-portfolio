@@ -22,7 +22,7 @@ class SensingIntegration:
     def run(
         self,
         data: Optional[pd.DataFrame] = None,
-        **kwargs
+        **_kwargs
     ) -> SensingResult:
         """Run demand sensing."""
         logger.info("Running demand sensing")
@@ -54,7 +54,7 @@ class SensingIntegration:
             }
         )
     
-    def _detect_anomalies(self, data: Optional[pd.DataFrame]) -> List[Dict[str, Any]]:
+    def _detect_anomalies(self, _data: Optional[pd.DataFrame]) -> List[Dict[str, Any]]:
         """Detect demand anomalies."""
         return [
             {

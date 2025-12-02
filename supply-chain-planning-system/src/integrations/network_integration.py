@@ -22,10 +22,14 @@ class NetworkIntegration:
         self,
         data: Optional[pd.DataFrame] = None,
         inventory: Optional[pd.DataFrame] = None,
-        **kwargs
+        **_kwargs
     ) -> NetworkResult:
         """Run network optimization."""
         logger.info("Running network optimization")
+        
+        # Note: data and inventory parameters can be used for demand-aware optimization
+        # Currently using simplified network structure
+        _ = data, inventory  # Available for future integration
         
         return NetworkResult(
             facility_decisions=pd.DataFrame({

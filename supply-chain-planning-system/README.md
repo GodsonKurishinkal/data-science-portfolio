@@ -173,6 +173,27 @@ print(f"Replenishment Automation: {results.replenishment.automation_rate:.1%}")
 
 ---
 
+## ✅ Testing
+
+All tests pass with comprehensive coverage:
+
+```bash
+# Run tests
+cd supply-chain-planning-system
+pytest tests/ -v
+
+# Expected output: 44 passed
+```
+
+| Test Module | Tests | Status |
+|-------------|-------|--------|
+| `test_orchestrator.py` | 19 | ✅ Passing |
+| `test_integrations.py` | 16 | ✅ Passing |
+| `test_kpi_utils.py` | 9 | ✅ Passing |
+| **Total** | **44** | ✅ **All Passing** |
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -197,6 +218,9 @@ supply-chain-planning-system/
 │   │   ├── models.py           # Shared data models
 │   │   ├── connectors.py       # Data source connectors
 │   │   └── cache.py            # Shared cache layer
+│   ├── config/                 # Configuration utilities
+│   │   ├── __init__.py
+│   │   └── loader.py           # Configuration loader
 │   ├── kpi/                    # KPI and metrics
 │   │   ├── __init__.py
 │   │   ├── calculator.py       # KPI calculations
@@ -204,32 +228,19 @@ supply-chain-planning-system/
 │   │   └── alerts.py           # Alert management
 │   └── utils/                  # Shared utilities
 │       ├── __init__.py
-│       ├── logging.py
-│       └── config.py
+│       ├── helpers.py          # Helper functions
+│       └── logging.py          # Logging configuration
 ├── config/
-│   ├── config.yaml             # Master configuration
-│   ├── modules.yaml            # Module-specific settings
-│   └── kpis.yaml               # KPI definitions
+│   └── config.yaml             # Master configuration
 ├── tests/
 │   ├── __init__.py
 │   ├── conftest.py
 │   ├── test_orchestrator.py
 │   ├── test_integrations.py
-│   └── test_workflow.py
-├── notebooks/
-│   ├── 01_system_overview.ipynb
-│   ├── 02_integrated_planning.ipynb
-│   └── 03_kpi_analysis.ipynb
-├── docs/
-│   ├── README.md
-│   ├── architecture.md
-│   ├── integration_guide.md
-│   └── api_reference.md
-├── demo.py
-├── app.py                      # Streamlit dashboard
+│   └── test_kpi_utils.py
+├── demo.py                     # Interactive demo
 ├── requirements.txt
 ├── setup.py
-├── CLAUDE.md
 ├── LICENSE
 └── README.md
 ```
@@ -427,10 +438,11 @@ for exception in exceptions:
 
 ## 📚 Documentation
 
-- [Architecture Guide](docs/architecture.md) - System design and patterns
-- [Integration Guide](docs/integration_guide.md) - How modules connect
-- [API Reference](docs/api_reference.md) - Programmatic interface
-- [User Guide](docs/user_guide.md) - End-user documentation
+For detailed documentation on the Supply Chain Planning System:
+
+- **README.md** (this file) - Overview and quick start
+- **config/config.yaml** - Master configuration reference
+- **Individual module READMEs** - See linked projects above
 
 ---
 

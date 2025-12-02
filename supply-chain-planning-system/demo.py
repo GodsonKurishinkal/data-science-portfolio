@@ -39,7 +39,7 @@ def demo_planning_cycle():
     planner = SupplyChainPlanner(config)
     
     print("\n✓ Initialized Supply Chain Planner")
-    print(f"  - Modules: Demand, Inventory, Pricing, Network, Sensing, Replenishment")
+    print("  - Modules: Demand, Inventory, Pricing, Network, Sensing, Replenishment")
     
     # Run planning cycle
     print_section("Running Monthly Planning Cycle")
@@ -53,28 +53,28 @@ def demo_planning_cycle():
     print_section("Planning Results")
     
     if results.demand:
-        print(f"\n📈 DEMAND FORECASTING")
+        print("\n📈 DEMAND FORECASTING")
         print(f"   MAPE: {format_percentage(results.demand.mape)}")
         print(f"   Model: {results.demand.model_used}")
         print(f"   Elasticity: {results.demand.elasticity}")
     
     if results.inventory:
-        print(f"\n📦 INVENTORY OPTIMIZATION")
+        print("\n📦 INVENTORY OPTIMIZATION")
         print(f"   Service Level: {format_percentage(results.inventory.service_level)}")
         print(f"   Inventory Value: {format_currency(results.inventory.total_inventory_value)}")
     
     if results.pricing:
-        print(f"\n💰 DYNAMIC PRICING")
+        print("\n💰 DYNAMIC PRICING")
         print(f"   Revenue Lift: {format_percentage(results.pricing.revenue_lift)}")
         print(f"   Margin Improvement: {format_percentage(results.pricing.margin_improvement)}")
     
     if results.network:
-        print(f"\n🚚 NETWORK OPTIMIZATION")
+        print("\n🚚 NETWORK OPTIMIZATION")
         print(f"   Cost Reduction: {format_percentage(results.network.cost_reduction)}")
         print(f"   Distance Savings: {format_percentage(results.network.distance_savings)}")
     
     if results.replenishment:
-        print(f"\n🔄 AUTO-REPLENISHMENT")
+        print("\n🔄 AUTO-REPLENISHMENT")
         print(f"   Automation Rate: {format_percentage(results.replenishment.automation_rate)}")
         print(f"   Service Level: {format_percentage(results.replenishment.service_level_achieved)}")
     
@@ -275,7 +275,7 @@ def main():
         except KeyboardInterrupt:
             print("\n\nDemo interrupted.")
             break
-        except Exception as e:
+        except (ValueError, RuntimeError, OSError) as e:
             print(f"Error: {e}")
     
     print("\n" + "=" * 70)

@@ -2,7 +2,7 @@
 Data Cache for Supply Chain Planning System.
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Dict, Any, Optional
 import logging

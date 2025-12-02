@@ -21,8 +21,8 @@ class InventoryIntegration:
     def run(
         self,
         data: Optional[pd.DataFrame] = None,
-        forecast: Optional[pd.DataFrame] = None,
-        **kwargs
+        _forecast: Optional[pd.DataFrame] = None,
+        **_kwargs
     ) -> InventoryResult:
         """Run inventory optimization."""
         logger.info("Running inventory optimization")
@@ -41,7 +41,7 @@ class InventoryIntegration:
             ]
         )
     
-    def _calculate_positions(self, data: Optional[pd.DataFrame]) -> pd.DataFrame:
+    def _calculate_positions(self, _data: Optional[pd.DataFrame]) -> pd.DataFrame:
         """Calculate inventory positions."""
         return pd.DataFrame({
             'item_id': ['SKU001', 'SKU002', 'SKU003'],
@@ -51,7 +51,7 @@ class InventoryIntegration:
             'available': [550, 240, 230]
         })
     
-    def _calculate_classifications(self, data: Optional[pd.DataFrame]) -> pd.DataFrame:
+    def _calculate_classifications(self, _data: Optional[pd.DataFrame]) -> pd.DataFrame:
         """Calculate ABC-XYZ classifications."""
         return pd.DataFrame({
             'item_id': ['SKU001', 'SKU002', 'SKU003'],

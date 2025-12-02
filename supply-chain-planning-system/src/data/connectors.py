@@ -4,7 +4,7 @@ Data Connectors for Supply Chain Planning System.
 
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Optional
 import pandas as pd
 import logging
 
@@ -17,22 +17,22 @@ class DataConnector(ABC):
     @abstractmethod
     def connect(self) -> bool:
         """Establish connection."""
-        pass
+        raise NotImplementedError
     
     @abstractmethod
     def read(self, query: str) -> pd.DataFrame:
         """Read data."""
-        pass
+        raise NotImplementedError
     
     @abstractmethod
     def write(self, data: pd.DataFrame, destination: str) -> bool:
         """Write data."""
-        pass
+        raise NotImplementedError
     
     @abstractmethod
     def close(self) -> None:
         """Close connection."""
-        pass
+        raise NotImplementedError
 
 
 class CSVConnector(DataConnector):

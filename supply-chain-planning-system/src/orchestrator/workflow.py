@@ -6,7 +6,7 @@ Defines the workflow patterns for different planning cycles.
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, List, Optional, Callable, Any
+from typing import Dict, List, Optional, Any
 from enum import Enum
 import logging
 
@@ -91,7 +91,7 @@ class PlanningWorkflow:
         self.steps: Dict[str, WorkflowStep] = {}
         self.execution_order: List[str] = []
         self._setup_default_workflow()
-        logger.info(f"PlanningWorkflow initialized: {self.workflow_id}")
+        logger.info("PlanningWorkflow initialized: %s", self.workflow_id)
     
     def _setup_default_workflow(self) -> None:
         """Set up default workflow based on type."""
@@ -178,7 +178,7 @@ class PlanningWorkflow:
         
         self.steps[name] = step
         self._update_execution_order()
-        logger.debug(f"Added workflow step: {name}")
+        logger.debug("Added workflow step: %s", name)
     
     def _update_execution_order(self) -> None:
         """Update the execution order based on dependencies (topological sort)."""
@@ -214,7 +214,7 @@ class PlanningWorkflow:
         started_at = datetime.now()
         errors = []
         
-        logger.info(f"Executing workflow {self.workflow_id}")
+        logger.info("Executing workflow %s", self.workflow_id)
         
         # Execute steps in order
         step_results = {}
@@ -223,7 +223,7 @@ class PlanningWorkflow:
             step.status = WorkflowStatus.RUNNING
             
             try:
-                logger.info(f"Executing step: {step_name}")
+                logger.info("Executing step: %s", step_name)
                 
                 # Get dependency results
                 dep_results = {dep: step_results.get(dep) for dep in step.dependencies}
@@ -305,4 +305,4 @@ class PlanningWorkflow:
             step.status = WorkflowStatus.PENDING
             step.result = None
             step.error = None
-        logger.info(f"Workflow {self.workflow_id} reset")
+        logger.info("Workflow %s reset", self.workflow_id)

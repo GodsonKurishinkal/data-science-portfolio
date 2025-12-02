@@ -2,7 +2,7 @@
 KPI Calculator for Supply Chain Planning System.
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 import logging
 
 from src.data.models import PlanningResult

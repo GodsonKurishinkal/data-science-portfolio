@@ -8,7 +8,6 @@ all planning functions across the supply chain.
 from dataclasses import dataclass, field
 from datetime import datetime, date
 from typing import Dict, List, Optional, Any
-from pathlib import Path
 import logging
 
 import pandas as pd
@@ -137,7 +136,11 @@ class SupplyChainPlanner:
         if data is None:
             data = {}
         
-        logger.info(f"Starting {planning_horizon} planning cycle with modules: {include_modules}")
+        logger.info(
+            "Starting %s planning cycle with modules: %s",
+            planning_horizon,
+            include_modules
+        )
         
         results = PlanningResult(
             planning_date=datetime.now(),
@@ -247,7 +250,11 @@ class SupplyChainPlanner:
         if scenarios is None:
             scenarios = ['base', 'optimistic', 'pessimistic']
         
-        logger.info(f"Generating S&OP plan for {horizon_months} months with scenarios: {scenarios}")
+        logger.info(
+            "Generating S&OP plan for %d months with scenarios: %s",
+            horizon_months,
+            scenarios
+        )
         
         # Generate demand plan
         demand_result = self.demand.run(None, horizon_months=horizon_months)
@@ -285,14 +292,14 @@ class SupplyChainPlanner:
     
     def run_daily_replenishment(
         self,
-        date: str,
+        run_date: str,
         scenarios: Optional[List[str]] = None
     ) -> DailyReplenishmentResult:
         """
         Run daily replenishment cycle.
         
         Args:
-            date: Date for replenishment run (YYYY-MM-DD)
+            run_date: Date for replenishment run (YYYY-MM-DD)
             scenarios: Replenishment scenarios to run
             
         Returns:
@@ -301,7 +308,11 @@ class SupplyChainPlanner:
         if scenarios is None:
             scenarios = ['dc_to_store', 'supplier_to_dc']
         
-        logger.info(f"Running daily replenishment for {date} with scenarios: {scenarios}")
+        logger.info(
+            "Running daily replenishment for %s with scenarios: %s",
+            run_date,
+            scenarios
+        )
         
         # Run replenishment for each scenario
         all_purchase_orders = []
@@ -309,7 +320,7 @@ class SupplyChainPlanner:
         all_alerts = []
         
         for scenario in scenarios:
-            result = self.replenishment.run_scenario(scenario, date)
+            result = self.replenishment.run_scenario(scenario, run_date)
             
             if result.purchase_orders is not None:
                 all_purchase_orders.append(result.purchase_orders)
@@ -322,7 +333,7 @@ class SupplyChainPlanner:
         transfer_orders = pd.concat(all_transfer_orders) if all_transfer_orders else pd.DataFrame()
         
         return DailyReplenishmentResult(
-            run_date=datetime.strptime(date, '%Y-%m-%d').date(),
+            run_date=datetime.strptime(run_date, '%Y-%m-%d').date(),
             scenarios=scenarios,
             purchase_orders=purchase_orders,
             transfer_orders=transfer_orders,
@@ -371,7 +382,11 @@ class SupplyChainPlanner:
         exception_id = exception.get('id')
         exception_type = exception.get('type')
         
-        logger.info(f"Attempting to resolve exception {exception_id} of type {exception_type}")
+        logger.info(
+            "Attempting to resolve exception %s of type %s",
+            exception_id,
+            exception_type
+        )
         
         resolution = {
             'exception_id': exception_id,

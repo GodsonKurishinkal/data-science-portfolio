@@ -87,7 +87,7 @@ End-to-end inventory intelligence covering safety stock calculations, ABC-XYZ cl
 ---
 
 ### 3. 💰 Dynamic Pricing Engine
-**Status**: ✅ **COMPLETE** | [View Project →](./project-003-dynamic-pricing-engine)
+**Status**: ✅ **COMPLETE** | [View Project →](./dynamic-pricing-engine)
 
 Intelligent pricing system using price elasticity analysis and revenue optimization algorithms.
 
@@ -116,7 +116,7 @@ Intelligent pricing system using price elasticity analysis and revenue optimizat
 ---
 
 ### 4. 🚚 Supply Chain Network Optimization
-**Status**: ✅ **COMPLETE** | [View Project →](./project-004-supply-chain-network-optimization)
+**Status**: ✅ **COMPLETE** | [View Project →](./supply-chain-network-optimization)
 
 Logistics network optimization solving facility location, vehicle routing, and multi-echelon inventory problems.
 
@@ -146,7 +146,7 @@ Logistics network optimization solving facility location, vehicle routing, and m
 ---
 
 ### 5. 🔮 Real-Time Demand Sensing
-**Status**: ✅ **COMPLETE** | [View Project →](./project-005-realtime-demand-sensing)
+**Status**: ✅ **COMPLETE** | [View Project →](./realtime-demand-sensing)
 
 Real-time demand sensing system with anomaly detection, short-term forecasting, and automated replenishment dashboard.
 
@@ -273,7 +273,7 @@ cd data-science-portfolio
 source activate.sh
 
 # Navigate to any project and explore
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 python demo.py
 ```
 
@@ -289,7 +289,7 @@ source .venv/bin/activate  # Mac/Linux
 # or .venv\Scripts\activate on Windows
 
 # Install dependencies for a specific project
-cd project-001-demand-forecasting-system
+cd demand-forecasting-system
 pip install -r requirements.txt
 ```
 

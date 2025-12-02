@@ -2,7 +2,7 @@
 Demand Forecasting Integration.
 """
 
-from typing import Optional, Any, Dict
+from typing import Optional, Any
 import pandas as pd
 import logging
 
@@ -28,7 +28,7 @@ class DemandIntegration:
         self,
         data: Optional[pd.DataFrame] = None,
         horizon_months: int = 3,
-        **kwargs
+        **_kwargs
     ) -> DemandResult:
         """
         Run demand forecasting.

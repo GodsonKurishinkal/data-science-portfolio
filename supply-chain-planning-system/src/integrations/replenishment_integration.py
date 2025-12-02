@@ -24,7 +24,7 @@ class ReplenishmentIntegration:
         data: Optional[pd.DataFrame] = None,
         inventory: Optional[InventoryResult] = None,
         forecast: Optional[pd.DataFrame] = None,
-        **kwargs
+        **_kwargs
     ) -> ReplenishmentResult:
         """Run auto-replenishment."""
         logger.info("Running auto-replenishment")
@@ -57,9 +57,9 @@ class ReplenishmentIntegration:
     
     def _calculate_orders(
         self,
-        data: Optional[pd.DataFrame],
-        inventory: Optional[InventoryResult],
-        forecast: Optional[pd.DataFrame]
+        _data: Optional[pd.DataFrame],
+        _inventory: Optional[InventoryResult],
+        _forecast: Optional[pd.DataFrame]
     ) -> pd.DataFrame:
         """Calculate replenishment orders."""
         return pd.DataFrame({

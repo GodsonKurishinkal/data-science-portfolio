@@ -22,10 +22,14 @@ class PricingIntegration:
         self,
         data: Optional[pd.DataFrame] = None,
         elasticity: Optional[float] = None,
-        **kwargs
+        **_kwargs
     ) -> PricingResult:
         """Run pricing optimization."""
         logger.info("Running pricing optimization")
+        
+        # Note: data parameter can be used for ML-based price optimization
+        # Currently using simplified elasticity-based calculation
+        _ = data  # Available for future ML model integration
         
         return PricingResult(
             optimal_prices=pd.DataFrame({
