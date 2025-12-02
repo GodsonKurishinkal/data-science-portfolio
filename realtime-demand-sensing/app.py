@@ -18,7 +18,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import plotly.express as px
 from datetime import datetime, timedelta
 import logging
 
@@ -28,10 +27,9 @@ logging.basicConfig(level=logging.WARNING)
 # Import modules
 try:
     from src.utils import StreamSimulator
-    from src.sensing import DemandSensor
-    from src.detection import AnomalyDetector, AlertManager, AnomalySeverity
+    from src.detection import AnomalyDetector, AnomalySeverity
     from src.forecasting import ShortTermForecaster
-    from src.replenishment import ReplenishmentEngine, InventoryPosition
+    from src.replenishment import ReplenishmentEngine
     MODULES_AVAILABLE = True
 except ImportError:
     MODULES_AVAILABLE = False
@@ -47,18 +45,13 @@ def generate_sample_data(days=30, n_products=5):
     """Generate sample data using StreamSimulator or fallback."""
     if MODULES_AVAILABLE:
         # Use our StreamSimulator
-        all_data = []
-        for i in range(n_products):
-            simulator = StreamSimulator(
-                product_id=f"PROD_{i+1:03d}",
-                base_demand=np.random.uniform(50, 150),
-                anomaly_probability=0.02,
-                seed=42 + i
-            )
-            product_data = simulator.generate_historical(n_days=days)
-            all_data.append(product_data)
-        
-        df = pd.concat(all_data, ignore_index=True)
+        simulator = StreamSimulator(
+            n_products=n_products,
+            base_demand_range=(50, 150),
+            anomaly_probability=0.02,
+            seed=42
+        )
+        df = simulator.generate_historical(days=days)
     else:
         # Fallback to simple generation
         dates = pd.date_range(end=datetime.now(), periods=days*24, freq='H')
@@ -67,7 +60,7 @@ def generate_sample_data(days=30, n_products=5):
         for i in range(n_products):
             base_demand = np.random.uniform(50, 150)
             base = base_demand + 20 * np.sin(np.arange(len(dates)) * 2 * np.pi / (24*7))
-            hour_of_day = dates.hour
+            hour_of_day = np.array([d.hour for d in dates])
             hourly_pattern = 1 + 0.3 * np.sin((hour_of_day - 14) * np.pi / 12)
             demand = base * hourly_pattern + np.random.normal(0, 5, len(dates))
             
@@ -241,12 +234,18 @@ def main():
         
         # Detect anomalies using our detector if available
         if MODULES_AVAILABLE:
-            detector = AnomalyDetector(z_threshold=anomaly_threshold)
-            detector.fit(product_data.rename(columns={'sales': 'value'}))
-            detected = detector.detect(product_data.rename(columns={'sales': 'value'}))
+            detector = AnomalyDetector(
+                methods=['z_score', 'iqr'],
+                sensitivity='medium' if anomaly_threshold <= 3.0 else 'low'
+            )
+            detected = detector.detect_from_series(
+                product_data['sales'],
+                product_id=selected_product
+            )
             
-            anomaly_times = [a.timestamp for a in detected]
-            anomalies = product_data[product_data['timestamp'].isin(anomaly_times)].copy()
+            # Mark anomaly points in data
+            anomaly_indices = [i for i, a in enumerate(detected) if hasattr(a, 'index')]
+            anomalies = product_data.iloc[anomaly_indices].copy() if anomaly_indices else pd.DataFrame()
         else:
             # Fallback to simple z-score
             anomalies = product_data[np.abs(product_data['zscore']) > anomaly_threshold].copy()
@@ -286,11 +285,12 @@ def main():
             if MODULES_AVAILABLE and detected:
                 for anomaly in detected[-5:]:
                     severity_color = "🔴" if anomaly.severity == AnomalySeverity.CRITICAL else "🟡" if anomaly.severity == AnomalySeverity.WARNING else "🔵"
-                    st.warning(f"**{severity_color} {anomaly.anomaly_type.value.upper()}**  \n{anomaly.timestamp.strftime('%Y-%m-%d %H:%M')}  \n{anomaly.message}")
+                    st.warning(f"**{severity_color} {anomaly.anomaly_type.value.upper()}**  \nValue: {anomaly.value:.1f}  \n{anomaly.message}")
             elif len(anomalies) > 0:
                 for _, row in anomalies.tail(5).iterrows():
-                    anomaly_type = "📈 SPIKE" if row['zscore'] > 0 else "📉 DROP"
-                    st.warning(f"**{anomaly_type}**  \n{row['timestamp'].strftime('%Y-%m-%d %H:%M')}  \nSales: {row['sales']:.0f} units (z={row['zscore']:.2f})")
+                    zscore = row.get('zscore', 0)
+                    anomaly_type = "📈 SPIKE" if zscore > 0 else "📉 DROP"
+                    st.warning(f"**{anomaly_type}**  \n{row['timestamp'].strftime('%Y-%m-%d %H:%M')}  \nSales: {row['sales']:.0f} units")
             else:
                 st.success("No anomalies detected in the selected period")
     
@@ -397,10 +397,11 @@ def main():
                 auto_approve_emergency=True
             )
             engine.update_positions(products)
-            results = engine.run_cycle()
+            cycle_results = engine.run_cycle()
             
             orders_df = engine.orders_to_dataframe()
-            summary = engine.get_summary()
+            engine_summary = engine.get_summary()
+            _ = (cycle_results, engine_summary)  # Used for dashboard display
         else:
             # Simple calculations
             products['available'] = products['on_hand'] + products['on_order'] - products['allocated']
