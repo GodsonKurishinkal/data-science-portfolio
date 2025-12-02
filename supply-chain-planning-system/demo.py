@@ -132,7 +132,7 @@ def demo_daily_replenishment():
     print(f"\n✓ Running daily replenishment for {today}")
     
     result = planner.run_daily_replenishment(
-        date=today,
+        run_date=today,
         scenarios=['dc_to_store', 'supplier_to_dc']
     )
     

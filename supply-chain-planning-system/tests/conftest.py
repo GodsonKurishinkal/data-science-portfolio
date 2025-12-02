@@ -169,11 +169,13 @@ def sample_kpis():
 
 
 @pytest.fixture
-def temp_config_file(tmp_path, sample_config):
+def temp_config_file(tmp_path, request):
     """Create a temporary config file."""
     import yaml
     
-    config_data = sample_config  # Use local variable to avoid shadowing warning
+    # Get sample_config fixture via request to avoid shadowing
+    config_data = request.getfixturevalue('sample_config')
     config_file = tmp_path / "config.yaml"
     with open(config_file, 'w', encoding='utf-8') as f:
         yaml.dump(config_data, f)
+    return config_file
