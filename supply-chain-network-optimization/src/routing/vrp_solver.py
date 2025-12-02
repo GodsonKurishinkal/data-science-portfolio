@@ -1,10 +1,11 @@
 """Vehicle Routing Problem (VRP) solver using OR-Tools."""
+# pyright: reportAttributeAccessIssue=false
 
 import pandas as pd
 import numpy as np
 from typing import Dict, Optional
-from ortools.constraint_solver import routing_enums_pb2
-from ortools.constraint_solver import pywrapcp
+from ortools.constraint_solver import routing_enums_pb2  # type: ignore[import-untyped]
+from ortools.constraint_solver import pywrapcp  # type: ignore[import-untyped]
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -60,7 +61,10 @@ class VRPSolver:
         Dict
             Solution with routes and metrics
         """
-        logger.info(f"Solving VRP for {len(deliveries)} deliveries with {self.num_vehicles} vehicles...")
+        logger.info(
+            "Solving VRP for %d deliveries with %d vehicles...",
+            len(deliveries), self.num_vehicles
+        )
 
         # Prepare data
         data = self._prepare_data(depot, deliveries, distance_matrix,
@@ -116,12 +120,11 @@ class VRPSolver:
 
         # Search parameters
         search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-        search_parameters.first_solution_strategy = (
-            routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
-        )
-        search_parameters.local_search_metaheuristic = (
-            routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
-        )
+        # Use getattr for protobuf-generated enums (Pylance can't analyze them)
+        first_solution = getattr(routing_enums_pb2, 'FirstSolutionStrategy')
+        local_search = getattr(routing_enums_pb2, 'LocalSearchMetaheuristic')
+        search_parameters.first_solution_strategy = first_solution.PATH_CHEAPEST_ARC
+        search_parameters.local_search_metaheuristic = local_search.GUIDED_LOCAL_SEARCH
         search_parameters.time_limit.seconds = 30
 
         # Solve
@@ -131,16 +134,19 @@ class VRPSolver:
             self.solution = self._extract_solution(
                 manager, routing, solution, data, deliveries
             )
-            logger.info(f"Solution found! Total distance: {self.solution['total_distance']:.1f} miles")
+            logger.info(
+                "Solution found! Total distance: %.1f miles",
+                self.solution['total_distance']
+            )
             return self.solution
         else:
             logger.error("No solution found!")
             return {'status': 'No solution'}
 
-    def _prepare_data(self, depot: Dict, deliveries: pd.DataFrame,
+    def _prepare_data(self, _depot: Dict, deliveries: pd.DataFrame,
                      distance_matrix: np.ndarray,
                      time_windows: Optional[pd.DataFrame],
-                     service_time: int) -> Dict:
+                     _service_time: int) -> Dict:
         """Prepare data for OR-Tools solver."""
         # Convert distance to integer (OR-Tools requirement)
         distance_matrix_int = (distance_matrix * 100).astype(int)
@@ -244,7 +250,7 @@ class VRPSolver:
             raise ValueError("No solution available.")
 
         import json
-        with open(filepath, 'w') as f:
+        with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(self.solution, f, indent=2)
 
-        logger.info(f"Solution exported to {filepath}")
+        logger.info("Solution exported to %s", filepath)
