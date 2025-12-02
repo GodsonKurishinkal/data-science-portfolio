@@ -11,7 +11,7 @@ Key formulas:
 """
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import pandas as pd
 import numpy as np

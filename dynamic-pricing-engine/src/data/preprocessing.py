@@ -6,7 +6,7 @@ Preprocesses pricing data and engineers features for pricing analysis.
 
 import pandas as pd
 import numpy as np
-from typing import List, Optional, Dict
+from typing import List
 import logging
 
 logger = logging.getLogger(__name__)

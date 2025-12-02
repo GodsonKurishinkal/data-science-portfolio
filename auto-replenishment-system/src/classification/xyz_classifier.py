@@ -5,7 +5,7 @@ using coefficient of variation (CV) as the primary metric.
 """
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import pandas as pd
 import numpy as np

@@ -2,8 +2,8 @@
 
 import pandas as pd
 import numpy as np
-from pulp import *
-from typing import Dict, List, Optional, Tuple
+from pulp import *  # noqa: F403, F405
+from typing import Dict, List, Optional
 import logging
 
 logging.basicConfig(level=logging.INFO)

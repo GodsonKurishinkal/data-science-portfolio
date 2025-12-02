@@ -5,7 +5,7 @@ to improve demand forecasting accuracy.
 """
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Dict, Optional
 
 import pandas as pd
 import numpy as np

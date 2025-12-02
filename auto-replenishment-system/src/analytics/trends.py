@@ -5,7 +5,7 @@ for proactive inventory planning.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict
 
 import pandas as pd
 import numpy as np
@@ -213,5 +213,4 @@ class TrendDetector:
             (trends["is_significant"])
         ]
 
-        sort_ascending = direction == "decreasing"
         return filtered.nlargest(top_n, "trend_strength")

@@ -6,7 +6,6 @@ To be implemented in Phase 7.
 """
 
 import pandas as pd
-from typing import Dict
 
 
 class CompetitiveAnalyzer:

@@ -8,10 +8,9 @@ Author: Godson Kurishinkal
 Date: November 12, 2025
 """
 
-import numpy as np
 import pandas as pd
-from typing import Dict, List, Optional, Tuple
-from datetime import datetime, timedelta
+from typing import Dict, List, Optional
+from datetime import datetime
 import logging
 
 # Set up logging
@@ -138,9 +137,7 @@ class MarkdownOptimizer:
         if target_clearance_pct <= 0 or target_clearance_pct > 1:
             raise ValueError(f"Target clearance must be between 0 and 1, got {target_clearance_pct}")
 
-        # Calculate target units to clear
-        target_units = int(current_inventory * target_clearance_pct)
-
+        # Target units to clear: int(current_inventory * target_clearance_pct)
         # Determine markdown strategy based on inventory pressure
         days_of_supply = current_inventory / baseline_demand
 

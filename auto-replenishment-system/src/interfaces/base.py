@@ -5,7 +5,7 @@ for testing and extensibility.
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 import pandas as pd
 

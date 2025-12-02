@@ -6,7 +6,7 @@ This module contains functions for making predictions with trained models.
 
 import pandas as pd
 import numpy as np
-from typing import Any, Union, Optional
+from typing import Any, Optional
 import joblib
 
 
@@ -145,7 +145,6 @@ def predict_with_confidence_interval(
         std = np.std(tree_predictions, axis=0)
 
         # Calculate confidence interval
-        alpha = 1 - confidence_level
         z_score = 1.96  # for 95% confidence
         margin = z_score * std
 

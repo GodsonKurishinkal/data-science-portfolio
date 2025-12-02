@@ -7,7 +7,6 @@ This module contains functions for training various forecasting models.
 import pandas as pd
 import numpy as np
 from typing import Dict, Any, Tuple, Optional
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split, TimeSeriesSplit
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import joblib
@@ -568,7 +567,7 @@ def train_m5_model(
     # Calculate metrics
     metrics = calculate_metrics(y_test.values, y_pred)
 
-    print(f"\nModel Performance:")
+    print("\nModel Performance:")
     print(f"  MAE:  {metrics['mae']:.4f}")
     print(f"  RMSE: {metrics['rmse']:.4f}")
     print(f"  MAPE: {metrics['mape']:.2f}%")

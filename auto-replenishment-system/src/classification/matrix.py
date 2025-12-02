@@ -5,10 +5,9 @@ for differentiated inventory management strategies.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional
 
 import pandas as pd
-import numpy as np
 
 from .abc_classifier import ABCClassifier
 from .xyz_classifier import XYZClassifier

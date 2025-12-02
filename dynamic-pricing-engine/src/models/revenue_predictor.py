@@ -4,7 +4,6 @@ Revenue prediction module
 This module will predict revenue based on pricing decisions.
 """
 
-import pandas as pd
 from typing import Dict
 
 

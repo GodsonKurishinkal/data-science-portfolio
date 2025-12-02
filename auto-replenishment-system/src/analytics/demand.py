@@ -5,7 +5,7 @@ outlier detection, and demand statistics calculation.
 """
 
 import logging
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import pandas as pd
 import numpy as np

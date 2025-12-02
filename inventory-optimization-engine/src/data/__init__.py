@@ -1,7 +1,6 @@
 """Data loading and preprocessing module."""
 
 import pandas as pd
-import numpy as np
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 import logging
@@ -149,11 +148,13 @@ class DataLoader:
             'items': sorted(self.sales_train['item_id'].unique())
         }
 
-        logger.info(f"Hierarchy: {len(hierarchy['states'])} states, "
-                   f"{len(hierarchy['stores'])} stores, "
-                   f"{len(hierarchy['categories'])} categories, "
-                   f"{len(hierarchy['departments'])} departments, "
-                   f"{len(hierarchy['items'])} items")
+        logger.info(
+            f"Hierarchy: {len(hierarchy['states'])} states, "
+            f"{len(hierarchy['stores'])} stores, "
+            f"{len(hierarchy['categories'])} categories, "
+            f"{len(hierarchy['departments'])} departments, "
+            f"{len(hierarchy['items'])} items"
+        )
 
         return hierarchy
 

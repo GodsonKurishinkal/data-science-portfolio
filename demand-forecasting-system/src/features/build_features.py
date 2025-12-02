@@ -5,7 +5,6 @@ This module contains functions for creating time-based and lag features.
 """
 
 import pandas as pd
-import numpy as np
 from typing import List, Optional
 
 

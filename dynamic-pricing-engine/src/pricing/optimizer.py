@@ -10,8 +10,8 @@ Date: November 11, 2025
 
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Optional, Tuple, Union
-from scipy.optimize import minimize, minimize_scalar
+from typing import Dict, List, Optional, Tuple
+from scipy.optimize import minimize_scalar
 import logging
 from datetime import datetime
 

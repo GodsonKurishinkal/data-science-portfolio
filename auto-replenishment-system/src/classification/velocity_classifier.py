@@ -5,10 +5,9 @@ useful for warehouse slotting and replenishment frequency decisions.
 """
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 import pandas as pd
-import numpy as np
 
 from ..interfaces.base import IClassifier
 

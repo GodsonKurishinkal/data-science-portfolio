@@ -14,21 +14,17 @@ Supports all retail replenishment scenarios through configuration.
 import logging
 from dataclasses import dataclass, field
 from datetime import datetime
-from pathlib import Path
 from typing import Any, Dict, List, Optional, Type
 
 import pandas as pd
-import numpy as np
 
-from ..config.loader import ConfigLoader, ScenarioConfig
-from ..data.loaders import InventoryDataLoader, DemandDataLoader, SourceInventoryLoader
-from ..data.validators import InventoryValidator, DemandValidator
+from ..config.loader import ConfigLoader
+from ..data.validators import InventoryValidator
 from ..classification.abc_classifier import ABCClassifier
 from ..classification.xyz_classifier import XYZClassifier
 from ..classification.velocity_classifier import VelocityClassifier
 from ..classification.matrix import ABCXYZMatrix
 from ..analytics.demand import DemandAnalyzer
-from ..safety_stock.calculator import SafetyStockCalculator
 from ..policies.periodic_review import PeriodicReviewPolicy
 from ..policies.continuous_review import ContinuousReviewPolicy
 from ..policies.min_max import MinMaxPolicy
@@ -572,9 +568,9 @@ class ReplenishmentEngine:
 
         # Check required fields
         required_fields = ["policy_type", "lead_time"]
-        for field in required_fields:
-            if field not in config:
-                warnings.append(f"Missing field '{field}', will use default")
+        for field_name in required_fields:
+            if field_name not in config:
+                warnings.append(f"Missing field '{field_name}', will use default")
 
         # Check policy type
         policy_type = config.get("policy_type", "periodic_review")

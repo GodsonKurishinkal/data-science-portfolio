@@ -10,8 +10,6 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
-from .schemas import ConfigSchema, ScenarioSchema
-
 logger = logging.getLogger(__name__)
 
 
@@ -74,7 +72,6 @@ class ConfigLoader:
             Tuple of (is_valid, list_of_error_messages)
         """
         errors = []
-        schema = ConfigSchema()
 
         # Check required sections
         required_sections = ["classification", "safety_stock", "policy", "alerts"]

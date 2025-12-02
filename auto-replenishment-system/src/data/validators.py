@@ -8,7 +8,6 @@ import logging
 from typing import Any, Dict, List, Optional, Tuple
 
 import pandas as pd
-import numpy as np
 
 from ..interfaces.base import IValidator
 

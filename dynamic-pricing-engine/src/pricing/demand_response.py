@@ -7,8 +7,8 @@ seasonality, and promotional effects.
 
 import pandas as pd
 import numpy as np
-from typing import Dict, List, Optional, Tuple, Union
-from datetime import datetime, timedelta
+from typing import Dict, List, Optional, Tuple
+from datetime import datetime
 import logging
 from scipy import stats
 

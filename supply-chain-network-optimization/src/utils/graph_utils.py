@@ -3,7 +3,6 @@
 import networkx as nx
 import pandas as pd
 from typing import Dict, List, Tuple, Optional
-import numpy as np
 
 
 class NetworkGraphBuilder:

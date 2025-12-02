@@ -6,7 +6,7 @@ Calculates price elasticity of demand using econometric methods.
 
 import pandas as pd
 import numpy as np
-from typing import Dict, Optional, Tuple, List
+from typing import Dict, Optional, List
 from sklearn.linear_model import LinearRegression
 from scipy import stats
 import logging
@@ -520,7 +520,7 @@ class ElasticityAnalyzer:
         Returns:
             Dictionary with summary statistics
         """
-        valid = elasticities[elasticities['valid'] == True]
+        valid = elasticities[elasticities['valid']]
 
         if len(valid) == 0:
             return {

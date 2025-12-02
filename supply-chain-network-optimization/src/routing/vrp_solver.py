@@ -2,7 +2,7 @@
 
 import pandas as pd
 import numpy as np
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, Optional
 from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 import logging

@@ -7,7 +7,6 @@ import pandas as pd
 import numpy as np
 from typing import Dict, List, Tuple, Optional
 import plotly.graph_objects as go
-import plotly.express as px
 
 
 class NetworkVisualizer:
@@ -194,7 +193,7 @@ class NetworkVisualizer:
         colors = ['green' if u >= 70 else 'orange' if u >= 50 else 'red'
                  for u in util_pct]
 
-        bars = ax.bar(facilities, util_pct, color=colors, alpha=0.7)
+        ax.bar(facilities, util_pct, color=colors, alpha=0.7)
         ax.axhline(y=80, color='g', linestyle='--', alpha=0.5, label='Target (80%)')
         ax.set_xlabel('Facility', fontsize=12)
         ax.set_ylabel('Utilization (%)', fontsize=12)

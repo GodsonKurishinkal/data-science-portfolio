@@ -1,10 +1,8 @@
 """Main inventory optimization engine."""
 
 import pandas as pd
-import numpy as np
-from typing import Dict, List, Optional
+from typing import Dict
 import logging
-from scipy.optimize import minimize
 
 from ..inventory.abc_analysis import ABCAnalyzer
 from ..inventory.safety_stock import SafetyStockCalculator

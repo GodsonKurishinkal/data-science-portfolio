@@ -11,11 +11,9 @@ Generates actionable alerts for:
 
 import logging
 from dataclasses import dataclass
-from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional
 
 import pandas as pd
-import numpy as np
 
 from ..interfaces.base import IAlertGenerator
 from .types import Alert, AlertSeverity, AlertType
@@ -205,7 +203,7 @@ class AlertGenerator(IAlertGenerator):
                 severity=AlertSeverity.CRITICAL,
                 item_id=item_id,
                 location_id=location_id,
-                message=f"Item is out of stock",
+                message="Item is out of stock",
                 details={
                     "current_stock": current_stock,
                     "days_of_supply": 0,

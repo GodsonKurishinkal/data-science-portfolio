@@ -2,7 +2,7 @@
 
 import numpy as np
 import pandas as pd
-from typing import Union, Tuple, List
+from typing import Tuple, List
 from math import radians, cos, sin, asin, sqrt
 
 
