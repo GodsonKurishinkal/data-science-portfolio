@@ -14,7 +14,7 @@ Date: December 2025
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Tuple, Generator
+from typing import Dict, Optional, Tuple, Generator
 import logging
 
 logger = logging.getLogger(__name__)
@@ -125,9 +125,6 @@ class StreamSimulator:
         
         Uses a sinusoidal pattern centered on peak hour.
         """
-        # Distance from peak hour (circular)
-        dist = min(abs(hour - peak_hour), 24 - abs(hour - peak_hour))
-        
         # Sinusoidal pattern with minimum at 4 AM
         amplitude = 0.4
         baseline = 0.7
@@ -276,9 +273,6 @@ class StreamSimulator:
             
             initial_inv = product['initial_inventory']
             
-            # Calculate cumulative consumption
-            cumulative_sales = df.loc[mask, 'sales'].cumsum()
-            
             # Replenishment simulation (when inventory drops below 20% of initial)
             inventory = []
             current_inv = initial_inv
@@ -352,26 +346,26 @@ class StreamSimulator:
         Returns:
             DataFrame with product summary
         """
-        summary = historical_data.groupby('product_id').agg({
+        product_summary = historical_data.groupby('product_id').agg({
             'sales': ['mean', 'std', 'sum', 'min', 'max'],
             'is_anomaly': 'sum',
             'inventory': 'last'
         }).round(2)
         
-        summary.columns = ['avg_hourly_sales', 'std_sales', 'total_sales',
+        product_summary.columns = ['avg_hourly_sales', 'std_sales', 'total_sales',
                           'min_sales', 'max_sales', 'anomaly_count', 'current_inventory']
         
-        summary['daily_sales'] = summary['avg_hourly_sales'] * 24
-        summary['cv'] = summary['std_sales'] / summary['avg_hourly_sales']
-        summary['days_of_stock'] = summary['current_inventory'] / summary['daily_sales']
+        product_summary['daily_sales'] = product_summary['avg_hourly_sales'] * 24
+        product_summary['cv'] = product_summary['std_sales'] / product_summary['avg_hourly_sales']
+        product_summary['days_of_stock'] = product_summary['current_inventory'] / product_summary['daily_sales']
         
         # Merge with product master
-        summary = summary.reset_index().merge(
+        product_summary = product_summary.reset_index().merge(
             self.products[['product_id', 'category', 'unit_cost', 'lead_time_days']],
             on='product_id'
         )
         
-        return summary
+        return product_summary
 
 
 def create_demo_data(
@@ -390,24 +384,24 @@ def create_demo_data(
     Returns:
         Tuple of (historical_data, product_summary)
     """
-    simulator = StreamSimulator(n_products=n_products, seed=seed)
-    historical = simulator.generate_historical(days=days)
-    summary = simulator.get_product_summary(historical)
+    sim = StreamSimulator(n_products=n_products, seed=seed)
+    historical = sim.generate_historical(days=days)
+    prod_summary = sim.get_product_summary(historical)
     
-    return historical, summary
+    return historical, prod_summary
 
 
 if __name__ == "__main__":
     # Quick test
     logging.basicConfig(level=logging.INFO)
     
-    simulator = StreamSimulator(n_products=5, seed=42)
-    data = simulator.generate_historical(days=7)
+    test_sim = StreamSimulator(n_products=5, seed=42)
+    test_data = test_sim.generate_historical(days=7)
     
-    print(f"\nGenerated {len(data)} records")
-    print(f"\nSample data:")
-    print(data.head(10))
+    print(f"\nGenerated {len(test_data)} records")
+    print("\nSample data:")
+    print(test_data.head(10))
     
-    print(f"\nProduct summary:")
-    summary = simulator.get_product_summary(data)
-    print(summary)
+    print("\nProduct summary:")
+    test_summary = test_sim.get_product_summary(test_data)
+    print(test_summary)

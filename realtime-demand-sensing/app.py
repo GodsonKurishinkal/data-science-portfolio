@@ -407,7 +407,6 @@ def main():
             products['available'] = products['on_hand'] + products['on_order'] - products['allocated']
             products['days_of_stock'] = products['available'] / products['avg_daily_demand']
             orders_df = pd.DataFrame()
-            summary = {}
         
         # Display products table
         products['available'] = products['on_hand'] + products['on_order'] - products['allocated']

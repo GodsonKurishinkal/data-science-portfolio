@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 import sys
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime
 import logging
 
 # Configure logging
@@ -30,12 +30,12 @@ sys.path.append(str(Path(__file__).parent / 'src'))
 try:
     from src.utils import StreamSimulator
     from src.sensing import DemandSensor
-    from src.detection import AnomalyDetector, AlertManager, AnomalySeverity, AnomalyType
+    from src.detection import AnomalyDetector, AnomalySeverity
     from src.forecasting import ShortTermForecaster, EnsembleForecaster
-    from src.replenishment import ReplenishmentEngine, InventoryPosition
+    from src.replenishment import ReplenishmentEngine
     MODULES_AVAILABLE = True
 except ImportError as e:
-    logger.warning(f"Some modules not available: {e}")
+    logger.warning("Some modules not available: %s", e)
     MODULES_AVAILABLE = False
 
 
@@ -66,7 +66,7 @@ def generate_sample_data(days=60, n_products=1):
         dates = pd.date_range(end=datetime.now(), periods=days*24, freq='H')
         
         base_demand = 100 + 20 * np.sin(np.arange(len(dates)) * 2 * np.pi / (24*7))
-        hour_of_day = dates.hour
+        hour_of_day = np.array([d.hour for d in dates])
         hourly_pattern = 1 + 0.3 * np.sin((hour_of_day - 14) * np.pi / 12)
         demand = base_demand * hourly_pattern + np.random.normal(0, 5, len(dates))
         
@@ -93,7 +93,7 @@ def demo_demand_sensing():
     # Generate data
     data = generate_sample_data(days=30)
     
-    print(f"Data Summary:")
+    print("Data Summary:")
     print(f"  - Time period: {data['timestamp'].min()} to {data['timestamp'].max()}")
     print(f"  - Data points: {len(data)} hourly observations")
     print(f"  - Average hourly sales: {data['sales'].mean():.1f} units")
@@ -110,13 +110,13 @@ def demo_demand_sensing():
         # Process recent observations
         recent_data = data.tail(24)
         for _, row in recent_data.iterrows():
-            result = sensor.update(product_id=product_id, sales=row['sales'], timestamp=row['timestamp'])
+            sensor.update(product_id=product_id, sales=row['sales'], timestamp=row['timestamp'])
         
         # Get current state using get_status_summary
         status = sensor.get_status_summary()
         if not status.empty:
             current_state = status.iloc[0]
-            print(f"\nDemand Sensor State:")
+            print("\nDemand Sensor State:")
             print(f"  - Current level: {current_state['current_demand']:.1f} units/hour")
             print(f"  - Baseline: {current_state['baseline_demand']:.1f} units/hour")
             print(f"  - Z-score: {current_state['z_score']:.2f}")
@@ -130,7 +130,7 @@ def demo_demand_sensing():
         baseline = data['rolling_mean'].iloc[-24:].mean()
         change_pct = ((recent_sales - baseline) / baseline) * 100
         
-        print(f"\nCurrent Demand Signal:")
+        print("\nCurrent Demand Signal:")
         print(f"  - Last 24h average: {recent_sales:.1f} units/hour")
         print(f"  - Baseline (24h MA): {baseline:.1f} units/hour")
         print(f"  - Change: {change_pct:+.1f}%")
@@ -141,17 +141,17 @@ def demo_demand_sensing():
     daily_sales = recent_sales * 24
     days_of_stock = current_inv / daily_sales if daily_sales > 0 else 999
     
-    print(f"\nInventory Status:")
+    print("\nInventory Status:")
     print(f"  - Current inventory: {current_inv:.0f} units")
     print(f"  - Daily sales rate: {daily_sales:.0f} units/day")
     print(f"  - Days of stock: {days_of_stock:.1f} days")
     
     if days_of_stock < 3:
-        print(f"  - 🚨 CRITICAL: Stockout risk!")
+        print("  - 🚨 CRITICAL: Stockout risk!")
     elif days_of_stock < 7:
-        print(f"  - ⚠️  WARNING: Low inventory")
+        print("  - ⚠️  WARNING: Low inventory")
     else:
-        print(f"  - ✓ Inventory healthy")
+        print("  - ✓ Inventory healthy")
     
     return data
 
@@ -176,8 +176,8 @@ def demo_anomaly_detection():
         product_id = data['product_id'].iloc[0]
         anomalies = detector.detect_from_series(data['sales'], product_id=product_id)
         
-        print(f"Anomaly Detection Results (Ensemble Method):")
-        print(f"  - Methods: Z-Score, IQR, Business Rules")
+        print("Anomaly Detection Results (Ensemble Method):")
+        print("  - Methods: Z-Score, IQR, Business Rules")
         print(f"  - Total anomalies detected: {len(anomalies)}")
         
         # Count by severity
@@ -188,7 +188,7 @@ def demo_anomaly_detection():
         print(f"  - Critical: {critical}, Warning: {warning}, Info: {info}")
         
         if anomalies:
-            print(f"\nRecent Anomalies:")
+            print("\nRecent Anomalies:")
             for anomaly in anomalies[-5:]:
                 severity_icon = "🔴" if anomaly.severity == AnomalySeverity.CRITICAL else "🟡" if anomaly.severity == AnomalySeverity.WARNING else "🔵"
                 print(f"  {severity_icon} [{anomaly.anomaly_type.value}] Value: {anomaly.value:.1f}")
@@ -197,7 +197,7 @@ def demo_anomaly_detection():
         # Get summary
         summary = detector.get_summary(anomalies)
         
-        print(f"\nDetector Summary:")
+        print("\nDetector Summary:")
         print(f"  - Total anomalies: {summary['total']}")
         print(f"  - By severity: {summary['by_severity']}")
     else:
@@ -205,14 +205,14 @@ def demo_anomaly_detection():
         data['zscore'] = (data['sales'] - data['sales'].mean()) / data['sales'].std()
         anomalies = data[np.abs(data['zscore']) > 3]
         
-        print(f"Anomaly Detection Results:")
-        print(f"  - Method: Z-score (threshold = 3.0)")
+        print("Anomaly Detection Results:")
+        print("  - Method: Z-score (threshold = 3.0)")
         print(f"  - Anomalies detected: {len(anomalies)}")
         print(f"  - Anomaly rate: {len(anomalies)/len(data)*100:.2f}%")
         
         if len(anomalies) > 0:
-            print(f"\nRecent Anomalies:")
-            for idx, row in anomalies.tail(5).iterrows():
+            print("\nRecent Anomalies:")
+            for _, row in anomalies.tail(5).iterrows():
                 anomaly_type = "SPIKE" if row['zscore'] > 0 else "DROP"
                 print(f"  - {row['timestamp']}: {anomaly_type} - Sales: {row['sales']:.0f} units (z={row['zscore']:.2f})")
     
@@ -243,13 +243,13 @@ def demo_forecasting():
         horizon = 48  # 48 hours
         forecasts = forecaster.predict(horizon=horizon)
         
-        print(f"Forecasting Configuration:")
-        print(f"  - Method: Ensemble (EWM + Moving Average)")
+        print("Forecasting Configuration:")
+        print("  - Method: Ensemble (EWM + Moving Average)")
         print(f"  - Horizon: {horizon} hours")
-        print(f"  - Confidence: 95%")
+        print("  - Confidence: 95%")
         print(f"  - Historical data: {len(data)} hours")
         
-        print(f"\nForecast Summary:")
+        print("\nForecast Summary:")
         if forecasts:
             total_24h = sum(f.value for f in forecasts[:min(24, len(forecasts))])
             total_48h = sum(f.value for f in forecasts)
@@ -257,13 +257,13 @@ def demo_forecasting():
             print(f"  - Next 24h forecast: {total_24h:.0f} units")
             print(f"  - Next 48h forecast: {total_48h:.0f} units")
             
-            print(f"\nHourly Forecasts (Next 12 hours):")
+            print("\nHourly Forecasts (Next 12 hours):")
             print(f"  {'Hour':<8} {'Forecast':<12} {'Lower':<12} {'Upper'}")
             print(f"  {'-'*50}")
             for i, f in enumerate(forecasts[:min(12, len(forecasts))]):
                 print(f"  H+{i+1:<5} {f.value:>8.1f}     {f.lower_bound:>8.1f}     {f.upper_bound:>8.1f}")
         else:
-            print(f"  No forecasts generated")
+            print("  No forecasts generated")
         
         # Use ShortTermForecaster for comparison
         st_forecaster = ShortTermForecaster(model='ensemble')
@@ -281,12 +281,12 @@ def demo_forecasting():
         horizon = 7
         forecast_values = [last_value + trend * i for i in range(1, horizon + 1)]
         
-        print(f"Forecasting Configuration:")
+        print("Forecasting Configuration:")
         print(f"  - Method: Exponential Smoothing (α={alpha})")
         print(f"  - Horizon: {horizon} days")
         print(f"  - Historical data: {len(data)} hours")
         
-        print(f"\n7-Day Forecast (Daily Averages):")
+        print("\n7-Day Forecast (Daily Averages):")
         for day in range(horizon):
             forecast_value = forecast_values[day] * 24
             trend_indicator = "↑" if trend > 0 else "↓" if trend < 0 else "→"
@@ -301,7 +301,7 @@ def demo_forecasting():
     mae = np.abs(last_week['sales'] - last_week['forecast']).mean()
     mape = (np.abs((last_week['sales'] - last_week['forecast']) / last_week['sales'].replace(0, 1)).mean()) * 100
     
-    print(f"\nForecast Accuracy (Last 7 Days):")
+    print("\nForecast Accuracy (Last 7 Days):")
     print(f"  - MAE: {mae:.1f} units")
     print(f"  - MAPE: {mape:.1f}%")
     
@@ -341,7 +341,7 @@ def demo_replenishment_engine():
         # Run replenishment cycle
         results = engine.run_cycle()
         
-        print(f"Replenishment Engine Results:")
+        print("Replenishment Engine Results:")
         print(f"  - Positions evaluated: {len(products)}")
         print(f"  - Triggers fired: {results['triggers']}")
         print(f"  - Orders generated: {results['orders_generated']}")
@@ -350,7 +350,7 @@ def demo_replenishment_engine():
         print(f"  - Total order value: ${results['total_value']:,.2f}")
         
         if results['orders']:
-            print(f"\nGenerated Orders:")
+            print("\nGenerated Orders:")
             print(f"  {'-'*90}")
             print(f"  {'Order ID':<20} {'Product':<12} {'Qty':<10} {'Priority':<12} {'Status':<18} {'Value'}")
             print(f"  {'-'*90}")
@@ -361,7 +361,7 @@ def demo_replenishment_engine():
                       f"{order.priority.name:<12} {order.status.value:<18} ${order.total_cost:>10,.2f}")
         
         summary = engine.get_summary()
-        print(f"\nEngine Summary:")
+        print("\nEngine Summary:")
         print(f"  - Positions below ROP: {summary['positions_below_rop']}")
         print(f"  - Emergency orders: {summary['emergency_orders']}")
         print(f"  - Pending order value: ${summary['pending_value']:,.2f}")
@@ -386,13 +386,13 @@ def demo_replenishment_engine():
         
         products['order_value'] = products['order_qty'] * products['unit_cost']
         
-        print(f"Portfolio Summary:")
+        print("Portfolio Summary:")
         print(f"  - Total products: {len(products)}")
         print(f"  - Products needing replenishment: {len(needs_repl)}")
         print(f"  - Critical alerts: {len(products[products['trigger_type'] == 'Critical'])}")
         print(f"  - Total order value: ${products['order_value'].sum():,.2f}")
         
-        print(f"\nReplenishment Queue:")
+        print("\nReplenishment Queue:")
         for _, row in products[products['trigger_type'] != 'None'].iterrows():
             priority_icon = "🚨" if row['trigger_type'] == 'Critical' else "⚠️"
             print(f"  {priority_icon} {row['product_id']}: Order {row['order_qty']:.0f} units (${row['order_value']:,.2f})")
@@ -416,16 +416,16 @@ def main():
     
     try:
         # Demo 1: Demand Sensing
-        data = demo_demand_sensing()
+        demo_demand_sensing()
         
         # Demo 2: Anomaly Detection
-        anomalies = demo_anomaly_detection()
+        demo_anomaly_detection()
         
         # Demo 3: Forecasting
-        forecast = demo_forecasting()
+        demo_forecasting()
         
         # Demo 4: Replenishment
-        replenishment = demo_replenishment_engine()
+        demo_replenishment_engine()
         
         print("\n\n" + "="*70)
         print("DEMO COMPLETE")
