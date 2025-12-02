@@ -1,0 +1,285 @@
+# Supply Chain Planning System - Master Configuration
+# ===================================================
+# This configuration file defines settings for all integrated modules
+# and the orchestration layer.
+
+# Global settings
+global:
+  environment: development  # development, staging, production
+  log_level: INFO
+  data_root: ./data
+  models_root: ./models
+  cache_enabled: true
+  cache_ttl_seconds: 3600
+
+# Module project paths (relative to portfolio root)
+project_paths:
+  demand_forecasting: ../demand-forecasting-system
+  inventory_optimization: ../inventory-optimization-engine
+  dynamic_pricing: ../dynamic-pricing-engine
+  network_optimization: ../supply-chain-network-optimization
+  realtime_sensing: ../realtime-demand-sensing
+  auto_replenishment: ../auto-replenishment-system
+
+# Orchestrator settings
+orchestrator:
+  default_horizon: monthly
+  parallel_execution: false  # Set to true for production
+  max_workers: 4
+  timeout_seconds: 3600
+  retry_attempts: 3
+  retry_delay_seconds: 60
+
+# Workflow configurations
+workflows:
+  monthly_sop:
+    description: "Monthly Sales & Operations Planning"
+    steps:
+      - demand_forecast
+      - inventory_optimization
+      - network_optimization
+      - pricing_strategy
+      - replenishment_plan
+      - kpi_calculation
+    timeout_minutes: 120
+    
+  weekly:
+    description: "Weekly Tactical Planning"
+    steps:
+      - demand_forecast
+      - inventory_adjustment
+      - pricing_update
+      - replenishment_orders
+    timeout_minutes: 30
+    
+  daily:
+    description: "Daily Operational Planning"
+    steps:
+      - sensing_update
+      - exception_detection
+      - replenishment_execution
+      - alert_generation
+    timeout_minutes: 15
+    
+  realtime:
+    description: "Real-time Exception Handling"
+    steps:
+      - anomaly_detection
+      - exception_handling
+      - alert_escalation
+    timeout_minutes: 5
+
+# Scheduler settings
+scheduler:
+  timezone: UTC
+  jobs:
+    daily_replenishment:
+      workflow: daily
+      frequency: daily
+      time: "06:00"
+      enabled: true
+      
+    daily_pricing:
+      workflow: daily
+      frequency: daily
+      time: "05:00"
+      enabled: true
+      
+    weekly_tactical:
+      workflow: weekly
+      frequency: weekly
+      day_of_week: monday
+      time: "08:00"
+      enabled: true
+      
+    monthly_sop:
+      workflow: monthly_sop
+      frequency: monthly
+      day_of_month: 1
+      time: "09:00"
+      enabled: true
+
+# Demand forecasting module
+demand:
+  model_type: lightgbm
+  forecast_horizon_days: 90
+  lag_days: [1, 7, 14, 21, 28]
+  rolling_windows: [7, 14, 28, 90]
+  features:
+    - day_of_week
+    - month
+    - is_weekend
+    - is_holiday
+    - price
+    - promotion
+  metrics:
+    - mape
+    - rmse
+    - bias
+  mape_threshold: 0.15
+
+# Inventory optimization module
+inventory:
+  service_level_target: 0.95
+  abc_thresholds:
+    A: 0.80
+    B: 0.95
+    C: 1.00
+  xyz_thresholds:
+    X: 0.50
+    Y: 1.00
+    Z: 999.99
+  safety_stock_method: statistical  # statistical, simulation
+  lead_time_days: 7
+  review_period_days: 7
+  holding_cost_rate: 0.25
+  ordering_cost: 50.0
+
+# Dynamic pricing module
+pricing:
+  elasticity_method: log-log  # log-log, arc, point
+  min_price_multiplier: 0.70
+  max_price_multiplier: 1.50
+  target_margin: 0.30
+  markdown_strategy: time_based  # time_based, inventory_based, combined
+  optimization_objective: revenue  # revenue, margin, volume
+  competitor_tracking: false
+
+# Network optimization module
+network:
+  solver: ortools  # ortools, pulp, gurobi
+  max_solve_time_seconds: 600
+  facility_location:
+    max_facilities: 10
+    fixed_cost_weight: 1.0
+    transport_cost_weight: 1.0
+  vehicle_routing:
+    max_vehicles: 50
+    max_route_distance_km: 500
+    time_windows_enabled: true
+
+# Real-time sensing module
+sensing:
+  update_frequency_minutes: 15
+  anomaly_detection:
+    methods:
+      - zscore
+      - isolation_forest
+      - lstm_autoencoder
+    zscore_threshold: 3.0
+    isolation_contamination: 0.1
+  alert_thresholds:
+    demand_spike: 2.0  # multiplier vs forecast
+    stockout_risk: 0.80  # probability threshold
+
+# Auto-replenishment module
+replenishment:
+  automation_level: semi  # manual, semi, full
+  approval_threshold: 10000  # orders > threshold require approval
+  order_consolidation: true
+  min_order_quantity: 10
+  lead_time_buffer_days: 2
+  scenarios:
+    - dc_to_store
+    - supplier_to_dc
+  rules:
+    - name: critical_stockout
+      condition: "days_of_supply < 3"
+      action: expedite_order
+      priority: critical
+    - name: low_inventory
+      condition: "inventory_position < reorder_point"
+      action: generate_order
+      priority: high
+    - name: excess_inventory
+      condition: "days_of_supply > 60"
+      action: reduce_orders
+      priority: medium
+
+# KPI definitions and targets
+kpis:
+  strategic:
+    perfect_order_rate:
+      target: 0.95
+      weight: 0.20
+    inventory_turns:
+      target: 12.0
+      weight: 0.15
+    gross_margin:
+      target: 0.30
+      weight: 0.20
+    total_cost_to_serve:
+      target: 0.08
+      weight: 0.15
+    forecast_accuracy:
+      target: 0.85
+      weight: 0.15
+    cash_to_cash_cycle:
+      target: 30
+      weight: 0.15
+      
+  operational:
+    fill_rate:
+      target: 0.98
+      weight: 0.25
+    stockout_rate:
+      target: 0.02
+      weight: 0.20
+    order_accuracy:
+      target: 0.995
+      weight: 0.20
+    on_time_delivery:
+      target: 0.95
+      weight: 0.20
+    automation_rate:
+      target: 0.80
+      weight: 0.15
+
+# Alert configuration
+alerts:
+  enabled: true
+  channels:
+    - console
+    - email
+    - slack
+  escalation:
+    critical:
+      notify_immediately: true
+      auto_escalate_minutes: 15
+    high:
+      notify_immediately: true
+      auto_escalate_minutes: 60
+    medium:
+      notify_immediately: false
+      batch_frequency_minutes: 240
+    low:
+      notify_immediately: false
+      batch_frequency_minutes: 1440
+  email:
+    recipients:
+      - supply-chain-team@company.com
+    smtp_server: smtp.company.com
+    smtp_port: 587
+  slack:
+    webhook_url: https://hooks.slack.com/services/xxx/yyy/zzz
+    channel: "#supply-chain-alerts"
+
+# Data connectors
+data:
+  connectors:
+    sales:
+      type: csv
+      path: data/raw/sales.csv
+    inventory:
+      type: csv
+      path: data/raw/inventory.csv
+    products:
+      type: csv
+      path: data/raw/products.csv
+    locations:
+      type: csv
+      path: data/raw/locations.csv
+  cache:
+    enabled: true
+    max_size_mb: 1024
+    ttl_seconds: 3600

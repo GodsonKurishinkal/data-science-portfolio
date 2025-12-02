@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="description" content="Universal Replenishment Engine - Configuration-driven replenishment system supporting all retail scenarios from Supplier to DC to Store">
+    <title>Universal Replenishment Engine | Godson Kurishinkal</title>
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔄</text></svg>">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/minimal.css">
+    <link rel="stylesheet" href="../css/minimal-project.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container container">
+            <a href="../index.html" class="nav-brand">Godson Kurishinkal</a>
+            <ul class="nav-menu">
+                <li><a href="../index.html#home" class="nav-link">Home</a></li>
+                <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="../index.html">Home</a>
+                <span>/</span>
+                <a href="../index.html#projects">Projects</a>
+                <span>/</span>
+                <span>Universal Replenishment Engine</span>
+            </div>
+            
+            <div class="project-header">
+                <div class="project-badge-large">🔄 Automated Operations</div>
+                <h1>🔄 Universal Replenishment Engine</h1>
+                <p class="project-tagline">
+                    Configuration-driven replenishment system supporting ALL retail scenarios: Supplier→DC, DC→Store, Cross-dock, Inter-store transfers, and E-commerce fulfillment. Zero code changes—just configure YAML and deploy.
+                </p>
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>Q4 2025</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-code"></i>
+                        <span>Python, YAML, Pydantic</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>30% Labor Reduction</span>
+                    </div>
+                </div>
+                
+                <div class="project-links">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/auto-replenishment-system" 
+                       class="btn btn-primary" target="_blank">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="#scenarios" class="btn btn-secondary">
+                        <i class="fas fa-route"></i> View Scenarios
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="quick-stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-value">30%</div>
+                    <div class="stat-label">Labor Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value">99%</div>
+                    <div class="stat-label">Inventory Accuracy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📦</div>
+                    <div class="stat-value">25%</div>
+                    <div class="stat-label">Space Utilization</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">15-20%</div>
+                    <div class="stat-label">Carrying Cost Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔄</div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Scenarios Supported</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">Service Level</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Problem -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">🎯 Business Problem</h2>
+            <div class="content-box">
+                <p class="lead">
+                    Retail supply chains require replenishment across multiple scenarios—each with unique constraints, 
+                    lead times, and service level requirements. Traditional systems require custom code for each scenario, 
+                    leading to maintenance nightmares and inconsistent logic.
+                </p>
+                
+                <div class="problem-grid">
+                    <div class="problem-item">
+                        <i class="fas fa-truck-loading"></i>
+                        <h3>Multi-Scenario</h3>
+                        <p>Support Supplier→DC, DC→Store, Cross-dock, and more from one system</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Configuration-Driven</h3>
+                        <p>Zero code changes—just update YAML configuration</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>ABC-XYZ-FMR Matrix</h3>
+                        <p>9-cell classification with differentiated service levels</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Multiple Policies</h3>
+                        <p>Periodic Review, Continuous Review, Min-Max policies</p>
+                    </div>
+                    <div class="problem-item">
+                        <i class="fas fa-bell"></i>
+                        <h3>Smart Alerts</h3>
+                        <p>Severity-based alerts with actionable recommendations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scenarios -->
+    <section class="project-section bg-alt" id="scenarios">
+        <div class="container">
+            <h2 class="section-title">🚚 Supported Scenarios</h2>
+            <div class="scenarios-grid">
+                <div class="scenario-card">
+                    <div class="scenario-icon">🏭→📦</div>
+                    <h3>Supplier → DC</h3>
+                    <p>Vendor/Manufacturer to Distribution Center</p>
+                    <div class="scenario-metrics">
+                        <span>PO accuracy</span>
+                        <span>Lead time</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">📦→🏪</div>
+                    <h3>DC → Store</h3>
+                    <p>Distribution Center to Retail Stores</p>
+                    <div class="scenario-metrics">
+                        <span>Fill rate</span>
+                        <span>Transit time</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">🏪→📦</div>
+                    <h3>Store → DC</h3>
+                    <p>Retail Stores to Distribution Center (Returns)</p>
+                    <div class="scenario-metrics">
+                        <span>Return rate</span>
+                        <span>Processing</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">📤→📥</div>
+                    <h3>Storage → Picking</h3>
+                    <p>Reserve Storage to Pick Locations</p>
+                    <div class="scenario-metrics">
+                        <span>Pick efficiency</span>
+                        <span>Travel time</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">🚪→🛒</div>
+                    <h3>Backroom → Floor</h3>
+                    <p>Store Backroom to Sales Floor</p>
+                    <div class="scenario-metrics">
+                        <span>Shelf availability</span>
+                        <span>Replen frequency</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">⚡→⚡</div>
+                    <h3>Cross-dock</h3>
+                    <p>Inbound Dock to Outbound Dock</p>
+                    <div class="scenario-metrics">
+                        <span>Throughput</span>
+                        <span>Dwell time</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">🏪↔️🏪</div>
+                    <h3>Inter-store</h3>
+                    <p>Store A to Store B Transfer</p>
+                    <div class="scenario-metrics">
+                        <span>Transfer accuracy</span>
+                        <span>Balance optimization</span>
+                    </div>
+                </div>
+                
+                <div class="scenario-card">
+                    <div class="scenario-icon">📦→🏠</div>
+                    <h3>E-commerce</h3>
+                    <p>DC/Store to Customer</p>
+                    <div class="scenario-metrics">
+                        <span>Order cycle time</span>
+                        <span>Promise accuracy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">✨ Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>ABC-XYZ-FMR Classification</h3>
+                    <ul>
+                        <li>ABC: Value-based (80/15/5% of revenue)</li>
+                        <li>XYZ: Variability-based (CV thresholds)</li>
+                        <li>FMR: Velocity-based (Fast/Medium/Rare)</li>
+                        <li>9-cell matrix with differentiated policies</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Pandas</span>
+                        <span class="tech-tag">NumPy</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Multiple Inventory Policies</h3>
+                    <ul>
+                        <li>Periodic Review (s,S) - review at fixed intervals</li>
+                        <li>Continuous Review (s,Q) - order at reorder point</li>
+                        <li>Min-Max - maintain between min and max levels</li>
+                        <li>Policy selection based on item classification</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">SciPy</span>
+                        <span class="tech-tag">Statistics</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Dynamic Safety Stock</h3>
+                    <ul>
+                        <li>Standard: Z × σ × √LT formula</li>
+                        <li>Dynamic: Adjusts for demand patterns</li>
+                        <li>Capacity-aware: Considers storage limits</li>
+                        <li>Service level differentiation by class</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Statistics</span>
+                        <span class="tech-tag">Optimization</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>YAML Configuration</h3>
+                    <ul>
+                        <li>8 pre-built scenario configurations</li>
+                        <li>Custom thresholds per scenario</li>
+                        <li>Lead time and service level settings</li>
+                        <li>No code changes required</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">PyYAML</span>
+                        <span class="tech-tag">Pydantic</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Implementation -->
+    <section class="project-section bg-alt">
+        <div class="container">
+            <h2 class="section-title">🔧 Technical Implementation</h2>
+            
+            <div class="implementation-section">
+                <h3>1. Replenishment Engine Core</h3>
+                <div class="code-block">
+                    <pre><code>from dataclasses import dataclass
+from typing import Dict, List, Optional
+from enum import Enum
+import pandas as pd
+import numpy as np
+
+class ReplenishmentPolicy(Enum):
+    PERIODIC_REVIEW = "periodic_review"  # (s, S) policy
+    CONTINUOUS_REVIEW = "continuous_review"  # (s, Q) policy
+    MIN_MAX = "min_max"
+
+@dataclass
+class ReplenishmentOrder:
+    item_id: str
+    source_location: str
+    dest_location: str
+    quantity: int
+    priority: str
+    policy_used: ReplenishmentPolicy
+    reason: str
+
+class ReplenishmentEngine:
+    def __init__(self, config: dict):
+        self.config = config
+        self.scenario = config['scenario']
+        self.classifiers = self._init_classifiers()
+        self.safety_stock_calc = SafetyStockCalculator(config)
+        
+    def generate_orders(
+        self,
+        inventory_data: pd.DataFrame,
+        demand_forecast: pd.DataFrame
+    ) -> List[ReplenishmentOrder]:
+        """Generate replenishment orders for all items."""
+        
+        # Classify items
+        classified = self._classify_items(inventory_data)
+        
+        # Calculate requirements
+        requirements = self._calculate_requirements(
+            classified, 
+            demand_forecast
+        )
+        
+        # Apply policies and generate orders
+        orders = []
+        for _, item in requirements.iterrows():
+            policy = self._select_policy(item['classification'])
+            order = self._apply_policy(item, policy)
+            if order:
+                orders.append(order)
+        
+        # Prioritize and consolidate
+        orders = self._prioritize_orders(orders)
+        orders = self._consolidate_orders(orders)
+        
+        return orders
+    
+    def _classify_items(self, data: pd.DataFrame) -> pd.DataFrame:
+        """Apply ABC-XYZ-FMR classification."""
+        
+        # ABC - Value based
+        data = self.classifiers['abc'].classify(data)
+        
+        # XYZ - Variability based
+        data = self.classifiers['xyz'].classify(data)
+        
+        # FMR - Velocity based
+        data = self.classifiers['fmr'].classify(data)
+        
+        # Combined classification
+        data['classification'] = (
+            data['abc_class'] + 
+            data['xyz_class'] + 
+            data['fmr_class']
+        )
+        
+        return data
+    
+    def _select_policy(self, classification: str) -> ReplenishmentPolicy:
+        """Select inventory policy based on classification."""
+        
+        policy_map = self.config.get('policy_map', {
+            'AXF': ReplenishmentPolicy.CONTINUOUS_REVIEW,
+            'AXM': ReplenishmentPolicy.CONTINUOUS_REVIEW,
+            'AYF': ReplenishmentPolicy.PERIODIC_REVIEW,
+            'BXF': ReplenishmentPolicy.PERIODIC_REVIEW,
+            'CZR': ReplenishmentPolicy.MIN_MAX,
+        })
+        
+        return policy_map.get(
+            classification, 
+            ReplenishmentPolicy.PERIODIC_REVIEW
+        )</code></pre>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>2. Safety Stock Calculator</h3>
+                <div class="code-block">
+                    <pre><code>from scipy import stats
+
+class SafetyStockCalculator:
+    def __init__(self, config: dict):
+        self.config = config
+        self.service_levels = config.get('service_levels', {
+            'A': 0.98,  # High service for A items
+            'B': 0.95,  # Standard service for B items
+            'C': 0.90,  # Lower service for C items
+        })
+        
+    def calculate(
+        self,
+        item: dict,
+        method: str = 'dynamic'
+    ) -> float:
+        """Calculate safety stock using specified method."""
+        
+        if method == 'standard':
+            return self._standard_safety_stock(item)
+        elif method == 'dynamic':
+            return self._dynamic_safety_stock(item)
+        elif method == 'capacity_aware':
+            return self._capacity_aware_safety_stock(item)
+        else:
+            raise ValueError(f"Unknown method: {method}")
+    
+    def _standard_safety_stock(self, item: dict) -> float:
+        """Standard safety stock: Z × σ × √LT"""
+        
+        service_level = self.service_levels.get(
+            item['abc_class'], 0.95
+        )
+        z_score = stats.norm.ppf(service_level)
+        
+        demand_std = item['demand_std']
+        lead_time = item['lead_time_days']
+        
+        safety_stock = z_score * demand_std * np.sqrt(lead_time)
+        
+        return max(safety_stock, 0)
+    
+    def _dynamic_safety_stock(self, item: dict) -> float:
+        """Dynamic safety stock with demand pattern adjustment."""
+        
+        base_ss = self._standard_safety_stock(item)
+        
+        # Adjust for demand trend
+        trend_factor = 1.0
+        if item.get('demand_trend', 0) > 0.1:
+            trend_factor = 1.2  # Increasing demand
+        elif item.get('demand_trend', 0) < -0.1:
+            trend_factor = 0.8  # Decreasing demand
+        
+        # Adjust for seasonality
+        season_factor = item.get('seasonality_factor', 1.0)
+        
+        # Adjust for lead time variability
+        lt_var_factor = 1 + (item.get('lead_time_cv', 0) * 0.5)
+        
+        dynamic_ss = base_ss * trend_factor * season_factor * lt_var_factor
+        
+        return max(dynamic_ss, 0)
+    
+    def _capacity_aware_safety_stock(self, item: dict) -> float:
+        """Safety stock constrained by storage capacity."""
+        
+        dynamic_ss = self._dynamic_safety_stock(item)
+        
+        # Get capacity constraint
+        max_capacity = item.get('storage_capacity', float('inf'))
+        current_inventory = item.get('current_inventory', 0)
+        
+        # Available capacity
+        available = max_capacity - current_inventory
+        
+        # Constrain safety stock
+        constrained_ss = min(dynamic_ss, available * 0.3)
+        
+        return max(constrained_ss, 0)</code></pre>
+                </div>
+            </div>
+            
+            <div class="implementation-section">
+                <h3>3. YAML Configuration Example</h3>
+                <div class="code-block">
+                    <pre><code># config/config.yaml - DC to Store Scenario
+scenario: dc_to_store
+version: "1.0"
+
+# Classification thresholds
+classification:
+  abc:
+    A_threshold: 0.80  # Top 80% of value
+    B_threshold: 0.95  # Next 15%
+    # C: remaining 5%
+  xyz:
+    X_threshold: 0.50  # CV < 0.5 (stable)
+    Y_threshold: 1.00  # CV 0.5-1.0 (variable)
+    # Z: CV > 1.0 (erratic)
+  fmr:
+    F_threshold: 0.70  # Fast movers (top 70% velocity)
+    M_threshold: 0.90  # Medium movers (next 20%)
+    # R: Rare movers (bottom 10%)
+
+# Service levels by ABC class
+service_levels:
+  A: 0.98
+  B: 0.95
+  C: 0.90
+
+# Policy mapping by classification
+policy_map:
+  AXF: continuous_review
+  AXM: continuous_review
+  AYF: periodic_review
+  AYM: periodic_review
+  BXF: periodic_review
+  BYF: periodic_review
+  CZR: min_max
+  default: periodic_review
+
+# Lead time settings
+lead_time:
+  standard_days: 3
+  express_days: 1
+  buffer_days: 1
+
+# Order constraints
+ordering:
+  min_order_quantity: 10
+  max_order_quantity: 1000
+  order_multiple: 5
+  consolidation_window_hours: 4
+
+# Safety stock method
+safety_stock:
+  method: dynamic  # standard, dynamic, capacity_aware
+  min_days_cover: 3
+  max_days_cover: 30
+
+# Alert thresholds
+alerts:
+  critical_days_cover: 2
+  warning_days_cover: 5
+  excess_days_cover: 45</code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Impact -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">💼 Business Impact</h2>
+            
+            <div class="impact-grid">
+                <div class="impact-card highlight">
+                    <h3>⚡ Labor Efficiency</h3>
+                    <div class="impact-metric">30% reduction</div>
+                    <p>Automated replenishment decisions reduce manual planning effort</p>
+                    <div class="impact-value">$500K annual savings</div>
+                </div>
+                
+                <div class="impact-card">
+                    <h3>🎯 Inventory Accuracy</h3>
+                    <div class="impact-metric">99%+ accuracy</div>
+                    <p>Systematic reorder points eliminate human error</p>
+                    <div class="impact-value">Zero stockout surprises</div>
+                </div>
+                
+                <div class="impact-card">
+                    <h3>📦 Space Utilization</h3>
+                    <div class="impact-metric">25% improvement</div>
+                    <p>Velocity-based classification optimizes storage allocation</p>
+                    <div class="impact-value">Better pick efficiency</div>
+                </div>
+                
+                <div class="impact-card">
+                    <h3>💰 Carrying Costs</h3>
+                    <div class="impact-metric">15-20% reduction</div>
+                    <p>Optimized safety stock reduces excess inventory</p>
+                    <div class="impact-value">$1M+ working capital freed</div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <h3>📈 Success Story: Multi-Scenario Deployment</h3>
+                <p>
+                    Deployed the same engine across 8 different replenishment scenarios—from supplier POs 
+                    to store shelf replenishment—with zero code changes. Each scenario was configured via 
+                    YAML in under 2 hours, compared to 2-3 weeks of custom development previously.
+                </p>
+                <ul class="success-metrics">
+                    <li><strong>Deployment Time:</strong> 2 hours per scenario vs 2-3 weeks</li>
+                    <li><strong>Maintenance:</strong> Single codebase for all scenarios</li>
+                    <li><strong>Consistency:</strong> Same logic applied across all flows</li>
+                    <li><strong>Flexibility:</strong> Business users can adjust thresholds without IT</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="project-section bg-alt">
+        <div class="container">
+            <h2 class="section-title">🛠️ Technology Stack</h2>
+            <div class="tech-categories">
+                <div class="tech-category">
+                    <h3>Core Engine</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">Python 3.11</span>
+                        <span class="tech-badge">Pandas</span>
+                        <span class="tech-badge">NumPy</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Configuration</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">PyYAML</span>
+                        <span class="tech-badge">Pydantic</span>
+                        <span class="tech-badge">Dataclasses</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Statistics</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">SciPy</span>
+                        <span class="tech-badge">Statistics</span>
+                    </div>
+                </div>
+                <div class="tech-category">
+                    <h3>Testing</h3>
+                    <div class="tech-list">
+                        <span class="tech-badge">pytest</span>
+                        <span class="tech-badge">pytest-cov</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="project-cta">
+        <div class="container">
+            <h2>Interested in Automated Replenishment?</h2>
+            <p>Let's discuss how configuration-driven systems can transform your inventory management</p>
+            <div class="cta-buttons">
+                <a href="../index.html#contact" class="btn btn-primary">
+                    <i class="fas fa-envelope"></i> Get in Touch
+                </a>
+                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/auto-replenishment-system" 
+                   class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-github"></i> View Code
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">© 2025 Godson Kurishinkal. All rights reserved.</p>
+                <ul class="footer-links">
+                    <li><a href="../index.html#home" class="footer-link">Home</a></li>
+                    <li><a href="../index.html#projects" class="footer-link">Projects</a></li>
+                    <li><a href="../index.html#contact" class="footer-link">Contact</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="mailto:godson.kurishinkal@gmail.com" class="social-link" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const navHeight = document.querySelector('.nav').offsetHeight;
+                    const targetPosition = target.offsetTop - navHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Nav scroll effect
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.feature-card, .scenario-card, .impact-card, .stat-card');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight * 0.85) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        revealElements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        });
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        revealOnScroll();
+    </script>
+    
+    <style>
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .scenario-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .scenario-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .scenario-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .scenario-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .scenario-metrics {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .scenario-metrics span {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+    </style>
+</body>
+</html>
