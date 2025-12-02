@@ -2,22 +2,211 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Supply Chain Planning System - Master orchestration layer unifying demand forecasting, inventory, pricing, network, sensing, and replenishment into one cohesive platform">
-    <title>Supply Chain Planning System | Godson Kurishinkal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Supply Chain Planning Master System - S&OP orchestration unifying all supply chain modules">
+    <title>Supply Chain Planning | Godson Kurishinkal</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏭</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <link rel="stylesheet" href="../css/minimal.css">
-    <link rel="stylesheet" href="../css/minimal-project.css">
+    <link rel="stylesheet" href="../css/portfolio.css">
+    <link rel="stylesheet" href="../css/project-page.css">
+    
+    <style>
+        .master-badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .master-badge i {
+            font-size: 0.75rem;
+        }
+        
+        .workflow-diagram {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: var(--gray-50);
+            border-radius: 0.75rem;
+            position: relative;
+        }
+        
+        .workflow-step::after {
+            content: '→';
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .workflow-step:last-child::after {
+            display: none;
+        }
+        
+        .workflow-step-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .workflow-step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray-900);
+        }
+        
+        .workflow-step-desc {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+        
+        .module-connections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .module-card h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .module-card p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .module-link {
+            color: var(--primary);
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .module-link:hover {
+            text-decoration: underline;
+        }
+        
+        .kpi-dashboard {
+            background: linear-gradient(135deg, var(--gray-900) 0%, #1e293b 100%);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .kpi-header {
+            color: white;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        
+        .kpi-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            text-align: center;
+        }
+        
+        .kpi-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .kpi-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+        }
+        
+        @media (max-width: 768px) {
+            .workflow-step::after {
+                display: none;
+            }
+            
+            .workflow-steps {
+                flex-direction: column;
+            }
+            
+            .workflow-step {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container container">
+    <nav class="nav" id="nav">
+        <div class="nav-container">
             <a href="../index.html" class="nav-brand">Godson Kurishinkal</a>
             <ul class="nav-menu">
                 <li><a href="../index.html#home" class="nav-link">Home</a></li>
@@ -29,295 +218,300 @@
     </nav>
 
     <!-- Project Hero -->
-    <section class="project-hero" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);">
+    <section class="project-hero">
         <div class="container">
-            <div class="breadcrumb">
+            <nav class="breadcrumb">
                 <a href="../index.html">Home</a>
-                <span>/</span>
+                <i class="fas fa-chevron-right"></i>
                 <a href="../index.html#projects">Projects</a>
-                <span>/</span>
-                <span>Supply Chain Planning System</span>
-            </div>
+                <i class="fas fa-chevron-right"></i>
+                <span>Supply Chain Planning</span>
+            </nav>
             
-            <div class="project-header">
-                <div class="project-badge-large" style="background: rgba(139, 92, 246, 0.2); color: #a78bfa;">🏭 Master Orchestrator</div>
-                <h1>🏭 Supply Chain Planning System</h1>
-                <p class="project-tagline">
-                    Master orchestration layer that unifies all 6 portfolio projects into a cohesive planning platform. 
-                    Provides end-to-end S&OP workflows, automated planning cycles, exception handling, and unified KPI management across the entire supply chain.
+            <div class="project-hero-content">
+                <div class="master-badge">
+                    <i class="fas fa-crown"></i> Master System
+                </div>
+                
+                <div class="project-badge-large">
+                    <span>🎯</span>
+                </div>
+                
+                <span class="project-category">S&OP Orchestration • Enterprise Integration</span>
+                
+                <h1 class="project-title">Supply Chain Planning</h1>
+                
+                <p class="project-subtitle">
+                    The capstone system that unifies all supply chain modules into a cohesive Sales & Operations Planning (S&OP) workflow. Orchestrates forecasting, inventory, pricing, network optimization, and real-time sensing for unified decision-making.
                 </p>
                 
-                <div class="project-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Q4 2025</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-code"></i>
-                        <span>Python, Orchestration, Workflows</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-chart-line"></i>
-                        <span>50% Faster Planning</span>
-                    </div>
-                </div>
-                
-                <div class="project-links">
-                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/supply-chain-planning-system" 
-                       class="btn btn-primary" target="_blank">
-                        <i class="fab fa-github"></i> View on GitHub
+                <div class="project-actions">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/supply-chain-planning-system" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i> View Code
                     </a>
-                    <a href="#architecture" class="btn btn-secondary">
-                        <i class="fas fa-sitemap"></i> View Architecture
+                    <a href="#workflow" class="btn btn-secondary">
+                        <i class="fas fa-project-diagram"></i> S&OP Workflow
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Quick Stats -->
-    <section class="quick-stats">
-        <div class="container">
-            <div class="stats-grid">
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
                 <div class="stat-card">
-                    <div class="stat-icon">🔗</div>
-                    <div class="stat-value">6</div>
-                    <div class="stat-label">Integrated Projects</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">⚡</div>
+                    <div class="stat-icon"><i class="fas fa-tachometer-alt"></i></div>
                     <div class="stat-value">50%</div>
                     <div class="stat-label">Faster Planning</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">📊</div>
-                    <div class="stat-value">20+</div>
-                    <div class="stat-label">Unified KPIs</div>
+                    <div class="stat-icon"><i class="fas fa-puzzle-piece"></i></div>
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Unified Modules</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🔄</div>
-                    <div class="stat-value">4</div>
-                    <div class="stat-label">Workflow Types</div>
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-value">$18M+</div>
+                    <div class="stat-label">Total Impact</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">🚨</div>
-                    <div class="stat-value">Real-time</div>
-                    <div class="stat-label">Exception Handling</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🎯</div>
-                    <div class="stat-value">Single</div>
-                    <div class="stat-label">Source of Truth</div>
+                    <div class="stat-icon"><i class="fas fa-sync"></i></div>
+                    <div class="stat-value">Real-Time</div>
+                    <div class="stat-label">KPI Dashboard</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Business Problem -->
-    <section class="project-section">
+    <!-- Overview Section -->
+    <section class="content-section">
         <div class="container">
-            <h2 class="section-title">🎯 Business Problem</h2>
-            <div class="content-box">
-                <p class="lead">
-                    Enterprise supply chains have siloed planning systems—demand forecasting, inventory optimization, 
-                    pricing, network planning—each operating independently. This creates coordination gaps, 
-                    inconsistent decisions, and slow response to exceptions.
-                </p>
+            <div class="section-grid">
+                <div class="main-content">
+                    <h2 class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        The Vision
+                    </h2>
+                    <p class="lead-text">
+                        Supply chain excellence isn't about having great forecasting OR great inventory management OR great pricing. It's about having all systems work together seamlessly.
+                    </p>
+                    <p>
+                        This master system orchestrates the entire supply chain planning process—from demand sensing to inventory positioning to pricing optimization—ensuring all modules communicate and align toward unified business objectives.
+                    </p>
+                    
+                    <h2 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Unified Value Delivered
+                    </h2>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-value">50%</div>
+                            <div class="result-label">Faster Planning</div>
+                            <div class="result-context">Automated S&OP workflow</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">$18M+</div>
+                            <div class="result-label">Total Impact</div>
+                            <div class="result-context">Across all modules</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">6</div>
+                            <div class="result-label">Integrated Modules</div>
+                            <div class="result-context">Single source of truth</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">Real-Time</div>
+                            <div class="result-label">Decision Support</div>
+                            <div class="result-context">Live KPI dashboard</div>
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="problem-grid">
-                    <div class="problem-item">
-                        <i class="fas fa-project-diagram"></i>
-                        <h3>Unified Orchestration</h3>
-                        <p>Single platform coordinating all planning modules</p>
+                <aside class="sidebar">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                        <ul class="info-list">
+                            <li>
+                                <span class="info-label">Status</span>
+                                <span class="info-value status-complete">✓ Complete</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Role</span>
+                                <span class="info-value">Master System</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Architecture</span>
+                                <span class="info-value">Orchestration</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Integration</span>
+                                <span class="info-value">6 Modules</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="problem-item">
-                        <i class="fas fa-calendar-alt"></i>
-                        <h3>S&OP Workflows</h3>
-                        <p>Monthly, weekly, daily, and real-time planning cycles</p>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-layer-group"></i> Tech Stack</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Streamlit</span>
+                            <span class="tech-tag">Apache Airflow</span>
+                            <span class="tech-tag">Pandas</span>
+                            <span class="tech-tag">Plotly</span>
+                            <span class="tech-tag">REST APIs</span>
+                        </div>
                     </div>
-                    <div class="problem-item">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <h3>Exception Management</h3>
-                        <p>Proactive detection and automated resolution</p>
-                    </div>
-                    <div class="problem-item">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <h3>Unified KPIs</h3>
-                        <p>Single dashboard tracking all supply chain metrics</p>
-                    </div>
-                    <div class="problem-item">
-                        <i class="fas fa-clock"></i>
-                        <h3>Automated Scheduling</h3>
-                        <p>Configurable job scheduler for planning cycles</p>
-                    </div>
-                </div>
+                </aside>
             </div>
         </div>
     </section>
 
-    <!-- Architecture -->
-    <section class="project-section bg-alt" id="architecture">
+    <!-- S&OP Workflow -->
+    <section class="content-section alt-bg" id="workflow">
         <div class="container">
-            <h2 class="section-title">🏗️ System Architecture</h2>
+            <h2 class="section-title centered">
+                <i class="fas fa-project-diagram"></i>
+                S&OP Workflow Engine
+            </h2>
             
-            <div class="architecture-diagram">
-                <div class="arch-layer master">
-                    <h3>🏭 Supply Chain Planning System</h3>
-                    <p>Master Orchestrator</p>
-                </div>
-                
-                <div class="arch-connector">▼</div>
-                
-                <div class="arch-layer orchestration">
-                    <div class="arch-components">
-                        <div class="arch-component">
-                            <span class="arch-icon">📋</span>
-                            <span>Workflow Engine</span>
+            <p class="lead-text centered">
+                Monthly S&OP cycle automated with configurable workflows, approvals, and exception handling.
+            </p>
+            
+            <div class="workflow-diagram">
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="workflow-step-icon">
+                            <i class="fas fa-chart-line"></i>
                         </div>
-                        <div class="arch-component">
-                            <span class="arch-icon">⏰</span>
-                            <span>Scheduler</span>
-                        </div>
-                        <div class="arch-component">
-                            <span class="arch-icon">📊</span>
-                            <span>KPI Calculator</span>
-                        </div>
-                        <div class="arch-component">
-                            <span class="arch-icon">🚨</span>
-                            <span>Alert Manager</span>
-                        </div>
+                        <div class="workflow-step-title">Demand Review</div>
+                        <div class="workflow-step-desc">Statistical + ML forecasts</div>
                     </div>
-                </div>
-                
-                <div class="arch-connector">▼</div>
-                
-                <div class="arch-layer integrations">
-                    <h4>Integration Layer</h4>
-                    <div class="integration-modules">
-                        <div class="integration-module">
-                            <span class="module-icon">📈</span>
-                            <span class="module-name">Demand</span>
+                    
+                    <div class="workflow-step">
+                        <div class="workflow-step-icon">
+                            <i class="fas fa-boxes"></i>
                         </div>
-                        <div class="integration-module">
-                            <span class="module-icon">📦</span>
-                            <span class="module-name">Inventory</span>
-                        </div>
-                        <div class="integration-module">
-                            <span class="module-icon">💰</span>
-                            <span class="module-name">Pricing</span>
-                        </div>
-                        <div class="integration-module">
-                            <span class="module-icon">🚚</span>
-                            <span class="module-name">Network</span>
-                        </div>
-                        <div class="integration-module">
-                            <span class="module-icon">🔮</span>
-                            <span class="module-name">Sensing</span>
-                        </div>
-                        <div class="integration-module">
-                            <span class="module-icon">🔄</span>
-                            <span class="module-name">Replenishment</span>
-                        </div>
+                        <div class="workflow-step-title">Supply Review</div>
+                        <div class="workflow-step-desc">Capacity & inventory</div>
                     </div>
-                </div>
-                
-                <div class="arch-connector">▼</div>
-                
-                <div class="arch-layer projects">
-                    <h4>Portfolio Projects</h4>
-                    <div class="project-modules">
-                        <a href="demand-forecasting.html" class="project-module">Demand Forecasting System</a>
-                        <a href="inventory-optimization.html" class="project-module">Inventory Optimization Engine</a>
-                        <a href="dynamic-pricing.html" class="project-module">Dynamic Pricing Engine</a>
-                        <a href="supply-chain-network.html" class="project-module">Network Optimization</a>
-                        <a href="realtime-demand-sensing.html" class="project-module">Real-Time Sensing</a>
-                        <a href="auto-replenishment.html" class="project-module">Auto-Replenishment</a>
+                    
+                    <div class="workflow-step">
+                        <div class="workflow-step-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <div class="workflow-step-title">Pre-S&OP</div>
+                        <div class="workflow-step-desc">Gap analysis & scenarios</div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="workflow-step-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="workflow-step-title">Executive S&OP</div>
+                        <div class="workflow-step-desc">Decision & approval</div>
+                    </div>
+                    
+                    <div class="workflow-step">
+                        <div class="workflow-step-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="workflow-step-title">Execution</div>
+                        <div class="workflow-step-desc">Publish & monitor</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Planning Workflows -->
-    <section class="project-section">
+    <!-- Module Connections -->
+    <section class="content-section">
         <div class="container">
-            <h2 class="section-title">📋 Planning Workflows</h2>
+            <h2 class="section-title centered">
+                <i class="fas fa-puzzle-piece"></i>
+                Integrated Modules
+            </h2>
             
-            <div class="workflows-grid">
-                <div class="workflow-card monthly">
-                    <div class="workflow-header">
-                        <span class="workflow-icon">📅</span>
-                        <h3>Monthly S&OP</h3>
-                        <span class="workflow-badge">Strategic</span>
-                    </div>
-                    <p>Comprehensive planning cycle integrating all modules for strategic alignment</p>
-                    <div class="workflow-steps">
-                        <div class="step">1. Demand Forecast Generation</div>
-                        <div class="step">2. Inventory Optimization</div>
-                        <div class="step">3. Network Planning</div>
-                        <div class="step">4. Pricing Strategy</div>
-                        <div class="step">5. Replenishment Plan</div>
-                        <div class="step">6. KPI Consolidation</div>
-                    </div>
-                    <div class="workflow-meta">
-                        <span><i class="fas fa-clock"></i> ~2 hours</span>
-                        <span><i class="fas fa-layer-group"></i> All modules</span>
-                    </div>
+            <p class="lead-text centered">
+                Six specialized modules, one unified planning system. Each module feeds data to others and receives orchestration commands from the master system.
+            </p>
+            
+            <div class="module-connections">
+                <div class="module-card">
+                    <h4><span>📈</span> Demand Forecasting</h4>
+                    <p>Statistical + ML forecasts powering all downstream planning. Feeds inventory targets and pricing models.</p>
+                    <a href="demand-forecasting.html" class="module-link">Learn more <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
-                <div class="workflow-card weekly">
-                    <div class="workflow-header">
-                        <span class="workflow-icon">📆</span>
-                        <h3>Weekly Tactical</h3>
-                        <span class="workflow-badge">Tactical</span>
-                    </div>
-                    <p>Mid-cycle adjustments based on actual performance vs plan</p>
-                    <div class="workflow-steps">
-                        <div class="step">1. Forecast Refresh</div>
-                        <div class="step">2. Inventory Adjustment</div>
-                        <div class="step">3. Pricing Updates</div>
-                        <div class="step">4. Order Generation</div>
-                    </div>
-                    <div class="workflow-meta">
-                        <span><i class="fas fa-clock"></i> ~30 min</span>
-                        <span><i class="fas fa-layer-group"></i> 4 modules</span>
-                    </div>
+                <div class="module-card">
+                    <h4><span>📦</span> Inventory Optimization</h4>
+                    <p>ABC-XYZ classification and safety stock calculations. Receives forecasts, feeds replenishment engine.</p>
+                    <a href="inventory-optimization.html" class="module-link">Learn more <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
-                <div class="workflow-card daily">
-                    <div class="workflow-header">
-                        <span class="workflow-icon">🌅</span>
-                        <h3>Daily Operations</h3>
-                        <span class="workflow-badge">Operational</span>
-                    </div>
-                    <p>Execution-focused workflow for day-to-day operations</p>
-                    <div class="workflow-steps">
-                        <div class="step">1. Sensing Update</div>
-                        <div class="step">2. Exception Detection</div>
-                        <div class="step">3. Replenishment Execution</div>
-                        <div class="step">4. Alert Generation</div>
-                    </div>
-                    <div class="workflow-meta">
-                        <span><i class="fas fa-clock"></i> ~15 min</span>
-                        <span><i class="fas fa-layer-group"></i> 3 modules</span>
-                    </div>
+                <div class="module-card">
+                    <h4><span>💰</span> Dynamic Pricing</h4>
+                    <p>Elasticity-based pricing optimization. Consumes demand forecasts, impacts demand sensing signals.</p>
+                    <a href="dynamic-pricing.html" class="module-link">Learn more <i class="fas fa-arrow-right"></i></a>
                 </div>
                 
-                <div class="workflow-card realtime">
-                    <div class="workflow-header">
-                        <span class="workflow-icon">⚡</span>
-                        <h3>Real-Time</h3>
-                        <span class="workflow-badge">Reactive</span>
+                <div class="module-card">
+                    <h4><span>🌐</span> Network Optimization</h4>
+                    <p>Facility location and vehicle routing. Receives demand patterns, optimizes distribution network.</p>
+                    <a href="supply-chain-network.html" class="module-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="module-card">
+                    <h4><span>⚡</span> Real-Time Sensing</h4>
+                    <p>Anomaly detection and short-term adjustments. Provides real-time feedback to all modules.</p>
+                    <a href="realtime-demand-sensing.html" class="module-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="module-card">
+                    <h4><span>🔄</span> Auto-Replenishment</h4>
+                    <p>Policy-driven order generation. Receives targets from inventory module, executes across scenarios.</p>
+                    <a href="auto-replenishment.html" class="module-link">Learn more <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- KPI Dashboard -->
+    <section class="content-section alt-bg">
+        <div class="container">
+            <h2 class="section-title centered">
+                <i class="fas fa-chart-bar"></i>
+                Unified KPI Dashboard
+            </h2>
+            
+            <div class="kpi-dashboard">
+                <div class="kpi-header">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <h3 style="margin: 0;">Executive Summary View</h3>
+                </div>
+                
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-value">87.7%</div>
+                        <div class="kpi-label">Forecast Accuracy</div>
                     </div>
-                    <p>Immediate response to exceptions and urgent situations</p>
-                    <div class="workflow-steps">
-                        <div class="step">1. Anomaly Detection</div>
-                        <div class="step">2. Exception Handling</div>
-                        <div class="step">3. Alert Escalation</div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">98.2%</div>
+                        <div class="kpi-label">Service Level</div>
                     </div>
-                    <div class="workflow-meta">
-                        <span><i class="fas fa-clock"></i> ~5 min</span>
-                        <span><i class="fas fa-layer-group"></i> On-demand</span>
+                    <div class="kpi-item">
+                        <div class="kpi-value">$4.2M</div>
+                        <div class="kpi-label">Inventory Value</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">12.4x</div>
+                        <div class="kpi-label">Inventory Turns</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">+8.3%</div>
+                        <div class="kpi-label">Revenue Lift</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-value">15.2%</div>
+                        <div class="kpi-label">Cost Reduction</div>
                     </div>
                 </div>
             </div>
@@ -325,506 +519,115 @@
     </section>
 
     <!-- Key Features -->
-    <section class="project-section bg-alt">
+    <section class="content-section">
         <div class="container">
-            <h2 class="section-title">✨ Key Features</h2>
+            <h2 class="section-title centered">
+                <i class="fas fa-star"></i>
+                Key Capabilities
+            </h2>
+            
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Master Orchestrator</h3>
-                    <ul>
-                        <li>Central coordination of all planning modules</li>
-                        <li>Dependency-based execution order</li>
-                        <li>Unified data models across modules</li>
-                        <li>Single configuration management</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Orchestration</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-sitemap"></i>
                     </div>
+                    <h3>Workflow Orchestration</h3>
+                    <p>Configurable S&OP workflows with automated triggers, approvals, and exception escalation.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">📋</div>
-                    <h3>Workflow Engine</h3>
-                    <ul>
-                        <li>Topological sort for step ordering</li>
-                        <li>Parallel execution where possible</li>
-                        <li>Retry logic with backoff</li>
-                        <li>Workflow status tracking</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">DAG</span>
-                        <span class="tech-tag">Async</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
                     </div>
+                    <h3>Module Integration</h3>
+                    <p>Standardized APIs connect all modules. Data flows automatically between systems.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">⏰</div>
-                    <h3>Planning Scheduler</h3>
-                    <ul>
-                        <li>Configurable job scheduling</li>
-                        <li>Daily/weekly/monthly frequencies</li>
-                        <li>Job enable/disable controls</li>
-                        <li>Next run time calculation</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Celery</span>
-                        <span class="tech-tag">Scheduler</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-code-branch"></i>
                     </div>
+                    <h3>Scenario Planning</h3>
+                    <p>What-if analysis across the entire supply chain. Compare outcomes before committing.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Unified KPI System</h3>
-                    <ul>
-                        <li>20+ KPIs across all modules</li>
-                        <li>Target-based evaluation</li>
-                        <li>Strategic vs operational split</li>
-                        <li>Status indicators (on-track, warning, critical)</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Metrics</span>
-                        <span class="tech-tag">Dashboard</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technical Implementation -->
-    <section class="project-section">
-        <div class="container">
-            <h2 class="section-title">🔧 Technical Implementation</h2>
-            
-            <div class="implementation-section">
-                <h3>1. Supply Chain Planner (Core Orchestrator)</h3>
-                <div class="code-block">
-                    <pre><code>from dataclasses import dataclass
-from typing import Dict, List, Optional
-from datetime import datetime
-import pandas as pd
-
-@dataclass
-class PlanningResult:
-    """Unified result from planning cycle."""
-    demand: Optional['DemandResult'] = None
-    inventory: Optional['InventoryResult'] = None
-    pricing: Optional['PricingResult'] = None
-    network: Optional['NetworkResult'] = None
-    sensing: Optional['SensingResult'] = None
-    replenishment: Optional['ReplenishmentResult'] = None
-    kpis: Dict[str, float] = None
-    timestamp: datetime = None
-
-class SupplyChainPlanner:
-    """Master orchestrator for supply chain planning."""
-    
-    def __init__(self, config: 'PlanningConfig'):
-        self.config = config
-        self.integrations = self._init_integrations()
-        self.kpi_calculator = KPICalculator()
-        self.alert_manager = AlertManager()
-        
-    def run_planning_cycle(
-        self,
-        planning_horizon: str = 'monthly',
-        include_modules: List[str] = None
-    ) -> PlanningResult:
-        """
-        Execute a complete planning cycle.
-        
-        Args:
-            planning_horizon: 'monthly', 'weekly', 'daily', 'realtime'
-            include_modules: List of modules to include
-        """
-        result = PlanningResult(timestamp=datetime.now())
-        
-        modules = include_modules or [
-            'demand', 'inventory', 'pricing', 
-            'network', 'sensing', 'replenishment'
-        ]
-        
-        # Execute in dependency order
-        if 'demand' in modules:
-            result.demand = self.integrations['demand'].run_forecast(
-                horizon_days=self._get_horizon_days(planning_horizon)
-            )
-        
-        if 'inventory' in modules:
-            result.inventory = self.integrations['inventory'].run_optimization(
-                demand_forecast=result.demand
-            )
-        
-        if 'pricing' in modules:
-            result.pricing = self.integrations['pricing'].run_optimization(
-                demand_data=result.demand
-            )
-        
-        if 'network' in modules:
-            result.network = self.integrations['network'].run_optimization()
-        
-        if 'sensing' in modules:
-            result.sensing = self.integrations['sensing'].run_sensing()
-        
-        if 'replenishment' in modules:
-            result.replenishment = self.integrations['replenishment'].run_replenishment(
-                inventory_result=result.inventory,
-                demand_result=result.demand
-            )
-        
-        # Calculate unified KPIs
-        result.kpis = self.kpi_calculator.calculate_all(result)
-        
-        # Generate alerts for exceptions
-        self._generate_alerts(result)
-        
-        return result
-    
-    def generate_sop_plan(
-        self,
-        horizon_months: int = 3,
-        scenarios: List[str] = None
-    ) -> 'SOPPlan':
-        """Generate S&OP plan with scenario analysis."""
-        
-        scenarios = scenarios or ['base', 'optimistic', 'pessimistic']
-        
-        scenario_results = {}
-        for scenario in scenarios:
-            scenario_results[scenario] = self._run_scenario(
-                scenario, horizon_months
-            )
-        
-        # Identify gaps and recommendations
-        gaps = self._identify_gaps(scenario_results)
-        recommendations = self._generate_recommendations(gaps)
-        
-        return SOPPlan(
-            planning_date=datetime.now(),
-            horizon_months=horizon_months,
-            scenarios=scenario_results,
-            gaps=gaps,
-            recommendations=recommendations
-        )
-    
-    def monitor_exceptions(self) -> List[Dict]:
-        """Monitor for exceptions across all modules."""
-        
-        exceptions = []
-        
-        # Check sensing anomalies
-        if self.integrations['sensing'].last_result:
-            anomalies = self.integrations['sensing'].get_anomalies()
-            for anomaly in anomalies:
-                exceptions.append({
-                    'type': 'demand_anomaly',
-                    'severity': anomaly['severity'],
-                    'item_id': anomaly['item_id'],
-                    'source': 'sensing'
-                })
-        
-        # Check inventory alerts
-        if self.integrations['inventory'].last_result:
-            inventory_alerts = self.integrations['inventory'].get_alerts()
-            exceptions.extend(inventory_alerts)
-        
-        # Check replenishment issues
-        if self.integrations['replenishment'].last_result:
-            replen_issues = self.integrations['replenishment'].get_issues()
-            exceptions.extend(replen_issues)
-        
-        return sorted(exceptions, key=lambda x: x.get('severity', 'LOW'))</code></pre>
-                </div>
-            </div>
-            
-            <div class="implementation-section">
-                <h3>2. Workflow Engine</h3>
-                <div class="code-block">
-                    <pre><code>from enum import Enum
-from typing import Callable, Dict, List
-from collections import defaultdict
-
-class WorkflowStatus(Enum):
-    PENDING = "pending"
-    RUNNING = "running"
-    COMPLETED = "completed"
-    FAILED = "failed"
-
-@dataclass
-class WorkflowStep:
-    name: str
-    step_type: str
-    dependencies: List[str]
-    handler: Callable = None
-
-class PlanningWorkflow:
-    """Workflow definition and execution engine."""
-    
-    def __init__(self, workflow_type: str):
-        self.workflow_type = workflow_type
-        self.steps: Dict[str, WorkflowStep] = {}
-        self.execution_order: List[str] = []
-        self._init_default_workflow(workflow_type)
-    
-    def _init_default_workflow(self, workflow_type: str):
-        """Initialize default workflow based on type."""
-        
-        workflows = {
-            'monthly_sop': [
-                ('demand_forecast', 'demand', []),
-                ('inventory_optimization', 'inventory', ['demand_forecast']),
-                ('network_optimization', 'network', ['demand_forecast']),
-                ('pricing_strategy', 'pricing', ['demand_forecast']),
-                ('replenishment_plan', 'replenishment', ['inventory_optimization']),
-                ('kpi_calculation', 'kpi', ['demand_forecast', 'inventory_optimization']),
-            ],
-            'weekly': [
-                ('demand_forecast', 'demand', []),
-                ('inventory_adjustment', 'inventory', ['demand_forecast']),
-                ('pricing_update', 'pricing', ['demand_forecast']),
-                ('replenishment_orders', 'replenishment', ['inventory_adjustment']),
-            ],
-            'daily': [
-                ('sensing_update', 'sensing', []),
-                ('exception_detection', 'detection', ['sensing_update']),
-                ('replenishment_execution', 'replenishment', ['exception_detection']),
-                ('alert_generation', 'alerts', ['exception_detection']),
-            ],
-            'realtime': [
-                ('anomaly_detection', 'sensing', []),
-                ('exception_handling', 'exception', ['anomaly_detection']),
-                ('alert_escalation', 'alerts', ['exception_handling']),
-            ],
-        }
-        
-        for name, step_type, deps in workflows.get(workflow_type, []):
-            self.add_step(name, step_type, deps)
-        
-        self.execution_order = self._topological_sort()
-    
-    def _topological_sort(self) -> List[str]:
-        """Sort steps by dependencies using topological sort."""
-        
-        in_degree = defaultdict(int)
-        for step in self.steps.values():
-            for dep in step.dependencies:
-                in_degree[step.name] += 1
-        
-        queue = [name for name in self.steps if in_degree[name] == 0]
-        order = []
-        
-        while queue:
-            current = queue.pop(0)
-            order.append(current)
-            
-            for step in self.steps.values():
-                if current in step.dependencies:
-                    in_degree[step.name] -= 1
-                    if in_degree[step.name] == 0:
-                        queue.append(step.name)
-        
-        return order
-    
-    def execute(self, context: Dict, config: 'PlanningConfig') -> 'WorkflowResult':
-        """Execute workflow in dependency order."""
-        
-        result = WorkflowResult(
-            workflow_type=self.workflow_type,
-            start_time=datetime.now()
-        )
-        
-        for step_name in self.execution_order:
-            step = self.steps[step_name]
-            try:
-                step_result = self._execute_step(step, context, config)
-                context[step_name] = step_result
-                result.step_results[step_name] = step_result
-            except Exception as e:
-                result.status = WorkflowStatus.FAILED
-                result.error = str(e)
-                break
-        else:
-            result.status = WorkflowStatus.COMPLETED
-        
-        result.end_time = datetime.now()
-        return result</code></pre>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- KPI Dashboard -->
-    <section class="project-section bg-alt">
-        <div class="container">
-            <h2 class="section-title">📊 Unified KPI Framework</h2>
-            
-            <div class="kpi-framework">
-                <div class="kpi-category">
-                    <h3>📈 Strategic KPIs</h3>
-                    <div class="kpi-list">
-                        <div class="kpi-item">
-                            <span class="kpi-name">Perfect Order Rate</span>
-                            <span class="kpi-target">Target: 95%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Inventory Turns</span>
-                            <span class="kpi-target">Target: 12x</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Gross Margin</span>
-                            <span class="kpi-target">Target: 30%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Total Cost to Serve</span>
-                            <span class="kpi-target">Target: 8%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Forecast Accuracy</span>
-                            <span class="kpi-target">Target: 85%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Cash-to-Cash Cycle</span>
-                            <span class="kpi-target">Target: 30 days</span>
-                        </div>
-                    </div>
+                    <h3>Alert Engine</h3>
+                    <p>Proactive notifications for KPI breaches, demand shifts, and supply disruptions.</p>
                 </div>
                 
-                <div class="kpi-category">
-                    <h3>⚙️ Operational KPIs</h3>
-                    <div class="kpi-list">
-                        <div class="kpi-item">
-                            <span class="kpi-name">Fill Rate</span>
-                            <span class="kpi-target">Target: 98%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Stockout Rate</span>
-                            <span class="kpi-target">Target: <2%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Order Accuracy</span>
-                            <span class="kpi-target">Target: 99.5%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">On-Time Delivery</span>
-                            <span class="kpi-target">Target: 95%</span>
-                        </div>
-                        <div class="kpi-item">
-                            <span class="kpi-name">Automation Rate</span>
-                            <span class="kpi-target">Target: 80%</span>
-                        </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
                     </div>
+                    <h3>Audit Trail</h3>
+                    <p>Complete history of decisions, overrides, and plan changes for compliance.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-export"></i>
+                    </div>
+                    <h3>Export & Reporting</h3>
+                    <p>Automated reports for stakeholders. Excel, PDF, and API access to all data.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Business Impact -->
-    <section class="project-section">
+    <!-- Key Insights -->
+    <section class="content-section alt-bg">
         <div class="container">
-            <h2 class="section-title">💼 Business Impact</h2>
+            <h2 class="section-title centered">
+                <i class="fas fa-lightbulb"></i>
+                Architecture Insights
+            </h2>
             
-            <div class="impact-grid">
-                <div class="impact-card highlight">
-                    <h3>🎯 Single Source of Truth</h3>
-                    <div class="impact-metric">Unified Platform</div>
-                    <p>All supply chain decisions coordinated through one system</p>
-                    <div class="impact-value">Zero conflicting decisions</div>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Loose Coupling</h3>
+                    <p>Modules communicate via APIs, not direct database access. Each can evolve independently.</p>
                 </div>
                 
-                <div class="impact-card">
-                    <h3>⚡ Planning Speed</h3>
-                    <div class="impact-metric">50% faster</div>
-                    <p>Automated workflows reduce manual planning effort</p>
-                    <div class="impact-value">Hours → Minutes</div>
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-database"></i></div>
+                    <h3>Single Source of Truth</h3>
+                    <p>Master data managed centrally. All modules reference the same products, locations, and hierarchies.</p>
                 </div>
                 
-                <div class="impact-card">
-                    <h3>📊 Visibility</h3>
-                    <div class="impact-metric">20+ KPIs</div>
-                    <p>Unified tracking across all modules</p>
-                    <div class="impact-value">Real-time insights</div>
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Time Synchronization</h3>
+                    <p>All modules align on planning calendar. Weekly buckets, monthly cycles, rolling horizons.</p>
                 </div>
                 
-                <div class="impact-card">
-                    <h3>🚨 Exception Response</h3>
-                    <div class="impact-metric">Proactive</div>
-                    <p>Automated detection and escalation</p>
-                    <div class="impact-value">Prevent vs React</div>
-                </div>
-            </div>
-            
-            <div class="success-story">
-                <h3>📈 The Complete Supply Chain Story</h3>
-                <p>
-                    This project represents the culmination of the entire portfolio—bringing together demand 
-                    forecasting, inventory optimization, dynamic pricing, network planning, real-time sensing, 
-                    and automated replenishment into one cohesive platform. The result is a true end-to-end 
-                    supply chain planning system that can be configured for any retail or manufacturing environment.
-                </p>
-                <ul class="success-metrics">
-                    <li><strong>Integration:</strong> 6 specialized projects working as one system</li>
-                    <li><strong>Automation:</strong> From monthly S&OP to real-time exception handling</li>
-                    <li><strong>Flexibility:</strong> YAML-based configuration for any scenario</li>
-                    <li><strong>Scalability:</strong> Modular design allows selective deployment</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technology Stack -->
-    <section class="project-section bg-alt">
-        <div class="container">
-            <h2 class="section-title">🛠️ Technology Stack</h2>
-            <div class="tech-categories">
-                <div class="tech-category">
-                    <h3>Orchestration</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">Python 3.11</span>
-                        <span class="tech-badge">Dataclasses</span>
-                        <span class="tech-badge">Type Hints</span>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <h3>Workflow</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">DAG Processing</span>
-                        <span class="tech-badge">Topological Sort</span>
-                        <span class="tech-badge">Celery</span>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <h3>Configuration</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">PyYAML</span>
-                        <span class="tech-badge">Pydantic</span>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <h3>Data</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">Pandas</span>
-                        <span class="tech-badge">NumPy</span>
-                        <span class="tech-badge">Redis Cache</span>
-                    </div>
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-user-check"></i></div>
+                    <h3>Human-in-the-Loop</h3>
+                    <p>Automation handles routine decisions. Exceptions and overrides require human approval.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="project-cta" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);">
+    <!-- CTA Section -->
+    <section class="cta-section">
         <div class="container">
-            <h2>Interested in Unified Supply Chain Planning?</h2>
-            <p>Let's discuss how an integrated planning platform can transform your supply chain operations</p>
-            <div class="cta-buttons">
-                <a href="../index.html#contact" class="btn btn-primary">
-                    <i class="fas fa-envelope"></i> Get in Touch
-                </a>
-                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/supply-chain-planning-system" 
-                   class="btn btn-secondary" target="_blank">
-                    <i class="fab fa-github"></i> View Code
-                </a>
+            <div class="cta-content">
+                <h2>Explore the Complete Portfolio</h2>
+                <p>This master system represents the culmination of six interconnected supply chain projects delivering $18M+ in business value.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio" target="_blank" class="btn btn-primary btn-lg">
+                        <i class="fab fa-github"></i> View Full Portfolio
+                    </a>
+                    <a href="../index.html#projects" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-th-large"></i> All Projects
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -840,279 +643,36 @@ class PlanningWorkflow:
                     <li><a href="../index.html#contact" class="footer-link">Contact</a></li>
                 </ul>
                 <div class="social-links">
-                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="mailto:godson.kurishinkal@gmail.com" class="social-link" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:godson.kurishinkal@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const navHeight = document.querySelector('.nav').offsetHeight;
-                    const targetPosition = target.offsetTop - navHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Nav scroll effect
         const nav = document.querySelector('.nav');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            nav.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.feature-card, .workflow-card, .impact-card, .stat-card, .kpi-item');
-        
+        const revealElements = document.querySelectorAll('.feature-card, .stat-card, .result-card, .insight-card, .module-card, .workflow-step, .kpi-item');
         const revealOnScroll = () => {
-            revealElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementTop < windowHeight * 0.85) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
+            revealElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
                 }
             });
         };
-
-        revealElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
         });
-
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
-        revealOnScroll();
     </script>
-    
-    <style>
-        /* Architecture Diagram */
-        .architecture-diagram {
-            max-width: 900px;
-            margin: 2rem auto;
-        }
-        
-        .arch-layer {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            border: 1px solid var(--border-color);
-        }
-        
-        .arch-layer.master {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-            color: white;
-        }
-        
-        .arch-layer.master h3 {
-            color: white;
-            margin-bottom: 0.5rem;
-        }
-        
-        .arch-layer.master p {
-            color: rgba(255,255,255,0.8);
-            margin: 0;
-        }
-        
-        .arch-connector {
-            text-align: center;
-            font-size: 1.5rem;
-            color: var(--primary);
-            padding: 0.5rem;
-        }
-        
-        .arch-components {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-        
-        .arch-component {
-            background: rgba(59, 130, 246, 0.1);
-            padding: 1rem;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .arch-icon {
-            font-size: 1.5rem;
-        }
-        
-        .integration-modules, .project-modules {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            justify-content: center;
-            margin-top: 1rem;
-        }
-        
-        .integration-module {
-            background: rgba(139, 92, 246, 0.1);
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .project-module {
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .project-module:hover {
-            background: rgba(59, 130, 246, 0.2);
-        }
-        
-        /* Workflows Grid */
-        .workflows-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .workflow-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-        }
-        
-        .workflow-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-        
-        .workflow-icon {
-            font-size: 1.5rem;
-        }
-        
-        .workflow-header h3 {
-            margin: 0;
-            flex: 1;
-        }
-        
-        .workflow-badge {
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-        
-        .workflow-card.monthly .workflow-badge { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
-        .workflow-card.weekly .workflow-badge { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
-        .workflow-card.daily .workflow-badge { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
-        .workflow-card.realtime .workflow-badge { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-        
-        .workflow-steps {
-            margin: 1rem 0;
-        }
-        
-        .workflow-steps .step {
-            padding: 0.5rem;
-            background: rgba(0,0,0,0.02);
-            border-radius: 4px;
-            margin-bottom: 0.25rem;
-            font-size: 0.85rem;
-        }
-        
-        .workflow-meta {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        
-        /* KPI Framework */
-        .kpi-framework {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .kpi-category {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-        }
-        
-        .kpi-category h3 {
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--primary);
-        }
-        
-        .kpi-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-        
-        .kpi-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem;
-            background: rgba(0,0,0,0.02);
-            border-radius: 4px;
-        }
-        
-        .kpi-name {
-            font-weight: 500;
-        }
-        
-        .kpi-target {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        
-        @media (max-width: 768px) {
-            .arch-components {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
 </body>
 </html>

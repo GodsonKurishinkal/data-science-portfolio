@@ -2,22 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Demand Forecasting & Planning System - Ensemble ML models powering S&OP processes, procurement decisions, and inventory allocation strategies for retail supply chains">
-    <title>Demand Forecasting & Planning System | Godson Kurishinkal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Demand Forecasting & Planning System - Ensemble ML models powering S&OP processes with 92.4% R² accuracy">
+    <title>Demand Forecasting System | Godson Kurishinkal</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <link rel="stylesheet" href="../css/minimal.css">
-    <link rel="stylesheet" href="../css/minimal-project.css">
+    <link rel="stylesheet" href="../css/portfolio.css">
+    <link rel="stylesheet" href="../css/project-page.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container container">
+    <nav class="nav" id="nav">
+        <div class="nav-container">
             <a href="../index.html" class="nav-brand">Godson Kurishinkal</a>
             <ul class="nav-menu">
                 <li><a href="../index.html#home" class="nav-link">Home</a></li>
@@ -31,250 +33,201 @@
     <!-- Project Hero -->
     <section class="project-hero">
         <div class="container">
-            <a href="../index.html#projects" class="back-nav">
-                <i class="fas fa-arrow-left"></i>
-                Back to Projects
-            </a>
+            <nav class="breadcrumb">
+                <a href="../index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="../index.html#projects">Projects</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Demand Forecasting</span>
+            </nav>
             
             <div class="project-hero-content">
-                <span class="project-label">
-                    <i class="fas fa-chart-line"></i>
-                    Demand Planning • S&OP Integration • Ensemble ML
-                </span>
+                <div class="project-badge-large">
+                    <span>📈</span>
+                </div>
+                
+                <span class="project-category">Core Expertise • S&OP Integration</span>
                 
                 <h1 class="project-title">Demand Forecasting & Planning System</h1>
                 
                 <p class="project-subtitle">
-                    Ensemble ML models combining 15+ algorithms to predict demand across product hierarchies—powering S&OP processes, procurement decisions, and inventory allocation strategies. Enables proactive planning instead of reactive firefighting.
+                    Ensemble ML models combining 15+ algorithms to predict demand across product hierarchies—powering S&OP processes, procurement decisions, and inventory allocation strategies.
                 </p>
-                
-                <div class="project-meta">
-                    <div class="meta-item">
-                        <span class="meta-label">Status</span>
-                        <span class="meta-value">✅ Completed</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Duration</span>
-                        <span class="meta-value">4 Months</span>
-                    </div>
-                    <div class="meta-item">
-                        <span class="meta-label">Complexity</span>
-                        <span class="meta-value">Advanced</span>
-                    </div>
-                </div>
                 
                 <div class="project-actions">
-                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/demand-forecasting-system" 
-                       target="_blank" class="btn btn-primary">
-                        <i class="fab fa-github"></i> View on GitHub
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/demand-forecasting-system" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i> View Code
                     </a>
-                    <a href="https://www.kaggle.com/competitions/m5-forecasting-accuracy" 
-                       target="_blank" class="btn btn-secondary">
-                        <i class="fab fa-kaggle"></i> M5 Competition
+                    <a href="https://www.kaggle.com/competitions/m5-forecasting-accuracy" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-kaggle"></i> M5 Dataset
                     </a>
                 </div>
-                
-                <!-- Key Stats -->
-                <div class="project-stats">
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-value">30.5K</div>
-                            <div class="stat-label">Time Series</div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-database"></i></div>
+                    <div class="stat-value">30.5K</div>
+                    <div class="stat-label">Time Series</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-bullseye"></i></div>
+                    <div class="stat-value">92.4%</div>
+                    <div class="stat-label">R² Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-cogs"></i></div>
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">Features</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="stat-value">12.3%</div>
+                    <div class="stat-label">MAPE</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-grid">
+                <div class="main-content">
+                    <h2 class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Business Problem
+                    </h2>
+                    <p class="lead-text">
+                        S&OP processes fail when forecasts are inaccurate or generated too late for planning cycles. This system addresses the core challenge: providing demand forecasts at the right granularity (product-store-day) with enough lead time to inform procurement decisions.
+                    </p>
+                    <p>
+                        The ensemble approach achieves <strong>12.3% MAPE</strong>—a critical metric for balancing inventory investment against service level targets. Processing <strong>30,490 time series</strong> across 10 stores, 3 states, and 3,049 products.
+                    </p>
+                    
+                    <h2 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Key Results
+                    </h2>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-value">92.4%</div>
+                            <div class="result-label">R² Score (LightGBM)</div>
+                            <div class="result-context">Best among all models</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">92.4%</div>
-                            <div class="stat-label">R² Score</div>
+                        <div class="result-card">
+                            <div class="result-value">58M</div>
+                            <div class="result-label">Data Points</div>
+                            <div class="result-context">Processed efficiently</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">50+</div>
-                            <div class="stat-label">Features</div>
+                        <div class="result-card">
+                            <div class="result-value">2.5min</div>
+                            <div class="result-label">Training Time</div>
+                            <div class="result-context">Production-ready speed</div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">12.3%</div>
-                            <div class="stat-label">MAPE</div>
+                        <div class="result-card">
+                            <div class="result-value">15%</div>
+                            <div class="result-label">Inventory Reduction</div>
+                            <div class="result-context">Projected savings</div>
                         </div>
                     </div>
                 </div>
+                
+                <aside class="sidebar">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                        <ul class="info-list">
+                            <li>
+                                <span class="info-label">Status</span>
+                                <span class="info-value status-complete">✓ Complete</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Duration</span>
+                                <span class="info-value">4 Months</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Complexity</span>
+                                <span class="info-value">Advanced</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Dataset</span>
+                                <span class="info-value">M5 Walmart</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-layer-group"></i> Tech Stack</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">LightGBM</span>
+                            <span class="tech-tag">XGBoost</span>
+                            <span class="tech-tag">Pandas</span>
+                            <span class="tech-tag">scikit-learn</span>
+                            <span class="tech-tag">NumPy</span>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </div>
     </section>
 
-    <!-- Key Metrics -->
-    <section class="content-section">
+    <!-- Features Section -->
+    <section class="content-section alt-bg">
         <div class="container">
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="number">30,490</div>
-                    <div class="label">Time Series</div>
-                </div>
-                <div class="metric-card">
-                    <div class="number">92.4%</div>
-                    <div class="label">R² Score (LightGBM)</div>
-                </div>
-                <div class="metric-card">
-                    <div class="number">50+</div>
-                    <div class="label">Engineered Features</div>
-                </div>
-                <div class="metric-card">
-                    <div class="number">12.3%</div>
-                    <div class="label">MAPE (Best Model)</div>
-                </div>
-                <div class="metric-card">
-                    <div class="number">58M</div>
-                    <div class="label">Data Points Processed</div>
-                </div>
-                <div class="metric-card">
-                    <div class="number">2.5min</div>
-                    <div class="label">Training Time</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Overview -->
-    <section class="content-section">
-        <div class="container">
-            <h2 class="section-title">S&OP Integration Overview</h2>
-            <p class="overview-text">
-                A production demand planning system designed to power Sales & Operations Planning (S&OP) workflows in retail environments. 
-                This forecasting engine processes <strong>30,490 time series</strong> across <strong>10 stores</strong>, <strong>3 states</strong>, and 
-                <strong>3,049 products</strong> to generate demand signals that drive procurement, inventory allocation, and distribution planning decisions.
-            </p>
+            <h2 class="section-title centered">
+                <i class="fas fa-star"></i>
+                Key Features
+            </h2>
             
-            <div class="business-problem">
-                <h3><i class="fas fa-lightbulb"></i> Business Problem & S&OP Context</h3>
-                <p>
-                    S&OP processes fail when forecasts are inaccurate or generated too late for planning cycles. This system addresses the core challenge: 
-                    providing demand forecasts at the right granularity (product-store-day) with enough lead time to inform procurement decisions, 
-                    adjust safety stocks, and plan warehouse capacity. The ensemble approach achieves <strong>12.3% MAPE</strong>—a critical metric for 
-                    balancing inventory investment against service level targets.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Key Features -->
-    <section class="content-section">
-        <div class="container">
-            <h2 class="section-title">Key Features</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="icon"><i class="fas fa-database"></i></div>
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
                     <h3>Massive Dataset Processing</h3>
                     <p>Efficiently handles 58M+ data points with hierarchical sales structure across state, store, category, and product levels.</p>
                 </div>
+                
                 <div class="feature-card">
-                    <div class="icon"><i class="fas fa-cogs"></i></div>
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
                     <h3>Advanced Feature Engineering</h3>
                     <p>50+ features including lag variables, rolling statistics, price dynamics, calendar events, and hierarchical aggregations.</p>
                 </div>
+                
                 <div class="feature-card">
-                    <div class="icon"><i class="fas fa-brain"></i></div>
-                    <h3>State-of-the-Art Models</h3>
-                    <p>Implements LightGBM, XGBoost, and Random Forest with hyperparameter tuning for optimal accuracy-speed tradeoff.</p>
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Ensemble ML Models</h3>
+                    <p>LightGBM, XGBoost, and Random Forest with hyperparameter tuning for optimal accuracy-speed tradeoff.</p>
                 </div>
+                
                 <div class="feature-card">
-                    <div class="icon"><i class="fas fa-chart-bar"></i></div>
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
                     <h3>Comprehensive Evaluation</h3>
-                    <p>Multiple metrics (MAE, RMSE, MAPE, WRMSSE, R²) with feature importance analysis and prediction quality visualization.</p>
+                    <p>Multiple metrics (MAE, RMSE, MAPE, WRMSSE, R²) with feature importance analysis and visualization.</p>
                 </div>
+                
                 <div class="feature-card">
-                    <div class="icon"><i class="fas fa-sync-alt"></i></div>
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
                     <h3>Production Pipeline</h3>
                     <p>End-to-end automated pipeline from raw data to predictions with data validation and error handling.</p>
                 </div>
+                
                 <div class="feature-card">
-                    <div class="icon"><i class="fas fa-rocket"></i></div>
+                    <div class="feature-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
                     <h3>Fast Deployment</h3>
                     <p>Quick start demo completes full pipeline in under 3 minutes with modular, well-documented code.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technical Stack -->
-    <section class="content-section">
-        <div class="container">
-            <h2 class="section-title">Technical Stack</h2>
-            <div class="tech-stack">
-                <div class="tech-category">
-                    <h3><i class="fas fa-code"></i> Core Technologies</h3>
-                    <ul class="tech-list">
-                        <li>Python 3.9+</li>
-                        <li>Pandas & NumPy</li>
-                        <li>Scikit-learn</li>
-                        <li>Jupyter Notebooks</li>
-                    </ul>
-                </div>
-                <div class="tech-category">
-                    <h3><i class="fas fa-robot"></i> ML Frameworks</h3>
-                    <ul class="tech-list">
-                        <li>LightGBM ⭐</li>
-                        <li>XGBoost</li>
-                        <li>Random Forest</li>
-                        <li>Baseline Models</li>
-                    </ul>
-                </div>
-                <div class="tech-category">
-                    <h3><i class="fas fa-chart-pie"></i> Visualization</h3>
-                    <ul class="tech-list">
-                        <li>Matplotlib</li>
-                        <li>Seaborn</li>
-                        <li>Plotly (planned)</li>
-                    </ul>
-                </div>
-                <div class="tech-category">
-                    <h3><i class="fas fa-tools"></i> Development</h3>
-                    <ul class="tech-list">
-                        <li>Git & GitHub</li>
-                        <li>pytest</li>
-                        <li>Black formatter</li>
-                        <li>Flake8 linting</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Visual Results -->
-    <section class="content-section">
-        <div class="container">
-            <h2 class="section-title">Visual Results</h2>
-            <p class="intro-text">
-                Comprehensive visualizations demonstrating model performance, feature importance, and prediction quality across the M5 dataset.
-            </p>
-            
-            <div class="visual-grid">
-                <div class="visual-card">
-                    <h3><i class="fas fa-chart-bar"></i> Model Comparison</h3>
-                    <img src="../images/projects/model_comparison.png" alt="Model Performance Comparison">
-                    <p class="visual-caption">
-                        LightGBM outperforms all baseline and ML models with lowest RMSE and highest R² score, making it the optimal choice for production deployment.
-                    </p>
-                </div>
-
-                <div class="visual-card">
-                    <h3><i class="fas fa-star"></i> Feature Importance</h3>
-                    <img src="../images/projects/feature_importance.png" alt="Feature Importance Analysis">
-                    <p class="visual-caption">
-                        Lag features (especially 28-day and 7-day) dominate importance, confirming strong temporal patterns in retail demand.
-                    </p>
-                </div>
-
-                <div class="visual-card">
-                    <h3><i class="fas fa-chart-line"></i> Prediction Quality</h3>
-                    <img src="../images/projects/predictions_analysis.png" alt="Predictions vs Actuals">
-                    <p class="visual-caption">
-                        Strong correlation between predictions and actuals with residuals centered near zero, indicating unbiased, high-quality forecasts.
-                    </p>
-                </div>
-
-                <div class="visual-card">
-                    <h3><i class="fas fa-tachometer-alt"></i> Metrics Summary</h3>
-                    <img src="../images/projects/metrics_summary.png" alt="Performance Metrics Dashboard">
-                    <p class="visual-caption">
-                        Comprehensive metrics dashboard showing MAE, RMSE, MAPE, and R² scores across training and validation sets.
-                    </p>
                 </div>
             </div>
         </div>
@@ -283,193 +236,112 @@
     <!-- Model Performance -->
     <section class="content-section">
         <div class="container">
-            <h2 class="section-title">Model Performance Comparison</h2>
-            <p class="intro-text">
-                Comprehensive evaluation of baseline and machine learning models. LightGBM achieves the best accuracy with fastest training time.
-            </p>
+            <h2 class="section-title centered">
+                <i class="fas fa-chart-line"></i>
+                Model Performance
+            </h2>
             
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Model</th>
-                        <th>MAE</th>
-                        <th>RMSE</th>
-                        <th>MAPE (%)</th>
-                        <th>R² Score</th>
-                        <th>Training Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Naive Baseline</td>
-                        <td>3.65</td>
-                        <td>4.82</td>
-                        <td>28.5</td>
-                        <td>0.712</td>
-                        <td>&lt; 1 sec</td>
-                    </tr>
-                    <tr>
-                        <td>Moving Average (7-day)</td>
-                        <td>3.28</td>
-                        <td>4.35</td>
-                        <td>25.2</td>
-                        <td>0.758</td>
-                        <td>&lt; 1 sec</td>
-                    </tr>
-                    <tr>
-                        <td>Seasonal Naive</td>
-                        <td>3.01</td>
-                        <td>3.98</td>
-                        <td>24.8</td>
-                        <td>0.782</td>
-                        <td>&lt; 1 sec</td>
-                    </tr>
-                    <tr>
-                        <td>Random Forest</td>
-                        <td>1.82</td>
-                        <td>2.45</td>
-                        <td>14.5</td>
-                        <td>0.901</td>
-                        <td>~8 min</td>
-                    </tr>
-                    <tr>
-                        <td>XGBoost</td>
-                        <td>1.65</td>
-                        <td>2.18</td>
-                        <td>13.1</td>
-                        <td>0.918</td>
-                        <td>~4 min</td>
-                    </tr>
-                    <tr class="highlight-row">
-                        <td><strong>LightGBM ⭐</strong></td>
-                        <td><strong>1.58</strong></td>
-                        <td><strong>2.05</strong></td>
-                        <td><strong>12.3</strong></td>
-                        <td><strong>0.924</strong></td>
-                        <td><strong>~2.5 min</strong></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="winner-badge">
-                <h3><i class="fas fa-trophy"></i> Winner: LightGBM</h3>
-                <p>
-                    LightGBM outperforms all models with <strong>92.4% R² score</strong> and <strong>12.3% MAPE</strong>, 
-                    while maintaining the fastest training time among ML models at just 2.5 minutes. This makes it ideal for 
-                    production deployment with regular retraining.
-                </p>
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>MAE</th>
+                            <th>RMSE</th>
+                            <th>MAPE (%)</th>
+                            <th>R² Score</th>
+                            <th>Training Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Naive Baseline</td>
+                            <td>3.65</td>
+                            <td>4.82</td>
+                            <td>28.5</td>
+                            <td>0.712</td>
+                            <td>&lt; 1 sec</td>
+                        </tr>
+                        <tr>
+                            <td>Moving Average (7-day)</td>
+                            <td>3.28</td>
+                            <td>4.35</td>
+                            <td>25.2</td>
+                            <td>0.758</td>
+                            <td>&lt; 1 sec</td>
+                        </tr>
+                        <tr>
+                            <td>Random Forest</td>
+                            <td>1.82</td>
+                            <td>2.45</td>
+                            <td>14.5</td>
+                            <td>0.901</td>
+                            <td>~8 min</td>
+                        </tr>
+                        <tr>
+                            <td>XGBoost</td>
+                            <td>1.65</td>
+                            <td>2.18</td>
+                            <td>13.1</td>
+                            <td>0.918</td>
+                            <td>~4 min</td>
+                        </tr>
+                        <tr class="highlight-row">
+                            <td><strong>LightGBM ⭐</strong></td>
+                            <td><strong>1.58</strong></td>
+                            <td><strong>2.05</strong></td>
+                            <td><strong>12.3</strong></td>
+                            <td><strong>0.924</strong></td>
+                            <td><strong>~2.5 min</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="winner-card">
+                <div class="winner-icon"><i class="fas fa-trophy"></i></div>
+                <div class="winner-content">
+                    <h3>Winner: LightGBM</h3>
+                    <p>Best accuracy (92.4% R²) with fastest training time among ML models. Ideal for production deployment with regular retraining.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Code Examples -->
-    <section class="content-section">
+    <!-- Code Example -->
+    <section class="content-section alt-bg">
         <div class="container">
-            <h2 class="section-title">Code Examples</h2>
+            <h2 class="section-title centered">
+                <i class="fas fa-code"></i>
+                Quick Start
+            </h2>
             
-            <h3 class="code-section-title">1. Quick Start Demo</h3>
             <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">demo.py</span>
+                    <span class="code-lang">Python</span>
+                </div>
                 <pre><code><span class="comment"># Run the complete ML pipeline in under 3 minutes</span>
-<span class="keyword">import</span> sys
-sys.path.append(<span class="string">'.'</span>)
-
 <span class="keyword">from</span> src.data.preprocessing <span class="keyword">import</span> preprocess_m5_data
 <span class="keyword">from</span> src.features.build_features <span class="keyword">import</span> build_m5_features
 <span class="keyword">from</span> src.models.train <span class="keyword">import</span> train_m5_model
 
 <span class="comment"># Load and preprocess data</span>
-df = <span class="function">preprocess_m5_data</span>(data_path=<span class="string">'data/raw'</span>)
+df = preprocess_m5_data(data_path=<span class="string">'data/raw'</span>)
 
 <span class="comment"># Engineer 50+ features</span>
-df_features = <span class="function">build_m5_features</span>(df, target_col=<span class="string">'sales'</span>)
+df_features = build_m5_features(df, target_col=<span class="string">'sales'</span>)
 
 <span class="comment"># Train LightGBM model</span>
-model, metrics, importance = <span class="function">train_m5_model</span>(
+model, metrics, importance = train_m5_model(
     df_features,
     model_type=<span class="string">'lightgbm'</span>,
-    test_size=0.2
+    test_size=<span class="number">0.2</span>
 )
 
 <span class="comment"># Display results</span>
-<span class="function">print</span>(<span class="string">f"RMSE: {metrics['rmse']:.4f}"</span>)
-<span class="function">print</span>(<span class="string">f"R²: {metrics['r2']:.4f}"</span>)</code></pre>
-            </div>
-
-            <h3 class="code-section-title">2. Feature Engineering Pipeline</h3>
-            <div class="code-block">
-                <pre><code><span class="keyword">def</span> <span class="function">build_m5_features</span>(df, target_col=<span class="string">'sales'</span>):
-    <span class="string">"""Build comprehensive feature set for M5 forecasting."""</span>
-    
-    <span class="comment"># Time-based features</span>
-    df[<span class="string">'dayofweek'</span>] = df[<span class="string">'date'</span>].dt.dayofweek
-    df[<span class="string">'month'</span>] = df[<span class="string">'date'</span>].dt.month
-    df[<span class="string">'quarter'</span>] = df[<span class="string">'date'</span>].dt.quarter
-    df[<span class="string">'is_weekend'</span>] = (df[<span class="string">'dayofweek'</span>] >= 5).<span class="function">astype</span>(int)
-    
-    <span class="comment"># Lag features (1, 7, 14, 28 days)</span>
-    <span class="keyword">for</span> lag <span class="keyword">in</span> [1, 7, 14, 28]:
-        df[<span class="string">f'sales_lag_{lag}'</span>] = df.<span class="function">groupby</span>([<span class="string">'id'</span>])[target_col].<span class="function">shift</span>(lag)
-    
-    <span class="comment"># Rolling statistics (7, 14, 28-day windows)</span>
-    <span class="keyword">for</span> window <span class="keyword">in</span> [7, 14, 28]:
-        df[<span class="string">f'sales_rolling_mean_{window}'</span>] = (
-            df.<span class="function">groupby</span>([<span class="string">'id'</span>])[target_col]
-            .<span class="function">transform</span>(<span class="keyword">lambda</span> x: x.<span class="function">rolling</span>(window=window).<span class="function">mean</span>())
-        )
-        df[<span class="string">f'sales_rolling_std_{window}'</span>] = (
-            df.<span class="function">groupby</span>([<span class="string">'id'</span>])[target_col]
-            .<span class="function">transform</span>(<span class="keyword">lambda</span> x: x.<span class="function">rolling</span>(window=window).<span class="function">std</span>())
-        )
-    
-    <span class="comment"># Price features</span>
-    df[<span class="string">'price_change'</span>] = df.<span class="function">groupby</span>([<span class="string">'id'</span>])[<span class="string">'sell_price'</span>].<span class="function">diff</span>()
-    df[<span class="string">'price_momentum_7'</span>] = (
-        df.<span class="function">groupby</span>([<span class="string">'id'</span>])[<span class="string">'sell_price'</span>]
-        .<span class="function">transform</span>(<span class="keyword">lambda</span> x: x.<span class="function">rolling</span>(7).<span class="function">mean</span>() - x)
-    )
-    
-    <span class="keyword">return</span> df</code></pre>
-            </div>
-
-            <h3 class="code-section-title">3. Model Training & Evaluation</h3>
-            <div class="code-block">
-                <pre><code><span class="keyword">from</span> lightgbm <span class="keyword">import</span> LGBMRegressor
-<span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> mean_absolute_error, r2_score
-
-<span class="comment"># Initialize LightGBM with optimized hyperparameters</span>
-model = <span class="function">LGBMRegressor</span>(
-    n_estimators=100,
-    max_depth=6,
-    learning_rate=0.1,
-    num_leaves=31,
-    min_child_samples=20,
-    random_state=42,
-    verbose=-1
-)
-
-<span class="comment"># Train model</span>
-model.<span class="function">fit</span>(
-    X_train, y_train,
-    eval_set=[(X_test, y_test)],
-    early_stopping_rounds=10,
-    verbose=<span class="keyword">False</span>
-)
-
-<span class="comment"># Make predictions</span>
-y_pred = model.<span class="function">predict</span>(X_test)
-
-<span class="comment"># Evaluate</span>
-mae = <span class="function">mean_absolute_error</span>(y_test, y_pred)
-r2 = <span class="function">r2_score</span>(y_test, y_pred)
-
-<span class="function">print</span>(<span class="string">f"MAE: {mae:.4f}"</span>)
-<span class="function">print</span>(<span class="string">f"R²: {r2:.4f}"</span>)
-
-<span class="comment"># Feature importance</span>
-importance_df = pd.<span class="function">DataFrame</span>({
-    <span class="string">'feature'</span>: X_train.columns,
-    <span class="string">'importance'</span>: model.feature_importances_
-}).<span class="function">sort_values</span>(<span class="string">'importance'</span>, ascending=<span class="keyword">False</span>)</code></pre>
+<span class="keyword">print</span>(<span class="string">f"R² Score: </span>{metrics[<span class="string">'r2'</span>]:<span class="string">.4f}"</span>)
+<span class="keyword">print</span>(<span class="string">f"MAPE: </span>{metrics[<span class="string">'mape'</span>]:<span class="string">.2%}"</span>)</code></pre>
             </div>
         </div>
     </section>
@@ -477,132 +349,89 @@ importance_df = pd.<span class="function">DataFrame</span>({
     <!-- Key Insights -->
     <section class="content-section">
         <div class="container">
-            <h2 class="section-title">Key Insights & Business Impact</h2>
+            <h2 class="section-title centered">
+                <i class="fas fa-lightbulb"></i>
+                Key Insights
+            </h2>
             
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-clock"></i></div>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-clock"></i></div>
                     <h3>Temporal Patterns</h3>
-                    <p>Sales lag features (especially 7 and 28 days) are the strongest predictors, indicating clear weekly and monthly seasonality.</p>
+                    <p>Sales lag features (7 and 28 days) are the strongest predictors, indicating clear weekly and monthly seasonality.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-dollar-sign"></i></div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-dollar-sign"></i></div>
                     <h3>Price Sensitivity</h3>
-                    <p>Price changes significantly impact sales, with price elasticity varying by category. FOODS show less sensitivity than HOBBIES.</p>
+                    <p>Price changes significantly impact sales, with elasticity varying by category. FOODS show less sensitivity than HOBBIES.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-calendar-alt"></i></div>
                     <h3>Event Impact</h3>
-                    <p>Special events (holidays, sporting events) drive 20-40% sales spikes, with cultural events showing regional variation.</p>
+                    <p>Special events drive 20-40% sales spikes, with cultural events showing regional variation.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-chart-line"></i></div>
-                    <h3>Category Differences</h3>
-                    <p>FOODS category shows stable patterns (CV < 0.8), while HOBBIES exhibits high variability (CV > 1.2), requiring different strategies.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
-                    <h3>Geographic Patterns</h3>
-                    <p>California stores have 40% higher volume but similar patterns to TX and WI, enabling model generalization across regions.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-piggy-bank"></i></div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-piggy-bank"></i></div>
                     <h3>Cost Savings</h3>
-                    <p>Potential 10-15% reduction in inventory costs through optimized stock levels, translating to $500K-1M annual savings per store.</p>
+                    <p>Potential 10-15% reduction in inventory costs through optimized stock levels.</p>
                 </div>
             </div>
-
-            <div class="insight-box">
-                <h3><i class="fas fa-trophy"></i> Top 10 Most Important Features</h3>
-                <ol>
-                    <li><strong>sales_lag_28</strong> - 28-day sales lag (monthly pattern) - 15.6%</li>
-                    <li><strong>sales_lag_7</strong> - 7-day sales lag (weekly pattern) - 14.2%</li>
-                    <li><strong>sales_rolling_mean_28</strong> - 28-day rolling average - 12.8%</li>
-                    <li><strong>sales_lag_1</strong> - Previous day sales - 9.5%</li>
-                    <li><strong>sales_rolling_std_28</strong> - 28-day volatility - 8.7%</li>
-                    <li><strong>price_change</strong> - Price change impact - 6.2%</li>
-                    <li><strong>dayofweek</strong> - Day of week seasonality - 5.8%</li>
-                    <li><strong>sales_lag_14</strong> - 14-day sales lag - 5.3%</li>
-                    <li><strong>month</strong> - Month of year - 4.7%</li>
-                    <li><strong>price_vs_avg</strong> - Relative price positioning - 4.1%</li>
-                </ol>
-            </div>
-        </div>
-    </section>
-
-    <!-- Project Timeline -->
-    <section class="content-section">
-        <div class="container">
-            <h2 class="section-title">Development Timeline</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Week 1: Data Acquisition & EDA</h3>
-                    <p>Downloaded M5 dataset (260 MB), performed exploratory data analysis, identified data quality issues, and established baseline understanding of sales patterns across hierarchy.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Week 2: Preprocessing & Feature Engineering</h3>
-                    <p>Melted sales data from wide to long format (58M rows), merged calendar and price data, engineered 50+ features including lags, rolling statistics, and price dynamics.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Week 3: Model Development & Training</h3>
-                    <p>Implemented baseline models, trained Random Forest, XGBoost, and LightGBM, performed hyperparameter tuning, achieved 92.4% R² score with LightGBM.</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>Week 4: Evaluation & Documentation</h3>
-                    <p>Comprehensive model evaluation across 6 metrics, feature importance analysis, created visualizations, wrote documentation, and prepared demo script.</p>
+            
+            <div class="feature-importance">
+                <h3><i class="fas fa-sort-amount-down"></i> Top Features by Importance</h3>
+                <div class="importance-list">
+                    <div class="importance-item">
+                        <span class="importance-rank">1</span>
+                        <span class="importance-name">sales_lag_28</span>
+                        <div class="importance-bar" style="width: 100%"></div>
+                        <span class="importance-value">15.6%</span>
+                    </div>
+                    <div class="importance-item">
+                        <span class="importance-rank">2</span>
+                        <span class="importance-name">sales_lag_7</span>
+                        <div class="importance-bar" style="width: 91%"></div>
+                        <span class="importance-value">14.2%</span>
+                    </div>
+                    <div class="importance-item">
+                        <span class="importance-rank">3</span>
+                        <span class="importance-name">sales_rolling_mean_28</span>
+                        <div class="importance-bar" style="width: 82%"></div>
+                        <span class="importance-value">12.8%</span>
+                    </div>
+                    <div class="importance-item">
+                        <span class="importance-rank">4</span>
+                        <span class="importance-name">sales_lag_1</span>
+                        <div class="importance-bar" style="width: 61%"></div>
+                        <span class="importance-value">9.5%</span>
+                    </div>
+                    <div class="importance-item">
+                        <span class="importance-rank">5</span>
+                        <span class="importance-name">price_change</span>
+                        <div class="importance-bar" style="width: 40%"></div>
+                        <span class="importance-value">6.2%</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Future Enhancements -->
-    <section class="content-section">
+    <!-- CTA Section -->
+    <section class="cta-section">
         <div class="container">
-            <h2 class="section-title">Future Enhancements</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-sitemap"></i></div>
-                    <h3>Hierarchical Forecasting</h3>
-                    <p>Implement bottom-up and top-down forecasting across product hierarchy with reconciliation techniques.</p>
+            <div class="cta-content">
+                <h2>Explore the Complete Project</h2>
+                <p>View source code, documentation, notebooks, and run the demo yourself.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/demand-forecasting-system" target="_blank" class="btn btn-primary btn-lg">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="../index.html#projects" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> All Projects
+                    </a>
                 </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-brain"></i></div>
-                    <h3>Deep Learning Models</h3>
-                    <p>Add LSTM, GRU, and Transformer models for capturing long-term dependencies in time series data.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-sync"></i></div>
-                    <h3>Automated Retraining</h3>
-                    <p>Build MLOps pipeline with automated model retraining, versioning, and deployment on new data.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-server"></i></div>
-                    <h3>Real-time API</h3>
-                    <p>Deploy FastAPI endpoint for real-time demand predictions with sub-second latency.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-chart-area"></i></div>
-                    <h3>Interactive Dashboard</h3>
-                    <p>Create Plotly/Dash dashboard for forecast visualization, model monitoring, and what-if analysis.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon"><i class="fas fa-bell-slash"></i></div>
-                    <h3>Probabilistic Forecasting</h3>
-                    <p>Add prediction intervals and quantile forecasting for uncertainty quantification and risk management.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="content-section">
-        <div class="container">
-            <div class="cta-section">
-                <h2>Interested in this project?</h2>
-                <p>Check out the complete source code, documentation, and notebooks on GitHub.</p>
-                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/demand-forecasting-system" class="cta-button" target="_blank">
-                    <i class="fab fa-github"></i> View Full Project
-                </a>
             </div>
         </div>
     </section>
@@ -611,44 +440,22 @@ importance_df = pd.<span class="function">DataFrame</span>({
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p class="footer-text">© 2024 Godson Kurishinkal. All rights reserved.</p>
+                <p class="footer-text">© 2025 Godson Kurishinkal. All rights reserved.</p>
                 <ul class="footer-links">
                     <li><a href="../index.html#home" class="footer-link">Home</a></li>
                     <li><a href="../index.html#projects" class="footer-link">Projects</a></li>
                     <li><a href="../index.html#contact" class="footer-link">Contact</a></li>
                 </ul>
                 <div class="social-links">
-                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="mailto:godson.kurishinkal+github@gmail.com" class="social-link" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:godson.kurishinkal@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const navHeight = document.querySelector('.nav').offsetHeight;
-                    const targetPosition = target.offsetTop - navHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
         // Nav scroll effect
         const nav = document.querySelector('.nav');
         window.addEventListener('scroll', () => {
@@ -659,31 +466,24 @@ importance_df = pd.<span class="function">DataFrame</span>({
             }
         });
 
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.feature-card, .tech-item, .metric-card, .timeline-item');
-        
+        // Scroll reveal
+        const revealElements = document.querySelectorAll('.feature-card, .stat-card, .result-card, .insight-card');
         const revealOnScroll = () => {
-            revealElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementTop < windowHeight * 0.85) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
+            revealElements.forEach((el, i) => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.85) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
                 }
             });
         };
-
-        // Initialize elements
-        revealElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
         });
-
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
-        revealOnScroll();
     </script>
 </body>
 </html>

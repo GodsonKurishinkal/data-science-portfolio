@@ -2,22 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="description" content="Distribution Network Optimization - Logistics network optimization supporting distribution planning decisions with cost-service tradeoff analysis">
-    <title>Distribution Network Optimization | Godson Kurishinkal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Supply Chain Network Optimization - Facility location and vehicle routing using MILP and OR-Tools">
+    <title>Network Optimization | Godson Kurishinkal</title>
     
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚚</text></svg>">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <link rel="stylesheet" href="../css/minimal.css">
-    <link rel="stylesheet" href="../css/minimal-project.css">
+    <link rel="stylesheet" href="../css/portfolio.css">
+    <link rel="stylesheet" href="../css/project-page.css">
 </head>
 <body>
-        <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container container">
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
             <a href="../index.html" class="nav-brand">Godson Kurishinkal</a>
             <ul class="nav-menu">
                 <li><a href="../index.html#home" class="nav-link">Home</a></li>
@@ -31,553 +33,389 @@
     <!-- Project Hero -->
     <section class="project-hero">
         <div class="container">
-            <div class="breadcrumb">
+            <nav class="breadcrumb">
                 <a href="../index.html">Home</a>
-                <span>/</span>
+                <i class="fas fa-chevron-right"></i>
                 <a href="../index.html#projects">Projects</a>
-                <span>/</span>
-                <span>Supply Chain Network</span>
-            </div>
+                <i class="fas fa-chevron-right"></i>
+                <span>Network Optimization</span>
+            </nav>
             
-            <div class="project-header">
-                <div class="project-badge-large">🚀 Distribution Planning</div>
-                <h1>🚚 Distribution Network Optimization</h1>
-                <p class="project-tagline">
-                    Logistics network optimization solving facility location and vehicle routing problems—supporting distribution planning decisions with cost-service tradeoff analysis and interactive network visualizations
+            <div class="project-hero-content">
+                <div class="project-badge-large">
+                    <span>🚚</span>
+                </div>
+                
+                <span class="project-category">Operations Research • Logistics Planning</span>
+                
+                <h1 class="project-title">Distribution Network Optimization</h1>
+                
+                <p class="project-subtitle">
+                    Logistics network optimization solving facility location and vehicle routing problems using MILP and OR-Tools. Supports distribution planning with cost-service tradeoff analysis.
                 </p>
                 
-                <div class="project-meta">
-                    <div class="meta-item">
-                        <i class="fas fa-calendar"></i>
-                        <span>Q4 2025</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-code"></i>
-                        <span>Python, OR-Tools, PuLP</span>
-                    </div>
-                    <div class="meta-item">
-                        <i class="fas fa-chart-line"></i>
-                        <span>$2M+ Annual Savings</span>
-                    </div>
-                </div>
-                
-                <div class="project-links">
-                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/supply-chain-network-optimization" 
-                       class="btn btn-primary" target="_blank">
-                        <i class="fab fa-github"></i> View on GitHub
+                <div class="project-actions">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/supply-chain-network-optimization" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i> View Code
                     </a>
-                    <a href="#demo" class="btn btn-secondary">
-                        <i class="fas fa-play"></i> See Demo
+                    <a href="#algorithms" class="btn btn-secondary">
+                        <i class="fas fa-sitemap"></i> Algorithms
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Quick Stats -->
-    <section class="quick-stats">
-        <div class="container">
-            <div class="stats-grid">
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
                 <div class="stat-card">
-                    <div class="stat-icon">💰</div>
+                    <div class="stat-icon"><i class="fas fa-percentage"></i></div>
+                    <div class="stat-value">15-20%</div>
+                    <div class="stat-label">Cost Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
                     <div class="stat-value">$2M+</div>
                     <div class="stat-label">Annual Savings</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">📉</div>
-                    <div class="stat-value">20%</div>
-                    <div class="stat-label">Cost Reduction</div>
+                    <div class="stat-icon"><i class="fas fa-warehouse"></i></div>
+                    <div class="stat-value">MILP</div>
+                    <div class="stat-label">Facility Location</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon">⚡</div>
-                    <div class="stat-value">25%</div>
-                    <div class="stat-label">Faster Delivery</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">📦</div>
-                    <div class="stat-value">30%</div>
-                    <div class="stat-label">DC Reduction</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🎯</div>
-                    <div class="stat-value">98%+</div>
-                    <div class="stat-label">Service Level</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">🚛</div>
-                    <div class="stat-value">18%</div>
-                    <div class="stat-label">Miles Reduced</div>
+                    <div class="stat-icon"><i class="fas fa-route"></i></div>
+                    <div class="stat-value">VRP</div>
+                    <div class="stat-label">Vehicle Routing</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Business Problem -->
-    <section class="project-section">
+    <!-- Overview Section -->
+    <section class="content-section">
         <div class="container">
-            <h2 class="section-title">🎯 Business Problem</h2>
-            <div class="content-box">
-                <p class="lead">
-                    Supply chain networks must balance service levels with operational costs. Poor network 
-                    design leads to excess transportation costs, slow delivery times, and inefficient 
-                    inventory positioning.
-                </p>
+            <div class="section-grid">
+                <div class="main-content">
+                    <h2 class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Business Problem
+                    </h2>
+                    <p class="lead-text">
+                        Distribution network design significantly impacts both cost and service. Where should distribution centers be located? How should delivery routes be planned? What's the optimal number of vehicles?
+                    </p>
+                    <p>
+                        This project applies <strong>operations research techniques</strong> to optimize the physical flow of goods—from facility location decisions to daily route planning.
+                    </p>
+                    
+                    <h2 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Key Results
+                    </h2>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-value">15-20%</div>
+                            <div class="result-label">Logistics Cost</div>
+                            <div class="result-context">Reduction achieved</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">25%</div>
+                            <div class="result-label">Route Efficiency</div>
+                            <div class="result-context">Distance reduction</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">99%</div>
+                            <div class="result-label">On-Time Delivery</div>
+                            <div class="result-context">With time windows</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">$2M+</div>
+                            <div class="result-label">Annual Savings</div>
+                            <div class="result-context">Projected impact</div>
+                        </div>
+                    </div>
+                </div>
                 
-                <div class="problem-grid">
-                    <div class="problem-item">
-                        <i class="fas fa-map-marked-alt"></i>
-                        <h3>Facility Location</h3>
-                        <p>Where should we locate distribution centers (DCs)?</p>
+                <aside class="sidebar">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                        <ul class="info-list">
+                            <li>
+                                <span class="info-label">Status</span>
+                                <span class="info-value status-complete">✓ Complete</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Duration</span>
+                                <span class="info-value">3 Months</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Complexity</span>
+                                <span class="info-value">Advanced</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Solver</span>
+                                <span class="info-value">OR-Tools CP-SAT</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="problem-item">
-                        <i class="fas fa-network-wired"></i>
-                        <h3>Network Design</h3>
-                        <p>How should inventory flow from warehouses to stores?</p>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-layer-group"></i> Tech Stack</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">OR-Tools</span>
+                            <span class="tech-tag">PuLP</span>
+                            <span class="tech-tag">NetworkX</span>
+                            <span class="tech-tag">Folium</span>
+                            <span class="tech-tag">GeoPy</span>
+                        </div>
                     </div>
-                    <div class="problem-item">
-                        <i class="fas fa-route"></i>
-                        <h3>Vehicle Routing</h3>
-                        <p>What are the optimal delivery routes?</p>
-                    </div>
-                    <div class="problem-item">
-                        <i class="fas fa-boxes"></i>
-                        <h3>Inventory Positioning</h3>
-                        <p>How much stock at each echelon?</p>
-                    </div>
-                    <div class="problem-item">
-                        <i class="fas fa-dollar-sign"></i>
-                        <h3>Cost Optimization</h3>
-                        <p>Minimize transportation + facility + inventory costs</p>
-                    </div>
-                </div>
+                </aside>
             </div>
         </div>
     </section>
 
-    <!-- Key Features -->
-    <section class="project-section bg-alt">
+    <!-- Algorithms Section -->
+    <section class="content-section alt-bg" id="algorithms">
         <div class="container">
-            <h2 class="section-title">✨ Key Features</h2>
+            <h2 class="section-title centered">
+                <i class="fas fa-project-diagram"></i>
+                Optimization Algorithms
+            </h2>
+            
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🏢</div>
-                    <h3>Facility Location Optimization</h3>
-                    <ul>
-                        <li>Mixed Integer Programming (MIP) models</li>
-                        <li>Capacity constraints and fixed costs</li>
-                        <li>Multi-period planning</li>
-                        <li>Sensitivity analysis for site selection</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">OR-Tools</span>
-                        <span class="tech-tag">PuLP</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-warehouse"></i>
                     </div>
+                    <h3>Facility Location (CFLP)</h3>
+                    <p>Capacitated Facility Location Problem using MILP. Determines optimal DC locations considering fixed costs, capacity, and customer demand.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">🚛</div>
-                    <h3>Vehicle Routing Problem (VRP)</h3>
-                    <ul>
-                        <li>Capacitated vehicle routing</li>
-                        <li>Time windows and delivery constraints</li>
-                        <li>Multi-vehicle optimization</li>
-                        <li>Route visualization with Folium</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">OR-Tools VRP</span>
-                        <span class="tech-tag">Folium</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
                     </div>
+                    <h3>Vehicle Routing (VRP)</h3>
+                    <p>Capacitated VRP with time windows using OR-Tools CP-SAT solver. Optimizes delivery routes for a fleet of vehicles.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Network Flow Optimization</h3>
-                    <ul>
-                        <li>Min-cost flow problems</li>
-                        <li>Multi-echelon inventory allocation</li>
-                        <li>Store-DC assignment optimization</li>
-                        <li>Network graph visualization</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">NetworkX</span>
-                        <span class="tech-tag">Plotly</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
                     </div>
+                    <h3>Traveling Salesman (TSP)</h3>
+                    <p>Classic TSP for single-vehicle route optimization. Foundation for understanding VRP complexity.</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Cost Modeling & Analysis</h3>
-                    <ul>
-                        <li>Total cost of ownership (TCO)</li>
-                        <li>Cost-service tradeoff analysis</li>
-                        <li>What-if scenario planning</li>
-                        <li>ROI calculations</li>
-                    </ul>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Pandas</span>
-                        <span class="tech-tag">NumPy</span>
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technical Implementation -->
-    <section class="project-section">
-        <div class="container">
-            <h2 class="section-title">🔧 Technical Implementation</h2>
-            
-            <div class="implementation-section">
-                <h3>1. Facility Location Problem</h3>
-                <div class="code-block">
-                    <pre><code>from ortools.linear_solver import pywraplp
-
-def optimize_dc_locations(stores, dc_candidates, demand, costs):
-    """
-    Solve p-median problem for DC location selection
-    """
-    solver = pywraplp.Solver.CreateSolver('SCIP')
-    
-    # Decision variables
-    x = {}  # x[i,j] = 1 if store i assigned to DC j
-    y = {}  # y[j] = 1 if DC j is opened
-    
-    for i in stores:
-        for j in dc_candidates:
-            x[i,j] = solver.BoolVar(f'x_{i}_{j}')
-    
-    for j in dc_candidates:
-        y[j] = solver.BoolVar(f'y_{j}')
-    
-    # Objective: Minimize total cost
-    objective = solver.Objective()
-    
-    # Fixed costs for opening DCs
-    for j in dc_candidates:
-        objective.SetCoefficient(y[j], costs['fixed'][j])
-    
-    # Transportation costs
-    for i in stores:
-        for j in dc_candidates:
-            cost = costs['transport'][i][j] * demand[i]
-            objective.SetCoefficient(x[i,j], cost)
-    
-    objective.SetMinimization()
-    
-    # Constraints
-    for i in stores:
-        # Each store assigned to exactly one DC
-        solver.Add(sum(x[i,j] for j in dc_candidates) == 1)
-    
-    for i in stores:
-        for j in dc_candidates:
-            # Can only assign to open DCs
-            solver.Add(x[i,j] <= y[j])
-    
-    # Capacity constraints
-    for j in dc_candidates:
-        total_demand = sum(demand[i] * x[i,j] for i in stores)
-        solver.Add(total_demand <= costs['capacity'][j] * y[j])
-    
-    # Solve
-    status = solver.Solve()
-    
-    if status == pywraplp.Solver.OPTIMAL:
-        return {
-            'selected_dcs': [j for j in dc_candidates if y[j].solution_value() > 0.5],
-            'assignments': {i: j for i in stores for j in dc_candidates 
-                          if x[i,j].solution_value() > 0.5},
-            'total_cost': solver.Objective().Value()
-        }
-    
-    return None</code></pre>
-                </div>
-            </div>
-            
-            <div class="implementation-section">
-                <h3>2. Vehicle Routing Optimization</h3>
-                <div class="code-block">
-                    <pre><code>from ortools.constraint_solver import routing_enums_pb2
-from ortools.constraint_solver import pywrapcp
-
-def solve_vrp(distance_matrix, demands, vehicle_capacities, depot):
-    """
-    Solve Capacitated Vehicle Routing Problem
-    """
-    # Create routing model
-    manager = pywrapcp.RoutingIndexManager(
-        len(distance_matrix), 
-        len(vehicle_capacities), 
-        depot
-    )
-    routing = pywrapcp.RoutingModel(manager)
-    
-    # Distance callback
-    def distance_callback(from_index, to_index):
-        from_node = manager.IndexToNode(from_index)
-        to_node = manager.IndexToNode(to_index)
-        return distance_matrix[from_node][to_node]
-    
-    transit_callback_index = routing.RegisterTransitCallback(distance_callback)
-    routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
-    
-    # Demand callback
-    def demand_callback(from_index):
-        from_node = manager.IndexToNode(from_index)
-        return demands[from_node]
-    
-    demand_callback_index = routing.RegisterUnaryTransitCallback(demand_callback)
-    
-    # Add capacity constraints
-    routing.AddDimensionWithVehicleCapacity(
-        demand_callback_index,
-        0,  # null capacity slack
-        vehicle_capacities,
-        True,  # start cumul to zero
-        'Capacity'
-    )
-    
-    # Search parameters
-    search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = (
-        routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
-    )
-    search_parameters.local_search_metaheuristic = (
-        routing_enums_pb2.LocalSearchMetaheuristic.GUIDED_LOCAL_SEARCH
-    )
-    search_parameters.time_limit.seconds = 30
-    
-    # Solve
-    solution = routing.SolveWithParameters(search_parameters)
-    
-    if solution:
-        return extract_routes(manager, routing, solution)
-    
-    return None</code></pre>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Business Impact -->
-    <section class="project-section bg-alt">
-        <div class="container">
-            <h2 class="section-title">💼 Business Impact</h2>
-            
-            <div class="impact-grid">
-                <div class="impact-card highlight">
-                    <h3>🏢 DC Consolidation</h3>
-                    <div class="impact-metric">12 → 8 DCs</div>
-                    <p>Reduced distribution centers by 33% while maintaining 98%+ service levels</p>
-                    <div class="impact-value">$3M annual savings</div>
+                    <h3>Multi-Echelon Inventory</h3>
+                    <p>Risk pooling across network tiers. Optimizes inventory positioning at DC vs. store level.</p>
                 </div>
                 
-                <div class="impact-card">
-                    <h3>🚛 Route Optimization</h3>
-                    <div class="impact-metric">18% reduction</div>
-                    <p>Decreased total miles traveled through optimized routing</p>
-                    <div class="impact-value">$800K fuel savings</div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-balance-scale"></i>
+                    </div>
+                    <h3>Cost-Service Tradeoff</h3>
+                    <p>Pareto frontier analysis balancing logistics cost against delivery speed and service levels.</p>
                 </div>
                 
-                <div class="impact-card">
-                    <h3>📦 Inventory Positioning</h3>
-                    <div class="impact-metric">22% reduction</div>
-                    <p>Lowered safety stock across network with optimal allocation</p>
-                    <div class="impact-value">$1.5M inventory reduction</div>
-                </div>
-                
-                <div class="impact-card">
-                    <h3>⏱️ Delivery Speed</h3>
-                    <div class="impact-metric">25% faster</div>
-                    <p>Improved average delivery time through better network design</p>
-                    <div class="impact-value">98.5% on-time delivery</div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3>Geospatial Visualization</h3>
+                    <p>Interactive Folium maps showing facility locations, customer zones, and optimized routes.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Problem Formulation -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title centered">
+                <i class="fas fa-square-root-alt"></i>
+                Problem Formulations
+            </h2>
             
-            <div class="success-story">
-                <h3>📈 Success Story: National Retail Chain</h3>
-                <p>
-                    Optimized distribution network for a national retailer with 100+ stores across 10 states. 
-                    The solution identified optimal DC locations, minimized transportation costs, and improved 
-                    service levels while reducing total logistics costs by 20%.
-                </p>
-                <ul class="success-metrics">
-                    <li><strong>Before:</strong> 12 DCs, $15M annual logistics costs, 94% service level</li>
-                    <li><strong>After:</strong> 8 DCs, $12M annual logistics costs, 98% service level</li>
-                    <li><strong>ROI:</strong> $3M annual savings with 6-month payback period</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technology Stack -->
-    <section class="project-section">
-        <div class="container">
-            <h2 class="section-title">🛠️ Technology Stack</h2>
-            <div class="tech-categories">
-                <div class="tech-category">
-                    <h3>Optimization</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">OR-Tools</span>
-                        <span class="tech-badge">PuLP</span>
-                        <span class="tech-badge">Scipy</span>
-                        <span class="tech-badge">CVXPY</span>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <h3>Network Analysis</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">NetworkX</span>
-                        <span class="tech-badge">igraph</span>
-                        <span class="tech-badge">Graph-Tool</span>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <h3>Visualization</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">Folium</span>
-                        <span class="tech-badge">Plotly</span>
-                        <span class="tech-badge">Matplotlib</span>
-                        <span class="tech-badge">GeoPandas</span>
-                    </div>
-                </div>
-                <div class="tech-category">
-                    <h3>Data Processing</h3>
-                    <div class="tech-list">
-                        <span class="tech-badge">Pandas</span>
-                        <span class="tech-badge">NumPy</span>
-                        <span class="tech-badge">Polars</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Dataset -->
-    <section class="project-section bg-alt">
-        <div class="container">
-            <h2 class="section-title">📊 Dataset & Methodology</h2>
-            <div class="dataset-info">
-                <div class="dataset-card">
-                    <h3>M5 Walmart Sales Dataset + Synthetic Network</h3>
-                    <ul>
-                        <li><strong>10 stores</strong> across 3 states (CA, TX, WI)</li>
-                        <li><strong>5 potential DC locations</strong> with capacity constraints</li>
-                        <li><strong>28,000+ products</strong> with demand patterns</li>
-                        <li><strong>Distance matrix</strong> between all locations</li>
-                        <li><strong>Cost parameters:</strong> Fixed DC costs, variable transportation costs</li>
-                    </ul>
+            <div class="formula-grid">
+                <div class="formula-card">
+                    <h3>Facility Location Objective</h3>
+                    <div class="formula">min Σᵢ fᵢyᵢ + Σᵢⱼ cᵢⱼxᵢⱼ</div>
+                    <p>Minimize fixed costs (f) + transportation costs (c) for facility decisions (y) and assignments (x)</p>
                 </div>
                 
-                <div class="methodology">
-                    <h3>Optimization Methodology</h3>
-                    <ol>
-                        <li><strong>Network Analysis:</strong> Analyze current distribution network and costs</li>
-                        <li><strong>Facility Location:</strong> Solve p-median problem for optimal DC placement</li>
-                        <li><strong>Store Assignment:</strong> Assign stores to DCs minimizing transportation costs</li>
-                        <li><strong>Route Optimization:</strong> Solve VRP for delivery route planning</li>
-                        <li><strong>Inventory Positioning:</strong> Optimize stock levels across echelons</li>
-                        <li><strong>Validation:</strong> Simulate operations and validate service levels</li>
-                    </ol>
+                <div class="formula-card">
+                    <h3>VRP Objective</h3>
+                    <div class="formula">min Σₖ Σᵢⱼ dᵢⱼxᵢⱼₖ</div>
+                    <p>Minimize total distance traveled by all vehicles k on routes (i→j)</p>
+                </div>
+                
+                <div class="formula-card">
+                    <h3>Capacity Constraint</h3>
+                    <div class="formula">Σⱼ qⱼxᵢⱼ ≤ Qᵢyᵢ ∀i</div>
+                    <p>Demand assigned (q) cannot exceed facility capacity (Q) if open</p>
+                </div>
+                
+                <div class="formula-card">
+                    <h3>Time Window Constraint</h3>
+                    <div class="formula">aⱼ ≤ tⱼ ≤ bⱼ ∀j</div>
+                    <p>Arrival time (t) must fall within customer's time window [a, b]</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Call to Action -->
-    <section class="project-cta">
+    <!-- Code Example -->
+    <section class="content-section alt-bg">
         <div class="container">
-            <h2>Interested in Network Optimization?</h2>
-            <p>Let's discuss how optimization can improve your supply chain operations</p>
-            <div class="cta-buttons">
-                <a href="../index.html#contact" class="btn btn-primary">
-                    <i class="fas fa-envelope"></i> Get in Touch
-                </a>
-                <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/supply-chain-network-optimization" 
-                   class="btn btn-secondary" target="_blank">
-                    <i class="fab fa-github"></i> View Code
-                </a>
+            <h2 class="section-title centered">
+                <i class="fas fa-code"></i>
+                Quick Start
+            </h2>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">vrp_solver.py</span>
+                    <span class="code-lang">Python</span>
+                </div>
+                <pre><code><span class="keyword">from</span> ortools.constraint_solver <span class="keyword">import</span> routing_enums_pb2
+<span class="keyword">from</span> ortools.constraint_solver <span class="keyword">import</span> pywrapcp
+
+<span class="comment"># Create routing model</span>
+manager = pywrapcp.RoutingIndexManager(
+    len(distance_matrix),
+    num_vehicles,
+    depot_index
+)
+routing = pywrapcp.RoutingModel(manager)
+
+<span class="comment"># Distance callback</span>
+<span class="keyword">def</span> <span class="function">distance_callback</span>(from_idx, to_idx):
+    from_node = manager.IndexToNode(from_idx)
+    to_node = manager.IndexToNode(to_idx)
+    <span class="keyword">return</span> distance_matrix[from_node][to_node]
+
+transit_callback_index = routing.RegisterTransitCallback(distance_callback)
+routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
+
+<span class="comment"># Add capacity constraint</span>
+routing.AddDimensionWithVehicleCapacity(
+    demand_callback_index,
+    <span class="number">0</span>,  <span class="comment"># null capacity slack</span>
+    vehicle_capacities,
+    <span class="keyword">True</span>,
+    <span class="string">'Capacity'</span>
+)
+
+<span class="comment"># Solve</span>
+search_params = pywrapcp.DefaultRoutingSearchParameters()
+search_params.first_solution_strategy = (
+    routing_enums_pb2.FirstSolutionStrategy.PATH_CHEAPEST_ARC
+)
+solution = routing.SolveWithParameters(search_params)</code></pre>
             </div>
         </div>
     </section>
 
-        <!-- Footer -->
+    <!-- Key Insights -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title centered">
+                <i class="fas fa-lightbulb"></i>
+                Key Insights
+            </h2>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-warehouse"></i></div>
+                    <h3>Consolidation Benefits</h3>
+                    <p>Fewer, larger DCs reduce fixed costs but increase transport. Optimal is typically 3-5 regional hubs for national coverage.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Time Windows</h3>
+                    <p>Adding delivery windows increases route distance by 10-15% but enables better customer service and dock scheduling.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-truck"></i></div>
+                    <h3>Fleet Sizing</h3>
+                    <p>Optimal fleet balances vehicle costs against utilization. 80-85% utilization is typically ideal.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-map"></i></div>
+                    <h3>Geographic Clustering</h3>
+                    <p>Pre-clustering customers by zone before VRP improves solution quality and computation time by 30-40%.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Explore the Complete Project</h2>
+                <p>View source code, interactive maps, documentation, and run the optimization yourself.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/supply-chain-network-optimization" target="_blank" class="btn btn-primary btn-lg">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="../index.html#projects" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> All Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <p class="footer-text">© 2024 Godson Kurishinkal. All rights reserved.</p>
+                <p class="footer-text">© 2025 Godson Kurishinkal. All rights reserved.</p>
                 <ul class="footer-links">
                     <li><a href="../index.html#home" class="footer-link">Home</a></li>
                     <li><a href="../index.html#projects" class="footer-link">Projects</a></li>
                     <li><a href="../index.html#contact" class="footer-link">Contact</a></li>
                 </ul>
                 <div class="social-links">
-                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link" aria-label="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link" aria-label="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="mailto:godson.kurishinkal+github@gmail.com" class="social-link" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:godson.kurishinkal@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const navHeight = document.querySelector('.nav').offsetHeight;
-                    const targetPosition = target.offsetTop - navHeight;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Nav scroll effect
         const nav = document.querySelector('.nav');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
+            nav.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Scroll reveal animation
-        const revealElements = document.querySelectorAll('.feature-card, .tech-item, .metric-card, .timeline-item');
-        
+        const revealElements = document.querySelectorAll('.feature-card, .stat-card, .result-card, .insight-card, .formula-card');
         const revealOnScroll = () => {
-            revealElements.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementTop < windowHeight * 0.85) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
+            revealElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
                 }
             });
         };
-
-        // Initialize elements
-        revealElements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        revealElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
         });
-
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
-        revealOnScroll();
     </script>
 </body>
 </html>
