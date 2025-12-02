@@ -165,9 +165,13 @@ class PriceOptimizer:
         if constraints is None:
             constraints = {}
 
-        # Calculate price bounds
-        min_price = constraints.get('min_price', current_price * 0.5)
-        max_price = constraints.get('max_price', current_price * 2.0)
+        # Calculate price bounds (handle None values gracefully)
+        min_price = constraints.get('min_price')
+        if min_price is None:
+            min_price = current_price * 0.5
+        max_price = constraints.get('max_price')
+        if max_price is None:
+            max_price = current_price * 2.0
 
         # Apply margin constraint
         if 'min_margin_pct' in constraints and cost_per_unit is not None:
