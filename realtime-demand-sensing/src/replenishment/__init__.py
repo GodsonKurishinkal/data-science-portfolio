@@ -1,11 +1,25 @@
 """Automated replenishment modules."""
 
-from .trigger_engine import TriggerEngine
-from .order_generator import OrderGenerator
-from .priority_ranker import PriorityRanker
+from .engine import (
+    ReplenishmentEngine,
+    TriggerEvaluator,
+    OrderGenerator,
+    ApprovalWorkflow,
+    InventoryPosition,
+    ReplenishmentOrder,
+    TriggerType,
+    OrderPriority,
+    OrderStatus
+)
 
 __all__ = [
-    'TriggerEngine',
+    'ReplenishmentEngine',
+    'TriggerEvaluator',
     'OrderGenerator',
-    'PriorityRanker'
+    'ApprovalWorkflow',
+    'InventoryPosition',
+    'ReplenishmentOrder',
+    'TriggerType',
+    'OrderPriority',
+    'OrderStatus'
 ]
