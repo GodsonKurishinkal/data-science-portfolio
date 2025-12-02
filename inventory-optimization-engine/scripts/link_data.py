@@ -9,25 +9,25 @@ def main():
     """Create symlink to M5 data."""
     project_root = Path(__file__).parent.parent
     data_dir = project_root / 'data'
-    
+
     # Source data from project-001
     source_data = project_root.parent / 'project-001-demand-forecasting-system' / 'data' / 'raw'
-    
+
     # Target symlink
     target_link = data_dir / 'raw'
-    
+
     if target_link.exists():
         if target_link.is_symlink():
             print(f"✅ Symlink already exists: {target_link} -> {os.readlink(target_link)}")
         else:
             print(f"⚠️  {target_link} exists but is not a symlink")
         return
-    
+
     if not source_data.exists():
         print(f"❌ Source data not found: {source_data}")
         print("   Please ensure project-001 data is available")
         return
-    
+
     # Create symlink
     try:
         target_link.symlink_to(source_data, target_is_directory=True)

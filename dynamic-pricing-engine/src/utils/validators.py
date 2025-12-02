@@ -10,13 +10,13 @@ from typing import Union
 def validate_price(price: Union[float, pd.Series]) -> bool:
     """
     Validate price value(s).
-    
+
     Args:
         price: Price value or series to validate
-        
+
     Returns:
         True if valid
-        
+
     Raises:
         ValueError: If price is invalid
     """
@@ -32,20 +32,20 @@ def validate_price(price: Union[float, pd.Series]) -> bool:
             raise ValueError("Some prices seem unreasonably high")
     else:
         raise TypeError(f"Price must be numeric or Series, got {type(price)}")
-    
+
     return True
 
 
 def validate_elasticity(elasticity: Union[float, pd.Series]) -> bool:
     """
     Validate price elasticity value(s).
-    
+
     Args:
         elasticity: Elasticity value or series to validate
-        
+
     Returns:
         True if valid
-        
+
     Raises:
         ValueError: If elasticity is invalid
     """
@@ -61,7 +61,7 @@ def validate_elasticity(elasticity: Union[float, pd.Series]) -> bool:
             raise ValueError("Some elasticities seem unreasonably high")
     else:
         raise TypeError(f"Elasticity must be numeric or Series, got {type(elasticity)}")
-    
+
     return True
 
 
@@ -72,33 +72,33 @@ def validate_dataframe(
 ) -> bool:
     """
     Validate DataFrame structure and content.
-    
+
     Args:
         df: DataFrame to validate
         required_columns: List of required column names
         min_rows: Minimum number of rows required
-        
+
     Returns:
         True if valid
-        
+
     Raises:
         ValueError: If DataFrame is invalid
     """
     if not isinstance(df, pd.DataFrame):
         raise TypeError(f"Expected DataFrame, got {type(df)}")
-    
+
     if len(df) < min_rows:
         raise ValueError(f"DataFrame must have at least {min_rows} rows, got {len(df)}")
-    
+
     if required_columns:
         missing = set(required_columns) - set(df.columns)
         if missing:
             raise ValueError(f"Missing required columns: {missing}")
-    
+
     # Check for excessive missing values
     null_pct = df.isnull().sum() / len(df)
     high_null = null_pct[null_pct > 0.5]
     if len(high_null) > 0:
         raise ValueError(f"Columns with >50% missing values: {list(high_null.index)}")
-    
+
     return True

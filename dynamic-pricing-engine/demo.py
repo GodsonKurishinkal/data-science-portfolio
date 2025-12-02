@@ -37,7 +37,7 @@ def main():
     print("  6. 🎯 Competitive positioning")
     print()
     print("=" * 80)
-    
+
     # Load configuration
     try:
         config = load_config()
@@ -48,12 +48,12 @@ def main():
     except Exception as e:
         print(f"❌ Error loading configuration: {e}")
         return 1
-    
+
     print()
     print("To run the full demo, complete all implementation phases.")
     print("See IMPLEMENTATION_PLAN.md for details.")
     print()
-    
+
     return 0
 
 

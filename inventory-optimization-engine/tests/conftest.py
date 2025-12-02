@@ -10,11 +10,11 @@ from pathlib import Path
 def sample_sales_data():
     """Generate sample sales data for testing."""
     np.random.seed(42)
-    
+
     dates = pd.date_range('2015-01-01', '2015-12-31', freq='D')
     stores = ['CA_1', 'TX_1']
     items = ['ITEM_001', 'ITEM_002', 'ITEM_003']
-    
+
     data = []
     for store in stores:
         for item in items:
@@ -26,7 +26,7 @@ def sample_sales_data():
                     'sales': max(0, np.random.poisson(10)),
                     'sell_price': np.random.uniform(10, 50)
                 })
-    
+
     df = pd.DataFrame(data)
     df['revenue'] = df['sales'] * df['sell_price']
     return df
@@ -36,7 +36,7 @@ def sample_sales_data():
 def sample_demand_stats():
     """Generate sample demand statistics for testing."""
     np.random.seed(42)
-    
+
     data = {
         'store_id': ['CA_1'] * 10,
         'item_id': [f'ITEM_{i:03d}' for i in range(10)],
@@ -46,7 +46,7 @@ def sample_demand_stats():
         'revenue_sum': np.random.uniform(10000, 100000, 10),
         'sell_price_mean': np.random.uniform(10, 50, 10),
     }
-    
+
     df = pd.DataFrame(data)
     df['demand_cv'] = df['sales_std'] / df['sales_mean']
     return df

@@ -12,17 +12,17 @@ import yaml
 def load_config(config_path: str) -> Dict[str, Any]:
     """
     Load configuration from a YAML file.
-    
+
     Parameters
     ----------
     config_path : str
         Path to the configuration file.
-        
+
     Returns
     -------
     Dict[str, Any]
         Configuration dictionary.
-        
+
     Examples
     --------
     >>> config = load_config('config/config.yaml')
@@ -37,14 +37,14 @@ def load_config(config_path: str) -> Dict[str, Any]:
 def save_config(config: Dict[str, Any], config_path: str) -> None:
     """
     Save configuration to a YAML file.
-    
+
     Parameters
     ----------
     config : Dict[str, Any]
         Configuration dictionary.
     config_path : str
         Path where to save the configuration.
-        
+
     Examples
     --------
     >>> save_config(config, 'config/config.yaml')
@@ -56,14 +56,14 @@ def save_config(config: Dict[str, Any], config_path: str) -> None:
 def save_metrics(metrics: Dict[str, float], output_path: str) -> None:
     """
     Save model metrics to a JSON file.
-    
+
     Parameters
     ----------
     metrics : Dict[str, float]
         Dictionary of metrics to save.
     output_path : str
         Path where to save the metrics.
-        
+
     Examples
     --------
     >>> metrics = {'rmse': 45.23, 'mae': 32.15, 'r2': 0.89}
@@ -76,17 +76,17 @@ def save_metrics(metrics: Dict[str, float], output_path: str) -> None:
 def load_metrics(metrics_path: str) -> Dict[str, float]:
     """
     Load metrics from a JSON file.
-    
+
     Parameters
     ----------
     metrics_path : str
         Path to the metrics file.
-        
+
     Returns
     -------
     Dict[str, float]
         Dictionary of metrics.
-        
+
     Examples
     --------
     >>> metrics = load_metrics('results/metrics.json')
@@ -99,14 +99,14 @@ def load_metrics(metrics_path: str) -> Dict[str, float]:
 def print_metrics(metrics: Dict[str, float], title: str = "Model Metrics") -> None:
     """
     Print metrics in a formatted way.
-    
+
     Parameters
     ----------
     metrics : Dict[str, float]
         Dictionary of metrics to print.
     title : str, default="Model Metrics"
         Title for the metrics display.
-        
+
     Examples
     --------
     >>> print_metrics(metrics, "Random Forest Results")
@@ -122,12 +122,12 @@ def print_metrics(metrics: Dict[str, float], title: str = "Model Metrics") -> No
 def set_random_seed(seed: int = 42) -> None:
     """
     Set random seed for reproducibility.
-    
+
     Parameters
     ----------
     seed : int, default=42
         Random seed value.
-        
+
     Examples
     --------
     >>> set_random_seed(42)
@@ -149,7 +149,7 @@ def create_submission_file(
 ) -> None:
     """
     Create a submission file for competitions or model outputs.
-    
+
     Parameters
     ----------
     predictions : np.ndarray
@@ -160,7 +160,7 @@ def create_submission_file(
         Path where to save the submission file.
     columns : List[str], default=['id', 'prediction']
         Column names for the submission file.
-        
+
     Examples
     --------
     >>> create_submission_file(predictions, test_ids, 'submissions/submission.csv')

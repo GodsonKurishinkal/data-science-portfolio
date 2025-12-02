@@ -11,7 +11,7 @@ from typing import Any, Dict, List, Optional
 @dataclass
 class ABCThresholds:
     """ABC classification thresholds.
-    
+
     Items contributing to cumulative revenue up to threshold A are class A,
     A to B are class B, and the rest are class C.
     """
@@ -40,14 +40,14 @@ class ServiceLevelMatrix:
     CX: float = 0.95
     CY: float = 0.92
     CZ: float = 0.90
-    
+
     def get_service_level(self, abc_class: str, xyz_class: str) -> float:
         """Get service level for a classification combination.
-        
+
         Args:
             abc_class: ABC class (A, B, or C)
             xyz_class: XYZ class (X, Y, or Z)
-            
+
         Returns:
             Target service level
         """
@@ -61,7 +61,7 @@ class ClassificationConfig:
     abc_thresholds: ABCThresholds = field(default_factory=ABCThresholds)
     xyz_thresholds: XYZThresholds = field(default_factory=XYZThresholds)
     service_levels: ServiceLevelMatrix = field(default_factory=ServiceLevelMatrix)
-    
+
     # Column mappings
     item_id_column: str = "item_id"
     revenue_column: str = "revenue"
@@ -72,7 +72,7 @@ class ClassificationConfig:
 class SafetyStockConfig:
     """Configuration for safety stock calculation."""
     method: str = "standard"  # standard, dynamic, or capacity_aware
-    
+
     # Z-scores for common service levels
     z_scores: Dict[float, float] = field(default_factory=lambda: {
         0.90: 1.28,
@@ -81,11 +81,11 @@ class SafetyStockConfig:
         0.97: 1.88,
         0.99: 2.33,
     })
-    
+
     # Capacity-aware parameters
     capacity_threshold: float = 0.85  # Utilization above which to increase SS
     capacity_multiplier: float = 1.2  # Multiplier when above threshold
-    
+
     # Constraints
     min_safety_stock: Optional[int] = None
     max_safety_stock: Optional[int] = None
@@ -97,7 +97,7 @@ class PolicyConfig:
     type: str = "periodic_review"  # periodic_review (s,S), continuous_review (s,Q)
     review_period_days: int = 7
     order_strategy: str = "policy_target"  # policy_target, fill_to_capacity
-    
+
     # Constraints
     min_order_quantity: Optional[int] = None
     max_order_quantity: Optional[int] = None
@@ -108,12 +108,12 @@ class PolicyConfig:
 class AlertConfig:
     """Configuration for alert generation."""
     enabled: bool = True
-    
+
     # Alert thresholds
     stockout_risk_threshold: float = 1.0  # Days of supply below which to alert
     excess_inventory_days: int = 90  # Days of supply above which is excess
     demand_spike_threshold: float = 0.5  # % increase to trigger spike alert
-    
+
     # Alert severities
     severities: Dict[str, str] = field(default_factory=lambda: {
         "stockout_risk": "critical",
@@ -128,15 +128,15 @@ class AlertConfig:
 class BinPackingConfig:
     """Configuration for 3D bin packing optimization."""
     enabled: bool = False
-    
+
     # Orientation testing
     test_all_orientations: bool = True
-    
+
     # Scoring weights
     utilization_weight: float = 0.4
     demand_match_weight: float = 0.3
     ergonomics_weight: float = 0.3
-    
+
     # Ergonomic parameters
     max_item_weight_kg: float = 25.0
     preferred_height_range: tuple = (0.6, 1.4)  # meters from floor
@@ -148,14 +148,14 @@ class DemandAnalyticsConfig:
     # Weighted moving average
     recency_weights: List[float] = field(default_factory=lambda: [0.4, 0.3, 0.2, 0.1])
     lookback_periods: int = 4  # Number of periods for weighted average
-    
+
     # Trend detection
     trend_threshold: float = 0.1  # % change to consider a trend
     trend_periods: int = 4  # Periods to evaluate for trend
-    
+
     # Seasonality
     day_of_week_enabled: bool = True
-    
+
     # Outlier handling
     outlier_method: str = "iqr"  # iqr, zscore
     outlier_threshold: float = 1.5  # IQR multiplier or z-score threshold
@@ -170,14 +170,14 @@ class ConfigSchema:
     alerts: AlertConfig = field(default_factory=AlertConfig)
     bin_packing: BinPackingConfig = field(default_factory=BinPackingConfig)
     demand_analytics: DemandAnalyticsConfig = field(default_factory=DemandAnalyticsConfig)
-    
+
     @classmethod
     def from_dict(cls, config: Dict[str, Any]) -> "ConfigSchema":
         """Create ConfigSchema from dictionary.
-        
+
         Args:
             config: Configuration dictionary
-            
+
         Returns:
             ConfigSchema instance
         """
@@ -196,26 +196,26 @@ class ScenarioSchema:
     """Schema for scenario configuration."""
     name: str
     type: str  # external_supplier, internal_transfer, cross_dock, storage_to_picking
-    
+
     # Source configuration
     source_type: str  # supplier, warehouse, storage_zone
     source_zone: Optional[str] = None
     lead_time_days: float = 7.0
     lead_time_variability: float = 0.0
-    
+
     # Destination configuration
     destination_type: str = "warehouse"
     destination_zone: Optional[str] = None
-    
+
     # Policy overrides
     review_period_days: int = 7
     order_strategy: str = "policy_target"
-    
+
     # Constraints
     min_order_quantity: Optional[int] = None
     max_order_quantity: Optional[int] = None
     order_multiple: Optional[int] = None
-    
+
     @classmethod
     def from_dict(cls, scenario: Dict[str, Any]) -> "ScenarioSchema":
         """Create ScenarioSchema from dictionary."""

@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 class DemandResponseModel:
     """
     Predict demand changes based on price adjustments.
-    
+
     Uses price elasticity estimates to forecast how demand will respond
     to price changes, incorporating:
     - Price elasticity (from elasticity analyzer)
@@ -28,10 +28,10 @@ class DemandResponseModel:
     - Seasonality effects (day of week, month, holidays)
     - Promotional impacts
     - Competitor pricing effects (optional)
-    
+
     The core model is:
         Q_new = Q_base * (P_new / P_base) ^ elasticity * seasonality * promotion
-    
+
     where:
         Q_new = predicted demand at new price
         Q_base = baseline demand
@@ -39,7 +39,7 @@ class DemandResponseModel:
         P_base = current/baseline price
         elasticity = price elasticity of demand
     """
-    
+
     def __init__(
         self,
         elasticity_analyzer: Optional[ElasticityAnalyzer] = None,
@@ -48,7 +48,7 @@ class DemandResponseModel:
     ):
         """
         Initialize demand response model.
-        
+
         Args:
             elasticity_analyzer: Pre-configured ElasticityAnalyzer instance
             use_confidence_intervals: Whether to compute prediction intervals
@@ -58,18 +58,18 @@ class DemandResponseModel:
         self.use_confidence_intervals = use_confidence_intervals
         self.confidence_level = confidence_level
         self.z_score = stats.norm.ppf((1 + confidence_level) / 2)
-        
+
         # Cache for elasticity estimates
         self.elasticity_cache = {}
-        
+
         # Seasonality patterns (learned from data)
         self.seasonality_patterns = {}
-        
+
         # Promotional lift factors
         self.promotion_lifts = {}
-        
+
         logger.info(f"Initialized DemandResponseModel with {confidence_level*100}% confidence intervals")
-    
+
     def predict_demand_at_price(
         self,
         product_id: str,
@@ -83,7 +83,7 @@ class DemandResponseModel:
     ) -> Dict:
         """
         Predict demand at a new price point.
-        
+
         Args:
             product_id: Product identifier
             new_price: Proposed new price
@@ -93,7 +93,7 @@ class DemandResponseModel:
             date: Date for seasonality adjustment
             is_promotion: Whether this is a promotional period
             promotion_type: Type of promotion ('BOGO', 'discount', 'bundle', etc.)
-        
+
         Returns:
             Dictionary with predicted demand, change %, confidence intervals
         """
@@ -104,36 +104,36 @@ class DemandResponseModel:
             else:
                 logger.warning(f"No elasticity estimate for {product_id}, using default -1.0")
                 elasticity = -1.0
-        
+
         # Validate inputs
         if new_price <= 0 or current_price <= 0 or baseline_demand < 0:
             raise ValueError("Prices must be positive and demand must be non-negative")
-        
+
         # Calculate price ratio
         price_ratio = new_price / current_price
         price_change_pct = (price_ratio - 1) * 100
-        
+
         # Core elasticity-based demand adjustment
         # Q_new = Q_base * (P_new / P_base) ^ elasticity
         demand_multiplier = price_ratio ** elasticity
         predicted_demand = baseline_demand * demand_multiplier
-        
+
         # Apply seasonality adjustment if date provided
         seasonality_factor = 1.0
         if date is not None and product_id in self.seasonality_patterns:
             seasonality_factor = self._get_seasonality_factor(product_id, date)
             predicted_demand *= seasonality_factor
-        
+
         # Apply promotional lift if applicable
         promotion_lift = 1.0
         if is_promotion:
             promotion_lift = self._get_promotion_lift(product_id, promotion_type)
             predicted_demand *= promotion_lift
-        
+
         # Calculate demand change
         demand_change = predicted_demand - baseline_demand
         demand_change_pct = (demand_change / baseline_demand * 100) if baseline_demand > 0 else 0
-        
+
         # Calculate confidence intervals if requested
         lower_bound, upper_bound = None, None
         if self.use_confidence_intervals:
@@ -142,13 +142,13 @@ class DemandResponseModel:
             margin_of_error = self.z_score * std_error
             lower_bound = max(0, predicted_demand - margin_of_error)
             upper_bound = predicted_demand + margin_of_error
-        
+
         # Calculate revenue impact
         revenue_base = baseline_demand * current_price
         revenue_new = predicted_demand * new_price
         revenue_change = revenue_new - revenue_base
         revenue_change_pct = (revenue_change / revenue_base * 100) if revenue_base > 0 else 0
-        
+
         return {
             'product_id': product_id,
             'baseline_demand': baseline_demand,
@@ -170,7 +170,7 @@ class DemandResponseModel:
             'confidence_upper': upper_bound,
             'confidence_level': self.confidence_level if self.use_confidence_intervals else None
         }
-    
+
     def predict_demand_curve(
         self,
         product_id: str,
@@ -182,7 +182,7 @@ class DemandResponseModel:
     ) -> pd.DataFrame:
         """
         Generate a demand curve across a range of prices.
-        
+
         Args:
             product_id: Product identifier
             baseline_demand: Current/baseline demand level
@@ -190,7 +190,7 @@ class DemandResponseModel:
             price_range: (min_price, max_price) tuple. If None, uses ±30% of current
             num_points: Number of price points to evaluate
             elasticity: Price elasticity (if None, uses cached value)
-        
+
         Returns:
             DataFrame with columns: price, demand, revenue, elasticity
         """
@@ -200,10 +200,10 @@ class DemandResponseModel:
             max_price = current_price * 1.30  # +30%
         else:
             min_price, max_price = price_range
-        
+
         # Generate price points
         prices = np.linspace(min_price, max_price, num_points)
-        
+
         # Predict demand at each price point
         results = []
         for price in prices:
@@ -224,16 +224,16 @@ class DemandResponseModel:
                 'confidence_lower': prediction['confidence_lower'],
                 'confidence_upper': prediction['confidence_upper']
             })
-        
+
         df = pd.DataFrame(results)
-        
+
         # Find optimal price (maximum revenue)
         optimal_idx = df['revenue'].idxmax()
         df['is_optimal'] = False
         df.loc[optimal_idx, 'is_optimal'] = True
-        
+
         return df
-    
+
     def predict_bulk(
         self,
         predictions_df: pd.DataFrame,
@@ -245,7 +245,7 @@ class DemandResponseModel:
     ) -> pd.DataFrame:
         """
         Make bulk demand predictions for multiple products.
-        
+
         Args:
             predictions_df: DataFrame with columns for product_id, prices, baseline demand
             baseline_demand_col: Column name for baseline demand
@@ -253,16 +253,16 @@ class DemandResponseModel:
             new_price_col: Column name for new/proposed price
             product_id_col: Column name for product identifier
             elasticity_col: Column name for elasticity (optional)
-        
+
         Returns:
             DataFrame with prediction results
         """
         results = []
-        
+
         for idx, row in predictions_df.iterrows():
             try:
                 elasticity = row[elasticity_col] if elasticity_col and elasticity_col in row else None
-                
+
                 prediction = self.predict_demand_at_price(
                     product_id=row[product_id_col],
                     new_price=row[new_price_col],
@@ -271,13 +271,13 @@ class DemandResponseModel:
                     elasticity=elasticity
                 )
                 results.append(prediction)
-                
+
             except Exception as e:
                 logger.error(f"Error predicting for {row[product_id_col]}: {str(e)}")
                 continue
-        
+
         return pd.DataFrame(results)
-    
+
     def cache_elasticity(
         self,
         product_id: str,
@@ -286,7 +286,7 @@ class DemandResponseModel:
     ):
         """
         Cache elasticity estimate for a product.
-        
+
         Args:
             product_id: Product identifier
             elasticity: Elasticity value
@@ -298,7 +298,7 @@ class DemandResponseModel:
             'cached_at': datetime.now()
         }
         logger.debug(f"Cached elasticity {elasticity:.3f} for {product_id}")
-    
+
     def load_elasticity_from_analyzer(
         self,
         price_data: pd.DataFrame,
@@ -309,7 +309,7 @@ class DemandResponseModel:
     ):
         """
         Calculate and cache elasticities for all products in dataset.
-        
+
         Args:
             price_data: DataFrame with price data
             sales_data: DataFrame with sales data
@@ -319,20 +319,20 @@ class DemandResponseModel:
         """
         # Merge price and sales data
         data = pd.merge(price_data, sales_data, on=[product_id_col], how='inner')
-        
+
         # Calculate elasticity for each product
         products = data[product_id_col].unique()
         logger.info(f"Calculating elasticity for {len(products)} products")
-        
+
         for product_id in products:
             product_data = data[data[product_id_col] == product_id]
-            
+
             result = self.elasticity_analyzer.calculate_own_price_elasticity(
                 product_id=product_id,
                 price_series=product_data[price_col],
                 sales_series=product_data[sales_col]
             )
-            
+
             if result['valid']:
                 self.cache_elasticity(
                     product_id=product_id,
@@ -343,9 +343,9 @@ class DemandResponseModel:
                         'observations': result['observations']
                     }
                 )
-        
+
         logger.info(f"Cached elasticity for {len(self.elasticity_cache)} products")
-    
+
     def learn_seasonality(
         self,
         data: pd.DataFrame,
@@ -355,7 +355,7 @@ class DemandResponseModel:
     ):
         """
         Learn seasonality patterns from historical data.
-        
+
         Args:
             data: DataFrame with sales history
             product_id_col: Column name for product identifier
@@ -363,39 +363,39 @@ class DemandResponseModel:
             sales_col: Column name for sales
         """
         logger.info("Learning seasonality patterns...")
-        
+
         # Ensure date column is datetime
         data[date_col] = pd.to_datetime(data[date_col])
-        
+
         products = data[product_id_col].unique()
-        
+
         for product_id in products:
             product_data = data[data[product_id_col] == product_id].copy()
-            
+
             if len(product_data) < 90:  # Need at least 3 months
                 continue
-            
+
             # Extract temporal features
             product_data['dayofweek'] = product_data[date_col].dt.dayofweek
             product_data['month'] = product_data[date_col].dt.month
             product_data['is_weekend'] = product_data['dayofweek'].isin([5, 6]).astype(int)
-            
+
             # Calculate average sales by day of week and month
             overall_mean = product_data[sales_col].mean()
-            
+
             dow_pattern = (product_data.groupby('dayofweek')[sales_col].mean() / overall_mean).to_dict()
             month_pattern = (product_data.groupby('month')[sales_col].mean() / overall_mean).to_dict()
             weekend_lift = product_data[product_data['is_weekend'] == 1][sales_col].mean() / overall_mean
-            
+
             self.seasonality_patterns[product_id] = {
                 'day_of_week': dow_pattern,
                 'month': month_pattern,
                 'weekend_lift': weekend_lift,
                 'overall_mean': overall_mean
             }
-        
+
         logger.info(f"Learned seasonality for {len(self.seasonality_patterns)} products")
-    
+
     def set_promotion_lift(
         self,
         product_id: str,
@@ -404,7 +404,7 @@ class DemandResponseModel:
     ):
         """
         Set promotional lift factor for a product.
-        
+
         Args:
             product_id: Product identifier
             promotion_type: Type of promotion
@@ -412,40 +412,40 @@ class DemandResponseModel:
         """
         if product_id not in self.promotion_lifts:
             self.promotion_lifts[product_id] = {}
-        
+
         self.promotion_lifts[product_id][promotion_type] = lift_factor
         logger.debug(f"Set {promotion_type} lift to {lift_factor:.2f}x for {product_id}")
-    
+
     def _get_seasonality_factor(self, product_id: str, date: datetime) -> float:
         """Get seasonality adjustment factor for a given date."""
         if product_id not in self.seasonality_patterns:
             return 1.0
-        
+
         patterns = self.seasonality_patterns[product_id]
-        
+
         # Day of week effect
         dow_factor = patterns['day_of_week'].get(date.weekday(), 1.0)
-        
+
         # Month effect
         month_factor = patterns['month'].get(date.month, 1.0)
-        
+
         # Weekend effect (overrides day of week if more significant)
         if date.weekday() in [5, 6]:  # Weekend
             dow_factor = patterns.get('weekend_lift', dow_factor)
-        
+
         # Combine effects (weighted average)
         seasonality = 0.6 * dow_factor + 0.4 * month_factor
-        
+
         return seasonality
-    
+
     def _get_promotion_lift(self, product_id: str, promotion_type: Optional[str]) -> float:
         """Get promotional lift factor."""
         if not promotion_type:
             return 1.0
-        
+
         if product_id in self.promotion_lifts:
             return self.promotion_lifts[product_id].get(promotion_type, 1.0)
-        
+
         # Default promotion lifts if not learned
         default_lifts = {
             'BOGO': 1.50,  # 50% lift
@@ -453,19 +453,19 @@ class DemandResponseModel:
             'bundle': 1.25,  # 25% lift
             'clearance': 1.40  # 40% lift
         }
-        
+
         return default_lifts.get(promotion_type, 1.0)
-    
+
     def get_elasticity_summary(self) -> pd.DataFrame:
         """
         Get summary of cached elasticity estimates.
-        
+
         Returns:
             DataFrame with elasticity statistics by product
         """
         if not self.elasticity_cache:
             return pd.DataFrame()
-        
+
         summary = []
         for product_id, data in self.elasticity_cache.items():
             summary.append({
@@ -476,9 +476,9 @@ class DemandResponseModel:
                 'observations': data['metadata'].get('observations'),
                 'cached_at': data['cached_at']
             })
-        
+
         return pd.DataFrame(summary)
-    
+
     def simulate_price_scenarios(
         self,
         product_id: str,
@@ -489,23 +489,23 @@ class DemandResponseModel:
     ) -> pd.DataFrame:
         """
         Simulate multiple pricing scenarios.
-        
+
         Args:
             product_id: Product identifier
             baseline_demand: Current/baseline demand
             current_price: Current price
             scenarios: List of scenario dicts with 'name', 'price_change_pct', etc.
             elasticity: Price elasticity
-        
+
         Returns:
             DataFrame comparing scenario outcomes
         """
         results = []
-        
+
         for scenario in scenarios:
             price_change_pct = scenario.get('price_change_pct', 0)
             new_price = current_price * (1 + price_change_pct / 100)
-            
+
             prediction = self.predict_demand_at_price(
                 product_id=product_id,
                 new_price=new_price,
@@ -515,19 +515,19 @@ class DemandResponseModel:
                 is_promotion=scenario.get('is_promotion', False),
                 promotion_type=scenario.get('promotion_type')
             )
-            
+
             results.append({
                 'scenario_name': scenario.get('name', f'{price_change_pct:+.0f}% price change'),
                 **prediction
             })
-        
+
         return pd.DataFrame(results)
 
 
 def create_standard_scenarios() -> List[Dict]:
     """
     Create standard price change scenarios for testing.
-    
+
     Returns:
         List of scenario dictionaries
     """

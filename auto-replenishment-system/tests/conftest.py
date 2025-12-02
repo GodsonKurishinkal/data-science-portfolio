@@ -10,9 +10,9 @@ from datetime import datetime, timedelta
 def sample_inventory_data():
     """Create sample inventory data for testing."""
     np.random.seed(42)
-    
+
     n_items = 50
-    
+
     return pd.DataFrame({
         "item_id": [f"SKU{i:04d}" for i in range(n_items)],
         "current_stock": np.random.randint(10, 500, n_items),
@@ -29,17 +29,17 @@ def sample_inventory_data():
 def sample_demand_data():
     """Create sample demand history for testing."""
     np.random.seed(42)
-    
+
     n_items = 20
     n_days = 90
-    
+
     items = [f"SKU{i:04d}" for i in range(n_items)]
     dates = pd.date_range(
         end=datetime.now(),
         periods=n_days,
         freq="D",
     )
-    
+
     data = []
     for item in items:
         base_demand = np.random.uniform(10, 100)
@@ -48,14 +48,14 @@ def sample_demand_data():
             seasonal = 1 + 0.2 * np.sin(2 * np.pi * date.dayofyear / 365)
             noise = np.random.normal(0, base_demand * 0.2)
             demand = max(0, base_demand * seasonal + noise)
-            
+
             data.append({
                 "item_id": item,
                 "date": date,
                 "quantity": demand,
                 "price": np.random.uniform(10, 50),
             })
-    
+
     return pd.DataFrame(data)
 
 
@@ -63,9 +63,9 @@ def sample_demand_data():
 def sample_source_inventory():
     """Create sample source inventory for testing."""
     np.random.seed(42)
-    
+
     n_items = 50
-    
+
     return pd.DataFrame({
         "item_id": [f"SKU{i:04d}" for i in range(n_items)],
         "available_quantity": np.random.randint(100, 5000, n_items),
@@ -111,16 +111,16 @@ def abc_test_data():
 def xyz_test_data():
     """Create data for XYZ classification testing."""
     np.random.seed(42)
-    
+
     data = []
     items = {
         "X1": {"mean": 100, "std": 10},   # CV = 0.1 (X)
         "Y1": {"mean": 100, "std": 70},   # CV = 0.7 (Y)
         "Z1": {"mean": 100, "std": 150},  # CV = 1.5 (Z)
     }
-    
+
     dates = pd.date_range(end=datetime.now(), periods=30, freq="D")
-    
+
     for item, params in items.items():
         for date in dates:
             qty = max(0, np.random.normal(params["mean"], params["std"]))
@@ -129,5 +129,5 @@ def xyz_test_data():
                 "date": date,
                 "quantity": qty,
             })
-    
+
     return pd.DataFrame(data)

@@ -44,18 +44,18 @@ except Exception as e:
     np.random.seed(42)
     dates = pd.date_range('2024-01-01', periods=180, freq='D')
     products = [f'FOODS_{i}_001' for i in range(1, 6)]
-    
+
     data = []
     for product in products:
         base_price = np.random.uniform(3, 10)
         base_demand = np.random.uniform(50, 200)
         elasticity = np.random.uniform(-2.0, -0.5)
-        
+
         for date in dates:
             price = base_price * (1 + np.random.normal(0, 0.1))
             demand = base_demand * (price / base_price) ** elasticity
             demand = max(0, demand + np.random.normal(0, 10))
-            
+
             data.append({
                 'item_id': product,
                 'product_id': product,
@@ -63,7 +63,7 @@ except Exception as e:
                 'sell_price': price,
                 'sales': demand
             })
-    
+
     df = pd.DataFrame(data)
 
 print()
@@ -204,17 +204,17 @@ if product_id in model.seasonality_patterns:
     print(f"Day-of-week seasonality for {product_id}:")
     dow_pattern = model.seasonality_patterns[product_id]['day_of_week']
     days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    
+
     for day_idx, day_name in enumerate(days):
         if day_idx in dow_pattern:
             factor = dow_pattern[day_idx]
             print(f"  {day_name}: {factor:.2f}x ({(factor - 1) * 100:+.1f}%)")
     print()
-    
+
     # Compare predictions for weekday vs weekend
     weekday = datetime(2024, 11, 18)  # Monday
     weekend = datetime(2024, 11, 16)  # Saturday
-    
+
     pred_weekday = model.predict_demand_at_price(
         product_id=product_id,
         new_price=current_price,
@@ -223,7 +223,7 @@ if product_id in model.seasonality_patterns:
         elasticity=elasticity,
         date=weekday
     )
-    
+
     pred_weekend = model.predict_demand_at_price(
         product_id=product_id,
         new_price=current_price,
@@ -232,7 +232,7 @@ if product_id in model.seasonality_patterns:
         elasticity=elasticity,
         date=weekend
     )
-    
+
     print(f"Weekday demand: {pred_weekday['predicted_demand']:.1f} units")
     print(f"Weekend demand: {pred_weekend['predicted_demand']:.1f} units")
     print(f"Weekend lift: {((pred_weekend['predicted_demand'] / pred_weekday['predicted_demand']) - 1) * 100:+.1f}%")
@@ -250,7 +250,7 @@ for pid in top_products:
     if pid in elasticity_summary['product_id'].values:
         product_data = df[df['product_id'] == pid]
         elasticity_val = elasticity_summary[elasticity_summary['product_id'] == pid]['elasticity'].iloc[0]
-        
+
         bulk_data.append({
             'product_id': pid,
             'baseline_demand': product_data['sales'].mean(),
@@ -262,12 +262,12 @@ for pid in top_products:
 if bulk_data:
     bulk_df = pd.DataFrame(bulk_data)
     bulk_results = model.predict_bulk(bulk_df, elasticity_col='elasticity')
-    
+
     print(f"10% price reduction impact on top {len(bulk_results)} products:")
     print()
     print(bulk_results[['product_id', 'current_price', 'new_price', 'predicted_demand', 'demand_change_pct', 'revenue_change_pct']].to_string())
     print()
-    
+
     total_revenue_change = bulk_results['revenue_change'].sum()
     print(f"💵 Total revenue impact: ${total_revenue_change:.2f} ({(total_revenue_change / bulk_results['revenue_base'].sum() * 100):+.1f}%)")
     print()

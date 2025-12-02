@@ -15,22 +15,22 @@ def ensure_columns(
     fill_value: Any = 0,
 ) -> pd.DataFrame:
     """Ensure DataFrame has required columns.
-    
+
     Args:
         df: Input DataFrame
         required_columns: List of required columns
         fill_value: Value to fill for missing columns
-        
+
     Returns:
         DataFrame with all required columns
     """
     result = df.copy()
-    
+
     for col in required_columns:
         if col not in result.columns:
             logger.warning(f"Adding missing column '{col}' with default value")
             result[col] = fill_value
-    
+
     return result
 
 
@@ -40,12 +40,12 @@ def calculate_days_of_supply(
     default_value: float = float("inf"),
 ) -> Union[float, pd.Series]:
     """Calculate days of supply.
-    
+
     Args:
         current_stock: Current inventory level
         daily_demand: Daily demand rate
         default_value: Value when demand is zero
-        
+
     Returns:
         Days of supply
     """
@@ -67,14 +67,14 @@ def calculate_inventory_position(
     backorder: float = 0,
 ) -> float:
     """Calculate inventory position.
-    
+
     Inventory Position = On Hand + On Order - Backorders
-    
+
     Args:
         on_hand: Current on-hand inventory
         on_order: Quantity on order
         backorder: Backorder quantity
-        
+
     Returns:
         Inventory position
     """
@@ -87,12 +87,12 @@ def format_quantity(
     unit: str = "",
 ) -> str:
     """Format quantity for display.
-    
+
     Args:
         quantity: Quantity value
         decimals: Decimal places
         unit: Unit suffix
-        
+
     Returns:
         Formatted string
     """
@@ -109,13 +109,13 @@ def classify_urgency(
     medium_threshold: float = 7.0,
 ) -> str:
     """Classify replenishment urgency.
-    
+
     Args:
         days_of_supply: Current days of supply
         critical_threshold: Threshold for critical
         high_threshold: Threshold for high
         medium_threshold: Threshold for medium
-        
+
     Returns:
         Urgency classification
     """
@@ -135,18 +135,18 @@ def round_to_pack_size(
     round_up: bool = True,
 ) -> int:
     """Round quantity to pack size.
-    
+
     Args:
         quantity: Quantity to round
         pack_size: Pack size
         round_up: Whether to round up (True) or down (False)
-        
+
     Returns:
         Rounded quantity
     """
     if pack_size <= 0:
         return int(quantity)
-    
+
     if round_up:
         return int(np.ceil(quantity / pack_size) * pack_size)
     else:

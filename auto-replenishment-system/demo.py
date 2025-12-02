@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 def generate_sample_inventory(n_items: int = 100) -> pd.DataFrame:
     """Generate sample inventory data."""
     np.random.seed(42)
-    
+
     return pd.DataFrame({
         "item_id": [f"SKU{i:05d}" for i in range(n_items)],
         "item_name": [f"Product {i}" for i in range(n_items)],
@@ -56,19 +56,19 @@ def generate_sample_inventory(n_items: int = 100) -> pd.DataFrame:
 
 
 def generate_sample_demand(
-    n_items: int = 100, 
+    n_items: int = 100,
     n_days: int = 90
 ) -> pd.DataFrame:
     """Generate sample demand history."""
     np.random.seed(42)
-    
+
     items = [f"SKU{i:05d}" for i in range(n_items)]
     dates = pd.date_range(
         end=datetime.now(),
         periods=n_days,
         freq="D",
     )
-    
+
     data = []
     for item in items:
         base_demand = np.random.uniform(10, 100)
@@ -78,13 +78,13 @@ def generate_sample_demand(
             # Add noise
             noise = np.random.normal(0, base_demand * 0.3)
             demand = max(0, base_demand * dow_factor + noise)
-            
+
             data.append({
                 "item_id": item,
                 "date": date,
                 "quantity": demand,
             })
-    
+
     return pd.DataFrame(data)
 
 
@@ -104,21 +104,21 @@ def print_subheader(title: str) -> None:
 def demo_classification():
     """Demonstrate ABC/XYZ classification."""
     print_header("ABC/XYZ CLASSIFICATION DEMO")
-    
+
     # Generate sample data
     inventory = generate_sample_inventory(50)
     demand = generate_sample_demand(50, 30)
-    
+
     # ABC Classification
     print_subheader("ABC Classification (by Revenue)")
-    
+
     abc_classifier = ABCClassifier(
         value_column="revenue",
         thresholds=(0.80, 0.95),
     )
-    
+
     abc_result = abc_classifier.classify(inventory)
-    
+
     # Show class distribution
     class_dist = abc_result["abc_class"].value_counts().sort_index()
     print("Class Distribution:")
@@ -127,26 +127,26 @@ def demo_classification():
         value = inventory.loc[abc_result[abc_result["abc_class"] == cls].index, "revenue"].sum()
         value_pct = value / inventory["revenue"].sum() * 100
         print(f"  Class {cls}: {count:3d} items ({pct:5.1f}%) - ${value:,.0f} ({value_pct:5.1f}% of value)")
-    
+
     # XYZ Classification
     print_subheader("XYZ Classification (by Demand Variability)")
-    
+
     xyz_classifier = XYZClassifier(cv_thresholds=(0.5, 1.0))
     xyz_result = xyz_classifier.classify(demand)
-    
+
     xyz_dist = xyz_result["xyz_class"].value_counts().sort_index()
     print("Class Distribution:")
     for cls, count in xyz_dist.items():
         pct = count / len(xyz_result) * 100
         avg_cv = xyz_result[xyz_result["xyz_class"] == cls]["cv"].mean()
         print(f"  Class {cls}: {count:3d} items ({pct:5.1f}%) - Avg CV: {avg_cv:.2f}")
-    
+
     # ABC-XYZ Matrix
     print_subheader("ABC-XYZ Service Level Matrix")
-    
+
     matrix = ABCXYZMatrix()
     matrix_df = matrix.to_dataframe()
-    
+
     # Display as a grid
     print("Service Levels by Classification:")
     print("        X      Y      Z")
@@ -156,14 +156,14 @@ def demo_classification():
             sl = matrix.get_service_level(abc, xyz)
             row.append(f"{sl:.0%}")
         print(f"  {abc}:   {'   '.join(row)}")
-    
+
     return abc_result, xyz_result
 
 
 def demo_policies():
     """Demonstrate replenishment policies."""
     print_header("REPLENISHMENT POLICY DEMO")
-    
+
     # Generate test data with known characteristics
     test_data = pd.DataFrame({
         "item_id": ["SKU001", "SKU002", "SKU003", "SKU004", "SKU005"],
@@ -175,35 +175,35 @@ def demo_policies():
         "unit_cost": [50, 30, 20, 15, 100],
         "inventory_position": [50, 30, 200, 800, 0],
     })
-    
+
     # Periodic Review Policy
     print_subheader("Periodic Review (s,S) Policy")
-    
+
     policy = PeriodicReviewPolicy(
         review_period=7,
         lead_time=7,
         service_level=0.95,
         order_strategy="policy_target",
     )
-    
+
     result = policy.calculate(test_data)
-    
+
     print(f"Policy Parameters:")
     print(f"  Review Period: {policy.review_period} days")
     print(f"  Lead Time: {policy.lead_time} days")
     print(f"  Service Level: {policy.service_level:.0%}")
     print()
-    
+
     print("Replenishment Recommendations:")
     print("-" * 90)
     print(f"{'Item':<15} {'Stock':>8} {'DOS':>6} {'s':>8} {'S':>8} {'SS':>8} {'Order?':>8} {'Qty':>8}")
     print("-" * 90)
-    
+
     for _, row in result.iterrows():
         dos = row["current_stock"] / row["daily_demand_rate"] if row["daily_demand_rate"] > 0 else float("inf")
         needs = "YES" if row["needs_order"] else "no"
         qty = int(row["recommended_quantity"]) if row["recommended_quantity"] > 0 else "-"
-        
+
         print(
             f"{row['item_name']:<15} "
             f"{int(row['current_stock']):>8} "
@@ -214,18 +214,18 @@ def demo_policies():
             f"{needs:>8} "
             f"{qty:>8}"
         )
-    
+
     print("-" * 90)
     print(f"\nTotal Items Needing Order: {result['needs_order'].sum()}")
     print(f"Total Recommended Quantity: {result['recommended_quantity'].sum():,.0f} units")
-    
+
     return result
 
 
 def demo_safety_stock():
     """Demonstrate safety stock calculations."""
     print_header("SAFETY STOCK CALCULATION DEMO")
-    
+
     # Test different scenarios
     scenarios = [
         {"name": "Low Variability (X)", "demand_mean": 100, "demand_std": 10, "lead_time": 7},
@@ -233,14 +233,14 @@ def demo_safety_stock():
         {"name": "High Variability (Z)", "demand_mean": 100, "demand_std": 100, "lead_time": 7},
         {"name": "Long Lead Time", "demand_mean": 100, "demand_std": 30, "lead_time": 21},
     ]
-    
+
     calculator = SafetyStockCalculator(method="standard")
-    
+
     print("Safety Stock by Scenario (95% Service Level):")
     print("-" * 65)
     print(f"{'Scenario':<25} {'DDR':>8} {'σ':>8} {'LT':>6} {'SS':>10}")
     print("-" * 65)
-    
+
     for scenario in scenarios:
         ss = calculator.calculate(
             demand_mean=scenario["demand_mean"],
@@ -255,18 +255,18 @@ def demo_safety_stock():
             f"{scenario['lead_time']:>6} "
             f"{ss:>10.0f}"
         )
-    
+
     # Compare service levels
     print_subheader("Impact of Service Level on Safety Stock")
-    
+
     service_levels = [0.90, 0.95, 0.97, 0.99]
     base_case = {"demand_mean": 100, "demand_std": 30, "lead_time": 7}
-    
+
     print(f"Base Case: DDR=100, σ=30, LT=7 days")
     print("-" * 40)
     print(f"{'Service Level':>15} {'Z-Score':>10} {'SS':>10}")
     print("-" * 40)
-    
+
     for sl in service_levels:
         z = calculator._get_z_score(sl)
         ss = calculator.calculate(
@@ -279,7 +279,7 @@ def demo_safety_stock():
 def demo_alerts():
     """Demonstrate alert generation."""
     print_header("ALERT GENERATION DEMO")
-    
+
     # Create test data with various alert conditions
     test_data = pd.DataFrame({
         "item_id": ["SKU001", "SKU002", "SKU003", "SKU004", "SKU005", "SKU006"],
@@ -292,7 +292,7 @@ def demo_alerts():
         "source_available": [50, 100, 100, 100, 100, 100],  # SKU001 has shortage
         "reorder_point": [70, 70, 70, 70, 70, 70],
     })
-    
+
     generator = AlertGenerator(
         thresholds=AlertThresholds(
             critical_days_supply=1.0,
@@ -301,11 +301,11 @@ def demo_alerts():
             capacity_utilization_critical=0.95,
         )
     )
-    
+
     alerts = generator.generate(test_data)
-    
+
     print(f"Generated {len(alerts)} alerts from {len(test_data)} items\n")
-    
+
     # Group by severity
     severity_order = [
         AlertSeverity.CRITICAL,
@@ -313,7 +313,7 @@ def demo_alerts():
         AlertSeverity.MEDIUM,
         AlertSeverity.LOW,
     ]
-    
+
     for severity in severity_order:
         severity_alerts = [a for a in alerts if a.severity == severity]
         if severity_alerts:
@@ -322,11 +322,11 @@ def demo_alerts():
             for alert in severity_alerts:
                 print(f"  [{alert.alert_type.value}] {alert.item_id}: {alert.message}")
                 print(f"    → Action: {alert.recommended_action}")
-    
+
     # Summary
     print_subheader("Alert Summary")
     summary = generator.summarize_alerts(alerts)
-    
+
     print(f"Total Alerts: {summary['total_alerts']}")
     print(f"Items Affected: {summary['items_affected']}")
     print("\nBy Severity:")
@@ -337,11 +337,11 @@ def demo_alerts():
 def demo_full_engine():
     """Demonstrate the full replenishment engine."""
     print_header("FULL ENGINE DEMO - DC TO STORE SCENARIO")
-    
+
     # Create sample data
     inventory = generate_sample_inventory(100)
     demand = generate_sample_demand(100, 60)
-    
+
     # Create engine with configuration
     config = {
         "scenarios": {
@@ -368,23 +368,23 @@ def demo_full_engine():
             "low_days_supply": 3.0,
         },
     }
-    
+
     engine = ReplenishmentEngine(config_dict=config)
-    
+
     print("Running replenishment calculation...")
     print(f"  Scenario: DC to Store")
     print(f"  Items: {len(inventory)}")
     print(f"  Demand History: {len(demand)} records")
-    
+
     result = engine.run(
         scenario="dc_to_store",
         inventory_data=inventory,
         demand_data=demand,
     )
-    
+
     # Summary
     print_subheader("Execution Summary")
-    
+
     print(f"Total Items Analyzed: {result.summary['total_items']}")
     print(f"Items Needing Order: {result.summary['items_needing_order']}")
     print(f"Items Not Needing Order: {result.summary['items_not_needing_order']}")
@@ -392,16 +392,16 @@ def demo_full_engine():
     print(f"Total Alerts Generated: {result.summary['total_alerts']}")
     print(f"  - Critical: {result.summary.get('critical_alerts', 0)}")
     print(f"  - High: {result.summary.get('high_alerts', 0)}")
-    
+
     # Top priority orders
     print_subheader("Top 10 Priority Orders")
-    
+
     priority = result.get_priority_orders(top_n=10)
-    
+
     if not priority.empty:
         print(f"{'Item':<12} {'Stock':>8} {'DOS':>6} {'Order Qty':>10} {'Category':<12}")
         print("-" * 55)
-        
+
         for _, row in priority.iterrows():
             dos = row.get("days_of_supply", 0)
             print(
@@ -411,26 +411,26 @@ def demo_full_engine():
                 f"{int(row.get('recommended_quantity', 0)):>10} "
                 f"{row.get('category', 'N/A'):<12}"
             )
-    
+
     # Critical alerts
     if result.alerts:
         print_subheader("Critical & High Priority Alerts")
-        
+
         critical_high = [
-            a for a in result.alerts 
+            a for a in result.alerts
             if a.severity in [AlertSeverity.CRITICAL, AlertSeverity.HIGH]
         ][:5]
-        
+
         for alert in critical_high:
             print(f"  [{alert.severity.value.upper()}] {alert.item_id}: {alert.message}")
-    
+
     return result
 
 
 def demo_multi_scenario():
     """Demonstrate multiple scenario configurations."""
     print_header("MULTI-SCENARIO COMPARISON")
-    
+
     # Create test inventory
     inventory = pd.DataFrame({
         "item_id": [f"SKU{i:03d}" for i in range(10)],
@@ -442,7 +442,7 @@ def demo_multi_scenario():
         "revenue": [10000, 5000, 2000, 15000, 3000, 8000, 1000, 20000, 4000, 9000],
         "inventory_position": [100, 50, 200, 30, 150, 80, 250, 10, 120, 60],
     })
-    
+
     scenarios = {
         "supplier_to_dc": {
             "policy_type": "periodic_review",
@@ -463,21 +463,21 @@ def demo_multi_scenario():
             "service_level": 0.99,
         },
     }
-    
+
     print("Comparing replenishment across scenarios:")
     print("-" * 70)
     print(f"{'Scenario':<25} {'Review':>8} {'LT':>6} {'SL':>6} {'Orders':>8} {'Qty':>10}")
     print("-" * 70)
-    
+
     for scenario_name, scenario_config in scenarios.items():
         config = {"scenarios": {scenario_name: scenario_config}}
         engine = ReplenishmentEngine(config_dict=config)
-        
+
         result = engine.run(
             scenario=scenario_name,
             inventory_data=inventory.copy(),
         )
-        
+
         print(
             f"{scenario_name:<25} "
             f"{scenario_config['review_period']:>8} "
@@ -486,7 +486,7 @@ def demo_multi_scenario():
             f"{result.summary['items_needing_order']:>8} "
             f"{result.summary['total_recommended_quantity']:>10,.0f}"
         )
-    
+
     print("-" * 70)
     print("\nKey Insight: Different scenarios require different policies!")
     print("  - Longer lead times → More safety stock → Larger orders")
@@ -500,7 +500,7 @@ def main():
     print("A comprehensive retail inventory replenishment solution")
     print("Supports: Supplier→DC, DC→Store, Store→DC, Storage→Pick, and more!")
     print()
-    
+
     demos = [
         ("Classification Demo", demo_classification),
         ("Safety Stock Demo", demo_safety_stock),
@@ -509,23 +509,23 @@ def main():
         ("Full Engine Demo", demo_full_engine),
         ("Multi-Scenario Demo", demo_multi_scenario),
     ]
-    
+
     print("Available Demos:")
     for i, (name, _) in enumerate(demos, 1):
         print(f"  {i}. {name}")
     print(f"  {len(demos) + 1}. Run All")
     print(f"  0. Exit")
-    
+
     while True:
         try:
             choice = input("\nSelect demo (0-7): ").strip()
-            
+
             if choice == "0":
                 print("\nThank you for exploring the Universal Replenishment Engine!")
                 break
-            
+
             choice = int(choice)
-            
+
             if choice == len(demos) + 1:
                 # Run all
                 for name, func in demos:
@@ -536,7 +536,7 @@ def main():
                 func()
             else:
                 print("Invalid choice. Please try again.")
-        
+
         except ValueError:
             print("Please enter a number.")
         except KeyboardInterrupt:

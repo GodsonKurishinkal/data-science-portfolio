@@ -34,7 +34,7 @@ class AlertType(Enum):
 @dataclass
 class Alert:
     """Replenishment alert data structure.
-    
+
     Attributes:
         alert_type: Type of alert
         severity: Alert severity level
@@ -57,7 +57,7 @@ class Alert:
     created_at: datetime = field(default_factory=datetime.now)
     expires_at: Optional[datetime] = None
     acknowledged: bool = False
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert alert to dictionary."""
         return {
@@ -72,7 +72,7 @@ class Alert:
             "expires_at": self.expires_at.isoformat() if self.expires_at else None,
             "acknowledged": self.acknowledged,
         }
-    
+
     def __str__(self) -> str:
         """String representation of alert."""
         location = f" @ {self.location_id}" if self.location_id else ""
