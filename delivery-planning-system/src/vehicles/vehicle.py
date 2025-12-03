@@ -89,11 +89,11 @@ class Vehicle:
     total_km: float = 0.0
     
     @classmethod
-    def from_type(cls, vehicle_type: VehicleType, id: Optional[str] = None) -> 'Vehicle':
+    def from_type(cls, vehicle_type: VehicleType, vehicle_id: Optional[str] = None) -> 'Vehicle':
         """Create vehicle with specs from type."""
         specs = VEHICLE_SPECS.get(vehicle_type, VEHICLE_SPECS[VehicleType.MEDIUM_TRUCK])
         return cls(
-            id=id or str(uuid.uuid4())[:8],
+            id=vehicle_id or str(uuid.uuid4())[:8],
             vehicle_type=vehicle_type,
             cargo_length=specs["length"],
             cargo_width=specs["width"],

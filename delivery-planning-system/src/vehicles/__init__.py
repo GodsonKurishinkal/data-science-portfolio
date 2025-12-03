@@ -1,6 +1,6 @@
 """Vehicles module for fleet management."""
-from src.vehicles.vehicle import Vehicle, VehicleType, VehicleStatus
-from src.vehicles.fleet import Fleet, FleetManager
+from .vehicle import Vehicle, VehicleType, VehicleStatus
+from .fleet import Fleet, FleetManager
 
 __all__ = [
     "Vehicle",

@@ -1,10 +1,9 @@
 """Vehicle Routing Problem (VRP) Solver."""
 from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
+from typing import List
 from enum import Enum
-import random
 
-from src.routing.distance import DistanceMatrix, Location
+from .distance import DistanceMatrix
 
 
 class VRPType(Enum):

@@ -4,7 +4,7 @@ from typing import List, Optional, Dict
 from datetime import date, time, datetime
 from enum import Enum
 
-from src.resources.driver import Driver, DriverPool, DriverStatus
+from .driver import DriverPool
 
 
 class ShiftType(Enum):

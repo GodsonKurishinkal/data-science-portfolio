@@ -1,6 +1,6 @@
 """Utilities module."""
-from src.utils.visualizer import PackingVisualizer
-from src.utils.metrics import PackingMetrics, RouteMetrics
+from .visualizer import PackingVisualizer
+from .metrics import PackingMetrics, RouteMetrics
 
 __all__ = [
     "PackingVisualizer",

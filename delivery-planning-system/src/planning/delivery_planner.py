@@ -12,10 +12,10 @@ from typing import List, Dict, Optional
 from datetime import datetime
 import json
 
-from src.packing import Box, Container, BinPacker, PackingResult
-from src.routing import VRPSolver, VRPSolution, DistanceMatrix, Location
-from src.resources import Driver, DriverPool, ResourceScheduler
-from src.vehicles import Vehicle, Fleet, FleetManager, VehicleType
+from ..packing import Box, Container, BinPacker, PackingResult
+from ..routing import VRPSolver, DistanceMatrix, Location
+from ..resources import DriverPool, ResourceScheduler
+from ..vehicles import Fleet, FleetManager
 
 
 @dataclass
@@ -186,6 +186,7 @@ class DeliveryPlanner:
         self.packer = packer or BinPacker()
         
         self._plan_counter = 0
+        self._fixed_assignments: Dict[str, str] = {}
     
     def plan_deliveries(
         self,
@@ -366,6 +367,9 @@ class DeliveryPlanner:
         Returns:
             Updated planning result
         """
+        # Store fixed assignments for use during planning
+        self._fixed_assignments = fixed_assignments or {}
+        
         # Temporarily mark excluded vehicles as unavailable
         excluded = excluded_vehicles or []
         original_status = {}
@@ -440,4 +444,4 @@ class DeliveryPlanner:
 
 
 # Import for type hint only
-from src.vehicles.vehicle import VehicleStatus
+from ..vehicles.vehicle import VehicleStatus

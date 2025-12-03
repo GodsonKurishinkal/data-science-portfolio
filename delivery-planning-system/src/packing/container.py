@@ -1,6 +1,6 @@
 """Container/Vehicle representation for 3D bin packing."""
 from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
+from typing import List, Optional
 from enum import Enum
 import uuid
 
@@ -120,11 +120,11 @@ class Container:
     
     @classmethod
     def from_type(cls, container_type: ContainerType, 
-                  id: Optional[str] = None) -> 'Container':
+                  container_id: Optional[str] = None) -> 'Container':
         """Create container from predefined type."""
         specs = CONTAINER_SPECS.get(container_type, CONTAINER_SPECS[ContainerType.LARGE_TRUCK])
         return cls(
-            id=id or str(uuid.uuid4())[:8],
+            id=container_id or str(uuid.uuid4())[:8],
             length=specs["length"],
             width=specs["width"],
             height=specs["height"],

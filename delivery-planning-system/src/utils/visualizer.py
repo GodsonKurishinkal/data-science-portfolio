@@ -1,5 +1,5 @@
 """Visualization utilities for packing and routes."""
-from typing import List, Optional, Dict
+from typing import List, Dict
 import json
 
 
@@ -170,11 +170,9 @@ def create_matplotlib_visualization(container: Dict, boxes: List[Dict]):
     """
     try:
         import matplotlib.pyplot as plt
-        from mpl_toolkits.mplot3d import Axes3D
         from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-        import numpy as np
-    except ImportError:
-        raise ImportError("matplotlib is required for this visualization")
+    except ImportError as exc:
+        raise ImportError("matplotlib is required for this visualization") from exc
     
     fig = plt.figure(figsize=(12, 8))
     ax = fig.add_subplot(111, projection='3d')
@@ -190,7 +188,8 @@ def create_matplotlib_visualization(container: Dict, boxes: List[Dict]):
         ax.plot3D(*zip(s, e), 'gray', linewidth=1)
     
     # Color palette
-    colors = plt.cm.tab10(np.linspace(0, 1, len(boxes)))
+    cmap = plt.colormaps.get_cmap('tab10')
+    colors = [cmap(i / max(len(boxes), 1)) for i in range(len(boxes))]
     
     # Draw boxes
     for box, color in zip(boxes, colors):

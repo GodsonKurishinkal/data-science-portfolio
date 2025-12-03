@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Dict
 from datetime import date
 
-from src.vehicles.vehicle import Vehicle, VehicleType, VehicleStatus
+from .vehicle import Vehicle, VehicleType, VehicleStatus
 
 
 @dataclass

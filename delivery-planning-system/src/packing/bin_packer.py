@@ -9,11 +9,10 @@ with enhancements for:
 - Support surface requirements
 """
 from dataclasses import dataclass, field
-from typing import List, Optional, Callable
+from typing import List, Optional
 from enum import Enum
-import heapq
 
-from .box import Box, BoxType, Position
+from .box import Box, Position
 from .container import Container, ExtremePoint
 
 
@@ -299,7 +298,6 @@ class BinPacker:
             rotations = box.get_rotations() if self.allow_rotation else [box]
             
             for rotated_box in rotations:
-                dims = rotated_box.dimensions
                 position = ep.as_position()
                 
                 # Check if box fits at this position
@@ -407,8 +405,6 @@ class BinPacker:
         - Weight limits for stacking
         - Heavy items should go on bottom
         """
-        dims = box.dimensions
-        
         # Check if placing on top of other boxes
         if position.z > 0:
             # Find supporting boxes

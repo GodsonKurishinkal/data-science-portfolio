@@ -2,7 +2,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 from enum import Enum
-from datetime import datetime, time
+from datetime import time
 import uuid
 
 

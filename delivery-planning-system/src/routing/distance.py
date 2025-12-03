@@ -1,6 +1,6 @@
 """Distance calculation utilities for route optimization."""
 from dataclasses import dataclass, field
-from typing import List, Dict, Tuple, Optional
+from typing import List, Tuple, Optional
 import math
 import numpy as np
 

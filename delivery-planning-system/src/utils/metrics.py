@@ -1,6 +1,6 @@
 """Performance metrics for packing and routing."""
-from dataclasses import dataclass, field
-from typing import List, Dict
+from dataclasses import dataclass
+from typing import Dict
 
 
 @dataclass

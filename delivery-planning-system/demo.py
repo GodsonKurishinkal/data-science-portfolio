@@ -13,7 +13,6 @@ This demo showcases the key features of the Delivery Planning System:
 import sys
 from pathlib import Path
 from datetime import datetime, timedelta
-from typing import List
 
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent / "src"))
@@ -28,8 +27,6 @@ from resources.scheduler import ResourceScheduler, Shift
 from vehicles.vehicle import Vehicle, VehicleType
 from vehicles.fleet import Fleet, FleetManager
 from planning.delivery_planner import DeliveryPlanner, DeliveryOrder
-from utils.visualizer import PackingVisualizer
-from utils.metrics import PackingMetrics, RouteMetrics
 
 
 def demo_bin_packing():
@@ -41,8 +38,8 @@ def demo_bin_packing():
     # Create a delivery truck container
     print("\n1. Creating a standard delivery truck (6m x 2.5m x 2.7m)")
     truck = Container(
-        container_id="TRUCK-001",
-        container_type=ContainerType.BOX_TRUCK,
+        id="TRUCK-001",
+        container_type=ContainerType.LARGE_TRUCK,
         length=600,  # cm
         width=250,
         height=270,
@@ -53,56 +50,49 @@ def demo_bin_packing():
     # Create sample packages with delivery sequence
     print("\n2. Creating packages for delivery...")
     packages = [
-        Box("PKG-001", BoxType.SMALL, length=50, width=40, height=30, weight=8, 
-            delivery_sequence=5, fragile=False),
-        Box("PKG-002", BoxType.MEDIUM, length=80, width=60, height=50, weight=25,
-            delivery_sequence=3, fragile=True),
-        Box("PKG-003", BoxType.LARGE, length=100, width=80, height=60, weight=40,
-            delivery_sequence=1, fragile=False),
-        Box("PKG-004", BoxType.SMALL, length=40, width=35, height=25, weight=5,
-            delivery_sequence=4, fragile=False),
-        Box("PKG-005", BoxType.MEDIUM, length=70, width=55, height=45, weight=20,
-            delivery_sequence=2, fragile=False),
-        Box("PKG-006", BoxType.XLARGE, length=120, width=90, height=80, weight=60,
-            delivery_sequence=6, fragile=True),
-        Box("PKG-007", BoxType.SMALL, length=45, width=38, height=28, weight=7,
-            delivery_sequence=7, fragile=False),
-        Box("PKG-008", BoxType.MEDIUM, length=65, width=50, height=40, weight=15,
-            delivery_sequence=8, fragile=False),
+        Box(id="PKG-001", length=50, width=40, height=30, weight=8, 
+            sequence=5, box_type=BoxType.STANDARD),
+        Box(id="PKG-002", length=80, width=60, height=50, weight=25,
+            sequence=3, box_type=BoxType.FRAGILE),
+        Box(id="PKG-003", length=100, width=80, height=60, weight=40,
+            sequence=1, box_type=BoxType.STANDARD),
+        Box(id="PKG-004", length=40, width=35, height=25, weight=5,
+            sequence=4, box_type=BoxType.STANDARD),
+        Box(id="PKG-005", length=70, width=55, height=45, weight=20,
+            sequence=2, box_type=BoxType.STANDARD),
+        Box(id="PKG-006", length=120, width=90, height=80, weight=60,
+            sequence=6, box_type=BoxType.FRAGILE),
+        Box(id="PKG-007", length=45, width=38, height=28, weight=7,
+            sequence=7, box_type=BoxType.STANDARD),
+        Box(id="PKG-008", length=65, width=50, height=40, weight=15,
+            sequence=8, box_type=BoxType.STANDARD),
     ]
     
     for pkg in packages:
-        print(f"   {pkg.box_id}: {pkg.length}x{pkg.width}x{pkg.height} cm, "
-              f"{pkg.weight}kg, Seq: {pkg.delivery_sequence}")
+        print(f"   {pkg.id}: {pkg.length}x{pkg.width}x{pkg.height} cm, "
+              f"{pkg.weight}kg, Seq: {pkg.sequence}")
     
     # Initialize packer
     print("\n3. Running 3D bin packing algorithm...")
     packer = BinPacker(
         strategy=PackingStrategy.SEQUENCE_AWARE,
-        sorting_criterion=SortingCriterion.LIFO_SEQUENCE
+        sorting=SortingCriterion.SEQUENCE_ASC
     )
     
     result = packer.pack(packages, truck)
     
     # Display results
-    print(f"\n4. Packing Results:")
-    print(f"   ✅ Boxes packed: {len(result.packed_boxes)}/{len(packages)}")
-    print(f"   ❌ Boxes unpacked: {len(result.unpacked_boxes)}")
-    print(f"   📊 Volume utilization: {result.volume_utilization:.1f}%")
+    print("\n4. Packing Results:")
+    print(f"   ✅ Boxes packed: {result.num_packed}/{len(packages)}")
+    print(f"   ❌ Boxes unpacked: {result.num_unpacked}")
+    print(f"   📊 Volume utilization: {result.utilization:.1f}%")
     print(f"   ⚖️  Weight utilization: {result.weight_utilization:.1f}%")
     
     print("\n5. Packed box positions (LIFO - last delivery loaded first):")
-    for box in sorted(result.packed_boxes, key=lambda b: b.delivery_sequence, reverse=True):
+    for box in sorted(result.packed_boxes, key=lambda b: b.sequence, reverse=True):
         pos = box.position
-        print(f"   {box.box_id} @ position ({pos.x:.0f}, {pos.y:.0f}, {pos.z:.0f}) - "
-              f"Seq: {box.delivery_sequence}")
-    
-    # Calculate metrics
-    metrics = PackingMetrics.calculate(result.packed_boxes, truck)
-    print(f"\n6. Packing Metrics:")
-    print(f"   Space efficiency: {metrics.space_efficiency:.1f}%")
-    print(f"   Weight efficiency: {metrics.weight_efficiency:.1f}%")
-    print(f"   Stacking ratio: {metrics.stacking_ratio:.2f}")
+        print(f"   {box.id} @ position ({pos.x:.0f}, {pos.y:.0f}, {pos.z:.0f}) - "
+              f"Seq: {box.sequence}")
     
     return result
 
@@ -113,68 +103,48 @@ def demo_route_optimization():
     print("🗺️  ROUTE OPTIMIZATION DEMONSTRATION")
     print("=" * 60)
     
-    # Create delivery locations
-    print("\n1. Setting up delivery locations...")
+    # Create depot and delivery locations
+    print("\n1. Setting up depot and delivery locations...")
+    depot = Location(id="DEPOT", name="Warehouse", latitude=40.7128, longitude=-74.0060)
+    
     locations = [
-        Location("DEPOT", "Distribution Center", 40.7128, -74.0060),  # NYC
-        Location("STOP-1", "Customer A - Manhattan", 40.7589, -73.9851),
-        Location("STOP-2", "Customer B - Brooklyn", 40.6782, -73.9442),
-        Location("STOP-3", "Customer C - Queens", 40.7282, -73.7949),
-        Location("STOP-4", "Customer D - Bronx", 40.8448, -73.8648),
-        Location("STOP-5", "Customer E - Staten Island", 40.5795, -74.1502),
-        Location("STOP-6", "Customer F - Jersey City", 40.7178, -74.0431),
+        depot,
+        Location(id="C1", name="Customer 1", latitude=40.7580, longitude=-73.9855),  # Midtown
+        Location(id="C2", name="Customer 2", latitude=40.7489, longitude=-73.9680),  # Grand Central
+        Location(id="C3", name="Customer 3", latitude=40.7614, longitude=-73.9776),  # Rockefeller Center
+        Location(id="C4", name="Customer 4", latitude=40.7484, longitude=-73.9857),  # Empire State
+        Location(id="C5", name="Customer 5", latitude=40.7527, longitude=-73.9772),  # Bryant Park
     ]
     
     for loc in locations:
-        print(f"   {loc.location_id}: {loc.name}")
+        print(f"   {loc.id}: {loc.name} ({loc.latitude:.4f}, {loc.longitude:.4f})")
     
     # Create distance matrix
-    print("\n2. Calculating distance matrix...")
-    distance_matrix = DistanceMatrix.from_locations(locations, method="haversine")
-    
-    # Set demands (package counts per location)
-    demands = {
-        "DEPOT": 0,
-        "STOP-1": 3,
-        "STOP-2": 5,
-        "STOP-3": 2,
-        "STOP-4": 4,
-        "STOP-5": 3,
-        "STOP-6": 4,
-    }
+    print("\n2. Creating distance matrix...")
+    distance_matrix = DistanceMatrix.from_locations(locations)
+    print(f"   Matrix size: {len(locations)}x{len(locations)}")
     
     # Solve VRP
     print("\n3. Solving Vehicle Routing Problem...")
-    solver = VRPSolver(distance_matrix)
-    solution = solver.solve(
-        depot_id="DEPOT",
-        demands=demands,
-        vehicle_capacity=10,
+    solver = VRPSolver(
+        distance_matrix=distance_matrix,
+        depot_index=0,
         num_vehicles=2
     )
     
+    solution = solver.solve()
+    
     # Display results
-    print(f"\n4. Routing Results:")
+    print("\n4. Routing Results:")
     print(f"   Total distance: {solution.total_distance:.2f} km")
-    print(f"   Vehicles used: {len(solution.routes)}")
+    print(f"   Vehicles used: {solution.num_vehicles_used}/{2}")
     
-    for i, route in enumerate(solution.routes, 1):
-        print(f"\n   🚚 Vehicle {i}:")
-        print(f"      Route: {' → '.join(route.stops)}")
-        print(f"      Distance: {route.total_distance:.2f} km")
-        print(f"      Load: {route.total_demand} packages")
-    
-    # Calculate route metrics
-    for i, route in enumerate(solution.routes, 1):
-        metrics = RouteMetrics(
-            total_distance=route.total_distance,
-            total_time=route.total_distance / 30,  # Assume 30 km/h avg speed
-            num_stops=len(route.stops) - 2,  # Exclude depot
-            avg_distance_between_stops=route.total_distance / max(1, len(route.stops) - 1)
-        )
-        print(f"\n   Vehicle {i} Metrics:")
-        print(f"      Estimated time: {metrics.total_time:.1f} hours")
-        print(f"      Avg between stops: {metrics.avg_distance_between_stops:.2f} km")
+    print("\n5. Routes:")
+    for i, route in enumerate(solution.routes):
+        if not route.is_empty():
+            stops = " → ".join([locations[idx].name for idx in route.stops])
+            print(f"   Vehicle {i+1}: {stops}")
+            print(f"      Distance: {route.distance:.2f} km")
     
     return solution
 
@@ -182,279 +152,226 @@ def demo_route_optimization():
 def demo_resource_planning():
     """Demonstrate driver and resource planning."""
     print("\n" + "=" * 60)
-    print("👷 RESOURCE PLANNING DEMONSTRATION")
+    print("👥 RESOURCE PLANNING DEMONSTRATION")
     print("=" * 60)
     
-    # Create drivers
-    print("\n1. Setting up driver pool...")
+    # Create driver pool
+    print("\n1. Creating driver pool...")
     drivers = [
         Driver(
-            driver_id="DRV-001",
+            id="DRV-001",
             name="John Smith",
-            skills=[DriverSkill.STANDARD, DriverSkill.FRAGILE_HANDLING],
-            working_hours=WorkingHours(start_time=8, end_time=17),
-            max_daily_hours=8
+            skill_level=DriverSkill.SENIOR,
+            working_hours=WorkingHours(start_time="06:00", end_time="14:00"),
+            max_driving_hours=8.0,
+            vehicle_types=[VehicleType.MEDIUM_TRUCK, VehicleType.LARGE_TRUCK]
         ),
         Driver(
-            driver_id="DRV-002",
+            id="DRV-002", 
             name="Jane Doe",
-            skills=[DriverSkill.STANDARD, DriverSkill.HEAVY_GOODS, DriverSkill.HAZMAT],
-            working_hours=WorkingHours(start_time=6, end_time=14),
-            max_daily_hours=8
+            skill_level=DriverSkill.STANDARD,
+            working_hours=WorkingHours(start_time="08:00", end_time="18:00"),
+            max_driving_hours=10.0,
+            vehicle_types=[VehicleType.SMALL_VAN, VehicleType.MEDIUM_TRUCK]
         ),
         Driver(
-            driver_id="DRV-003",
-            name="Mike Johnson",
-            skills=[DriverSkill.STANDARD, DriverSkill.REFRIGERATED],
-            working_hours=WorkingHours(start_time=10, end_time=19),
-            max_daily_hours=9
+            id="DRV-003",
+            name="Bob Wilson",
+            skill_level=DriverSkill.JUNIOR,
+            working_hours=WorkingHours(start_time="14:00", end_time="22:00"),
+            max_driving_hours=8.0,
+            vehicle_types=[VehicleType.SMALL_VAN]
         ),
     ]
     
-    pool = DriverPool()
-    for driver in drivers:
-        pool.add_driver(driver)
-        skills_str = ", ".join(s.value for s in driver.skills)
-        print(f"   {driver.driver_id}: {driver.name} - Skills: {skills_str}")
+    pool = DriverPool(drivers=drivers)
+    
+    for drv in drivers:
+        print(f"   {drv.id}: {drv.name} ({drv.skill_level.value})")
+        print(f"      Hours: {drv.working_hours.start_time}-{drv.working_hours.end_time}")
+    
+    # Create scheduler
+    print("\n2. Setting up resource scheduler...")
+    scheduler = ResourceScheduler(driver_pool=pool)
     
     # Create shifts
-    print("\n2. Defining shifts...")
-    today = datetime.now().date()
+    print("\n3. Creating shifts for tomorrow...")
+    tomorrow = datetime.now().date() + timedelta(days=1)
+    
     shifts = [
         Shift(
-            shift_id="SHIFT-AM",
-            date=today,
-            start_time=datetime.combine(today, datetime.min.time()) + timedelta(hours=6),
-            end_time=datetime.combine(today, datetime.min.time()) + timedelta(hours=14),
-            required_skills=[DriverSkill.STANDARD]
+            id="SHIFT-001",
+            date=tomorrow,
+            start_time="06:00",
+            end_time="14:00",
+            required_skill=DriverSkill.SENIOR,
+            vehicle_type=VehicleType.LARGE_TRUCK
         ),
         Shift(
-            shift_id="SHIFT-PM",
-            date=today,
-            start_time=datetime.combine(today, datetime.min.time()) + timedelta(hours=14),
-            end_time=datetime.combine(today, datetime.min.time()) + timedelta(hours=22),
-            required_skills=[DriverSkill.STANDARD]
-        ),
-        Shift(
-            shift_id="SHIFT-HEAVY",
-            date=today,
-            start_time=datetime.combine(today, datetime.min.time()) + timedelta(hours=8),
-            end_time=datetime.combine(today, datetime.min.time()) + timedelta(hours=16),
-            required_skills=[DriverSkill.HEAVY_GOODS]
+            id="SHIFT-002",
+            date=tomorrow,
+            start_time="08:00",
+            end_time="18:00",
+            required_skill=DriverSkill.STANDARD,
+            vehicle_type=VehicleType.MEDIUM_TRUCK
         ),
     ]
     
     for shift in shifts:
-        print(f"   {shift.shift_id}: {shift.start_time.strftime('%H:%M')} - "
-              f"{shift.end_time.strftime('%H:%M')}")
+        print(f"   {shift.id}: {shift.start_time}-{shift.end_time} "
+              f"({shift.required_skill.value}, {shift.vehicle_type.value})")
     
-    # Schedule resources
-    print("\n3. Scheduling drivers to shifts...")
-    scheduler = ResourceScheduler(pool)
+    # Assign drivers
+    print("\n4. Assignment Results:")
     assignments = scheduler.assign_shifts(shifts)
-    
-    print(f"\n4. Assignment Results:")
     for assignment in assignments:
-        if assignment.driver_id:
-            driver = pool.get_driver(assignment.driver_id)
-            print(f"   {assignment.shift_id} → {driver.name}")
-        else:
-            print(f"   {assignment.shift_id} → ⚠️ Unassigned")
+        print(f"   {assignment.shift_id}: Assigned to {assignment.driver_id}")
     
     return assignments
 
 
-def demo_vehicle_planning():
-    """Demonstrate fleet and vehicle planning."""
-    print("\n" + "=" * 60)
-    print("🚛 VEHICLE PLANNING DEMONSTRATION")
-    print("=" * 60)
-    
-    # Create fleet
-    print("\n1. Setting up vehicle fleet...")
-    vehicles = [
-        Vehicle("VEH-001", VehicleType.SMALL_VAN, 
-                capacity_weight=1000, capacity_volume=8_000_000),
-        Vehicle("VEH-002", VehicleType.LARGE_VAN,
-                capacity_weight=2000, capacity_volume=15_000_000),
-        Vehicle("VEH-003", VehicleType.BOX_TRUCK,
-                capacity_weight=5000, capacity_volume=40_000_000),
-        Vehicle("VEH-004", VehicleType.BOX_TRUCK,
-                capacity_weight=5000, capacity_volume=40_000_000),
-        Vehicle("VEH-005", VehicleType.SEMI_TRAILER,
-                capacity_weight=20000, capacity_volume=80_000_000),
-    ]
-    
-    fleet = Fleet()
-    for vehicle in vehicles:
-        fleet.add_vehicle(vehicle)
-        print(f"   {vehicle.vehicle_id}: {vehicle.vehicle_type.value} - "
-              f"{vehicle.capacity_weight}kg, {vehicle.capacity_volume/1_000_000:.0f}m³")
-    
-    # Fleet manager for allocation
-    print("\n2. Creating fleet allocation plan...")
-    manager = FleetManager(fleet)
-    
-    # Sample delivery requirements
-    requirements = [
-        {"weight": 800, "volume": 5_000_000, "priority": "high"},
-        {"weight": 1500, "volume": 12_000_000, "priority": "medium"},
-        {"weight": 4000, "volume": 35_000_000, "priority": "high"},
-        {"weight": 15000, "volume": 70_000_000, "priority": "low"},
-    ]
-    
-    print("\n3. Allocating vehicles to deliveries...")
-    for i, req in enumerate(requirements, 1):
-        vehicle = manager.allocate_vehicle(req["weight"], req["volume"])
-        if vehicle:
-            print(f"   Delivery {i} ({req['weight']}kg, {req['volume']/1_000_000:.0f}m³) "
-                  f"→ {vehicle.vehicle_id} ({vehicle.vehicle_type.value})")
-            manager.reserve_vehicle(vehicle.vehicle_id)
-        else:
-            print(f"   Delivery {i} → ⚠️ No suitable vehicle available")
-    
-    # Fleet status
-    print("\n4. Fleet Status:")
-    available = manager.get_available_vehicles()
-    print(f"   Available vehicles: {len(available)}/{len(fleet.vehicles)}")
-    for v in available:
-        print(f"      {v.vehicle_id}: {v.vehicle_type.value}")
-    
-    return fleet
-
-
 def demo_complete_planning():
-    """Demonstrate complete end-to-end delivery planning."""
+    """Demonstrate the complete delivery planning workflow."""
     print("\n" + "=" * 60)
-    print("📋 COMPLETE DELIVERY PLANNING DEMONSTRATION")
+    print("🚚 COMPLETE DELIVERY PLANNING DEMONSTRATION")
     print("=" * 60)
+    
+    # Setup fleet
+    print("\n1. Setting up fleet...")
+    vehicles = [
+        Vehicle.from_type(VehicleType.LARGE_TRUCK, vehicle_id="TRK-001"),
+        Vehicle.from_type(VehicleType.MEDIUM_TRUCK, vehicle_id="TRK-002"),
+    ]
+    fleet = Fleet(vehicles=vehicles)
+    
+    for v in vehicles:
+        print(f"   {v.id}: {v.vehicle_type.value}")
+    
+    # Setup drivers
+    print("\n2. Setting up driver pool...")
+    drivers = [
+        Driver(id="DRV-001", name="Driver 1", skill_level=DriverSkill.SENIOR),
+        Driver(id="DRV-002", name="Driver 2", skill_level=DriverSkill.STANDARD),
+    ]
+    driver_pool = DriverPool(drivers=drivers)
+    
+    # Setup depot
+    depot = Location(id="DEPOT", name="Warehouse", latitude=40.7128, longitude=-74.0060)
     
     # Create delivery orders
-    print("\n1. Creating delivery orders...")
+    print("\n3. Creating delivery orders...")
     orders = [
         DeliveryOrder(
-            order_id="ORD-001",
-            customer_id="CUST-A",
-            location=Location("LOC-A", "Customer A", 40.7589, -73.9851),
+            id="ORD-001",
+            customer_id="CUST-001",
+            destination=Location(id="LOC-001", latitude=40.7580, longitude=-73.9855),
             packages=[
-                Box("PKG-A1", BoxType.MEDIUM, 60, 45, 35, 15),
-                Box("PKG-A2", BoxType.SMALL, 35, 30, 25, 8),
+                Box(id="PKG-001", length=50, width=40, height=30, weight=10, sequence=1),
+                Box(id="PKG-002", length=30, width=25, height=20, weight=5, sequence=1),
             ],
-            time_window_start=datetime.now() + timedelta(hours=2),
-            time_window_end=datetime.now() + timedelta(hours=4),
             priority=1
         ),
         DeliveryOrder(
-            order_id="ORD-002",
-            customer_id="CUST-B",
-            location=Location("LOC-B", "Customer B", 40.6782, -73.9442),
+            id="ORD-002",
+            customer_id="CUST-002",
+            destination=Location(id="LOC-002", latitude=40.7489, longitude=-73.9680),
             packages=[
-                Box("PKG-B1", BoxType.LARGE, 100, 80, 60, 45),
+                Box(id="PKG-003", length=80, width=60, height=50, weight=25, sequence=2),
             ],
-            time_window_start=datetime.now() + timedelta(hours=3),
-            time_window_end=datetime.now() + timedelta(hours=6),
             priority=2
         ),
         DeliveryOrder(
-            order_id="ORD-003",
-            customer_id="CUST-C",
-            location=Location("LOC-C", "Customer C", 40.7282, -73.7949),
+            id="ORD-003",
+            customer_id="CUST-003",
+            destination=Location(id="LOC-003", latitude=40.7614, longitude=-73.9776),
             packages=[
-                Box("PKG-C1", BoxType.SMALL, 40, 35, 30, 10),
-                Box("PKG-C2", BoxType.SMALL, 38, 32, 28, 9),
-                Box("PKG-C3", BoxType.MEDIUM, 55, 45, 35, 18),
+                Box(id="PKG-004", length=40, width=35, height=25, weight=8, sequence=3),
+                Box(id="PKG-005", length=45, width=40, height=30, weight=12, sequence=3),
             ],
-            time_window_start=datetime.now() + timedelta(hours=1),
-            time_window_end=datetime.now() + timedelta(hours=5),
             priority=1
         ),
     ]
     
     for order in orders:
-        print(f"   {order.order_id}: {len(order.packages)} packages to {order.customer_id}")
+        print(f"   {order.id}: {order.num_packages} packages, "
+              f"{order.total_weight:.1f}kg, Priority: {order.priority}")
     
     # Initialize planner
-    print("\n2. Initializing delivery planner...")
-    depot = Location("DEPOT", "Distribution Center", 40.7128, -74.0060)
+    planner = DeliveryPlanner(
+        fleet=fleet,
+        driver_pool=driver_pool,
+        depot_location=depot
+    )
     
-    # Create a simple fleet
-    fleet = Fleet()
-    fleet.add_vehicle(Vehicle("TRUCK-1", VehicleType.BOX_TRUCK, 3000, 40_000_000))
-    fleet.add_vehicle(Vehicle("VAN-1", VehicleType.LARGE_VAN, 2000, 15_000_000))
-    
-    # Create driver pool
-    pool = DriverPool()
-    pool.add_driver(Driver("DRV-1", "Driver One", [DriverSkill.STANDARD]))
-    pool.add_driver(Driver("DRV-2", "Driver Two", [DriverSkill.STANDARD]))
-    
-    planner = DeliveryPlanner(depot, fleet, pool)
-    
-    # Generate plan
-    print("\n3. Generating delivery plan...")
-    plan = planner.plan_deliveries(orders)
-    
-    # Display results
-    print(f"\n4. Planning Results:")
-    print(f"   ✅ Orders planned: {len(plan.assigned_orders)}/{len(orders)}")
-    print(f"   🚚 Vehicles used: {len(plan.vehicle_assignments)}")
-    print(f"   👷 Drivers assigned: {len(plan.driver_assignments)}")
-    
-    for vehicle_id, route in plan.vehicle_assignments.items():
-        driver_id = plan.driver_assignments.get(vehicle_id, "Unassigned")
-        print(f"\n   Vehicle {vehicle_id} (Driver: {driver_id}):")
-        print(f"      Route: {' → '.join(route.stops)}")
-        print(f"      Distance: {route.total_distance:.2f} km")
-        print(f"      Est. time: {route.total_distance / 30:.1f} hours")
-    
-    print(f"\n5. Summary:")
-    print(f"   Total distance: {plan.total_distance:.2f} km")
-    print(f"   Total packages: {plan.total_packages}")
-    print(f"   Estimated completion: {plan.estimated_completion}")
-    
-    return plan
+    # Generate delivery plan
+    print("\n4. Planning Results:")
+    try:
+        result = planner.plan_deliveries(orders)
+        
+        print(f"   ✅ Orders assigned: {len(orders) - len(result.unassigned_orders)}/{len(orders)}")
+        print(f"   🚛 Vehicles used: {result.vehicles_used}")
+        print(f"   📏 Total distance: {result.total_distance:.2f} km")
+        print(f"   ⏱️  Total time: {result.total_time:.1f} minutes")
+        
+        print("\n5. Summary:")
+        print(f"   Planning completed: {result.is_complete}")
+        print(f"   Computation time: {result.computation_time:.2f}s")
+        
+        return result
+    except Exception as e:
+        print(f"   ⚠️  Planning error: {str(e)}")
+        return None
 
 
 def main():
     """Run all demonstrations."""
     print("\n" + "=" * 60)
-    print("🚚 DELIVERY PLANNING SYSTEM - INTERACTIVE DEMO 🚚")
+    print("🚚 DELIVERY PLANNING SYSTEM - INTERACTIVE DEMO")
     print("=" * 60)
-    print("\nThis demo showcases the complete delivery planning system")
-    print("including 3D bin packing, route optimization, and resource planning.\n")
-    
-    demos = [
-        ("1", "3D Bin Packing", demo_bin_packing),
-        ("2", "Route Optimization", demo_route_optimization),
-        ("3", "Resource Planning", demo_resource_planning),
-        ("4", "Vehicle Planning", demo_vehicle_planning),
-        ("5", "Complete Planning", demo_complete_planning),
-        ("A", "Run All Demos", None),
-    ]
-    
-    print("Available Demonstrations:")
-    for key, name, _ in demos:
-        print(f"   [{key}] {name}")
-    print("   [Q] Quit\n")
+    print("\nThis demo showcases the key components of the system:")
+    print("1. 3D Bin Packing Algorithm")
+    print("2. Vehicle Route Optimization")
+    print("3. Driver/Resource Planning")
+    print("4. Complete Delivery Planning")
     
     while True:
-        choice = input("Select demo (1-5, A, or Q): ").strip().upper()
+        print("\n" + "-" * 40)
+        print("Select a demo to run:")
+        print("  1. 3D Bin Packing")
+        print("  2. Route Optimization")
+        print("  3. Resource Planning")
+        print("  4. Complete Planning")
+        print("  5. Run All Demos")
+        print("  0. Exit")
         
-        if choice == "Q":
+        try:
+            choice = input("\nEnter choice (0-5): ").strip()
+        except EOFError:
+            # Non-interactive mode - run all demos
+            choice = "5"
+        
+        if choice == "0":
             print("\nThank you for exploring the Delivery Planning System!")
             break
-        elif choice == "A":
-            for key, name, func in demos[:-1]:  # Exclude "Run All"
-                func()
+        elif choice == "1":
+            demo_bin_packing()
+        elif choice == "2":
+            demo_route_optimization()
+        elif choice == "3":
+            demo_resource_planning()
+        elif choice == "4":
+            demo_complete_planning()
+        elif choice == "5":
+            demo_bin_packing()
+            demo_route_optimization()
+            demo_resource_planning()
+            demo_complete_planning()
             print("\n" + "=" * 60)
-            print("✅ All demonstrations completed!")
+            print("All demos completed!")
             print("=" * 60)
-        elif choice in [d[0] for d in demos[:-1]]:
-            for key, name, func in demos[:-1]:
-                if key == choice:
-                    func()
-                    break
+            break
         else:
-            print("Invalid choice. Please try again.")
+            print("Invalid choice. Please enter 0-5.")
 
 
 if __name__ == "__main__":
