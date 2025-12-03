@@ -601,41 +601,46 @@
             cargoGroup.add(roof);
             
             // === REAR DOORS ===
-            const doorWidth = (cargoW - wallThickness * 3) / 2;
+            // Doors swing outward from hinges at the outer edges of the truck
+            const doorWidth = (cargoW - wallThickness * 2) / 2;
             const doorGeo = new THREE.BoxGeometry(wallThickness * 2, cargoH * 0.95, doorWidth);
             
-            // Left door
+            // Left door - hinge is at z=0 (left edge of truck)
             leftDoor = new THREE.Group();
             const leftDoorMesh = new THREE.Mesh(doorGeo, cargoMaterial);
-            leftDoorMesh.position.set(0, 0, -doorWidth/2);
+            // Position door mesh so pivot point is at the hinge (outer edge)
+            leftDoorMesh.position.set(wallThickness, 0, doorWidth/2);
             leftDoor.add(leftDoorMesh);
             
-            // Door handle left
+            // Door handle left (on the inner edge, near center of truck)
             const handleGeo = new THREE.BoxGeometry(0.08, 0.3, 0.05);
             const leftHandle = new THREE.Mesh(handleGeo, darkMaterial);
-            leftHandle.position.set(0.05, 0, -doorWidth + 0.1);
+            leftHandle.position.set(wallThickness * 2 + 0.02, 0, doorWidth - 0.15);
             leftDoor.add(leftHandle);
             
-            leftDoor.position.set(wallThickness, floorHeight + cargoH/2, doorWidth/2 + wallThickness);
+            // Position left door group at the hinge point (left outer edge at rear)
+            leftDoor.position.set(0, floorHeight + cargoH/2, 0);
             cargoGroup.add(leftDoor);
             
-            // Right door
+            // Right door - hinge is at z=cargoW (right edge of truck)
             rightDoor = new THREE.Group();
             const rightDoorMesh = new THREE.Mesh(doorGeo, cargoMaterial);
-            rightDoorMesh.position.set(0, 0, doorWidth/2);
+            // Position door mesh so pivot point is at the hinge (outer edge)
+            rightDoorMesh.position.set(wallThickness, 0, -doorWidth/2);
             rightDoor.add(rightDoorMesh);
             
-            // Door handle right
+            // Door handle right (on the inner edge, near center of truck)
             const rightHandle = new THREE.Mesh(handleGeo, darkMaterial);
-            rightHandle.position.set(0.05, 0, doorWidth - 0.1);
+            rightHandle.position.set(wallThickness * 2 + 0.02, 0, -doorWidth + 0.15);
             rightDoor.add(rightHandle);
             
-            rightDoor.position.set(wallThickness, floorHeight + cargoH/2, cargoW - doorWidth/2 - wallThickness);
+            // Position right door group at the hinge point (right outer edge at rear)
+            rightDoor.position.set(0, floorHeight + cargoH/2, cargoW);
             cargoGroup.add(rightDoor);
             
-            // Open doors by default
-            leftDoor.rotation.y = -Math.PI / 2;
-            rightDoor.rotation.y = Math.PI / 2;
+            // Open doors by default - swing outward from hinges
+            leftDoor.rotation.y = Math.PI / 2;  // Left door opens to the left
+            rightDoor.rotation.y = -Math.PI / 2; // Right door opens to the right
             
             // === CAB ===
             const cabGroup = new THREE.Group();
@@ -803,7 +808,12 @@
         
         function toggleDoors() {
             doorsOpen = !doorsOpen;
-            const targetAngle = doorsOpen ? Math.PI / 2 : 0;
+            
+            // Doors swing from hinges at outer edges
+            // Open: left door rotates +90° (opens left), right door rotates -90° (opens right)
+            // Closed: both doors at 0°
+            const leftTargetAngle = doorsOpen ? Math.PI / 2 : 0;
+            const rightTargetAngle = doorsOpen ? -Math.PI / 2 : 0;
             
             // Animate doors
             const duration = 500;
@@ -816,8 +826,8 @@
                 const progress = Math.min(elapsed / duration, 1);
                 const eased = 1 - Math.pow(1 - progress, 3);
                 
-                leftDoor.rotation.y = startLeftAngle + (-targetAngle - startLeftAngle) * eased;
-                rightDoor.rotation.y = startRightAngle + (targetAngle - startRightAngle) * eased;
+                leftDoor.rotation.y = startLeftAngle + (leftTargetAngle - startLeftAngle) * eased;
+                rightDoor.rotation.y = startRightAngle + (rightTargetAngle - startRightAngle) * eased;
                 
                 if (progress < 1) {
                     requestAnimationFrame(animateDoors);
