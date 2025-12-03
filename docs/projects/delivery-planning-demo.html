@@ -1009,36 +1009,78 @@
         }
         
         // Calculate a score for placing a box at a given position
+        // STABILITY-FIRST: Fill layers from bottom up, front to back within each layer
         function calculatePlacementScore(pos, dims, packedBoxes) {
             let score = 0;
             
-            // 1. Prioritize front of truck (high x) - items loaded first go deepest
-            // This is CRITICAL for human-realistic LIFO loading
-            score += (pos.x / truckDims.length) * 10000;
+            // LAYER-BASED SCORING for stability
+            // Divide truck height into layers (e.g., every 50cm)
+            const layerHeight = 50;
+            const currentLayer = Math.floor(pos.y / layerHeight);
             
-            // 2. Prefer lower positions (fill floor first, then stack)
-            score -= (pos.y / truckDims.height) * 100;
+            // 1. STRONGLY prefer lower layers (fill floor completely before stacking)
+            // This is the key to stability!
+            score -= currentLayer * 50000;
             
-            // 3. Slight preference for left side (simulates human reach pattern)
+            // 2. Within the same layer, prefer front of truck (LIFO loading)
+            score += (pos.x / truckDims.length) * 1000;
+            
+            // 3. Within same layer and depth, fill left to right
             score -= (pos.z / truckDims.width) * 10;
             
-            // 4. Reward corner positions (more stable)
-            if (pos.x === 0 || pos.z === 0) score += 50;
+            // 4. Strong reward for floor positions (most stable)
+            if (pos.y < 1) score += 10000;
             
             // 5. Reward positions that fit snugly against walls or other boxes
             const contactScore = calculateContactScore(pos, dims, packedBoxes);
-            score += contactScore * 200;
+            score += contactScore * 500;
             
             // 6. Penalize positions that create hard-to-fill gaps
             const gapPenalty = calculateGapPenalty(pos, dims, packedBoxes);
-            score -= gapPenalty * 100;
+            score -= gapPenalty * 200;
             
-            // 7. Prefer keeping boxes upright (original orientation)
+            // 7. Bonus for stacking directly on top of another box (pyramid style)
+            if (pos.y > 0) {
+                const directSupport = getDirectSupportScore(pos, dims, packedBoxes);
+                score += directSupport * 300;
+            }
+            
+            // 8. Prefer keeping boxes upright (original orientation)
             if (dims.rotated === false) score += 20;
             else if (dims.rotated === true) score += 15;
-            // Rotated onto side/flat gets lower score
             
             return score;
+        }
+        
+        // Calculate how well a position is directly supported by boxes below
+        function getDirectSupportScore(pos, dims, packedBoxes) {
+            let supportScore = 0;
+            const l = dims.l, w = dims.w;
+            const boxArea = l * w;
+            
+            for (const packed of packedBoxes) {
+                const packedTop = packed.position.y + packed.packedDims.height;
+                // Check if this box is directly below (within 2cm)
+                if (Math.abs(packedTop - pos.y) < 2) {
+                    const overlapX = Math.max(0, 
+                        Math.min(pos.x + l, packed.position.x + packed.packedDims.length) -
+                        Math.max(pos.x, packed.position.x)
+                    );
+                    const overlapZ = Math.max(0,
+                        Math.min(pos.z + w, packed.position.z + packed.packedDims.width) -
+                        Math.max(pos.z, packed.position.z)
+                    );
+                    const overlapArea = overlapX * overlapZ;
+                    
+                    // Bonus for centered support (box sitting squarely on another)
+                    if (overlapArea / boxArea > 0.7) {
+                        supportScore += 1.0;
+                    } else if (overlapArea / boxArea > 0.5) {
+                        supportScore += 0.5;
+                    }
+                }
+            }
+            return supportScore;
         }
         
         // Calculate how much contact area the box has with walls and other boxes
@@ -1166,6 +1208,7 @@
             if (pos.y > 0.5) {
                 let supportArea = 0;
                 const boxArea = length * width;
+                let supportingBoxes = [];
                 
                 for (const packed of packedBoxes) {
                     const packedTop = packed.position.y + packed.packedDims.height;
@@ -1178,12 +1221,34 @@
                             Math.min(pos.z + width, packed.position.z + packed.packedDims.width) -
                             Math.max(pos.z, packed.position.z)
                         );
-                        supportArea += overlapX * overlapZ;
+                        if (overlapX > 0 && overlapZ > 0) {
+                            supportArea += overlapX * overlapZ;
+                            supportingBoxes.push({ box: packed, overlapX, overlapZ });
+                        }
                     }
                 }
                 
-                // Need at least 50% support for stability
-                if (supportArea / boxArea < 0.5) return false;
+                // Need at least 60% support for stability (increased from 50%)
+                if (supportArea / boxArea < 0.6) return false;
+                
+                // Additional stability check: center of mass should be over support
+                // The box's center should be within the support area
+                const boxCenterX = pos.x + length / 2;
+                const boxCenterZ = pos.z + width / 2;
+                
+                let centerSupported = false;
+                for (const support of supportingBoxes) {
+                    const sp = support.box.position;
+                    const sd = support.box.packedDims;
+                    if (boxCenterX >= sp.x && boxCenterX <= sp.x + sd.length &&
+                        boxCenterZ >= sp.z && boxCenterZ <= sp.z + sd.width) {
+                        centerSupported = true;
+                        break;
+                    }
+                }
+                
+                // If center isn't over any single box, need even more support
+                if (!centerSupported && supportArea / boxArea < 0.75) return false;
             }
             
             return true;
