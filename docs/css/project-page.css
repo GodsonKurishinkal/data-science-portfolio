@@ -1330,6 +1330,59 @@
     color: var(--text-tertiary);
 }
 
+/* ===================================
+   KPI CARDS GRID
+   =================================== */
+
+.kpi-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.kpi-card {
+    background: white;
+    border: 1px solid var(--border-light);
+    border-radius: 1rem;
+    padding: 1.75rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.kpi-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent-tertiary);
+}
+
+.kpi-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.kpi-card-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+
+.kpi-card-label {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
 @media (max-width: 768px) {
     .workflow-step::after {
         display: none;
@@ -1345,6 +1398,25 @@
     
     .kpi-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .kpi-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .kpi-card {
+        padding: 1.25rem;
+    }
+    
+    .kpi-card-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+    
+    .kpi-card-value {
+        font-size: 1.5rem;
     }
     
     .interpretation-grid {
