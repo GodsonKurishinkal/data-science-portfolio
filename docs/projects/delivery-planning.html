@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Delivery Planning System - 3D Bin Packing, Route Optimization, and Fleet Management with Interactive 3D Visualization">
+    <title>Delivery Planning | Godson Kurishinkal</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚚</text></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/portfolio.css">
+    <link rel="stylesheet" href="../css/project-page.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="../index.html" class="nav-brand">Godson Kurishinkal</a>
+            <ul class="nav-menu">
+                <li><a href="../index.html#home" class="nav-link">Home</a></li>
+                <li><a href="../index.html#projects" class="nav-link">Projects</a></li>
+                <li><a href="../index.html#skills" class="nav-link">Skills</a></li>
+                <li><a href="../index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Project Hero -->
+    <section class="project-hero">
+        <div class="container">
+            <nav class="breadcrumb">
+                <a href="../index.html">Home</a>
+                <i class="fas fa-chevron-right"></i>
+                <a href="../index.html#projects">Projects</a>
+                <i class="fas fa-chevron-right"></i>
+                <span>Delivery Planning</span>
+            </nav>
+            
+            <div class="project-hero-content">
+                <div class="project-badge-large">
+                    <span>🚚</span>
+                </div>
+                
+                <span class="project-category">Operations Research • Last-Mile Delivery</span>
+                
+                <h1 class="project-title">Delivery Planning System</h1>
+                
+                <p class="project-subtitle">
+                    Comprehensive delivery optimization featuring 3D bin packing with Extreme Points algorithm, vehicle routing, resource planning, and fleet management—with interactive 3D truck loading visualization.
+                </p>
+                
+                <div class="project-actions">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/delivery-planning-system" target="_blank" class="btn btn-primary">
+                        <i class="fab fa-github"></i> View Code
+                    </a>
+                    <a href="#algorithms" class="btn btn-secondary">
+                        <i class="fas fa-cube"></i> Algorithms
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-cube"></i></div>
+                    <div class="stat-value">3D</div>
+                    <div class="stat-label">Bin Packing</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-route"></i></div>
+                    <div class="stat-value">VRP</div>
+                    <div class="stat-label">Route Optimization</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-value">Auto</div>
+                    <div class="stat-label">Driver Scheduling</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-eye"></i></div>
+                    <div class="stat-value">3D</div>
+                    <div class="stat-label">Visualization</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-grid">
+                <div class="main-content">
+                    <h2 class="section-title">
+                        <i class="fas fa-lightbulb"></i>
+                        Business Problem
+                    </h2>
+                    <p class="lead-text">
+                        How do you efficiently load delivery trucks while respecting delivery sequence (LIFO), weight limits, and fragility constraints? How do you then route those trucks optimally while scheduling drivers?
+                    </p>
+                    <p>
+                        This project provides an <strong>end-to-end delivery planning solution</strong> that solves the complete last-mile delivery problem—from box packing to route optimization to resource scheduling.
+                    </p>
+                    
+                    <h2 class="section-title">
+                        <i class="fas fa-trophy"></i>
+                        Key Capabilities
+                    </h2>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <div class="result-value">LIFO</div>
+                            <div class="result-label">Sequence Aware</div>
+                            <div class="result-context">Last loaded = First delivered</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">85%+</div>
+                            <div class="result-label">Space Utilization</div>
+                            <div class="result-context">Optimal packing</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">Multi</div>
+                            <div class="result-label">Vehicle Types</div>
+                            <div class="result-context">Van to semi-trailer</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value">Real-Time</div>
+                            <div class="result-label">3D Simulation</div>
+                            <div class="result-context">Interactive HTML5</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <aside class="sidebar">
+                    <div class="info-card">
+                        <h3><i class="fas fa-info-circle"></i> Project Info</h3>
+                        <ul class="info-list">
+                            <li>
+                                <span class="info-label">Status</span>
+                                <span class="info-value status-complete">✓ Complete</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Duration</span>
+                                <span class="info-value">2 Months</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Complexity</span>
+                                <span class="info-value">Advanced</span>
+                            </li>
+                            <li>
+                                <span class="info-label">Algorithm</span>
+                                <span class="info-value">Extreme Points</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3><i class="fas fa-layer-group"></i> Tech Stack</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Python 3.9+</span>
+                            <span class="tech-tag">NumPy</span>
+                            <span class="tech-tag">SciPy</span>
+                            <span class="tech-tag">NetworkX</span>
+                            <span class="tech-tag">Three.js</span>
+                            <span class="tech-tag">Matplotlib</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithms Section -->
+    <section class="content-section alt-bg" id="algorithms">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title centered">
+                    <i class="fas fa-cube"></i>
+                    Core Components
+                </h2>
+                <p class="section-subtitle">Five integrated modules for complete delivery planning</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3>3D Bin Packing</h3>
+                    <p>Advanced Extreme Points algorithm with rotation support. Handles weight limits, fragility, stacking constraints, and LIFO sequence for delivery order.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Route Optimization</h3>
+                    <p>Vehicle Routing Problem solver with time windows, capacity constraints, and multi-depot support. Nearest neighbor + 2-opt local search.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users-cog"></i>
+                    </div>
+                    <h3>Resource Planning</h3>
+                    <p>Driver scheduling and assignment with skill-based allocation. Working hours, breaks, and load balancing for workload distribution.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Fleet Management</h3>
+                    <p>Vehicle capacity modeling from small vans to semi-trailers. Maintenance scheduling, fuel estimation, and utilization tracking.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3>3D Visualization</h3>
+                    <p>Interactive Three.js simulation showing real-time truck loading. Step-by-step animation with rotation, zoom, and color-coded packages.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Delivery Orchestrator</h3>
+                    <p>Master planner coordinating all modules. Generates optimized delivery plans from orders to routes to driver assignments.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Algorithm Details -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title centered">
+                    <i class="fas fa-microchip"></i>
+                    3D Bin Packing Algorithm
+                </h2>
+                <p class="section-subtitle">Extreme Points algorithm with sequence-aware loading</p>
+            </div>
+            
+            <div class="formula-grid">
+                <div class="formula-card">
+                    <h3>Extreme Points (EP)</h3>
+                    <div class="formula">EP = {(x,y,z) | corner of placed box}</div>
+                    <p>Track potential placement positions at box corners. New points generated after each placement.</p>
+                </div>
+                
+                <div class="formula-card">
+                    <h3>Best Fit Selection</h3>
+                    <div class="formula">score = α·fit + β·support + γ·sequence</div>
+                    <p>Multi-criteria scoring for placement position selection considering fit, stability, and delivery order.</p>
+                </div>
+                
+                <div class="formula-card">
+                    <h3>Weight Balance</h3>
+                    <div class="formula">Σweight_left ≈ Σweight_right</div>
+                    <p>Load balancing constraint to ensure vehicle stability during transport.</p>
+                </div>
+                
+                <div class="formula-card">
+                    <h3>Stacking Constraint</h3>
+                    <div class="formula">fragile_box.z > heavy_box.z</div>
+                    <p>Fragile items placed on top; heavy items at bottom for stability and damage prevention.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packing Strategies -->
+    <section class="content-section alt-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title centered">
+                    <i class="fas fa-cogs"></i>
+                    Packing Strategies
+                </h2>
+                <p class="section-subtitle">Multiple strategies for different optimization goals</p>
+            </div>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-compress-arrows-alt"></i></div>
+                    <h3>Best Fit</h3>
+                    <p>Maximizes space utilization by finding the tightest fit for each box at available extreme points.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-fast-forward"></i></div>
+                    <h3>First Fit</h3>
+                    <p>Fast placement using first valid position found. Good for real-time applications with speed priority.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-sort-numeric-down"></i></div>
+                    <h3>Sequence Aware</h3>
+                    <p>LIFO-optimized loading ensuring last-loaded items are first accessible for delivery order.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-balance-scale-right"></i></div>
+                    <h3>Weight Balanced</h3>
+                    <p>Distributes weight evenly across the container for vehicle stability and fuel efficiency.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Example -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title centered">
+                    <i class="fas fa-code"></i>
+                    Quick Start
+                </h2>
+                <p class="section-subtitle">Pack boxes into a delivery truck with sequence awareness</p>
+            </div>
+            
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-title">demo.py</span>
+                    <span class="code-lang">Python</span>
+                </div>
+                <pre><code><span class="keyword">from</span> src.packing <span class="keyword">import</span> BinPacker, Box, BoxType, Container, ContainerType
+<span class="keyword">from</span> src.packing <span class="keyword">import</span> PackingStrategy, SortingCriterion
+
+<span class="comment"># Create boxes with delivery sequence</span>
+boxes = [
+    Box(id=<span class="string">"PKG001"</span>, length=<span class="number">40</span>, width=<span class="number">30</span>, height=<span class="number">30</span>, 
+        weight=<span class="number">10</span>, sequence=<span class="number">1</span>, box_type=BoxType.STANDARD),
+    Box(id=<span class="string">"PKG002"</span>, length=<span class="number">50</span>, width=<span class="number">40</span>, height=<span class="number">35</span>, 
+        weight=<span class="number">15</span>, sequence=<span class="number">2</span>, box_type=BoxType.FRAGILE),
+    Box(id=<span class="string">"PKG003"</span>, length=<span class="number">30</span>, width=<span class="number">25</span>, height=<span class="number">20</span>, 
+        weight=<span class="number">5</span>, sequence=<span class="number">3</span>, box_type=BoxType.STANDARD),
+]
+
+<span class="comment"># Create a delivery truck</span>
+truck = Container.from_type(
+    ContainerType.LARGE_TRUCK, 
+    container_id=<span class="string">"TRUCK-001"</span>
+)
+
+<span class="comment"># Configure packer with sequence-aware strategy</span>
+packer = BinPacker(
+    strategy=PackingStrategy.SEQUENCE_AWARE,
+    sorting=SortingCriterion.SEQUENCE_ASC
+)
+
+<span class="comment"># Pack and get results</span>
+result = packer.pack(boxes, truck)
+
+print(f<span class="string">"Packed: {result.num_packed}/{len(boxes)} boxes"</span>)
+print(f<span class="string">"Utilization: {result.utilization:.1f}%"</span>)</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Box Types -->
+    <section class="content-section alt-bg">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title centered">
+                    <i class="fas fa-box"></i>
+                    Supported Box Types
+                </h2>
+                <p class="section-subtitle">Handle different cargo types with appropriate constraints</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h3>Standard</h3>
+                    <p>Regular packages with no special handling requirements. Can be stacked and rotated freely.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-glass-martini-alt"></i>
+                    </div>
+                    <h3>Fragile</h3>
+                    <p>Delicate items that must be placed on top. Cannot have heavy items stacked above.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-radiation"></i>
+                    </div>
+                    <h3>Hazardous</h3>
+                    <p>Dangerous goods requiring separation and special placement constraints.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h3>Perishable</h3>
+                    <p>Temperature-sensitive items needing priority delivery and specific container zones.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-weight-hanging"></i>
+                    </div>
+                    <h3>Heavy</h3>
+                    <p>Dense items that must be placed at the bottom. Contributes to weight balancing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Types -->
+    <section class="content-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title centered">
+                    <i class="fas fa-truck-moving"></i>
+                    Vehicle Types
+                </h2>
+                <p class="section-subtitle">Pre-configured container types for common delivery vehicles</p>
+            </div>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-shuttle-van"></i></div>
+                    <h3>Small Van</h3>
+                    <p>300×150×180 cm, 1,000 kg max. Ideal for last-mile residential deliveries.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-truck"></i></div>
+                    <h3>Medium Truck</h3>
+                    <p>450×200×220 cm, 3,000 kg max. Good for B2B and larger residential orders.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-truck-moving"></i></div>
+                    <h3>Large Truck</h3>
+                    <p>600×250×270 cm, 5,000 kg max. Standard for regional distribution.</p>
+                </div>
+                
+                <div class="insight-card">
+                    <div class="insight-icon"><i class="fas fa-trailer"></i></div>
+                    <h3>Semi Trailer</h3>
+                    <p>1350×250×280 cm, 25,000 kg max. Long-haul and high-volume routes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Explore the Complete Project</h2>
+                <p>View source code, run the demo, and try the interactive 3D visualization.</p>
+                <div class="cta-actions">
+                    <a href="https://github.com/GodsonKurishinkal/data-science-portfolio/tree/main/delivery-planning-system" target="_blank" class="btn btn-primary btn-lg">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="../index.html#projects" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> All Projects
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-text">© 2025 Godson Kurishinkal. All rights reserved.</p>
+                <ul class="footer-links">
+                    <li><a href="../index.html#home" class="footer-link">Home</a></li>
+                    <li><a href="../index.html#projects" class="footer-link">Projects</a></li>
+                    <li><a href="../index.html#contact" class="footer-link">Contact</a></li>
+                </ul>
+                <div class="social-links">
+                    <a href="https://github.com/GodsonKurishinkal" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/godsonkurishinkal" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:godson.kurishinkal@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        const revealElements = document.querySelectorAll('.feature-card, .stat-card, .result-card, .insight-card, .formula-card');
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        revealElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+        });
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+    </script>
+</body>
+</html>
