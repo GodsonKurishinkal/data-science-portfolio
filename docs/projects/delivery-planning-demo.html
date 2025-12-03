@@ -1009,47 +1009,104 @@
         }
         
         // Calculate a score for placing a box at a given position
-        // STABILITY-FIRST: Fill layers from bottom up, front to back within each layer
+        // WALL-BUILDING APPROACH: Workers load from the back (doors) toward front (cab)
+        // Each vertical column is filled completely before moving deeper into truck
+        // This is realistic because workers can't reach deep inside once front is filled
         function calculatePlacementScore(pos, dims, packedBoxes) {
             let score = 0;
             
-            // LAYER-BASED SCORING for stability
-            // Divide truck height into layers (e.g., every 50cm)
-            const layerHeight = 50;
-            const currentLayer = Math.floor(pos.y / layerHeight);
+            // COLUMN-BASED LOADING (like building a wall from back to front)
+            // Divide truck into columns along the length (depth zones ~80cm each)
+            const columnDepth = 80; // About arm's reach depth
+            const currentColumn = Math.floor(pos.x / columnDepth);
+            const maxColumn = Math.floor(truckDims.length / columnDepth);
             
-            // 1. STRONGLY prefer lower layers (fill floor completely before stacking)
-            // This is the key to stability!
-            score -= currentLayer * 50000;
+            // 1. STRONGLY prefer the back columns (near doors) first
+            // Workers start near doors and build walls moving toward cab
+            // Higher X = deeper into truck = LESS preferred until back is filled
+            score -= currentColumn * 100000;
             
-            // 2. Within the same layer, prefer front of truck (LIFO loading)
-            score += (pos.x / truckDims.length) * 1000;
+            // 2. Check if the current back column is reasonably filled
+            // Only move to next column if current one has good floor coverage
+            const backColumnFillRatio = getColumnFillRatio(currentColumn, columnDepth, packedBoxes);
             
-            // 3. Within same layer and depth, fill left to right
-            score -= (pos.z / truckDims.width) * 10;
+            // If trying to place in a deeper column, penalize unless back columns are filled
+            if (currentColumn > 0) {
+                const prevColumnFill = getColumnFillRatio(currentColumn - 1, columnDepth, packedBoxes);
+                // If previous column isn't at least 60% floor coverage, big penalty
+                if (prevColumnFill < 0.6) {
+                    score -= 50000;
+                }
+            }
             
-            // 4. Strong reward for floor positions (most stable)
-            if (pos.y < 1) score += 10000;
+            // 3. Within a column, prefer stacking (fill vertically before moving deeper)
+            // This builds the "wall" - floor first, then stack on top
+            // But stacking is good in the current column!
+            if (pos.y > 0 && currentColumn <= getActiveColumn(packedBoxes, columnDepth)) {
+                // Reward stacking in the active loading zone
+                score += 20000;
+            }
             
-            // 5. Reward positions that fit snugly against walls or other boxes
+            // 4. Prefer floor positions in the current active column
+            if (pos.y < 1) {
+                score += 5000;
+            }
+            
+            // 5. Within column, fill left to right
+            score -= (pos.z / truckDims.width) * 100;
+            
+            // 6. Reward positions that fit snugly against walls or other boxes
             const contactScore = calculateContactScore(pos, dims, packedBoxes);
             score += contactScore * 500;
             
-            // 6. Penalize positions that create hard-to-fill gaps
+            // 7. Penalize positions that create hard-to-fill gaps
             const gapPenalty = calculateGapPenalty(pos, dims, packedBoxes);
             score -= gapPenalty * 200;
             
-            // 7. Bonus for stacking directly on top of another box (pyramid style)
+            // 8. Bonus for stacking directly on top of another box
             if (pos.y > 0) {
                 const directSupport = getDirectSupportScore(pos, dims, packedBoxes);
-                score += directSupport * 300;
+                score += directSupport * 1000;
             }
             
-            // 8. Prefer keeping boxes upright (original orientation)
+            // 9. Prefer keeping boxes upright (original orientation)
             if (dims.rotated === false) score += 20;
             else if (dims.rotated === true) score += 15;
             
             return score;
+        }
+        
+        // Calculate how filled a column is (floor coverage ratio)
+        function getColumnFillRatio(columnIndex, columnDepth, packedBoxes) {
+            const columnStartX = columnIndex * columnDepth;
+            const columnEndX = Math.min((columnIndex + 1) * columnDepth, truckDims.length);
+            const columnArea = (columnEndX - columnStartX) * truckDims.width;
+            
+            let floorCoverage = 0;
+            for (const box of packedBoxes) {
+                if (box.position.y < 5) { // Floor level boxes only
+                    const overlapX = Math.max(0,
+                        Math.min(box.position.x + box.packedDims.length, columnEndX) -
+                        Math.max(box.position.x, columnStartX)
+                    );
+                    if (overlapX > 0) {
+                        floorCoverage += overlapX * box.packedDims.width;
+                    }
+                }
+            }
+            
+            return floorCoverage / columnArea;
+        }
+        
+        // Get the current active loading column (the one workers are filling)
+        function getActiveColumn(packedBoxes, columnDepth) {
+            // Find the furthest column that has any boxes
+            let activeColumn = 0;
+            for (const box of packedBoxes) {
+                const boxColumn = Math.floor(box.position.x / columnDepth);
+                activeColumn = Math.max(activeColumn, boxColumn);
+            }
+            return activeColumn;
         }
         
         // Calculate how well a position is directly supported by boxes below
