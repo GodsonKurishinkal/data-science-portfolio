@@ -336,11 +336,317 @@
         .weight-heavy { color: #ff6b6b; }
         .weight-medium { color: #ffc107; }
         .weight-light { color: #4caf50; }
+        
+        /* Desktop/Mobile only visibility */
+        .mobile-only { display: none; }
+        .desktop-only { display: inline; }
+        
+        /* Mobile Toggle Button */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(78, 205, 196, 0.4);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-toggle:active {
+            transform: scale(0.95);
+        }
+        
+        /* Mobile Close Button */
+        .mobile-close {
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 107, 107, 0.8);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        /* ============================================================
+           MOBILE RESPONSIVE STYLES
+           ============================================================ */
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+            
+            #container {
+                flex-direction: column;
+                height: 100vh;
+                height: 100dvh; /* Dynamic viewport height for mobile */
+            }
+            
+            #sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 999;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                padding: 15px;
+                padding-top: 50px;
+                border-right: none;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            #sidebar.open {
+                transform: translateX(0);
+            }
+            
+            #canvas-container {
+                width: 100%;
+                height: 100%;
+                min-height: 100vh;
+                min-height: 100dvh;
+            }
+            
+            .mobile-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .mobile-close {
+                display: block;
+            }
+            
+            /* Show mobile controls, hide desktop controls */
+            .mobile-only { display: inline; }
+            .desktop-only { display: none; }
+            
+            h1 {
+                font-size: 1.2rem;
+                margin-bottom: 5px;
+            }
+            
+            .subtitle {
+                font-size: 0.75rem;
+                margin-bottom: 15px;
+            }
+            
+            h2 {
+                font-size: 1rem;
+                margin: 15px 0 8px;
+            }
+            
+            .dimension-inputs {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .control-group {
+                margin-bottom: 10px;
+            }
+            
+            label {
+                font-size: 0.8rem;
+                margin-bottom: 3px;
+            }
+            
+            input[type="number"], select {
+                padding: 10px 8px;
+                font-size: 16px; /* Prevents iOS zoom on focus */
+            }
+            
+            button {
+                padding: 12px 16px;
+                font-size: 0.85rem;
+                margin: 4px 4px 4px 0;
+            }
+            
+            /* Button grid for mobile */
+            .button-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .button-row button {
+                flex: 1;
+                min-width: 45%;
+                margin: 0;
+            }
+            
+            #stats {
+                padding: 10px;
+                margin-top: 15px;
+            }
+            
+            .stat-row {
+                font-size: 0.8rem;
+                margin-bottom: 6px;
+            }
+            
+            #box-list {
+                max-height: 150px;
+            }
+            
+            .box-item {
+                padding: 6px;
+                font-size: 0.8rem;
+            }
+            
+            .utilization-panel {
+                padding: 10px;
+            }
+            
+            .util-metric {
+                font-size: 0.8rem;
+            }
+            
+            .zone-legend {
+                padding: 8px;
+                gap: 6px;
+            }
+            
+            .zone-item {
+                font-size: 0.75rem;
+            }
+            
+            #info-overlay {
+                top: 10px;
+                left: 10px;
+                padding: 10px 12px;
+                font-size: 0.75rem;
+                max-width: 180px;
+            }
+            
+            #loading-status {
+                bottom: 80px; /* Above toggle button */
+                padding: 8px 20px;
+                font-size: 0.8rem;
+                max-width: 90%;
+                text-align: center;
+            }
+            
+            /* Collapsible sections for mobile */
+            .section-collapsible {
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .section-collapsible.collapsed .section-content {
+                display: none;
+            }
+            
+            .section-collapsible h2 {
+                cursor: pointer;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .section-collapsible h2::after {
+                content: '▼';
+                font-size: 0.7rem;
+                transition: transform 0.3s ease;
+            }
+            
+            .section-collapsible.collapsed h2::after {
+                transform: rotate(-90deg);
+            }
+        }
+        
+        /* Small phones */
+        @media (max-width: 380px) {
+            #sidebar {
+                padding: 10px;
+                padding-top: 45px;
+            }
+            
+            h1 {
+                font-size: 1.1rem;
+            }
+            
+            .subtitle {
+                font-size: 0.7rem;
+            }
+            
+            .dimension-inputs {
+                gap: 5px;
+            }
+            
+            button {
+                padding: 10px 12px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Landscape mobile */
+        @media (max-width: 768px) and (orientation: landscape) {
+            #sidebar {
+                padding-top: 40px;
+            }
+            
+            h1 {
+                font-size: 1rem;
+                margin-bottom: 3px;
+            }
+            
+            .subtitle {
+                font-size: 0.7rem;
+                margin-bottom: 10px;
+            }
+            
+            h2 {
+                margin: 10px 0 5px;
+                font-size: 0.9rem;
+            }
+            
+            .control-group {
+                margin-bottom: 8px;
+            }
+        }
+        
+        /* Tablet */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            #sidebar {
+                width: 300px;
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .subtitle {
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+    
     <div id="container">
         <div id="sidebar">
+            <!-- Mobile Close Button -->
+            <button class="mobile-close" onclick="toggleSidebar()" aria-label="Close menu">✕</button>
+            
             <h1>🚚 ML-Powered Load Optimization</h1>
             <p class="subtitle">3D Bin Packing with Extreme Points Algorithm • LIFO Optimization • Multi-Constraint Solver</p>
             
@@ -361,37 +667,43 @@
             <div class="dimension-inputs">
                 <div class="control-group">
                     <label>Length</label>
-                    <input type="number" id="box-length" value="50" min="10" max="200">
+                    <input type="number" id="box-length" value="50" min="10" max="200" inputmode="numeric">
                 </div>
                 <div class="control-group">
                     <label>Width</label>
-                    <input type="number" id="box-width" value="40" min="10" max="200">
+                    <input type="number" id="box-width" value="40" min="10" max="200" inputmode="numeric">
                 </div>
                 <div class="control-group">
                     <label>Height</label>
-                    <input type="number" id="box-height" value="30" min="10" max="200">
+                    <input type="number" id="box-height" value="30" min="10" max="200" inputmode="numeric">
                 </div>
             </div>
             <div class="control-group">
                 <label>Weight (kg)</label>
-                <input type="number" id="box-weight" value="10" min="1" max="500">
+                <input type="number" id="box-weight" value="10" min="1" max="500" inputmode="numeric">
             </div>
             <div class="control-group">
                 <label>Delivery Sequence (1 = first)</label>
-                <input type="number" id="box-sequence" value="1" min="1" max="100">
+                <input type="number" id="box-sequence" value="1" min="1" max="100" inputmode="numeric">
             </div>
             <div class="control-group checkbox-group">
                 <input type="checkbox" id="box-fragile">
                 <label for="box-fragile">Fragile Item ⚠️</label>
             </div>
-            <button class="btn-primary" onclick="addBox()">➕ Add Package</button>
-            <button class="btn-secondary" onclick="addRandomBoxes()">🎲 Add 10 Random</button>
+            <div class="button-row">
+                <button class="btn-primary" onclick="addBox()">➕ Add Package</button>
+                <button class="btn-secondary" onclick="addRandomBoxes()">🎲 Add 10 Random</button>
+            </div>
             
             <h2>🎮 Controls</h2>
-            <button class="btn-primary" onclick="runPacking()">▶️ Run Packing</button>
-            <button class="btn-primary" onclick="animatePacking()">🎬 Animate Load</button>
-            <button class="btn-secondary" onclick="resetCamera()">🎥 Reset View</button>
-            <button class="btn-danger" onclick="clearAll()">🗑️ Clear All</button>
+            <div class="button-row">
+                <button class="btn-primary" onclick="runPacking(); closeSidebarOnMobile();">▶️ Run Packing</button>
+                <button class="btn-primary" onclick="animatePacking(); closeSidebarOnMobile();">🎬 Animate</button>
+            </div>
+            <div class="button-row">
+                <button class="btn-secondary" onclick="resetCamera()">🎥 Reset View</button>
+                <button class="btn-danger" onclick="clearAll()">🗑️ Clear All</button>
+            </div>
             
             <h2>📊 Statistics</h2>
             <div id="stats">
@@ -483,14 +795,12 @@
         
         <div id="canvas-container">
             <div id="info-overlay">
-                <strong>3D Visualization Controls:</strong><br>
-                🖱️ Left drag: Orbit camera<br>
-                🖱️ Right drag: Pan view<br>
-                🖱️ Scroll: Zoom in/out<br>
+                <strong>Controls:</strong><br>
+                <span class="desktop-only">🖱️ Left drag: Orbit | Right drag: Pan | Scroll: Zoom</span>
+                <span class="mobile-only">👆 One finger: Rotate | 👌 Two fingers: Zoom/Pan</span>
                 <br>
                 <em style="font-size: 0.8em; color: #888;">
-                Algorithm: Extreme Points + BFD<br>
-                Powered by Three.js
+                Extreme Points + BFD Algorithm
                 </em>
             </div>
             <div id="loading-status">Ready to optimize</div>
@@ -498,6 +808,34 @@
     </div>
 
     <script>
+        // ============================================================
+        // MOBILE RESPONSIVE FUNCTIONS
+        // ============================================================
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+        
+        function closeSidebarOnMobile() {
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.remove('open');
+            }
+        }
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                const toggle = document.querySelector('.mobile-toggle');
+                if (!sidebar.contains(event.target) && 
+                    !toggle.contains(event.target) && 
+                    sidebar.classList.contains('open')) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+        
         // Global variables
         let scene, camera, renderer, controls;
         let truckGroup;
@@ -577,6 +915,7 @@
             
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Optimize for mobile
             renderer.shadowMap.enabled = true;
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             container.appendChild(renderer.domElement);
@@ -584,9 +923,14 @@
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.minDistance = 5;
+            controls.minDistance = 3; // Allow closer zoom on mobile
             controls.maxDistance = 50;
             controls.maxPolarAngle = Math.PI / 2;
+            controls.enablePan = true;
+            controls.touches = {
+                ONE: THREE.TOUCH.ROTATE,
+                TWO: THREE.TOUCH.DOLLY_PAN
+            };
             
             // Lighting
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -2302,10 +2646,27 @@
         
         function onWindowResize() {
             const container = document.getElementById('canvas-container');
-            camera.aspect = container.clientWidth / container.clientHeight;
+            if (!container || !camera || !renderer) return;
+            
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            camera.aspect = width / height;
             camera.updateProjectionMatrix();
-            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            
+            // Close sidebar on orientation change for mobile
+            if (window.innerWidth <= 768) {
+                const sidebar = document.getElementById('sidebar');
+                if (sidebar) sidebar.classList.remove('open');
+            }
         }
+        
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(onWindowResize, 100);
+        });
         
         function animate() {
             requestAnimationFrame(animate);
