@@ -911,21 +911,25 @@
                 return;
             }
             
-            // Best Fit Decreasing: Sort by volume (largest first) for better packing
-            // Also consider delivery sequence for LIFO loading
+            // LIFO Loading: Sort by delivery sequence
+            // Higher sequence = later delivery = loaded FIRST = goes to FRONT (cab)
+            // Lower sequence = earlier delivery = loaded LAST = stays near DOORS
             const sortedBoxes = [...boxes].sort((a, b) => {
-                // Primary: delivery sequence (higher = loaded first, goes to front)
+                // Primary: delivery sequence (higher = later delivery = load first)
                 if (b.sequence !== a.sequence) return b.sequence - a.sequence;
-                // Secondary: volume (larger boxes first for better base)
+                // Secondary: volume (larger boxes first for stable base)
                 const volA = a.length * a.width * a.height;
                 const volB = b.length * b.width * b.height;
                 return volB - volA;
             });
             
-            // Initialize extreme points with origin (back-left-bottom corner)
-            // In our coordinate system: x = depth (0 = rear doors, max = cab)
-            // z = width, y = height
-            let extremePoints = [{ x: 0, y: 0, z: 0 }];
+            // Initialize extreme points starting from FRONT of truck (cab side)
+            // Workers start at the front when truck is empty
+            // x = depth (0 = rear doors, max = cab front wall)
+            let extremePoints = [
+                { x: truckDims.length - 1, y: 0, z: 0 },  // Front-left corner
+                { x: truckDims.length - 1, y: 0, z: truckDims.width - 1 }  // Front-right corner
+            ];
             const packedBoxes = [];
             
             for (const box of sortedBoxes) {
@@ -959,6 +963,7 @@
         }
         
         // Find the best placement for a box using Extreme Points algorithm
+        // For LIFO: positions box so it fits against the front or existing boxes
         function findBestPlacement(box, extremePoints, packedBoxes) {
             let bestPlacement = null;
             let bestScore = -Infinity;
@@ -968,18 +973,26 @@
             
             for (const ep of extremePoints) {
                 for (const dims of orientations) {
-                    if (canPlaceBoxAt(ep, dims.l, dims.w, dims.h, packedBoxes)) {
-                        // Calculate placement score
-                        // Human-realistic: prioritize front (high x), then floor (low y), then left (low z)
-                        // Also reward positions that minimize wasted space
-                        const score = calculatePlacementScore(ep, dims, packedBoxes);
+                    // For front-to-back loading, adjust X so box fits within bounds
+                    // The extreme point is where the box's back edge should be
+                    // So the box extends from ep.x to ep.x + dims.l
+                    // But if ep is near front wall, we need to push box back
+                    let adjustedX = ep.x;
+                    if (adjustedX + dims.l > truckDims.length) {
+                        adjustedX = truckDims.length - dims.l;
+                    }
+                    
+                    const adjustedPos = { x: adjustedX, y: ep.y, z: ep.z };
+                    
+                    if (canPlaceBoxAt(adjustedPos, dims.l, dims.w, dims.h, packedBoxes)) {
+                        const score = calculatePlacementScore(adjustedPos, dims, packedBoxes);
                         
                         if (score > bestScore) {
                             bestScore = score;
                             bestPlacement = {
-                                x: ep.x,
-                                y: ep.y,
-                                z: ep.z,
+                                x: adjustedPos.x,
+                                y: adjustedPos.y,
+                                z: adjustedPos.z,
                                 dims: dims,
                                 rotated: dims.rotated
                             };
@@ -1009,47 +1022,54 @@
         }
         
         // Calculate a score for placing a box at a given position
-        // WALL-BUILDING APPROACH: Workers load from the back (doors) toward front (cab)
-        // Each vertical column is filled completely before moving deeper into truck
-        // This is realistic because workers can't reach deep inside once front is filled
+        // LIFO DELIVERY OPTIMIZATION: Load last-delivery items first (deepest in truck)
+        // Workers start at front (cab), build walls moving backward toward doors
+        // When truck is empty, workers CAN reach the front - so start there!
+        // Result: First delivery items are near doors, easy to grab
         function calculatePlacementScore(pos, dims, packedBoxes) {
             let score = 0;
             
-            // COLUMN-BASED LOADING (like building a wall from back to front)
-            // Divide truck into columns along the length (depth zones ~80cm each)
-            const columnDepth = 80; // About arm's reach depth
+            // COLUMN-BASED LOADING (build walls from FRONT to BACK for LIFO)
+            // Divide truck into columns along the length (~80cm each)
+            const columnDepth = 80;
             const currentColumn = Math.floor(pos.x / columnDepth);
             const maxColumn = Math.floor(truckDims.length / columnDepth);
             
-            // 1. STRONGLY prefer the back columns (near doors) first
-            // Workers start near doors and build walls moving toward cab
-            // Higher X = deeper into truck = LESS preferred until back is filled
-            score -= currentColumn * 100000;
+            // 1. PREFER FRONT (high X) columns first - this is LIFO loading!
+            // Last delivery items go deepest, first delivery items near doors
+            // Higher X = front of truck = loaded FIRST = delivered LAST
+            score += currentColumn * 100000;
             
-            // 2. Check if the current back column is reasonably filled
-            // Only move to next column if current one has good floor coverage
-            const backColumnFillRatio = getColumnFillRatio(currentColumn, columnDepth, packedBoxes);
-            
-            // If trying to place in a deeper column, penalize unless back columns are filled
-            if (currentColumn > 0) {
-                const prevColumnFill = getColumnFillRatio(currentColumn - 1, columnDepth, packedBoxes);
-                // If previous column isn't at least 60% floor coverage, big penalty
-                if (prevColumnFill < 0.6) {
-                    score -= 50000;
+            // 2. Check if current front column is filled before moving back
+            // Only move to next column (toward doors) if current one is well-filled
+            if (currentColumn < maxColumn) {
+                const currentColFill = getColumnFillRatio(currentColumn, columnDepth, packedBoxes);
+                const nextColFill = getColumnFillRatio(currentColumn + 1, columnDepth, packedBoxes);
+                
+                // If front columns aren't filled yet, prefer them
+                for (let c = maxColumn; c > currentColumn; c--) {
+                    const frontColFill = getColumnFillRatio(c, columnDepth, packedBoxes);
+                    if (frontColFill < 0.5) {
+                        // There's space in a front column, penalize this back position
+                        score -= 30000;
+                        break;
+                    }
                 }
             }
             
-            // 3. Within a column, prefer stacking (fill vertically before moving deeper)
-            // This builds the "wall" - floor first, then stack on top
-            // But stacking is good in the current column!
-            if (pos.y > 0 && currentColumn <= getActiveColumn(packedBoxes, columnDepth)) {
-                // Reward stacking in the active loading zone
-                score += 20000;
+            // 3. Within a column, fill floor first then stack
+            // This builds stable walls
+            if (pos.y < 1) {
+                score += 10000; // Floor positions get bonus
             }
             
-            // 4. Prefer floor positions in the current active column
-            if (pos.y < 1) {
-                score += 5000;
+            // 4. Stacking is good in the current active column
+            if (pos.y > 0) {
+                const activeCol = getActiveColumn(packedBoxes, columnDepth);
+                if (currentColumn >= activeCol) {
+                    // Reward stacking in the front columns we're filling
+                    score += 15000;
+                }
             }
             
             // 5. Within column, fill left to right
@@ -1069,7 +1089,7 @@
                 score += directSupport * 1000;
             }
             
-            // 9. Prefer keeping boxes upright (original orientation)
+            // 9. Prefer keeping boxes upright
             if (dims.rotated === false) score += 20;
             else if (dims.rotated === true) score += 15;
             
@@ -1312,24 +1332,31 @@
         }
         
         // Update extreme points after placing a box
+        // For LIFO: generate points that help fill from front to back
         function updateExtremePoints(currentPoints, placedBox, packedBoxes) {
             const pos = placedBox.position;
             const dims = placedBox.packedDims;
             
             // Generate new extreme points from the placed box
             const newPoints = [
-                // Point at front-right-bottom of placed box (along X)
-                { x: pos.x + dims.length, y: pos.y, z: pos.z },
-                // Point at back-right-bottom of placed box (along Z)
+                // Point toward doors (lower X = toward back/doors)
+                { x: pos.x - 1, y: pos.y, z: pos.z },
+                // Point to the right of the box (along Z)
                 { x: pos.x, y: pos.y, z: pos.z + dims.width },
-                // Point on top of placed box
-                { x: pos.x, y: pos.y + dims.height, z: pos.z }
+                // Point on top of placed box (for stacking)
+                { x: pos.x, y: pos.y + dims.height, z: pos.z },
+                // Top corners for more stacking options
+                { x: pos.x, y: pos.y + dims.height, z: pos.z + dims.width },
             ];
             
-            // Also add corner points on top
-            newPoints.push({ x: pos.x + dims.length, y: pos.y + dims.height, z: pos.z });
-            newPoints.push({ x: pos.x, y: pos.y + dims.height, z: pos.z + dims.width });
-            newPoints.push({ x: pos.x + dims.length, y: pos.y, z: pos.z + dims.width });
+            // Add points behind the box (toward doors) at floor level
+            if (pos.x > 0) {
+                newPoints.push({ x: pos.x - dims.length, y: 0, z: pos.z });
+                newPoints.push({ x: pos.x - dims.length, y: 0, z: pos.z + dims.width });
+            }
+            
+            // Add floor points in the same column
+            newPoints.push({ x: pos.x, y: 0, z: pos.z + dims.width });
             
             // Combine with existing points
             let allPoints = [...currentPoints, ...newPoints];
@@ -1339,9 +1366,9 @@
             
             // Remove points outside truck bounds
             allPoints = allPoints.filter(p => 
-                p.x >= 0 && p.x < truckDims.length &&
+                p.x >= 0 && p.x <= truckDims.length &&
                 p.y >= 0 && p.y < truckDims.height &&
-                p.z >= 0 && p.z < truckDims.width
+                p.z >= 0 && p.z <= truckDims.width
             );
             
             // Remove duplicate points
@@ -1355,13 +1382,14 @@
                 }
             }
             
-            // Sort by priority: front of truck first (high x), then floor (low y)
+            // Sort by priority: FRONT first (high x), then FLOOR (low y), then LEFT (low z)
+            // This ensures we fill front column, stack it, then move toward doors
             uniquePoints.sort((a, b) => {
-                // Primary: higher X (front of truck, cab side)
+                // Primary: higher X = front of truck = fill first
                 if (Math.abs(b.x - a.x) > 5) return b.x - a.x;
-                // Secondary: lower Y (floor first)
+                // Secondary: lower Y = floor first, then stack
                 if (Math.abs(a.y - b.y) > 5) return a.y - b.y;
-                // Tertiary: lower Z (left side)
+                // Tertiary: lower Z = left side first
                 return a.z - b.z;
             });
             
@@ -1469,9 +1497,9 @@
             packedMeshes.push(mesh);
         }
         
-        // Human-realistic animated loading with Extreme Point algorithm
-        // Workers enter through rear doors, carry box to the optimal position
-        // Uses same advanced packing algorithm as instant packing
+        // Human-realistic animated loading with LIFO optimization
+        // Workers enter through rear doors, walk to position, place box
+        // Last delivery items go to front first, first delivery items near doors
         async function animatePacking() {
             clearPackedBoxes();
             
@@ -1488,7 +1516,7 @@
             
             boxes.forEach(b => { b.packed = false; b.position = null; });
             
-            // Best Fit Decreasing: Sort by volume (largest first) for better packing
+            // LIFO: Higher sequence = later delivery = load first = goes to front
             const sortedBoxes = [...boxes].sort((a, b) => {
                 if (b.sequence !== a.sequence) return b.sequence - a.sequence;
                 const volA = a.length * a.width * a.height;
@@ -1496,13 +1524,16 @@
                 return volB - volA;
             });
             
-            // Initialize extreme points with origin
-            let extremePoints = [{ x: 0, y: 0, z: 0 }];
+            // Start from front of truck (workers can reach front when empty)
+            let extremePoints = [
+                { x: truckDims.length - 1, y: 0, z: 0 },
+                { x: truckDims.length - 1, y: 0, z: truckDims.width - 1 }
+            ];
             const packedBoxes = [];
             
             for (let i = 0; i < sortedBoxes.length; i++) {
                 const box = sortedBoxes[i];
-                updateStatus(`Worker loading package ${i + 1}/${sortedBoxes.length}...`);
+                updateStatus(`Worker loading package ${i + 1}/${sortedBoxes.length} (Delivery #${box.sequence})...`);
                 
                 const placement = findBestPlacement(box, extremePoints, packedBoxes);
                 
