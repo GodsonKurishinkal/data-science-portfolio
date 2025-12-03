@@ -920,7 +920,6 @@
             const packedBoxes = [];
             
             // Human loading zones - divide truck into sections from front to back
-            // Workers fill each zone before moving to the next one toward the doors
             const zoneDepth = 100; // 100cm zones (about arm's reach)
             const numZones = Math.ceil(truckDims.length / zoneDepth);
             
@@ -929,34 +928,29 @@
                 let bestRotation = false;
                 let bestScore = Infinity;
                 
+                const rotations = [
+                    { l: box.length, w: box.width, rotated: false },
+                    { l: box.width, w: box.length, rotated: true }
+                ];
+                
                 // Try to place in zones from FRONT (cab) to BACK (doors)
-                // This simulates humans loading the deepest part first
                 for (let zone = numZones - 1; zone >= 0; zone--) {
                     const zoneStartX = zone * zoneDepth;
                     const zoneEndX = Math.min((zone + 1) * zoneDepth, truckDims.length);
                     
-                    // Within each zone, try positions: floor first, then stack
-                    // Also prioritize left-to-right (z-axis) to simulate human reach pattern
-                    for (let y = 0; y < truckDims.height; y += 10) {
-                        for (let x = zoneEndX - 10; x >= zoneStartX; x -= 10) {
-                            for (let z = 0; z < truckDims.width; z += 10) {
-                                const rotations = [
-                                    { l: box.length, w: box.width, rotated: false },
-                                    { l: box.width, w: box.length, rotated: true }
-                                ];
-                                
-                                for (const rot of rotations) {
-                                    const pos = { x, y, z };
-                                    if (canPlaceBox(pos, rot.l, rot.w, box.height, packedBoxes)) {
-                                        // Score: prioritize front zones (high x), then floor (low y), then left side (low z)
-                                        // Negative x because we want HIGH x (front of truck) first
-                                        const score = -x * 10000 + y * 100 + z;
-                                        if (score < bestScore) {
-                                            bestScore = score;
-                                            bestPoint = { ...pos };
-                                            bestRotation = rot.rotated;
-                                        }
-                                    }
+                    // Generate candidate positions based on existing boxes
+                    const candidates = generateStackingPositions(packedBoxes, zoneStartX, zoneEndX);
+                    
+                    for (const pos of candidates) {
+                        for (const rot of rotations) {
+                            if (canPlaceBox(pos, rot.l, rot.w, box.height, packedBoxes)) {
+                                // Score: prioritize front (high x), then lower positions, then left
+                                // This fills each zone floor first, stacks, then moves to next zone
+                                const score = -pos.x * 10000 + pos.y * 10 + pos.z * 0.1;
+                                if (score < bestScore) {
+                                    bestScore = score;
+                                    bestPoint = { ...pos };
+                                    bestRotation = rot.rotated;
                                 }
                             }
                         }
@@ -987,11 +981,78 @@
             updateStatus(`Loaded ${packedBoxes.length}/${boxes.length} packages (front-to-back)`);
         }
         
+        // Generate stacking positions - floor grid + on top of existing boxes
+        function generateStackingPositions(packedBoxes, zoneStartX, zoneEndX) {
+            const positions = [];
+            const gridStep = 20; // 20cm grid for floor positions
+            
+            // Floor positions within the zone
+            for (let x = zoneEndX - gridStep; x >= zoneStartX; x -= gridStep) {
+                for (let z = 0; z < truckDims.width; z += gridStep) {
+                    positions.push({ x, y: 0, z });
+                }
+            }
+            
+            // Stacking positions on top of existing boxes
+            for (const packed of packedBoxes) {
+                const topY = packed.position.y + packed.packedDims.height;
+                
+                // Only stack if there's room above
+                if (topY < truckDims.height - 10) {
+                    // Position directly on top
+                    positions.push({ 
+                        x: packed.position.x, 
+                        y: topY, 
+                        z: packed.position.z 
+                    });
+                    
+                    // Also try corners of the box top
+                    if (packed.position.x + packed.packedDims.length <= truckDims.length) {
+                        positions.push({
+                            x: packed.position.x + packed.packedDims.length / 2,
+                            y: topY,
+                            z: packed.position.z
+                        });
+                    }
+                    if (packed.position.z + packed.packedDims.width <= truckDims.width) {
+                        positions.push({
+                            x: packed.position.x,
+                            y: topY,
+                            z: packed.position.z + packed.packedDims.width / 2
+                        });
+                    }
+                }
+            }
+            
+            // Remove duplicates and positions outside zone
+            const unique = [];
+            const seen = new Set();
+            for (const pos of positions) {
+                if (pos.x >= zoneStartX && pos.x < zoneEndX) {
+                    const key = `${Math.round(pos.x)},${Math.round(pos.y)},${Math.round(pos.z)}`;
+                    if (!seen.has(key)) {
+                        seen.add(key);
+                        unique.push(pos);
+                    }
+                }
+            }
+            
+            // Sort: lower Y first (fill floor), then higher X (front of truck)
+            unique.sort((a, b) => {
+                if (a.y !== b.y) return a.y - b.y;
+                return b.x - a.x;
+            });
+            
+            return unique;
+        }
+        
         function canPlaceBox(position, length, width, height, packedBoxes) {
             if (position.x + length > truckDims.length) return false;
             if (position.y + height > truckDims.height) return false;
             if (position.z + width > truckDims.width) return false;
+            if (position.x < 0 || position.z < 0) return false;
             
+            // Check collision with existing boxes
             for (const packed of packedBoxes) {
                 if (boxesIntersect(
                     position.x, position.y, position.z, length, height, width,
@@ -1002,12 +1063,15 @@
                 }
             }
             
-            if (position.y > 0) {
+            // Check support - must be on floor or supported by boxes below
+            if (position.y > 0.1) {
                 let supportArea = 0;
                 const boxArea = length * width;
                 
                 for (const packed of packedBoxes) {
-                    if (Math.abs(packed.position.y + packed.packedDims.height - position.y) < 0.1) {
+                    const packedTop = packed.position.y + packed.packedDims.height;
+                    // Check if this box is directly below (within 2cm tolerance)
+                    if (Math.abs(packedTop - position.y) < 2) {
                         const overlapX = Math.max(0, 
                             Math.min(position.x + length, packed.position.x + packed.packedDims.length) -
                             Math.max(position.x, packed.position.x)
@@ -1020,7 +1084,8 @@
                     }
                 }
                 
-                if (supportArea / boxArea < 0.5) return false;
+                // Need at least 40% support for stability
+                if (supportArea / boxArea < 0.4) return false;
             }
             
             return true;
@@ -1144,30 +1209,27 @@
                 let bestRotation = false;
                 let bestScore = Infinity;
                 
+                const rotations = [
+                    { l: box.length, w: box.width, rotated: false },
+                    { l: box.width, w: box.length, rotated: true }
+                ];
+                
                 // Try zones from FRONT (cab) to BACK (doors)
                 for (let zone = numZones - 1; zone >= 0; zone--) {
                     const zoneStartX = zone * zoneDepth;
                     const zoneEndX = Math.min((zone + 1) * zoneDepth, truckDims.length);
                     
-                    // Within zone: floor first, then stack; left to right
-                    for (let y = 0; y < truckDims.height; y += 10) {
-                        for (let x = zoneEndX - 10; x >= zoneStartX; x -= 10) {
-                            for (let z = 0; z < truckDims.width; z += 10) {
-                                const rotations = [
-                                    { l: box.length, w: box.width, rotated: false },
-                                    { l: box.width, w: box.length, rotated: true }
-                                ];
-                                
-                                for (const rot of rotations) {
-                                    const pos = { x, y, z };
-                                    if (canPlaceBox(pos, rot.l, rot.w, box.height, packedBoxes)) {
-                                        const score = -x * 10000 + y * 100 + z;
-                                        if (score < bestScore) {
-                                            bestScore = score;
-                                            bestPoint = { ...pos };
-                                            bestRotation = rot.rotated;
-                                        }
-                                    }
+                    // Generate candidate positions based on existing boxes
+                    const candidates = generateStackingPositions(packedBoxes, zoneStartX, zoneEndX);
+                    
+                    for (const pos of candidates) {
+                        for (const rot of rotations) {
+                            if (canPlaceBox(pos, rot.l, rot.w, box.height, packedBoxes)) {
+                                const score = -pos.x * 10000 + pos.y * 10 + pos.z * 0.1;
+                                if (score < bestScore) {
+                                    bestScore = score;
+                                    bestPoint = { ...pos };
+                                    bestRotation = rot.rotated;
                                 }
                             }
                         }
