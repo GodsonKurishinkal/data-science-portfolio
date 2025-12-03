@@ -887,6 +887,9 @@
             updateStatus(`Added 10 packages`);
         }
         
+        // Human-realistic packing: Load from front (cab side) to back (doors)
+        // Workers enter through rear doors, walk to the front, and start loading there
+        // Fill a section (floor first, then stack), before moving toward the doors
         function runPacking() {
             clearPackedBoxes();
             
@@ -895,35 +898,62 @@
                 return;
             }
             
+            // Sort by delivery sequence (last delivery first = goes deepest in truck)
+            // Then by size for efficient stacking
             const sortedBoxes = [...boxes].sort((a, b) => {
+                // Higher sequence number = delivered later = loaded first (goes to front)
                 if (b.sequence !== a.sequence) return b.sequence - a.sequence;
+                // Larger/heavier boxes first for stability
                 return (b.length * b.width * b.height) - (a.length * a.width * a.height);
             });
             
-            let extremePoints = [{ x: 0, y: 0, z: 0 }];
             const packedBoxes = [];
+            
+            // Human loading zones - divide truck into sections from front to back
+            // Workers fill each zone before moving to the next one toward the doors
+            const zoneDepth = 100; // 100cm zones (about arm's reach)
+            const numZones = Math.ceil(truckDims.length / zoneDepth);
             
             for (const box of sortedBoxes) {
                 let bestPoint = null;
                 let bestRotation = false;
                 let bestScore = Infinity;
                 
-                for (const ep of extremePoints) {
-                    const rotations = [
-                        { l: box.length, w: box.width, rotated: false },
-                        { l: box.width, w: box.length, rotated: true }
-                    ];
+                // Try to place in zones from FRONT (cab) to BACK (doors)
+                // This simulates humans loading the deepest part first
+                for (let zone = numZones - 1; zone >= 0; zone--) {
+                    const zoneStartX = zone * zoneDepth;
+                    const zoneEndX = Math.min((zone + 1) * zoneDepth, truckDims.length);
                     
-                    for (const rot of rotations) {
-                        if (canPlaceBox(ep, rot.l, rot.w, box.height, packedBoxes)) {
-                            const score = ep.y * 1000 + ep.x * 100 + ep.z;
-                            if (score < bestScore) {
-                                bestScore = score;
-                                bestPoint = { ...ep };
-                                bestRotation = rot.rotated;
+                    // Within each zone, try positions: floor first, then stack
+                    // Also prioritize left-to-right (z-axis) to simulate human reach pattern
+                    for (let y = 0; y < truckDims.height; y += 10) {
+                        for (let x = zoneEndX - 10; x >= zoneStartX; x -= 10) {
+                            for (let z = 0; z < truckDims.width; z += 10) {
+                                const rotations = [
+                                    { l: box.length, w: box.width, rotated: false },
+                                    { l: box.width, w: box.length, rotated: true }
+                                ];
+                                
+                                for (const rot of rotations) {
+                                    const pos = { x, y, z };
+                                    if (canPlaceBox(pos, rot.l, rot.w, box.height, packedBoxes)) {
+                                        // Score: prioritize front zones (high x), then floor (low y), then left side (low z)
+                                        // Negative x because we want HIGH x (front of truck) first
+                                        const score = -x * 10000 + y * 100 + z;
+                                        if (score < bestScore) {
+                                            bestScore = score;
+                                            bestPoint = { ...pos };
+                                            bestRotation = rot.rotated;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
+                    
+                    // If found a spot in this zone, don't check zones closer to doors
+                    if (bestPoint) break;
                 }
                 
                 if (bestPoint) {
@@ -935,19 +965,6 @@
                     box.packedDims = { length: l, width: w, height: box.height };
                     box.rotated = bestRotation;
                     packedBoxes.push(box);
-                    
-                    extremePoints.push({ x: bestPoint.x + l, y: bestPoint.y, z: bestPoint.z });
-                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y, z: bestPoint.z + w });
-                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y + box.height, z: bestPoint.z });
-                    
-                    extremePoints = extremePoints.filter(ep => 
-                        ep.x < truckDims.length && 
-                        ep.y < truckDims.height && 
-                        ep.z < truckDims.width &&
-                        !isPointInsideBox(ep, packedBoxes)
-                    );
-                    
-                    extremePoints.sort((a, b) => (a.y * 1000 + a.x) - (b.y * 1000 + b.x));
                 }
             }
             
@@ -957,7 +974,7 @@
             
             updateStats();
             updateBoxList();
-            updateStatus(`Loaded ${packedBoxes.length}/${boxes.length} packages`);
+            updateStatus(`Loaded ${packedBoxes.length}/${boxes.length} packages (front-to-back)`);
         }
         
         function canPlaceBox(position, length, width, height, packedBoxes) {
@@ -1078,6 +1095,9 @@
             packedMeshes.push(mesh);
         }
         
+        // Human-realistic animated loading
+        // Workers enter through rear doors, carry box to the front, place it
+        // Fill front section first (floor, then stack), move toward doors
         async function animatePacking() {
             clearPackedBoxes();
             
@@ -1094,38 +1114,56 @@
             
             boxes.forEach(b => { b.packed = false; b.position = null; });
             
+            // Sort: last delivery first (goes deepest), then by size
             const sortedBoxes = [...boxes].sort((a, b) => {
                 if (b.sequence !== a.sequence) return b.sequence - a.sequence;
                 return (b.length * b.width * b.height) - (a.length * a.width * a.height);
             });
             
-            let extremePoints = [{ x: 0, y: 0, z: 0 }];
             const packedBoxes = [];
+            
+            // Human loading zones - divide truck into sections from front to back
+            const zoneDepth = 100;
+            const numZones = Math.ceil(truckDims.length / zoneDepth);
             
             for (let i = 0; i < sortedBoxes.length; i++) {
                 const box = sortedBoxes[i];
-                updateStatus(`Loading package ${i + 1}/${sortedBoxes.length}...`);
+                updateStatus(`Worker loading package ${i + 1}/${sortedBoxes.length}...`);
                 
                 let bestPoint = null;
                 let bestRotation = false;
                 let bestScore = Infinity;
                 
-                for (const ep of extremePoints) {
-                    const rotations = [
-                        { l: box.length, w: box.width, rotated: false },
-                        { l: box.width, w: box.length, rotated: true }
-                    ];
+                // Try zones from FRONT (cab) to BACK (doors)
+                for (let zone = numZones - 1; zone >= 0; zone--) {
+                    const zoneStartX = zone * zoneDepth;
+                    const zoneEndX = Math.min((zone + 1) * zoneDepth, truckDims.length);
                     
-                    for (const rot of rotations) {
-                        if (canPlaceBox(ep, rot.l, rot.w, box.height, packedBoxes)) {
-                            const score = ep.y * 1000 + ep.x * 100 + ep.z;
-                            if (score < bestScore) {
-                                bestScore = score;
-                                bestPoint = { ...ep };
-                                bestRotation = rot.rotated;
+                    // Within zone: floor first, then stack; left to right
+                    for (let y = 0; y < truckDims.height; y += 10) {
+                        for (let x = zoneEndX - 10; x >= zoneStartX; x -= 10) {
+                            for (let z = 0; z < truckDims.width; z += 10) {
+                                const rotations = [
+                                    { l: box.length, w: box.width, rotated: false },
+                                    { l: box.width, w: box.length, rotated: true }
+                                ];
+                                
+                                for (const rot of rotations) {
+                                    const pos = { x, y, z };
+                                    if (canPlaceBox(pos, rot.l, rot.w, box.height, packedBoxes)) {
+                                        const score = -x * 10000 + y * 100 + z;
+                                        if (score < bestScore) {
+                                            bestScore = score;
+                                            bestPoint = { ...pos };
+                                            bestRotation = rot.rotated;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
+                    
+                    if (bestPoint) break;
                 }
                 
                 if (bestPoint) {
@@ -1138,26 +1176,14 @@
                     box.rotated = bestRotation;
                     packedBoxes.push(box);
                     
-                    extremePoints.push({ x: bestPoint.x + l, y: bestPoint.y, z: bestPoint.z });
-                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y, z: bestPoint.z + w });
-                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y + box.height, z: bestPoint.z });
-                    
-                    extremePoints = extremePoints.filter(ep => 
-                        ep.x < truckDims.length && 
-                        ep.y < truckDims.height && 
-                        ep.z < truckDims.width &&
-                        !isPointInsideBox(ep, packedBoxes)
-                    );
-                    
-                    extremePoints.sort((a, b) => (a.y * 1000 + a.x) - (b.y * 1000 + b.x));
-                    
-                    await animateBoxDrop(box);
+                    // Animate: box enters from rear, worker carries it to position
+                    await animateHumanLoading(box);
                     
                     updateStats();
                     updateBoxList();
                 }
                 
-                await sleep(150);
+                await sleep(100);
             }
             
             updateStatus(`Loaded ${packedBoxes.length}/${boxes.length} packages`);
@@ -1169,7 +1195,9 @@
             }
         }
         
-        function animateBoxDrop(box) {
+        // Realistic animation: box enters through rear doors, moves horizontally to position
+        // If stacking, box slides in low then lifts up
+        function animateHumanLoading(box) {
             return new Promise(resolve => {
                 const config = TRUCK_CONFIGS[currentTruckType];
                 const wheelR = config.wheelRadius * SCALE;
@@ -1191,13 +1219,18 @@
                 const cargoL = truckDims.length * SCALE;
                 const cargoW = truckDims.width * SCALE;
                 
+                // Final position in the truck
                 const targetX = box.position.x * SCALE + l/2 - cargoL/2;
                 const targetY = floorHeight + box.position.y * SCALE + h/2;
                 const targetZ = box.position.z * SCALE + w/2 - cargoW/2;
                 
-                // Start from behind the truck (loading from rear)
-                mesh.position.set(targetX - 3, targetY + 1, targetZ);
+                // Start position: outside the truck at rear door level (worker carrying box)
+                const startX = -cargoL/2 - 1.5; // Behind the truck (at the doors)
+                const carryHeight = floorHeight + h/2 + 0.3; // Worker holds box at waist height
                 
+                mesh.position.set(startX, carryHeight, targetZ);
+                
+                // Add cardboard details
                 const edges = new THREE.EdgesGeometry(geometry);
                 const lineMaterial = new THREE.LineBasicMaterial({ color: 0x5D4037 });
                 const wireframe = new THREE.LineSegments(edges, lineMaterial);
@@ -1227,18 +1260,44 @@
                 scene.add(mesh);
                 packedMeshes.push(mesh);
                 
-                const startX = mesh.position.x;
-                const startY = mesh.position.y;
-                const duration = 400;
+                // Animation phases:
+                // 1. Enter truck through rear doors (move from outside to inside)
+                // 2. Walk to the position (move along X axis)
+                // 3. Place/stack the box (lower to final Y position)
+                
+                const phase1Duration = 300; // Enter truck
+                const phase2Duration = 400; // Walk to position
+                const phase3Duration = 250; // Place box
+                const totalDuration = phase1Duration + phase2Duration + phase3Duration;
+                
                 const startTime = Date.now();
+                
+                // Intermediate point: just inside the truck doors
+                const entryX = -cargoL/2 + 0.3;
                 
                 function animateMove() {
                     const elapsed = Date.now() - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    const eased = 1 - Math.pow(1 - progress, 3);
+                    const progress = Math.min(elapsed / totalDuration, 1);
                     
-                    mesh.position.x = startX + (targetX - startX) * eased;
-                    mesh.position.y = startY + (targetY - startY) * eased;
+                    if (elapsed < phase1Duration) {
+                        // Phase 1: Enter through doors
+                        const p = elapsed / phase1Duration;
+                        const eased = 1 - Math.pow(1 - p, 2);
+                        mesh.position.x = startX + (entryX - startX) * eased;
+                        mesh.position.y = carryHeight;
+                    } else if (elapsed < phase1Duration + phase2Duration) {
+                        // Phase 2: Walk to position (horizontal movement)
+                        const p = (elapsed - phase1Duration) / phase2Duration;
+                        const eased = p; // Linear for walking
+                        mesh.position.x = entryX + (targetX - entryX) * eased;
+                        mesh.position.y = carryHeight;
+                    } else {
+                        // Phase 3: Place the box (lower to final position)
+                        const p = (elapsed - phase1Duration - phase2Duration) / phase3Duration;
+                        const eased = 1 - Math.pow(1 - p, 2);
+                        mesh.position.x = targetX;
+                        mesh.position.y = carryHeight + (targetY - carryHeight) * eased;
+                    }
                     
                     if (progress < 1) {
                         requestAnimationFrame(animateMove);
