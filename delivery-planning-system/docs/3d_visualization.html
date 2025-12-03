@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Truck Loading Simulation - Delivery Planning System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            overflow: hidden;
+        }
+        
+        #container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        #sidebar {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        #canvas-container {
+            flex: 1;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        
+        h2 {
+            font-size: 1.1rem;
+            margin: 20px 0 10px;
+            color: #ff6b6b;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 0.9rem;
+        }
+        
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #4ecdc4;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px 5px 5px 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: #fff;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        #stats {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .stat-label {
+            color: #aaa;
+        }
+        
+        .stat-value {
+            color: #4ecdc4;
+            font-weight: 600;
+        }
+        
+        #box-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 10px;
+        }
+        
+        .box-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .box-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        
+        .box-info {
+            flex: 1;
+        }
+        
+        .box-dims {
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+        
+        #info-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        #loading-status {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px 30px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .dimension-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .dimension-inputs input {
+            text-align: center;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="sidebar">
+            <h1>🚚 3D Truck Loading</h1>
+            <p class="subtitle">Interactive Bin Packing Simulation</p>
+            
+            <h2>📦 Truck Dimensions (cm)</h2>
+            <div class="dimension-inputs">
+                <div class="control-group">
+                    <label>Length</label>
+                    <input type="number" id="truck-length" value="600" min="100" max="2000">
+                </div>
+                <div class="control-group">
+                    <label>Width</label>
+                    <input type="number" id="truck-width" value="250" min="100" max="500">
+                </div>
+                <div class="control-group">
+                    <label>Height</label>
+                    <input type="number" id="truck-height" value="270" min="100" max="400">
+                </div>
+            </div>
+            <button class="btn-secondary" onclick="updateTruck()">Update Truck</button>
+            
+            <h2>📦 Add Package</h2>
+            <div class="dimension-inputs">
+                <div class="control-group">
+                    <label>Length</label>
+                    <input type="number" id="box-length" value="50" min="10" max="200">
+                </div>
+                <div class="control-group">
+                    <label>Width</label>
+                    <input type="number" id="box-width" value="40" min="10" max="200">
+                </div>
+                <div class="control-group">
+                    <label>Height</label>
+                    <input type="number" id="box-height" value="30" min="10" max="200">
+                </div>
+            </div>
+            <div class="control-group">
+                <label>Weight (kg)</label>
+                <input type="number" id="box-weight" value="10" min="1" max="500">
+            </div>
+            <div class="control-group">
+                <label>Delivery Sequence (1 = first)</label>
+                <input type="number" id="box-sequence" value="1" min="1" max="100">
+            </div>
+            <div class="control-group checkbox-group">
+                <input type="checkbox" id="box-fragile">
+                <label for="box-fragile">Fragile Item</label>
+            </div>
+            <button class="btn-primary" onclick="addBox()">Add Package</button>
+            <button class="btn-secondary" onclick="addRandomBoxes()">Add 10 Random</button>
+            
+            <h2>🎮 Controls</h2>
+            <button class="btn-primary" onclick="runPacking()">▶️ Run Packing</button>
+            <button class="btn-primary" onclick="animatePacking()">🎬 Animate</button>
+            <button class="btn-secondary" onclick="resetCamera()">🎥 Reset View</button>
+            <button class="btn-danger" onclick="clearAll()">🗑️ Clear All</button>
+            
+            <h2>📊 Statistics</h2>
+            <div id="stats">
+                <div class="stat-row">
+                    <span class="stat-label">Boxes Added:</span>
+                    <span class="stat-value" id="stat-boxes">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Boxes Packed:</span>
+                    <span class="stat-value" id="stat-packed">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Volume Used:</span>
+                    <span class="stat-value" id="stat-volume">0%</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Weight Used:</span>
+                    <span class="stat-value" id="stat-weight">0 kg</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <h2>📋 Package List</h2>
+            <div id="box-list"></div>
+        </div>
+        
+        <div id="canvas-container">
+            <div id="info-overlay">
+                <strong>Controls:</strong><br>
+                🖱️ Left click + drag: Rotate<br>
+                🖱️ Right click + drag: Pan<br>
+                🖱️ Scroll: Zoom
+            </div>
+            <div id="loading-status">Ready to pack</div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let scene, camera, renderer, controls;
+        let truckMesh, truckEdges;
+        let boxes = [];  // Boxes to pack
+        let packedMeshes = [];  // 3D meshes of packed boxes
+        let boxIdCounter = 0;
+        
+        // Truck dimensions (in cm, will be scaled)
+        let truckDims = {
+            length: 600,
+            width: 250,
+            height: 270
+        };
+        
+        const SCALE = 0.01;  // Scale factor for 3D scene
+        
+        // Color palette for boxes
+        const BOX_COLORS = [
+            0x4CAF50, 0x2196F3, 0xFF9800, 0x9C27B0,
+            0xE91E63, 0x00BCD4, 0xFFEB3B, 0x795548,
+            0x607D8B, 0x3F51B5, 0x009688, 0xFF5722
+        ];
+        
+        // Initialize Three.js scene
+        function init() {
+            // Scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x1a1a2e);
+            
+            // Camera
+            const container = document.getElementById('canvas-container');
+            camera = new THREE.PerspectiveCamera(
+                60,
+                container.clientWidth / container.clientHeight,
+                0.1,
+                1000
+            );
+            camera.position.set(10, 8, 10);
+            
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+            
+            // Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 20, 10);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+            
+            // Ground grid
+            const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
+            gridHelper.position.y = -0.01;
+            scene.add(gridHelper);
+            
+            // Create truck
+            createTruck();
+            
+            // Handle resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Start animation loop
+            animate();
+        }
+        
+        function createTruck() {
+            // Remove existing truck
+            if (truckMesh) scene.remove(truckMesh);
+            if (truckEdges) scene.remove(truckEdges);
+            
+            const l = truckDims.length * SCALE;
+            const w = truckDims.width * SCALE;
+            const h = truckDims.height * SCALE;
+            
+            // Truck wireframe
+            const geometry = new THREE.BoxGeometry(l, h, w);
+            const edges = new THREE.EdgesGeometry(geometry);
+            const lineMaterial = new THREE.LineBasicMaterial({ 
+                color: 0x4ecdc4, 
+                linewidth: 2 
+            });
+            truckEdges = new THREE.LineSegments(edges, lineMaterial);
+            truckEdges.position.set(l/2, h/2, w/2);
+            scene.add(truckEdges);
+            
+            // Semi-transparent truck
+            const truckMaterial = new THREE.MeshBasicMaterial({
+                color: 0x4ecdc4,
+                transparent: true,
+                opacity: 0.05,
+                side: THREE.DoubleSide
+            });
+            truckMesh = new THREE.Mesh(geometry, truckMaterial);
+            truckMesh.position.set(l/2, h/2, w/2);
+            scene.add(truckMesh);
+            
+            // Floor
+            const floorGeometry = new THREE.PlaneGeometry(l, w);
+            const floorMaterial = new THREE.MeshBasicMaterial({
+                color: 0x4ecdc4,
+                transparent: true,
+                opacity: 0.1,
+                side: THREE.DoubleSide
+            });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.set(l/2, 0.001, w/2);
+            scene.add(floor);
+            
+            // Axes helper
+            const axesHelper = new THREE.AxesHelper(2);
+            scene.add(axesHelper);
+        }
+        
+        function updateTruck() {
+            truckDims.length = parseInt(document.getElementById('truck-length').value);
+            truckDims.width = parseInt(document.getElementById('truck-width').value);
+            truckDims.height = parseInt(document.getElementById('truck-height').value);
+            createTruck();
+            clearPackedBoxes();
+            updateStats();
+        }
+        
+        function addBox() {
+            const box = {
+                id: ++boxIdCounter,
+                length: parseInt(document.getElementById('box-length').value),
+                width: parseInt(document.getElementById('box-width').value),
+                height: parseInt(document.getElementById('box-height').value),
+                weight: parseInt(document.getElementById('box-weight').value),
+                sequence: parseInt(document.getElementById('box-sequence').value),
+                fragile: document.getElementById('box-fragile').checked,
+                color: BOX_COLORS[boxIdCounter % BOX_COLORS.length],
+                packed: false,
+                position: null
+            };
+            
+            boxes.push(box);
+            updateBoxList();
+            updateStats();
+            updateStatus(`Added box #${box.id}`);
+        }
+        
+        function addRandomBoxes() {
+            for (let i = 0; i < 10; i++) {
+                const box = {
+                    id: ++boxIdCounter,
+                    length: Math.floor(Math.random() * 60) + 20,
+                    width: Math.floor(Math.random() * 50) + 20,
+                    height: Math.floor(Math.random() * 40) + 15,
+                    weight: Math.floor(Math.random() * 30) + 5,
+                    sequence: Math.floor(Math.random() * 10) + 1,
+                    fragile: Math.random() > 0.8,
+                    color: BOX_COLORS[boxIdCounter % BOX_COLORS.length],
+                    packed: false,
+                    position: null
+                };
+                boxes.push(box);
+            }
+            updateBoxList();
+            updateStats();
+            updateStatus(`Added 10 random boxes`);
+        }
+        
+        // 3D Bin Packing Algorithm (Extreme Points)
+        function runPacking() {
+            clearPackedBoxes();
+            
+            if (boxes.length === 0) {
+                updateStatus('No boxes to pack!');
+                return;
+            }
+            
+            // Sort boxes: LIFO (reverse sequence), then by volume
+            const sortedBoxes = [...boxes].sort((a, b) => {
+                if (b.sequence !== a.sequence) return b.sequence - a.sequence;
+                return (b.length * b.width * b.height) - (a.length * a.width * a.height);
+            });
+            
+            // Initialize extreme points
+            let extremePoints = [{ x: 0, y: 0, z: 0 }];
+            const packedBoxes = [];
+            
+            for (const box of sortedBoxes) {
+                // Try each extreme point
+                let bestPoint = null;
+                let bestRotation = false;
+                let bestScore = Infinity;
+                
+                for (const ep of extremePoints) {
+                    // Try both rotations
+                    const rotations = [
+                        { l: box.length, w: box.width, rotated: false },
+                        { l: box.width, w: box.length, rotated: true }
+                    ];
+                    
+                    for (const rot of rotations) {
+                        if (canPlaceBox(ep, rot.l, rot.w, box.height, packedBoxes)) {
+                            // Score: prefer lower, then back, then left
+                            const score = ep.y * 1000 + ep.x * 100 + ep.z;
+                            if (score < bestScore) {
+                                bestScore = score;
+                                bestPoint = { ...ep };
+                                bestRotation = rot.rotated;
+                            }
+                        }
+                    }
+                }
+                
+                if (bestPoint) {
+                    const l = bestRotation ? box.width : box.length;
+                    const w = bestRotation ? box.length : box.width;
+                    
+                    box.packed = true;
+                    box.position = { ...bestPoint };
+                    box.packedDims = { length: l, width: w, height: box.height };
+                    box.rotated = bestRotation;
+                    packedBoxes.push(box);
+                    
+                    // Generate new extreme points
+                    extremePoints.push({ x: bestPoint.x + l, y: bestPoint.y, z: bestPoint.z });
+                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y, z: bestPoint.z + w });
+                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y + box.height, z: bestPoint.z });
+                    
+                    // Remove invalid points
+                    extremePoints = extremePoints.filter(ep => 
+                        ep.x < truckDims.length && 
+                        ep.y < truckDims.height && 
+                        ep.z < truckDims.width &&
+                        !isPointInsideBox(ep, packedBoxes)
+                    );
+                    
+                    // Sort by score
+                    extremePoints.sort((a, b) => (a.y * 1000 + a.x) - (b.y * 1000 + b.x));
+                }
+            }
+            
+            // Create 3D meshes for packed boxes
+            for (const box of packedBoxes) {
+                createBoxMesh(box);
+            }
+            
+            updateStats();
+            updateBoxList();
+            updateStatus(`Packed ${packedBoxes.length}/${boxes.length} boxes`);
+        }
+        
+        function canPlaceBox(position, length, width, height, packedBoxes) {
+            // Check bounds
+            if (position.x + length > truckDims.length) return false;
+            if (position.y + height > truckDims.height) return false;
+            if (position.z + width > truckDims.width) return false;
+            
+            // Check intersections
+            for (const packed of packedBoxes) {
+                if (boxesIntersect(
+                    position.x, position.y, position.z, length, height, width,
+                    packed.position.x, packed.position.y, packed.position.z,
+                    packed.packedDims.length, packed.packedDims.height, packed.packedDims.width
+                )) {
+                    return false;
+                }
+            }
+            
+            // Check support (must be on floor or fully supported)
+            if (position.y > 0) {
+                let supportArea = 0;
+                const boxArea = length * width;
+                
+                for (const packed of packedBoxes) {
+                    if (Math.abs(packed.position.y + packed.packedDims.height - position.y) < 0.1) {
+                        // Calculate overlap
+                        const overlapX = Math.max(0, 
+                            Math.min(position.x + length, packed.position.x + packed.packedDims.length) -
+                            Math.max(position.x, packed.position.x)
+                        );
+                        const overlapZ = Math.max(0,
+                            Math.min(position.z + width, packed.position.z + packed.packedDims.width) -
+                            Math.max(position.z, packed.position.z)
+                        );
+                        supportArea += overlapX * overlapZ;
+                    }
+                }
+                
+                if (supportArea / boxArea < 0.5) return false;
+            }
+            
+            return true;
+        }
+        
+        function boxesIntersect(x1, y1, z1, l1, h1, w1, x2, y2, z2, l2, h2, w2) {
+            return !(x1 + l1 <= x2 || x2 + l2 <= x1 ||
+                    y1 + h1 <= y2 || y2 + h2 <= y1 ||
+                    z1 + w1 <= z2 || z2 + w2 <= z1);
+        }
+        
+        function isPointInsideBox(point, packedBoxes) {
+            for (const box of packedBoxes) {
+                if (point.x >= box.position.x && point.x < box.position.x + box.packedDims.length &&
+                    point.y >= box.position.y && point.y < box.position.y + box.packedDims.height &&
+                    point.z >= box.position.z && point.z < box.position.z + box.packedDims.width) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
+        function createBoxMesh(box) {
+            const l = box.packedDims.length * SCALE;
+            const h = box.packedDims.height * SCALE;
+            const w = box.packedDims.width * SCALE;
+            
+            const geometry = new THREE.BoxGeometry(l, h, w);
+            const material = new THREE.MeshPhongMaterial({
+                color: box.color,
+                transparent: true,
+                opacity: 0.85
+            });
+            
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(
+                box.position.x * SCALE + l/2,
+                box.position.y * SCALE + h/2,
+                box.position.z * SCALE + w/2
+            );
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            
+            // Add edges
+            const edges = new THREE.EdgesGeometry(geometry);
+            const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+            const wireframe = new THREE.LineSegments(edges, lineMaterial);
+            mesh.add(wireframe);
+            
+            scene.add(mesh);
+            packedMeshes.push(mesh);
+            
+            // Add label
+            // (Labels would require CSS2DRenderer for proper text rendering)
+        }
+        
+        async function animatePacking() {
+            clearPackedBoxes();
+            
+            if (boxes.length === 0) {
+                updateStatus('No boxes to pack!');
+                return;
+            }
+            
+            // Reset packed status
+            boxes.forEach(b => { b.packed = false; b.position = null; });
+            
+            // Sort boxes
+            const sortedBoxes = [...boxes].sort((a, b) => {
+                if (b.sequence !== a.sequence) return b.sequence - a.sequence;
+                return (b.length * b.width * b.height) - (a.length * a.width * a.height);
+            });
+            
+            let extremePoints = [{ x: 0, y: 0, z: 0 }];
+            const packedBoxes = [];
+            
+            for (let i = 0; i < sortedBoxes.length; i++) {
+                const box = sortedBoxes[i];
+                updateStatus(`Packing box ${i + 1}/${sortedBoxes.length}...`);
+                
+                let bestPoint = null;
+                let bestRotation = false;
+                let bestScore = Infinity;
+                
+                for (const ep of extremePoints) {
+                    const rotations = [
+                        { l: box.length, w: box.width, rotated: false },
+                        { l: box.width, w: box.length, rotated: true }
+                    ];
+                    
+                    for (const rot of rotations) {
+                        if (canPlaceBox(ep, rot.l, rot.w, box.height, packedBoxes)) {
+                            const score = ep.y * 1000 + ep.x * 100 + ep.z;
+                            if (score < bestScore) {
+                                bestScore = score;
+                                bestPoint = { ...ep };
+                                bestRotation = rot.rotated;
+                            }
+                        }
+                    }
+                }
+                
+                if (bestPoint) {
+                    const l = bestRotation ? box.width : box.length;
+                    const w = bestRotation ? box.length : box.width;
+                    
+                    box.packed = true;
+                    box.position = { ...bestPoint };
+                    box.packedDims = { length: l, width: w, height: box.height };
+                    box.rotated = bestRotation;
+                    packedBoxes.push(box);
+                    
+                    extremePoints.push({ x: bestPoint.x + l, y: bestPoint.y, z: bestPoint.z });
+                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y, z: bestPoint.z + w });
+                    extremePoints.push({ x: bestPoint.x, y: bestPoint.y + box.height, z: bestPoint.z });
+                    
+                    extremePoints = extremePoints.filter(ep => 
+                        ep.x < truckDims.length && 
+                        ep.y < truckDims.height && 
+                        ep.z < truckDims.width &&
+                        !isPointInsideBox(ep, packedBoxes)
+                    );
+                    
+                    extremePoints.sort((a, b) => (a.y * 1000 + a.x) - (b.y * 1000 + b.x));
+                    
+                    // Animate: create mesh with drop animation
+                    await animateBoxDrop(box);
+                    
+                    updateStats();
+                    updateBoxList();
+                }
+                
+                await sleep(100);
+            }
+            
+            updateStatus(`Packed ${packedBoxes.length}/${boxes.length} boxes`);
+        }
+        
+        function animateBoxDrop(box) {
+            return new Promise(resolve => {
+                const l = box.packedDims.length * SCALE;
+                const h = box.packedDims.height * SCALE;
+                const w = box.packedDims.width * SCALE;
+                
+                const geometry = new THREE.BoxGeometry(l, h, w);
+                const material = new THREE.MeshPhongMaterial({
+                    color: box.color,
+                    transparent: true,
+                    opacity: 0.85
+                });
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                const targetY = box.position.y * SCALE + h/2;
+                
+                mesh.position.set(
+                    box.position.x * SCALE + l/2,
+                    targetY + 3,  // Start above
+                    box.position.z * SCALE + w/2
+                );
+                
+                const edges = new THREE.EdgesGeometry(geometry);
+                const lineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+                const wireframe = new THREE.LineSegments(edges, lineMaterial);
+                mesh.add(wireframe);
+                
+                scene.add(mesh);
+                packedMeshes.push(mesh);
+                
+                // Animate drop
+                const startY = mesh.position.y;
+                const duration = 300;
+                const startTime = Date.now();
+                
+                function animateDrop() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // Easing function (ease-out bounce)
+                    const eased = 1 - Math.pow(1 - progress, 3);
+                    
+                    mesh.position.y = startY + (targetY - startY) * eased;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateDrop);
+                    } else {
+                        mesh.position.y = targetY;
+                        resolve();
+                    }
+                }
+                
+                animateDrop();
+            });
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+        
+        function clearPackedBoxes() {
+            for (const mesh of packedMeshes) {
+                scene.remove(mesh);
+            }
+            packedMeshes = [];
+            boxes.forEach(b => { b.packed = false; b.position = null; });
+        }
+        
+        function clearAll() {
+            clearPackedBoxes();
+            boxes = [];
+            boxIdCounter = 0;
+            updateBoxList();
+            updateStats();
+            updateStatus('Cleared all boxes');
+        }
+        
+        function resetCamera() {
+            camera.position.set(10, 8, 10);
+            camera.lookAt(0, 0, 0);
+            controls.reset();
+        }
+        
+        function updateStats() {
+            const packedCount = boxes.filter(b => b.packed).length;
+            const usedVolume = boxes.filter(b => b.packed)
+                .reduce((sum, b) => sum + b.length * b.width * b.height, 0);
+            const totalVolume = truckDims.length * truckDims.width * truckDims.height;
+            const usedWeight = boxes.filter(b => b.packed)
+                .reduce((sum, b) => sum + b.weight, 0);
+            
+            document.getElementById('stat-boxes').textContent = boxes.length;
+            document.getElementById('stat-packed').textContent = packedCount;
+            document.getElementById('stat-volume').textContent = 
+                ((usedVolume / totalVolume) * 100).toFixed(1) + '%';
+            document.getElementById('stat-weight').textContent = usedWeight + ' kg';
+            document.getElementById('progress-fill').style.width = 
+                ((usedVolume / totalVolume) * 100) + '%';
+        }
+        
+        function updateBoxList() {
+            const list = document.getElementById('box-list');
+            list.innerHTML = boxes.map(box => `
+                <div class="box-item">
+                    <div class="box-color" style="background-color: #${box.color.toString(16).padStart(6, '0')}"></div>
+                    <div class="box-info">
+                        <div>Box #${box.id} ${box.packed ? '✓' : ''} ${box.fragile ? '⚠️' : ''}</div>
+                        <div class="box-dims">${box.length}×${box.width}×${box.height}cm, ${box.weight}kg, Seq: ${box.sequence}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('loading-status').textContent = message;
+        }
+        
+        function onWindowResize() {
+            const container = document.getElementById('canvas-container');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize on load
+        window.onload = init;
+    </script>
+</body>
+</html>

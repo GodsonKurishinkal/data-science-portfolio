@@ -1,0 +1,135 @@
+# Delivery Planning System Configuration
+
+system:
+  name: "Delivery Planning System"
+  version: "1.0.0"
+  debug: false
+  log_level: "INFO"
+
+# Bin Packing Configuration
+packing:
+  # Algorithm settings
+  algorithm: "extreme_points"  # extreme_points, guillotine, shelf
+  rotation_allowed: true
+  rotation_axes: ["z"]  # Only allow rotation around z-axis (no flipping)
+  
+  # Optimization settings
+  optimize_sequence: true  # Consider delivery sequence (LIFO)
+  balance_weight: true     # Distribute weight evenly
+  
+  # Constraints
+  max_stacking_weight: 50  # kg - max weight that can be placed on top
+  fragile_on_top: true     # Place fragile items on top
+  
+  # Performance
+  max_iterations: 1000
+  time_limit_seconds: 60
+
+# Vehicle Configuration
+vehicles:
+  default_dimensions:
+    length: 600  # cm
+    width: 250   # cm
+    height: 270  # cm
+    max_weight: 10000  # kg
+  
+  types:
+    small_van:
+      length: 300
+      width: 170
+      height: 180
+      max_weight: 1000
+    
+    medium_truck:
+      length: 450
+      width: 220
+      height: 230
+      max_weight: 5000
+    
+    large_truck:
+      length: 600
+      width: 250
+      height: 270
+      max_weight: 10000
+    
+    semi_trailer:
+      length: 1360
+      width: 250
+      height: 270
+      max_weight: 25000
+
+# Routing Configuration
+routing:
+  algorithm: "hybrid"  # nearest_neighbor, savings, hybrid
+  local_search: ["2-opt", "or-opt"]
+  
+  # Time windows
+  service_time_minutes: 15  # Average time per delivery
+  start_time: "08:00"
+  end_time: "18:00"
+  
+  # Constraints
+  max_route_duration_hours: 8
+  max_stops_per_route: 50
+  
+  # Speed settings (km/h)
+  speeds:
+    urban: 30
+    suburban: 50
+    highway: 80
+
+# Resource Planning Configuration
+resources:
+  # Driver settings
+  drivers:
+    max_driving_hours: 8
+    break_after_hours: 4
+    break_duration_minutes: 30
+    overtime_allowed: true
+    max_overtime_hours: 2
+  
+  # Skill levels
+  skill_levels:
+    - name: "junior"
+      experience_years: 0
+      allowed_vehicles: ["small_van"]
+    - name: "standard"
+      experience_years: 1
+      allowed_vehicles: ["small_van", "medium_truck"]
+    - name: "senior"
+      experience_years: 3
+      allowed_vehicles: ["small_van", "medium_truck", "large_truck"]
+    - name: "expert"
+      experience_years: 5
+      allowed_vehicles: ["small_van", "medium_truck", "large_truck", "semi_trailer"]
+
+# Visualization Configuration
+visualization:
+  # 3D settings
+  box_colors:
+    default: "#4CAF50"
+    fragile: "#FFC107"
+    hazardous: "#F44336"
+    perishable: "#2196F3"
+  
+  # Animation
+  animation_speed: 500  # ms per box placement
+  show_sequence_numbers: true
+  
+  # Export
+  export_formats: ["png", "html", "json"]
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_enabled: true
+  rate_limit: 100  # requests per minute
+
+# Metrics and Logging
+metrics:
+  track_utilization: true
+  track_weight_distribution: true
+  track_delivery_time: true
+  export_reports: true
+  report_format: "json"  # json, csv, excel

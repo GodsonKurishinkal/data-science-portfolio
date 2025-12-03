@@ -1,0 +1,256 @@
+{
+  "orders": [
+    {
+      "order_id": "ORD-001",
+      "customer_id": "CUST-001",
+      "customer_name": "Acme Corporation",
+      "location": {
+        "id": "LOC-001",
+        "name": "Acme HQ",
+        "address": "123 Business Ave, Manhattan, NY",
+        "latitude": 40.7589,
+        "longitude": -73.9851
+      },
+      "packages": [
+        {
+          "package_id": "PKG-001-A",
+          "type": "MEDIUM",
+          "length": 60,
+          "width": 45,
+          "height": 35,
+          "weight": 15,
+          "fragile": false,
+          "description": "Office supplies"
+        },
+        {
+          "package_id": "PKG-001-B",
+          "type": "SMALL",
+          "length": 35,
+          "width": 30,
+          "height": 25,
+          "weight": 8,
+          "fragile": true,
+          "description": "Electronics"
+        }
+      ],
+      "time_window": {
+        "start": "09:00",
+        "end": "12:00"
+      },
+      "priority": 1,
+      "special_instructions": "Call upon arrival"
+    },
+    {
+      "order_id": "ORD-002",
+      "customer_id": "CUST-002",
+      "customer_name": "Brooklyn Books",
+      "location": {
+        "id": "LOC-002",
+        "name": "Brooklyn Books Store",
+        "address": "456 Library Lane, Brooklyn, NY",
+        "latitude": 40.6782,
+        "longitude": -73.9442
+      },
+      "packages": [
+        {
+          "package_id": "PKG-002-A",
+          "type": "LARGE",
+          "length": 100,
+          "width": 80,
+          "height": 60,
+          "weight": 45,
+          "fragile": false,
+          "description": "Book shipment"
+        }
+      ],
+      "time_window": {
+        "start": "10:00",
+        "end": "14:00"
+      },
+      "priority": 2,
+      "special_instructions": "Rear entrance"
+    },
+    {
+      "order_id": "ORD-003",
+      "customer_id": "CUST-003",
+      "customer_name": "Queens Medical Center",
+      "location": {
+        "id": "LOC-003",
+        "name": "Queens Medical",
+        "address": "789 Health St, Queens, NY",
+        "latitude": 40.7282,
+        "longitude": -73.7949
+      },
+      "packages": [
+        {
+          "package_id": "PKG-003-A",
+          "type": "SMALL",
+          "length": 40,
+          "width": 35,
+          "height": 30,
+          "weight": 10,
+          "fragile": true,
+          "description": "Medical supplies"
+        },
+        {
+          "package_id": "PKG-003-B",
+          "type": "SMALL",
+          "length": 38,
+          "width": 32,
+          "height": 28,
+          "weight": 9,
+          "fragile": true,
+          "description": "Lab equipment"
+        },
+        {
+          "package_id": "PKG-003-C",
+          "type": "MEDIUM",
+          "length": 55,
+          "width": 45,
+          "height": 35,
+          "weight": 18,
+          "fragile": false,
+          "description": "General supplies"
+        }
+      ],
+      "time_window": {
+        "start": "08:00",
+        "end": "16:00"
+      },
+      "priority": 1,
+      "special_instructions": "Fragile - handle with care"
+    },
+    {
+      "order_id": "ORD-004",
+      "customer_id": "CUST-004",
+      "customer_name": "Bronx Auto Parts",
+      "location": {
+        "id": "LOC-004",
+        "name": "Bronx Auto Parts",
+        "address": "321 Mechanic Blvd, Bronx, NY",
+        "latitude": 40.8448,
+        "longitude": -73.8648
+      },
+      "packages": [
+        {
+          "package_id": "PKG-004-A",
+          "type": "XLARGE",
+          "length": 120,
+          "width": 90,
+          "height": 80,
+          "weight": 75,
+          "fragile": false,
+          "description": "Engine parts"
+        },
+        {
+          "package_id": "PKG-004-B",
+          "type": "LARGE",
+          "length": 85,
+          "width": 65,
+          "height": 55,
+          "weight": 40,
+          "fragile": false,
+          "description": "Brake systems"
+        }
+      ],
+      "time_window": {
+        "start": "07:00",
+        "end": "18:00"
+      },
+      "priority": 3,
+      "special_instructions": "Loading dock available"
+    },
+    {
+      "order_id": "ORD-005",
+      "customer_id": "CUST-005",
+      "customer_name": "Staten Island Furniture",
+      "location": {
+        "id": "LOC-005",
+        "name": "SI Furniture Warehouse",
+        "address": "567 Home Ave, Staten Island, NY",
+        "latitude": 40.5795,
+        "longitude": -74.1502
+      },
+      "packages": [
+        {
+          "package_id": "PKG-005-A",
+          "type": "XLARGE",
+          "length": 200,
+          "width": 100,
+          "height": 50,
+          "weight": 60,
+          "fragile": true,
+          "description": "Glass table top"
+        }
+      ],
+      "time_window": {
+        "start": "11:00",
+        "end": "15:00"
+      },
+      "priority": 2,
+      "special_instructions": "Two-person delivery required"
+    }
+  ],
+  "depot": {
+    "id": "DEPOT",
+    "name": "NYC Distribution Center",
+    "address": "1 Logistics Way, Manhattan, NY",
+    "latitude": 40.7128,
+    "longitude": -74.0060
+  },
+  "vehicles": [
+    {
+      "vehicle_id": "VEH-001",
+      "type": "BOX_TRUCK",
+      "capacity_weight": 5000,
+      "capacity_volume": 40000000,
+      "license_plate": "NYC-001"
+    },
+    {
+      "vehicle_id": "VEH-002",
+      "type": "LARGE_VAN",
+      "capacity_weight": 2000,
+      "capacity_volume": 15000000,
+      "license_plate": "NYC-002"
+    },
+    {
+      "vehicle_id": "VEH-003",
+      "type": "SMALL_VAN",
+      "capacity_weight": 1000,
+      "capacity_volume": 8000000,
+      "license_plate": "NYC-003"
+    }
+  ],
+  "drivers": [
+    {
+      "driver_id": "DRV-001",
+      "name": "John Smith",
+      "skills": ["STANDARD", "FRAGILE_HANDLING"],
+      "working_hours": {
+        "start": 8,
+        "end": 17
+      },
+      "phone": "+1-555-0101"
+    },
+    {
+      "driver_id": "DRV-002",
+      "name": "Jane Doe",
+      "skills": ["STANDARD", "HEAVY_GOODS"],
+      "working_hours": {
+        "start": 6,
+        "end": 14
+      },
+      "phone": "+1-555-0102"
+    },
+    {
+      "driver_id": "DRV-003",
+      "name": "Mike Johnson",
+      "skills": ["STANDARD"],
+      "working_hours": {
+        "start": 10,
+        "end": 19
+      },
+      "phone": "+1-555-0103"
+    }
+  ]
+}
