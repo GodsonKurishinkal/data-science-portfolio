@@ -99,12 +99,17 @@
             flex: 1;
             position: relative;
             background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
+            min-height: 100%;
+            overflow: hidden;
         }
         
         #canvas-container canvas {
             display: block;
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
         }
         
         /* ============================================================
