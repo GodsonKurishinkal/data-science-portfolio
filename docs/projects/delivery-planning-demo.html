@@ -1579,10 +1579,6 @@
             createTruck();
             resetCamera();
             
-            document.getElementById('stat-truck').textContent = config.name;
-            document.getElementById('stat-space').textContent = 
-                `${truckDims.length}×${truckDims.width}×${truckDims.height} cm`;
-            
             updateStats();
             updateStatus(`Switched to ${config.name}`);
         }
@@ -2664,10 +2660,6 @@
             document.getElementById('stat-packed').textContent = packedCount;
             document.getElementById('stat-volume').textContent = 
                 ((usedVolume / totalVolume) * 100).toFixed(1) + '%';
-            document.getElementById('stat-weight').textContent = 
-                `${usedWeight} / ${maxWeight} kg`;
-            document.getElementById('progress-fill').style.width = 
-                ((usedVolume / totalVolume) * 100) + '%';
             
             // ============================================================
             // CUBE UTILIZATION METRICS (Industry KPIs)
