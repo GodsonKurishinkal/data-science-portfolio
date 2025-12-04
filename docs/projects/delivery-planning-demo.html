@@ -98,6 +98,12 @@
             background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
         }
         
+        #canvas-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
         /* ============================================================
            TYPOGRAPHY
            ============================================================ */
@@ -1037,11 +1043,11 @@
                 <span class="desktop-only">🖱️ Left drag: Orbit | Right drag: Pan | Scroll: Zoom</span>
                 <span class="mobile-only">👆 One finger: Rotate | 👌 Two fingers: Zoom/Pan</span>
                 <br>
-                <em style="font-size: 0.8em; color: #888;">
+                <em style="font-size: 0.8em; color: rgba(255,255,255,0.5);">
                 Extreme Points + BFD Algorithm
                 </em>
             </div>
-            <div id="loading-status">Ready to optimize</div>
+            <div id="loading-status"><div class="status-dot"></div>Ready to optimize</div>
         </div>
     </div>
 
