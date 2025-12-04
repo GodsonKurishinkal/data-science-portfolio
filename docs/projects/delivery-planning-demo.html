@@ -2,11 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>3D Truck Loading Optimization | ML-Powered Bin Packing - Supply Chain Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <style>
+        :root {
+            /* Apple/Google inspired color palette */
+            --bg-primary: #000000;
+            --bg-secondary: #1c1c1e;
+            --bg-tertiary: #2c2c2e;
+            --bg-elevated: #3a3a3c;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-tertiary: rgba(255, 255, 255, 0.5);
+            --accent-blue: #0a84ff;
+            --accent-green: #30d158;
+            --accent-orange: #ff9f0a;
+            --accent-red: #ff453a;
+            --accent-purple: #bf5af2;
+            --accent-teal: #64d2ff;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --glass-bg: rgba(28, 28, 30, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --transition-fast: 0.15s ease;
+            --transition-medium: 0.25s ease;
+            --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,371 +45,659 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         #container {
             display: flex;
             height: 100vh;
+            height: 100dvh;
         }
         
+        /* ============================================================
+           SIDEBAR - Premium Glass Design
+           ============================================================ */
         #sidebar {
-            width: 350px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 20px;
+            width: 380px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            padding: 24px;
             overflow-y: auto;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid var(--glass-border);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        #sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        #sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+        
+        #sidebar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
         
         #canvas-container {
             flex: 1;
             position: relative;
+            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
+        }
+        
+        /* ============================================================
+           TYPOGRAPHY
+           ============================================================ */
+        .header-section {
+            margin-bottom: 20px;
         }
         
         h1 {
             font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #4ecdc4;
-        }
-        
-        h2 {
-            font-size: 1.1rem;
-            margin: 20px 0 10px;
-            color: #ff6b6b;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-bottom: 5px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .subtitle {
-            font-size: 0.85rem;
-            color: #aaa;
-            margin-bottom: 20px;
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            line-height: 1.5;
         }
         
+        /* Section Cards */
+        .section-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid var(--glass-border);
+            transition: all var(--transition-medium);
+        }
+        
+        .section-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+        
+        .section-icon.blue { background: rgba(10, 132, 255, 0.15); }
+        .section-icon.green { background: rgba(48, 209, 88, 0.15); }
+        .section-icon.orange { background: rgba(255, 159, 10, 0.15); }
+        .section-icon.purple { background: rgba(191, 90, 242, 0.15); }
+        .section-icon.red { background: rgba(255, 69, 58, 0.15); }
+        .section-icon.teal { background: rgba(100, 210, 255, 0.15); }
+        
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+        
+        /* ============================================================
+           FORM CONTROLS
+           ============================================================ */
         .control-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: #ccc;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
         }
         
         input[type="number"], select {
             width: 100%;
-            padding: 8px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 0.9rem;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        input[type="number"]:hover, select:hover {
+            border-color: rgba(255, 255, 255, 0.2);
         }
         
         input[type="number"]:focus, select:focus {
             outline: none;
-            border-color: #4ecdc4;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.2);
         }
         
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' fill-opacity='0.5' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 40px;
             cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 5px 5px 5px 0;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
-            color: #fff;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
-        }
-        
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .btn-danger {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
-            color: #fff;
-        }
-        
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
-        }
-        
-        #stats {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-        }
-        
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-        
-        .stat-label {
-            color: #aaa;
-        }
-        
-        .stat-value {
-            color: #4ecdc4;
-            font-weight: 600;
-        }
-        
-        #box-list {
-            max-height: 200px;
-            overflow-y: auto;
-            margin-top: 10px;
-        }
-        
-        .box-item {
-            display: flex;
-            align-items: center;
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            margin-bottom: 5px;
-            font-size: 0.85rem;
-        }
-        
-        .box-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        
-        .box-info {
-            flex: 1;
-        }
-        
-        .box-dims {
-            color: #aaa;
-            font-size: 0.8rem;
-        }
-        
-        #info-overlay {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px 20px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-        }
-        
-        #loading-status {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            padding: 10px 30px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #4ecdc4, #44a08d);
-            border-radius: 4px;
-            transition: width 0.3s ease;
         }
         
         .dimension-inputs {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
+            gap: 8px;
+        }
+        
+        .dimension-inputs .control-group {
+            margin-bottom: 0;
         }
         
         .dimension-inputs input {
             text-align: center;
+            padding: 12px 8px;
         }
         
+        /* Custom Checkbox */
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            padding: 10px 0;
         }
         
         .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+            position: relative;
+            transition: all var(--transition-fast);
         }
         
-        .truck-type-select {
-            margin-bottom: 15px;
+        .checkbox-group input[type="checkbox"]:checked {
+            background: var(--accent-orange);
+            border-color: var(--accent-orange);
         }
         
-        .door-controls {
+        .checkbox-group input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 0;
+            text-transform: none;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        /* ============================================================
+           BUTTONS - Apple Style
+           ============================================================ */
+        .button-row {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 4px;
         }
         
-        .door-controls button {
+        button {
             flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
         }
         
-        /* Cube Utilization Panel */
-        .utilization-panel {
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 8px;
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0977e6;
+            box-shadow: 0 4px 16px rgba(10, 132, 255, 0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-elevated);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-success {
+            background: var(--accent-green);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #28b84d;
+            box-shadow: 0 4px 16px rgba(48, 209, 88, 0.3);
+        }
+        
+        .btn-danger {
+            background: var(--accent-red);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #e63e35;
+            box-shadow: 0 4px 16px rgba(255, 69, 58, 0.3);
+        }
+        
+        .btn-icon-only {
+            width: 44px;
+            height: 44px;
+            flex: none;
+            padding: 0;
+            font-size: 1.1rem;
+        }
+        
+        /* ============================================================
+           STATS & METRICS
+           ============================================================ */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        
+        .stat-item {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
             padding: 12px;
-            margin-top: 10px;
+            text-align: center;
         }
         
-        .util-metric {
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .stat-value.blue { color: var(--accent-blue); }
+        .stat-value.green { color: var(--accent-green); }
+        .stat-value.orange { color: var(--accent-orange); }
+        .stat-value.purple { color: var(--accent-purple); }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        
+        /* Progress/Utilization Bars */
+        .metric-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
-            font-size: 0.85rem;
         }
         
-        .util-bar {
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .metric-value {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .progress-bar {
             width: 100%;
             height: 6px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--bg-tertiary);
             border-radius: 3px;
-            margin-top: 4px;
             overflow: hidden;
+            margin-bottom: 12px;
         }
         
-        .util-fill {
+        .progress-fill {
             height: 100%;
             border-radius: 3px;
-            transition: width 0.3s ease;
+            transition: width var(--transition-medium);
         }
         
-        .util-fill.excellent { background: #4CAF50; }
-        .util-fill.good { background: #8BC34A; }
-        .util-fill.average { background: #FFC107; }
-        .util-fill.poor { background: #FF5722; }
+        .progress-fill.blue { background: linear-gradient(90deg, var(--accent-blue), #5eb3ff); }
+        .progress-fill.green { background: linear-gradient(90deg, var(--accent-green), #7ae99a); }
+        .progress-fill.orange { background: linear-gradient(90deg, var(--accent-orange), #ffbf4d); }
+        .progress-fill.purple { background: linear-gradient(90deg, var(--accent-purple), #d98aff); }
+        .progress-fill.teal { background: linear-gradient(90deg, var(--accent-teal), #99e5ff); }
         
-        /* Zone Legend */
-        .zone-legend {
+        /* Quality Score Badge */
+        .quality-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: var(--radius-xl);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .quality-badge.excellent {
+            background: rgba(48, 209, 88, 0.15);
+            color: var(--accent-green);
+        }
+        
+        .quality-badge.good {
+            background: rgba(10, 132, 255, 0.15);
+            color: var(--accent-blue);
+        }
+        
+        .quality-badge.average {
+            background: rgba(255, 159, 10, 0.15);
+            color: var(--accent-orange);
+        }
+        
+        .quality-badge.poor {
+            background: rgba(255, 69, 58, 0.15);
+            color: var(--accent-red);
+        }
+        
+        /* Zone Legend Pills */
+        .zone-pills {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
+            gap: 6px;
         }
         
-        .zone-item {
+        .zone-pill {
             display: flex;
             align-items: center;
-            gap: 5px;
-            font-size: 0.8rem;
-        }
-        
-        .zone-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 3px;
-            border: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        /* Fragile indicator */
-        .fragile-badge {
-            background: #ff4444;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-        
-        /* Weight indicator */
-        .weight-indicator {
-            display: flex;
-            align-items: center;
-            gap: 3px;
+            gap: 6px;
+            padding: 6px 10px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-xl);
             font-size: 0.75rem;
-            color: #aaa;
+            font-weight: 500;
+            color: var(--text-secondary);
         }
         
-        .weight-heavy { color: #ff6b6b; }
-        .weight-medium { color: #ffc107; }
-        .weight-light { color: #4caf50; }
+        .zone-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
         
-        /* Desktop/Mobile only visibility */
+        /* Package List */
+        .package-list {
+            max-height: 180px;
+            overflow-y: auto;
+            margin-top: 8px;
+        }
+        
+        .package-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-md);
+            margin-bottom: 6px;
+            transition: all var(--transition-fast);
+        }
+        
+        .package-item:hover {
+            background: var(--bg-elevated);
+        }
+        
+        .package-color {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+        }
+        
+        .package-details {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .package-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .package-meta {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+        
+        .badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .badge-fragile {
+            background: rgba(255, 69, 58, 0.2);
+            color: var(--accent-red);
+        }
+        
+        .badge-packed {
+            background: rgba(48, 209, 88, 0.2);
+            color: var(--accent-green);
+        }
+        
+        .badge-pending {
+            background: rgba(255, 159, 10, 0.2);
+            color: var(--accent-orange);
+        }
+        
+        /* ============================================================
+           CANVAS OVERLAYS
+           ============================================================ */
+        #info-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 14px 18px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--glass-border);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            box-shadow: 0 8px 32px var(--shadow-color);
+        }
+        
+        #info-overlay strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        #loading-status {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--glass-border);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            box-shadow: 0 8px 32px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        /* Algorithm Info Card */
+        .algo-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .algo-item {
+            padding: 8px 10px;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+        }
+        
+        .algo-item-label {
+            color: var(--text-tertiary);
+            margin-bottom: 2px;
+        }
+        
+        .algo-item-value {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        /* Desktop/Mobile visibility */
         .mobile-only { display: none; }
         .desktop-only { display: inline; }
         
-        /* Mobile Toggle Button */
+        /* ============================================================
+           MOBILE TOGGLE BUTTON (FAB)
+           ============================================================ */
         .mobile-toggle {
             display: none;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
             z-index: 1000;
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            background: var(--accent-blue);
             border: none;
             color: white;
             font-size: 24px;
             cursor: pointer;
-            box-shadow: 0 4px 20px rgba(78, 205, 196, 0.4);
-            transition: transform 0.3s ease;
+            box-shadow: 0 6px 24px rgba(10, 132, 255, 0.4);
+            transition: all var(--transition-medium);
+        }
+        
+        .mobile-toggle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 32px rgba(10, 132, 255, 0.5);
         }
         
         .mobile-toggle:active {
             transform: scale(0.95);
         }
         
-        /* Mobile Close Button */
         .mobile-close {
             display: none;
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 36px;
-            height: 36px;
+            top: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255, 107, 107, 0.8);
-            border: none;
-            color: white;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
             font-size: 20px;
             cursor: pointer;
             z-index: 1001;
+            transition: all var(--transition-fast);
+        }
+        
+        .mobile-close:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
         }
         
         /* ============================================================
@@ -391,8 +710,6 @@
             
             #container {
                 flex-direction: column;
-                height: 100vh;
-                height: 100dvh; /* Dynamic viewport height for mobile */
             }
             
             #sidebar {
@@ -403,12 +720,10 @@
                 height: 100%;
                 z-index: 999;
                 transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                padding: 15px;
-                padding-top: 50px;
+                transition: transform var(--transition-slow);
+                padding: 20px;
+                padding-top: 60px;
                 border-right: none;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
             }
             
             #sidebar.open {
@@ -429,368 +744,291 @@
             }
             
             .mobile-close {
-                display: block;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             
-            /* Show mobile controls, hide desktop controls */
             .mobile-only { display: inline; }
             .desktop-only { display: none; }
             
             h1 {
-                font-size: 1.2rem;
-                margin-bottom: 5px;
+                font-size: 1.3rem;
             }
             
-            .subtitle {
-                font-size: 0.75rem;
-                margin-bottom: 15px;
-            }
-            
-            h2 {
-                font-size: 1rem;
-                margin: 15px 0 8px;
-            }
-            
-            .dimension-inputs {
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 8px;
-            }
-            
-            .control-group {
-                margin-bottom: 10px;
-            }
-            
-            label {
-                font-size: 0.8rem;
-                margin-bottom: 3px;
+            .section-card {
+                padding: 14px;
             }
             
             input[type="number"], select {
-                padding: 10px 8px;
-                font-size: 16px; /* Prevents iOS zoom on focus */
+                font-size: 16px;
+                padding: 14px;
             }
             
             button {
-                padding: 12px 16px;
-                font-size: 0.85rem;
-                margin: 4px 4px 4px 0;
-            }
-            
-            /* Button grid for mobile */
-            .button-row {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-            
-            .button-row button {
-                flex: 1;
-                min-width: 45%;
-                margin: 0;
-            }
-            
-            #stats {
-                padding: 10px;
-                margin-top: 15px;
-            }
-            
-            .stat-row {
-                font-size: 0.8rem;
-                margin-bottom: 6px;
-            }
-            
-            #box-list {
-                max-height: 150px;
-            }
-            
-            .box-item {
-                padding: 6px;
-                font-size: 0.8rem;
-            }
-            
-            .utilization-panel {
-                padding: 10px;
-            }
-            
-            .util-metric {
-                font-size: 0.8rem;
-            }
-            
-            .zone-legend {
-                padding: 8px;
-                gap: 6px;
-            }
-            
-            .zone-item {
-                font-size: 0.75rem;
+                padding: 14px 16px;
             }
             
             #info-overlay {
-                top: 10px;
-                left: 10px;
-                padding: 10px 12px;
-                font-size: 0.75rem;
-                max-width: 180px;
+                top: 12px;
+                left: 12px;
+                padding: 10px 14px;
+                font-size: 0.7rem;
+                max-width: 200px;
             }
             
             #loading-status {
-                bottom: 80px; /* Above toggle button */
-                padding: 8px 20px;
+                bottom: 100px;
+                padding: 10px 20px;
                 font-size: 0.8rem;
-                max-width: 90%;
-                text-align: center;
             }
             
-            /* Collapsible sections for mobile */
-            .section-collapsible {
-                border-bottom: 1px solid rgba(255,255,255,0.1);
-                padding-bottom: 10px;
-                margin-bottom: 10px;
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
             }
             
-            .section-collapsible.collapsed .section-content {
-                display: none;
-            }
-            
-            .section-collapsible h2 {
-                cursor: pointer;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            
-            .section-collapsible h2::after {
-                content: '▼';
-                font-size: 0.7rem;
-                transition: transform 0.3s ease;
-            }
-            
-            .section-collapsible.collapsed h2::after {
-                transform: rotate(-90deg);
+            .package-list {
+                max-height: 140px;
             }
         }
         
         /* Small phones */
         @media (max-width: 380px) {
             #sidebar {
-                padding: 10px;
-                padding-top: 45px;
+                padding: 16px;
+                padding-top: 56px;
             }
             
             h1 {
-                font-size: 1.1rem;
+                font-size: 1.2rem;
             }
             
-            .subtitle {
-                font-size: 0.7rem;
+            .section-card {
+                padding: 12px;
             }
             
             .dimension-inputs {
-                gap: 5px;
-            }
-            
-            button {
-                padding: 10px 12px;
-                font-size: 0.8rem;
-            }
-        }
-        
-        /* Landscape mobile */
-        @media (max-width: 768px) and (orientation: landscape) {
-            #sidebar {
-                padding-top: 40px;
-            }
-            
-            h1 {
-                font-size: 1rem;
-                margin-bottom: 3px;
-            }
-            
-            .subtitle {
-                font-size: 0.7rem;
-                margin-bottom: 10px;
-            }
-            
-            h2 {
-                margin: 10px 0 5px;
-                font-size: 0.9rem;
-            }
-            
-            .control-group {
-                margin-bottom: 8px;
+                gap: 6px;
             }
         }
         
         /* Tablet */
         @media (min-width: 769px) and (max-width: 1024px) {
             #sidebar {
-                width: 300px;
-                padding: 15px;
+                width: 340px;
+            }
+        }
+        
+        /* Large screens */
+        @media (min-width: 1400px) {
+            #sidebar {
+                width: 420px;
             }
             
             h1 {
-                font-size: 1.3rem;
-            }
-            
-            .subtitle {
-                font-size: 0.8rem;
+                font-size: 1.7rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Mobile Toggle Button -->
-    <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Open menu">☰</button>
+    <!-- Mobile Toggle Button (FAB) -->
+    <button class="mobile-toggle" onclick="toggleSidebar()" aria-label="Open controls">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12h14"/>
+        </svg>
+    </button>
     
     <div id="container">
         <div id="sidebar">
             <!-- Mobile Close Button -->
-            <button class="mobile-close" onclick="toggleSidebar()" aria-label="Close menu">✕</button>
+            <button class="mobile-close" onclick="toggleSidebar()" aria-label="Close controls">✕</button>
             
-            <h1>🚚 ML-Powered Load Optimization</h1>
-            <p class="subtitle">3D Bin Packing with Extreme Points Algorithm • LIFO Optimization • Multi-Constraint Solver</p>
-            
-            <h2>🚛 Select Truck Type</h2>
-            <div class="truck-type-select">
-                <select id="truck-type" onchange="changeTruckType()">
-                    <option value="small_van">Small Van (300×150×180 cm)</option>
-                    <option value="medium_truck">Medium Truck (450×200×220 cm)</option>
-                    <option value="large_truck" selected>Large Truck (600×250×270 cm)</option>
-                    <option value="semi_trailer">Semi Trailer (1350×250×280 cm)</option>
-                </select>
-            </div>
-            <div class="door-controls">
-                <button class="btn-secondary" onclick="toggleDoors()">🚪 Toggle Doors</button>
+            <!-- Header -->
+            <div class="header-section">
+                <h1>Load Optimization</h1>
+                <p class="subtitle">ML-Powered 3D Bin Packing with Extreme Points Algorithm</p>
             </div>
             
-            <h2>📦 Add Package</h2>
-            <div class="dimension-inputs">
-                <div class="control-group">
-                    <label>Length</label>
-                    <input type="number" id="box-length" value="50" min="10" max="200" inputmode="numeric">
+            <!-- Truck Configuration -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon blue">🚛</div>
+                    <span class="section-title">Vehicle Configuration</span>
                 </div>
                 <div class="control-group">
-                    <label>Width</label>
-                    <input type="number" id="box-width" value="40" min="10" max="200" inputmode="numeric">
+                    <label>Truck Type</label>
+                    <select id="truck-type" onchange="changeTruckType()">
+                        <option value="small_van">Small Van (300×150×180 cm)</option>
+                        <option value="medium_truck">Medium Truck (450×200×220 cm)</option>
+                        <option value="large_truck" selected>Large Truck (600×250×270 cm)</option>
+                        <option value="semi_trailer">Semi Trailer (1350×250×280 cm)</option>
+                    </select>
+                </div>
+                <button class="btn-secondary" onclick="toggleDoors()" style="width: 100%; margin-top: 8px;">
+                    🚪 Toggle Doors
+                </button>
+            </div>
+            
+            <!-- Package Input -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon orange">📦</div>
+                    <span class="section-title">Add Package</span>
+                </div>
+                <label>Dimensions (cm)</label>
+                <div class="dimension-inputs">
+                    <div class="control-group">
+                        <input type="number" id="box-length" value="50" min="10" max="200" inputmode="numeric" placeholder="L">
+                    </div>
+                    <div class="control-group">
+                        <input type="number" id="box-width" value="40" min="10" max="200" inputmode="numeric" placeholder="W">
+                    </div>
+                    <div class="control-group">
+                        <input type="number" id="box-height" value="30" min="10" max="200" inputmode="numeric" placeholder="H">
+                    </div>
                 </div>
                 <div class="control-group">
-                    <label>Height</label>
-                    <input type="number" id="box-height" value="30" min="10" max="200" inputmode="numeric">
+                    <label>Weight (kg)</label>
+                    <input type="number" id="box-weight" value="10" min="1" max="500" inputmode="numeric">
                 </div>
-            </div>
-            <div class="control-group">
-                <label>Weight (kg)</label>
-                <input type="number" id="box-weight" value="10" min="1" max="500" inputmode="numeric">
-            </div>
-            <div class="control-group">
-                <label>Delivery Sequence (1 = first)</label>
-                <input type="number" id="box-sequence" value="1" min="1" max="100" inputmode="numeric">
-            </div>
-            <div class="control-group checkbox-group">
-                <input type="checkbox" id="box-fragile">
-                <label for="box-fragile">Fragile Item ⚠️</label>
-            </div>
-            <div class="button-row">
-                <button class="btn-primary" onclick="addBox()">➕ Add Package</button>
-                <button class="btn-secondary" onclick="addRandomBoxes()">🎲 Add 10 Random</button>
-            </div>
-            
-            <h2>🎮 Controls</h2>
-            <div class="button-row">
-                <button class="btn-primary" onclick="runPacking(); closeSidebarOnMobile();">▶️ Run Packing</button>
-                <button class="btn-primary" onclick="animatePacking(); closeSidebarOnMobile();">🎬 Animate</button>
-            </div>
-            <div class="button-row">
-                <button class="btn-secondary" onclick="resetCamera()">🎥 Reset View</button>
-                <button class="btn-danger" onclick="clearAll()">🗑️ Clear All</button>
-            </div>
-            
-            <h2>📊 Statistics</h2>
-            <div id="stats">
-                <div class="stat-row">
-                    <span class="stat-label">Truck Type:</span>
-                    <span class="stat-value" id="stat-truck">Large Truck</span>
+                <div class="control-group">
+                    <label>Delivery Sequence</label>
+                    <input type="number" id="box-sequence" value="1" min="1" max="100" inputmode="numeric" placeholder="1 = First Stop">
                 </div>
-                <div class="stat-row">
-                    <span class="stat-label">Cargo Space:</span>
-                    <span class="stat-value" id="stat-space">600×250×270 cm</span>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="box-fragile">
+                    <label for="box-fragile">Fragile Item</label>
                 </div>
-                <div class="stat-row">
-                    <span class="stat-label">Boxes Added:</span>
-                    <span class="stat-value" id="stat-boxes">0</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Boxes Packed:</span>
-                    <span class="stat-value" id="stat-packed">0</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Volume Used:</span>
-                    <span class="stat-value" id="stat-volume">0%</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-label">Weight Used:</span>
-                    <span class="stat-value" id="stat-weight">0 / 5000 kg</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                <div class="button-row">
+                    <button class="btn-primary" onclick="addBox()">Add</button>
+                    <button class="btn-secondary" onclick="addRandomBoxes()">+10 Random</button>
                 </div>
             </div>
             
-            <h2>📈 Cube Utilization (Industry KPIs)</h2>
-            <div class="utilization-panel">
-                <div class="util-metric">
-                    <span>Volume Fill Rate</span>
-                    <span id="util-volume" class="stat-value">0%</span>
+            <!-- Controls -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon green">▶️</div>
+                    <span class="section-title">Optimization Controls</span>
                 </div>
-                <div class="util-bar"><div class="util-fill" id="util-volume-bar" style="width: 0%"></div></div>
+                <div class="button-row">
+                    <button class="btn-success" onclick="runPacking(); closeSidebarOnMobile();">Run Packing</button>
+                    <button class="btn-primary" onclick="animatePacking(); closeSidebarOnMobile();">Animate</button>
+                </div>
+                <div class="button-row" style="margin-top: 8px;">
+                    <button class="btn-secondary" onclick="resetCamera()">Reset View</button>
+                    <button class="btn-danger" onclick="clearAll()">Clear All</button>
+                </div>
+            </div>
+            
+            <!-- Statistics -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon purple">📊</div>
+                    <span class="section-title">Performance Metrics</span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value blue" id="stat-boxes">0</div>
+                        <div class="stat-label">Packages</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value green" id="stat-packed">0</div>
+                        <div class="stat-label">Packed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value orange" id="stat-volume">0%</div>
+                        <div class="stat-label">Volume</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value purple" id="stat-weight-pct">0%</div>
+                        <div class="stat-label">Weight</div>
+                    </div>
+                </div>
                 
-                <div class="util-metric" style="margin-top: 10px;">
-                    <span>Floor Coverage</span>
-                    <span id="util-floor" class="stat-value">0%</span>
+                <div style="margin-top: 12px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Volume Utilization</span>
+                        <span class="metric-value" id="util-volume">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill blue" id="util-volume-bar" style="width: 0%"></div></div>
+                    
+                    <div class="metric-row">
+                        <span class="metric-label">Floor Coverage</span>
+                        <span class="metric-value" id="util-floor">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill green" id="util-floor-bar" style="width: 0%"></div></div>
+                    
+                    <div class="metric-row">
+                        <span class="metric-label">Weight Capacity</span>
+                        <span class="metric-value" id="util-weight">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill orange" id="util-weight-bar" style="width: 0%"></div></div>
+                    
+                    <div class="metric-row">
+                        <span class="metric-label">Stability Index</span>
+                        <span class="metric-value" id="util-stability">—</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill purple" id="util-stability-bar" style="width: 0%"></div></div>
                 </div>
-                <div class="util-bar"><div class="util-fill" id="util-floor-bar" style="width: 0%"></div></div>
                 
-                <div class="util-metric" style="margin-top: 10px;">
-                    <span>Weight Utilization</span>
-                    <span id="util-weight" class="stat-value">0%</span>
+                <div id="quality-badge-container"></div>
+            </div>
+            
+            <!-- Algorithm Info -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon teal">🧠</div>
+                    <span class="section-title">Algorithm Details</span>
                 </div>
-                <div class="util-bar"><div class="util-fill" id="util-weight-bar" style="width: 0%"></div></div>
-                
-                <div class="util-metric" style="margin-top: 10px;">
-                    <span>Load Stability Index</span>
-                    <span id="util-stability" class="stat-value">-</span>
-                </div>
-                <div class="util-bar"><div class="util-fill" id="util-stability-bar" style="width: 0%"></div></div>
-                
-                <div class="util-metric" style="margin-top: 10px;">
-                    <span>Overall Quality Score</span>
-                    <span id="util-score" class="stat-value">-</span>
+                <div class="algo-info">
+                    <div class="algo-item">
+                        <div class="algo-item-label">Method</div>
+                        <div class="algo-item-value">Extreme Points</div>
+                    </div>
+                    <div class="algo-item">
+                        <div class="algo-item-label">Heuristic</div>
+                        <div class="algo-item-value">Best-Fit Decreasing</div>
+                    </div>
+                    <div class="algo-item">
+                        <div class="algo-item-label">Complexity</div>
+                        <div class="algo-item-value">O(n² × 6)</div>
+                    </div>
+                    <div class="algo-item">
+                        <div class="algo-item-label">Constraints</div>
+                        <div class="algo-item-value">LIFO + Stability</div>
+                    </div>
                 </div>
             </div>
             
-            <h2>🧠 Algorithm</h2>
-            <div class="utilization-panel" style="font-size: 0.75rem; line-height: 1.5;">
-                <div><strong>Method:</strong> Extreme Points + BFD Heuristic</div>
-                <div style="margin-top: 5px;"><strong>Optimization Constraints:</strong></div>
-                <div style="padding-left: 8px;">• LIFO delivery sequencing</div>
-                <div style="padding-left: 8px;">• Weight-based floor priority</div>
-                <div style="padding-left: 8px;">• 60% support area for stability</div>
-                <div style="padding-left: 8px;">• Fragile item protection layer</div>
-                <div style="padding-left: 8px;">• Center of mass validation</div>
-                <div style="margin-top: 5px;"><strong>Complexity:</strong> O(n² × 6 rotations)</div>
+            <!-- Delivery Zones -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon red">🗺️</div>
+                    <span class="section-title">Delivery Zones</span>
+                </div>
+                <div class="zone-pills" id="zone-legend">
+                    <div class="zone-pill"><div class="zone-dot" style="background: #30d158"></div>Zone 1</div>
+                    <div class="zone-pill"><div class="zone-dot" style="background: #64d2ff"></div>Zone 2</div>
+                    <div class="zone-pill"><div class="zone-dot" style="background: #ff9f0a"></div>Zone 3</div>
+                    <div class="zone-pill"><div class="zone-dot" style="background: #ff453a"></div>Zone 4</div>
+                    <div class="zone-pill"><div class="zone-dot" style="background: #bf5af2"></div>Zone 5</div>
+                </div>
             </div>
             
-            <h2>🗺️ Delivery Zones</h2>
-            <div class="zone-legend" id="zone-legend">
-                <div class="zone-item"><div class="zone-color" style="background: #4CAF50"></div><span>Zone 1 (First)</span></div>
-                <div class="zone-item"><div class="zone-color" style="background: #8BC34A"></div><span>Zone 2</span></div>
-                <div class="zone-item"><div class="zone-color" style="background: #FFC107"></div><span>Zone 3</span></div>
-                <div class="zone-item"><div class="zone-color" style="background: #FF9800"></div><span>Zone 4</span></div>
-                <div class="zone-item"><div class="zone-color" style="background: #FF5722"></div><span>Zone 5 (Last)</span></div>
+            <!-- Package List -->
+            <div class="section-card">
+                <div class="section-header">
+                    <div class="section-icon blue">📋</div>
+                    <span class="section-title">Package Queue</span>
+                </div>
+                <div class="package-list" id="box-list">
+                    <div style="text-align: center; color: var(--text-tertiary); padding: 20px; font-size: 0.85rem;">
+                        No packages added yet
+                    </div>
+                </div>
             </div>
-            
-            <h2>📋 Package List</h2>
-            <div id="box-list"></div>
         </div>
         
         <div id="canvas-container">
@@ -2556,25 +2794,39 @@
             document.getElementById('util-floor').textContent = floorUtil.toFixed(1) + '%';
             document.getElementById('util-weight').textContent = weightUtil.toFixed(1) + '%';
             
+            // Update stat-weight-pct for the grid
+            const statWeightPct = document.getElementById('stat-weight-pct');
+            if (statWeightPct) statWeightPct.textContent = weightUtil.toFixed(0) + '%';
+            
             // Stability index display
             let stabilityRating = '';
-            if (stabilityScore >= 90) stabilityRating = '🛡️ Excellent';
-            else if (stabilityScore >= 75) stabilityRating = '✓ Good';
-            else if (stabilityScore >= 50) stabilityRating = '⚠️ Fair';
-            else stabilityRating = '❌ Poor';
+            if (stabilityScore >= 90) stabilityRating = 'Excellent';
+            else if (stabilityScore >= 75) stabilityRating = 'Good';
+            else if (stabilityScore >= 50) stabilityRating = 'Fair';
+            else stabilityRating = 'Poor';
             document.getElementById('util-stability').textContent = 
-                packedCount > 0 ? `${Math.round(stabilityScore)}% ${stabilityRating}` : '-';
+                packedCount > 0 ? `${Math.round(stabilityScore)}%` : '—';
             
-            // Quality score rating
-            let scoreRating = '';
-            if (qualityScore >= 85) scoreRating = '⭐ Excellent';
-            else if (qualityScore >= 70) scoreRating = '👍 Good';
-            else if (qualityScore >= 50) scoreRating = '📊 Average';
-            else scoreRating = '⚠️ Needs Improvement';
-            document.getElementById('util-score').textContent = 
-                packedCount > 0 ? `${Math.round(qualityScore)}/100 ${scoreRating}` : '-';
+            // Quality badge
+            const badgeContainer = document.getElementById('quality-badge-container');
+            if (badgeContainer && packedCount > 0) {
+                let badgeClass = 'poor';
+                let badgeText = 'Needs Improvement';
+                if (qualityScore >= 85) { badgeClass = 'excellent'; badgeText = 'Excellent Load'; }
+                else if (qualityScore >= 70) { badgeClass = 'good'; badgeText = 'Good Load'; }
+                else if (qualityScore >= 50) { badgeClass = 'average'; badgeText = 'Average Load'; }
+                
+                badgeContainer.innerHTML = `
+                    <div class="quality-badge ${badgeClass}">
+                        <span>${Math.round(qualityScore)}/100</span>
+                        <span>${badgeText}</span>
+                    </div>
+                `;
+            } else if (badgeContainer) {
+                badgeContainer.innerHTML = '';
+            }
             
-            // Update progress bars with color coding
+            // Update progress bars
             updateUtilBar('util-volume-bar', volumeUtil);
             updateUtilBar('util-floor-bar', floorUtil);
             updateUtilBar('util-weight-bar', weightUtil);
@@ -2597,28 +2849,39 @@
         
         function updateBoxList() {
             const list = document.getElementById('box-list');
+            
+            if (boxes.length === 0) {
+                list.innerHTML = `
+                    <div style="text-align: center; color: var(--text-tertiary); padding: 20px; font-size: 0.85rem;">
+                        No packages added yet
+                    </div>
+                `;
+                return;
+            }
+            
             list.innerHTML = boxes.map(box => {
-                // Weight classification
-                let weightClass = 'weight-light';
-                let weightIcon = '🪶';
-                if (box.weight > 25) { weightClass = 'weight-heavy'; weightIcon = '🏋️'; }
-                else if (box.weight > 10) { weightClass = 'weight-medium'; weightIcon = '📦'; }
-                
                 // Zone color based on delivery sequence
-                const zoneColor = getZoneColor(box.sequence);
+                const zoneColors = ['#30d158', '#64d2ff', '#ff9f0a', '#ff453a', '#bf5af2'];
+                const zone = getDeliveryZone(box.sequence);
+                const zoneColor = zoneColors[zone - 1] || zoneColors[0];
+                
+                const statusBadge = box.packed 
+                    ? '<span class="badge badge-packed">Packed</span>'
+                    : '<span class="badge badge-pending">Pending</span>';
+                
+                const fragileBadge = box.fragile 
+                    ? '<span class="badge badge-fragile">Fragile</span>' 
+                    : '';
                 
                 return `
-                    <div class="box-item" style="border-left: 3px solid ${zoneColor}">
-                        <div class="box-color" style="background-color: #${box.color.toString(16).padStart(6, '0')}"></div>
-                        <div class="box-info">
-                            <div>
-                                📦 #${box.id} ${box.packed ? '✅' : '⏳'}
-                                ${box.fragile ? '<span class="fragile-badge">FRAGILE</span>' : ''}
+                    <div class="package-item">
+                        <div class="package-color" style="background-color: #${box.color.toString(16).padStart(6, '0')}; border: 2px solid ${zoneColor}"></div>
+                        <div class="package-details">
+                            <div class="package-title">
+                                Package #${box.id} ${statusBadge} ${fragileBadge}
                             </div>
-                            <div class="box-dims">
-                                ${box.length}×${box.width}×${box.height}cm
-                                <span class="weight-indicator ${weightClass}">${weightIcon} ${box.weight}kg</span>
-                                | Zone ${getDeliveryZone(box.sequence)}
+                            <div class="package-meta">
+                                ${box.length}×${box.width}×${box.height} cm • ${box.weight} kg • Zone ${zone}
                             </div>
                         </div>
                     </div>
@@ -2636,12 +2899,13 @@
         // Get zone color for visual identification
         function getZoneColor(sequence) {
             const zone = getDeliveryZone(sequence);
-            const colors = ['#4CAF50', '#8BC34A', '#FFC107', '#FF9800', '#FF5722'];
+            const colors = ['#30d158', '#64d2ff', '#ff9f0a', '#ff453a', '#bf5af2'];
             return colors[zone - 1] || colors[0];
         }
         
         function updateStatus(message) {
-            document.getElementById('loading-status').textContent = message;
+            const statusEl = document.getElementById('loading-status');
+            statusEl.innerHTML = `<div class="status-dot"></div>${message}`;
         }
         
         function onWindowResize() {
