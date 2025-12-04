@@ -98,18 +98,10 @@
         #canvas-container {
             flex: 1;
             position: relative;
-            background: linear-gradient(180deg, #1a1a2e 0%, #0d0d1a 100%);
-            min-height: 100%;
-            overflow: hidden;
         }
         
         #canvas-container canvas {
             display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100% !important;
-            height: 100% !important;
         }
         
         /* ============================================================
@@ -731,6 +723,7 @@
                 top: 0;
                 left: 0;
                 width: 100%;
+                min-width: 0;
                 height: 100%;
                 z-index: 999;
                 transform: translateX(-100%);
